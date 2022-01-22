@@ -1,0 +1,17 @@
+{
+  "extends": "./node_modules/@monots/tsconfig/tsconfig.json",
+  "include": [],
+  "files": [],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "target": "ESNext"
+    }
+  },
+  "references": [
+    {
+      "path": "packages/kickjump/src"
+    }
+  ]
+}
