@@ -92,6 +92,43 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
+  e2e_test:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: run tests
+        run: |
+          pnpm setup:tests
+          pnpm test
+        working-directory: website
+
   # Build the project and run tests on built files.
   build_packages:
     timeout-minutes: 8
@@ -135,7 +172,7 @@ jobs:
           path: packages/*/dist/**
           retention-days: 1
 
-  test_build:
+  build_unit_test:
     timeout-minutes: 8
     runs-on: ubuntu-latest
     strategy:
@@ -230,6 +267,14 @@ jobs:
           append: true
           message: |
             🚀 Deployed preview website for commit ${{github.sha}}: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
+
+      - name: run tests on vercel
+        env:
+          WEBSITE_URL: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
+        run: |
+          pnpm setup:tests
+          pnpm test
+        working-directory: website
 
       - name: deploy production
         uses: amondnet/vercel-action@v20

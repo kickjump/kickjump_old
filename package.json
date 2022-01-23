@@ -34,6 +34,7 @@
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "test:website": "pnpm --dir website test",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc -b",
     "update:deps": "pnpm update --latest --recursive -i",
