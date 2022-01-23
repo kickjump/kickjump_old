@@ -13,7 +13,7 @@ module.exports = {
       extends: ['monots/react'],
     },
     {
-      files: ['**/vite.config.{js,ts}'],
+      files: ['**/vite.config.{js,ts}', 'website/**'],
       rules: { 'import/no-default-export': 'off' },
     },
   ],

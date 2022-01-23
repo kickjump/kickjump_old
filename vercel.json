@@ -1,0 +1,11 @@
+{
+  "public": false,
+  "github": {
+    "enabled": false
+  },
+  "build": {
+    "env": {
+      "ENABLE_FILE_SYSTEM_API": "1"
+    }
+  }
+}

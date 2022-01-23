@@ -137,8 +137,12 @@ yarn.lock
 /tsconfig.references.json
 /.markdownlint.json
 /vite.config.ts
+/playwright.config.ts
+/.swc
 .parcel-cache/
 .psc-ide-port
 
 # CI `pnpm` cache
 .pnpm-store/
+
+.vercel
