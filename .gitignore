@@ -143,3 +143,5 @@ yarn.lock
 
 # CI `pnpm` cache
 .pnpm-store/
+
+.vercel

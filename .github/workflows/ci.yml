@@ -1,9 +1,6 @@
 name: ci
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
-
   push:
     branches:
       - main
@@ -18,9 +15,12 @@ env:
 jobs:
   # Lint the project
   lint:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
@@ -35,20 +35,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: setup node.js
+      - name: setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 16.x
+          node-version: 16
 
       - name: install and audit
         uses: ./.github/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: check TS / JS files
+      - name: 🚨 lint TS / JS files
         run: pnpm lint:es
 
-      - name: check formatting
+      - name: 🔹 check formatting
         run: pnpm lint:prettier
 
       - name: check repo and versions
@@ -59,9 +59,12 @@ jobs:
 
   # Unit test and update coverage report
   unit_test:
-    timeout-minutes: 15
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
@@ -76,10 +79,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: setup node.js
+      - name: setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 16.x
+          node-version: 16
 
       - name: install and audit
         uses: ./.github/actions/pnpm
@@ -90,15 +93,14 @@ jobs:
         run: pnpm test
 
   # Build the project and run tests on built files.
-  build_test:
-    timeout-minutes: 15
+  build_packages:
+    timeout-minutes: 8
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 17.x]
-      fail-fast: false
 
     steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
@@ -113,7 +115,53 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: setup node.js
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build packages
+        run: pnpm build
+
+      - name: upload typescript build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ts-build
+          path: packages/*/dist/**
+          retention-days: 1
+
+  test_build:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 17]
+      fail-fast: false
+
+    steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
@@ -123,8 +171,73 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: build project
+      - name: build packages
         run: pnpm build
 
       - name: run unit tests
         run: pnpm test
+
+  deploy_website:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build packages
+        run: pnpm build
+
+      - name: build website
+        run: 'pnpm build:website'
+
+      - name: deploy staging website
+        id: deploy-vercel-staging
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: add staging comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          append: true
+          message: |
+            🚀 Deployed preview website for commit ${{github.sha}}: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
+
+      - name: deploy production
+        uses: amondnet/vercel-action@v20
+        id: deploy-vercel-production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-args: '--prod'

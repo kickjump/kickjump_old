@@ -1,5 +1,3 @@
-## Listens to the CI workflow and runs the publish command to main when applicable.
-
 name: publish
 
 on:
