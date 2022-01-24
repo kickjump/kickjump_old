@@ -9,4 +9,5 @@ module.exports = {
   publicPath: '/build/',
   serverBuildDirectory: 'api/_build',
   ignoredRouteFiles: ['.*'],
+  devServerPort: process.env.TEST === '1' ? 8003 : 8002,
 };

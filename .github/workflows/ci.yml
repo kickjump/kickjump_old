@@ -45,10 +45,10 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: 🚨 lint TS / JS files
+      - name: lint TS / JS files
         run: pnpm lint:es
 
-      - name: 🔹 check formatting
+      - name: check formatting
         run: pnpm lint:prettier
 
       - name: check repo and versions

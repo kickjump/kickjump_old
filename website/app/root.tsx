@@ -1,5 +1,13 @@
-import type { LinksFunction, MetaFunction } from 'remix';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
+import {
+  type LinksFunction,
+  type MetaFunction,
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from 'remix';
 
 export const meta: MetaFunction = () => {
   return { title: 'KickJump' };

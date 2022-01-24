@@ -1,0 +1,50 @@
+{
+  "name": "@kickjump/tokens",
+  "version": "0.0.0",
+  "description": "Generate tokens with strata",
+  "keywords": [],
+  "license": "MIT",
+  "contributors": [],
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "browser": "./dist/index.browser.esm.js",
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./index.js": {
+      "browser": "./dist/index.browser.esm.js",
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/*.d.ts"
+  },
+  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.browser.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@project-serum/anchor": "^0.20.1",
+    "@solana/web3.js": "^1.32.0",
+    "@strata-foundation/spl-token-bonding": "^2.1.8",
+    "@strata-foundation/spl-token-collective": "^2.1.8",
+    "@strata-foundation/spl-utils": "^2.1.7",
+    "@swc/helpers": "^0.3.2",
+    "bn.js": "^5.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "entrypoints": [
+      "index.ts"
+    ],
+    "tsconfigs": {},
+    "mode": "library",
+    "externalModules": []
+  }
+}

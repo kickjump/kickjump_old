@@ -11,6 +11,12 @@
   },
   "references": [
     {
+      "path": "packages/kickjump__components/src"
+    },
+    {
+      "path": "packages/kickjump__tokens/src"
+    },
+    {
       "path": "packages/kickjump/src"
     }
   ]
