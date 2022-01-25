@@ -1,0 +1,112 @@
+{
+  "name": "kickjump.com",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "setup:tests": "playwright install-deps",
+    "start": "next start",
+    "test": "playwright test",
+    "test:watch": "E2E_QUICK=1 playwright-watch test"
+  },
+  "dependencies": {
+    "@kickjump/components": "^0.0.0",
+    "@monots/next-plugin": "^0.2.1",
+    "@playwright/test": "^1.18.0",
+    "@trpc/client": "^9.17.0",
+    "@trpc/next": "^9.17.0",
+    "@trpc/react": "^9.17.0",
+    "@trpc/server": "^9.17.0",
+    "gray-matter": "^4.0.3",
+    "jest-process-manager": "^0.3.1",
+    "mdx-bundler": "^8.0.1",
+    "next": "12.0.9-canary.8",
+    "next-auth": "^4.1.2",
+    "next-seo": "^4.29.0",
+    "next-themes": "^0.0.15",
+    "playwright": "^1.18.0",
+    "playwright-watch": "^1.3.23",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-query": "^3.34.12",
+    "superjson": "^1.8.0",
+    "superstruct": "^0.15.3",
+    "ts-extras": "^0.8.0",
+    "type-fest": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.10",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11"
+  },
+  "monots": {
+    "tsconfigs": {
+      "": {
+        "compilerOptions": {
+          "target": "ESNext",
+          "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+          ],
+          "allowJs": true,
+          "skipLibCheck": true,
+          "strict": true,
+          "forceConsistentCasingInFileNames": true,
+          "noEmit": true,
+          "esModuleInterop": true,
+          "module": "esnext",
+          "moduleResolution": "node",
+          "resolveJsonModule": true,
+          "isolatedModules": true,
+          "jsx": "preserve",
+          "incremental": true,
+          "baseUrl": "./src",
+          "paths": {
+            "~/*": [
+              "./*"
+            ]
+          },
+          "types": [
+            "node",
+            "@testing-library/jest-dom"
+          ]
+        },
+        "include": [
+          "next-env.d.ts",
+          "**/*.ts",
+          "**/*.tsx"
+        ],
+        "exclude": [
+          "node_modules"
+        ],
+        "ts-node": {
+          "transpileOnly": true,
+          "compilerOptions": {
+            "esModuleInterop": true,
+            "target": "ESNext",
+            "module": "CommonJS"
+          }
+        }
+      },
+      "src": {
+        "compilerOptions": {
+          "types": [],
+          "noEmit": true
+        }
+      }
+    },
+    "entrypoints": [
+      "index.{ts,tsx}"
+    ],
+    "mode": "library",
+    "externalModules": []
+  }
+}

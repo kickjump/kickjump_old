@@ -13,8 +13,12 @@ module.exports = {
       extends: ['monots/react'],
     },
     {
-      files: ['**/vite.config.{js,ts}', 'website/**'],
+      files: ['**/vite.config.{js,ts}', 'websites/**'],
       rules: { 'import/no-default-export': 'off' },
+    },
+    {
+      files: ['websites/kickjump.com/**'],
+      extends: ['next/core-web-vitals', 'monots/react'],
     },
   ],
 };

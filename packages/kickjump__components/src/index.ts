@@ -1,1 +1,1 @@
-export * from './connect-wallet.jsx';
+export * from './connect-wallet';

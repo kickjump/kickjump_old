@@ -18,6 +18,12 @@
     },
     {
       "path": "packages/kickjump/src"
+    },
+    {
+      "path": "websites/kickjump.com"
+    },
+    {
+      "path": "websites/kickjump.com/src"
     }
   ]
 }

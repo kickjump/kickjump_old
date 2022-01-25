@@ -34,8 +34,8 @@
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
+    "test:kickjump.com": "pnpm --dir websites/kickjump.com test",
     "test:watch": "vitest watch",
-    "test:website": "pnpm --dir website test",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc -b",
     "update:deps": "pnpm update --latest --recursive -i",
@@ -59,9 +59,11 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^17.0.10",
+    "@types/testing-library__jest-dom": "^5.14.2",
     "@vitejs/plugin-react": "^1.1.4",
     "eslint": "^8.7.0",
     "eslint-config-monots": "^0.5.1",
+    "eslint-config-next": "12.0.8",
     "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-testing-library": "^5.0.4",
     "happy-dom": "^2.28.0",
@@ -77,7 +79,7 @@
     "typescript": "^4.5.5",
     "vercel": "^23.1.2",
     "vite": "^2.7.13",
-    "vitest": "^0.1.27"
+    "vitest": "^0.2.1"
   },
   "engines": {
     "node": ">=16.9",
@@ -85,7 +87,8 @@
   },
   "monots": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "websites/*"
     ],
     "tsconfigPath": "./.monots/symlink/tsconfig.json",
     "baseTsconfig": "./node_modules/@monots/tsconfig/tsconfig.json",
