@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
