@@ -214,7 +214,8 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
-  deploy_website:
+  deploy_kickjump_com:
+    name: deploy kickjump.com
     timeout-minutes: 8
     runs-on: ubuntu-latest
 
@@ -250,7 +251,7 @@ jobs:
         run: pnpm build
 
       - name: build website
-        run: 'pnpm build:website'
+        run: 'pnpm build:kickjump.com'
 
       - name: deploy staging website
         id: deploy-vercel-staging

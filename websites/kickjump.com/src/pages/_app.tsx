@@ -1,3 +1,4 @@
+import { Provider } from '@kickjump/components';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
@@ -15,14 +16,16 @@ const App = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   return (
-    <ThemeProvider attribute='class'>
-      <Head>
-        <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width,initial-scale=1' />
-      </Head>
-      <DefaultSeo {...DEFAULT_SEO} />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider>
+      <ThemeProvider attribute='class'>
+        <Head>
+          <meta charSet='utf-8' />
+          <meta name='viewport' content='width=device-width,initial-scale=1' />
+        </Head>
+        <DefaultSeo {...DEFAULT_SEO} />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </Provider>
   );
 };
 

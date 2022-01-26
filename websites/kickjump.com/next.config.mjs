@@ -1,14 +1,19 @@
 import withMonots from '@monots/next-plugin';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
 
-  // experimental: { concurrentFeatures: true, serverComponents: true },
-  // images: { formats: ['image/avif', 'image/webp'] },
   webpack: (config, { isServer }) => {
     const resolve = (config.resolve ??= {});
     // resolve.enforceExtension = true;
+    const fallback = (resolve.fallback ??= {});
+    fallback.fs = false;
+    fallback.buffer = require.resolve('poly-buffer');
+    console.log('buffer', fallback.buffer);
 
     if (isServer) {
       resolve.extensions = ['.node.ts', '.node.tsx', '.node.js', ...resolve.extensions];

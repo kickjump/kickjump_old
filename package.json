@@ -5,10 +5,13 @@
   "license": "BSD-3-Clause",
   "contributors": [],
   "type": "module",
+  "browser": {
+    "fs": false
+  },
   "scripts": {
     "build": "run-p build:packages typecheck",
+    "build:kickjump.com": "pnpm --dir websites/kickjump.com build",
     "build:packages": "pnpm monots build",
-    "build:website": "cd website && pnpm build",
     "changeset": "changeset",
     "check:pnpm": "node .monots/check-pnpm.js",
     "checks": "run-s lint typecheck test",
@@ -102,5 +105,10 @@
       }
     }
   },
-  "packageManager": "pnpm@6.24.1"
+  "packageManager": "pnpm@6.28.0",
+  "pnpm": {
+    "overrides": {
+      "@project-serum/anchor": "^0.20.1"
+    }
+  }
 }
