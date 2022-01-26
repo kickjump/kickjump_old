@@ -248,7 +248,7 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: check versions are valid
-        if: github.event.pull_request_target
+        if: github.event.pull_request
         run: |
           pnpm version:pr
           pnpm version:ci
