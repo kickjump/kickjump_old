@@ -23,8 +23,8 @@
     "test:watch": "E2E_QUICK=1 playwright-watch test"
   },
   "dependencies": {
-    "@kickjump/components": "^0.0.0",
-    "@kickjump/tokens": "^0.0.0",
+    "@kickjump/components": "^0.0.1",
+    "@kickjump/tokens": "^0.0.1",
     "@monots/next-plugin": "^0.3.0",
     "@s-libs/micro-dash": "^13.1.0",
     "@trpc/client": "^9.17.1",
