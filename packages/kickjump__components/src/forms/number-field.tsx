@@ -4,7 +4,7 @@ import { useNumberField } from '@react-aria/numberfield';
 import { useObjectRef } from '@react-aria/utils';
 import { useNumberFieldState } from '@react-stately/numberfield';
 import { type AriaNumberFieldProps } from '@react-types/numberfield';
-import type { ChangeEventHandler, FormEventHandler, ForwardedRef } from 'react';
+import type { ChangeEventHandler, ForwardedRef } from 'react';
 import { forwardRef, useRef } from 'react';
 
 export interface NumberFieldProps extends AriaNumberFieldProps {

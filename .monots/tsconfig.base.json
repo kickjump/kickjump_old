@@ -1,0 +1,6 @@
+{
+  "extends": "../node_modules/@monots/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}

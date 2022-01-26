@@ -94,7 +94,7 @@
       "websites/*"
     ],
     "tsconfigPath": "./.monots/symlink/tsconfig.json",
-    "baseTsconfig": "./node_modules/@monots/tsconfig/tsconfig.json",
+    "baseTsconfig": "./.monots/tsconfig.base.json",
     "tsconfig": {
       "ts-node": {
         "transpileOnly": true,

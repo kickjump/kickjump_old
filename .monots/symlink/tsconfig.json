@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@monots/tsconfig/tsconfig.json",
+  "extends": "./.monots/tsconfig.base.json",
   "include": [],
   "files": [],
   "ts-node": {
