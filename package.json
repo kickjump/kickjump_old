@@ -5,13 +5,16 @@
   "license": "BSD-3-Clause",
   "contributors": [],
   "type": "module",
+  "browser": {
+    "fs": false
+  },
   "scripts": {
     "build": "run-p build:packages typecheck",
+    "build:kickjump.com": "pnpm --dir apps/kickjump.com build",
     "build:packages": "pnpm monots build",
-    "build:website": "cd website && pnpm build",
     "changeset": "changeset",
     "check:pnpm": "node .monots/check-pnpm.js",
-    "checks": "run-s lint typecheck test",
+    "checks": "run-s lint typecheck test test:kickjump.com build:packages build:kickjump.com",
     "clean": "git clean -fdX --exclude='.config.json'",
     "fix": "run-s -c fix:repo fix:build fix:es fix:prettier",
     "fix:build": "pnpm monots fix",
@@ -19,13 +22,14 @@
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",
     "preinstall": "pnpm symlink:root && pnpm check:pnpm",
-    "postinstall": "pnpm monots prepare",
+    "postinstall": "pnpm patch && pnpm monots prepare",
     "lint": "run-s lint:\\*",
     "lint:build": "pnpm monots check",
     "lint:es": "eslint --ext=.tsx,.ts,.js .",
     "lint:prettier": "pnpm run:prettier -- --check",
     "lint:repo": "manypkg check",
     "monots": "monots",
+    "patch": "patch-package --patch-dir .monots/patches",
     "prepare": "husky install .monots/.husky || true",
     "prerelease": "pnpm build",
     "release": "changeset publish",
@@ -33,8 +37,8 @@
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
+    "test:kickjump.com": "pnpm --dir apps/kickjump.com test",
     "test:watch": "vitest watch",
-    "test:website": "pnpm --dir website test",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc -b",
     "update:deps": "pnpm update --latest --recursive -i",
@@ -43,29 +47,45 @@
     "version:changeset": "changeset version",
     "version:ci": "run-s version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "node .monots/changelog-dates.js",
-    "version:lockfile": "pnpm install --lockfile-only"
+    "version:lockfile": "pnpm install --lockfile-only",
+    "version:pr": "pnpm ts .monots/delete-changset-changelog-property.ts"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.4.2",
     "@changesets/cli": "^2.19.0",
     "@manypkg/cli": "^0.19.1",
     "@manypkg/get-packages": "^1.1.3",
+    "@milahu/patch-package-with-pnpm-support": "6.4.8",
     "@monots/cli": "^0.10.4",
     "@monots/tsconfig": "^0.1.0",
-    "@types/node": "^17.0.10",
+    "@testing-library/dom": "^8.11.2",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/node": "^17.0.12",
+    "@types/testing-library__jest-dom": "^5.14.2",
+    "@vitejs/plugin-react": "^1.1.4",
+    "chalk": "^5.0.0",
     "eslint": "^8.7.0",
-    "eslint-config-monots": "^0.5.1",
+    "eslint-config-monots": "^0.6.0",
+    "eslint-config-next": "12.0.8",
+    "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint-plugin-testing-library": "^5.0.4",
+    "happy-dom": "^2.28.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.2.2",
     "load-json-file": "^7.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "prettier-config-monots": "^0.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
     "vercel": "^23.1.2",
     "vite": "^2.7.13",
-    "vitest": "^0.1.27"
+    "vitest": "^0.2.1",
+    "write-json-file": "^5.0.0"
   },
   "engines": {
     "node": ">=16.9",
@@ -73,10 +93,11 @@
   },
   "monots": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "websites/*"
     ],
     "tsconfigPath": "./.monots/symlink/tsconfig.json",
-    "baseTsconfig": "./node_modules/@monots/tsconfig/tsconfig.json",
+    "baseTsconfig": "./.monots/tsconfig.base.json",
     "tsconfig": {
       "ts-node": {
         "transpileOnly": true,
@@ -87,5 +108,15 @@
       }
     }
   },
-  "packageManager": "pnpm@6.24.1"
+  "packageManager": "pnpm@6.28.0",
+  "pnpm": {
+    "overrides": {
+      "bn.js": "^5.2.0",
+      "@solana/spl-token": "^0.1.8",
+      "@solana/wallet-adapter-react": "^0.15.2",
+      "@solana/wallet-adapter-wallets": "^0.14.2",
+      "@solana/wallet-adapter-base": "^0.9.2",
+      "@project-serum/anchor": "^0.20.1"
+    }
+  }
 }

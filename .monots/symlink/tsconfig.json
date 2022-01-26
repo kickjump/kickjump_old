@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@monots/tsconfig/tsconfig.json",
+  "extends": "./.monots/tsconfig.base.json",
   "include": [],
   "files": [],
   "ts-node": {
@@ -10,6 +10,12 @@
     }
   },
   "references": [
+    {
+      "path": "packages/kickjump__components/src"
+    },
+    {
+      "path": "packages/kickjump__tokens/src"
+    },
     {
       "path": "packages/kickjump/src"
     }
