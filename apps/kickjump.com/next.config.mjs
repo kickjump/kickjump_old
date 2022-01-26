@@ -9,8 +9,13 @@ const config = {
   reactStrictMode: true,
 
   webpack: (config) => {
-    const resolve = (config.resolve ??= {});
-    const fallback = (resolve.fallback ??= {});
+    // Nullish coalescing assignment is not supported on node 14 (vercel)
+    // const resolve = (config.resolve ??= {});
+    // const fallback = (resolve.fallback ??= {});
+
+    const resolve = config.resolve ?? (config.resolve = {});
+    const fallback = resolve.fallback ?? (resolve.fallback = {});
+
     fallback.fs = false;
     fallback['react-icons'] = false;
     fallback['@chakra-ui/react'] = false;
