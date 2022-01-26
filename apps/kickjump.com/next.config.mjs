@@ -1,5 +1,6 @@
 import withMonots from '@monots/next-plugin';
 import { createRequire } from 'module';
+import analyzer from '@next/bundle-analyzer';
 
 const require = createRequire(import.meta.url);
 
@@ -7,25 +8,17 @@ const require = createRequire(import.meta.url);
 const config = {
   reactStrictMode: true,
 
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     const resolve = (config.resolve ??= {});
-    // resolve.enforceExtension = true;
     const fallback = (resolve.fallback ??= {});
     fallback.fs = false;
+    fallback['react-icons'] = false;
+    fallback['@chakra-ui/react'] = false;
     fallback.buffer = require.resolve('poly-buffer');
-    console.log('buffer', fallback.buffer);
-
-    if (isServer) {
-      resolve.extensions = ['.node.ts', '.node.tsx', '.node.js', ...resolve.extensions];
-      // config.externals = config.externals ?? [];
-      // // config.externals._http_common = '_http_common';
-      // config.externals.push('_http_common');
-    } else {
-      resolve.extensions = ['.browser.ts', '.browser.tsx', '.browser.js', ...resolve.extensions];
-    }
 
     return config;
   },
 };
+const withBundleAnalyzer = analyzer({ enabled: process.env.ANALYZE === 'true' });
 
-export default withMonots(config);
+export default withBundleAnalyzer(withMonots(config));
