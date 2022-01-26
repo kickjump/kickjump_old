@@ -26,7 +26,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -70,7 +70,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -104,7 +104,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -123,8 +123,8 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: 'build kickjump.com'
-        run: 'pnpm build:kickjump.com'
+      - name: build kickjump.com
+        run: pnpm build:kickjump.com
 
       - name: setup playwright test environment
         run: pnpm setup:tests
@@ -152,7 +152,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -194,7 +194,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -202,6 +202,16 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
+
+      - name: setup next.js caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/apps/kickjump.com/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
       - name: setup node
         uses: actions/setup-node@v2
@@ -213,8 +223,8 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: 'build kickjump.com'
-        run: 'pnpm build:kickjump.com'
+      - name: build kickjump.com
+        run: pnpm build:kickjump.com
 
       - name: upload typescript build
         uses: actions/upload-artifact@v2
@@ -240,7 +250,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:
@@ -279,7 +289,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
         with:

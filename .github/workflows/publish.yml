@@ -17,12 +17,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: manage commit status
+        uses: haya14busa/action-workflow_run-status@v1
+
       - name: checkout code repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: setup caching
+      - name: setup pnpm caching
         uses: actions/cache@v2
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
