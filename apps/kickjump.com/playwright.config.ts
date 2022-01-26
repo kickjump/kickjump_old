@@ -30,6 +30,7 @@ const config: PlaywrightTestConfig = {
   globalTeardown: require.resolve('./e2e/helpers/global-teardown'),
   reporter: process.env.CI ? 'dot' : 'list',
   testMatch: ['e2e/*.test.ts'],
+  timeout: 60_000,
   projects,
 };
 
