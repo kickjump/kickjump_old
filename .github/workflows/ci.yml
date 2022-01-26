@@ -123,7 +123,16 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
+      - name: 'build kickjump.com'
+        run: 'pnpm build:kickjump.com'
+
+      - name: setup playwright test environment
+        run: pnpm setup:tests
+        working-directory: apps/kickjump.com
+
       - name: run tests
+        env:
+          TEST_BUILD: 1
         run: |
           pnpm setup:tests
           pnpm test
@@ -204,8 +213,8 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: build website
-        run: pnpm build:kickjump.com
+      - name: 'build kickjump.com'
+        run: 'pnpm build:kickjump.com'
 
       - name: upload typescript build
         uses: actions/upload-artifact@v2

@@ -47,7 +47,7 @@ jobs:
       # - name: build packages
       #   run: pnpm build
 
-      - name: build website
+      - name: build kickjump.com
         run: 'pnpm build:kickjump.com'
 
       - name: deploy staging website
@@ -66,13 +66,17 @@ jobs:
           message: |
             🚀 Deployed preview website for commit ${{github.sha}}: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
 
+      - name: setup playwright test environment
+        env:
+          TEST_BUILD: 1
+        run: pnpm setup:tests
+        working-directory: apps/kickjump.com
+
       - name: run tests on vercel
         env:
           WEBSITE_URL: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
-        run: |
-          pnpm setup:tests
-          pnpm test
-        working-directory: website
+        run: pnpm test
+        working-directory: apps/kickjump.com
 
       - name: deploy production
         uses: amondnet/vercel-action@v20
