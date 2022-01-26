@@ -14,7 +14,7 @@
     "build:packages": "pnpm monots build",
     "changeset": "changeset",
     "check:pnpm": "node .monots/check-pnpm.js",
-    "checks": "run-s lint typecheck test test:kickjump.com",
+    "checks": "run-s lint typecheck test test:kickjump.com build:packages build:kickjump.com",
     "clean": "git clean -fdX --exclude='.config.json'",
     "fix": "run-s -c fix:repo fix:build fix:es fix:prettier",
     "fix:build": "pnpm monots fix",

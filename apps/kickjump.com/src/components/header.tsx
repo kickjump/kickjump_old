@@ -19,6 +19,11 @@ export const Header = () => {
             <a>About&nbsp;</a>
           </Link>
         </li>
+        <li>
+          <Link href='/articles' aria-label='Articles'>
+            <a>Articles&nbsp;</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

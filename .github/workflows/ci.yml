@@ -214,85 +214,11 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
-  deploy_kickjump_com:
-    name: deploy kickjump.com
-    timeout-minutes: 8
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.1
-
-      - name: checkout code repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: setup caching
-        uses: actions/cache@v2
-        if: ${{ !env.ACT }}
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: install and audit
-        uses: ./.github/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
-
-      - name: build packages
-        run: pnpm build
-
-      - name: build website
-        run: 'pnpm build:kickjump.com'
-
-      - name: deploy staging website
-        id: deploy-vercel-staging
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-
-      - name: add staging comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          append: true
-          message: |
-            🚀 Deployed preview website for commit ${{github.sha}}: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
-
-      - name: run tests on vercel
-        env:
-          WEBSITE_URL: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
-        run: |
-          pnpm setup:tests
-          pnpm test
-        working-directory: website
-
-      - name: deploy production
-        uses: amondnet/vercel-action@v20
-        id: deploy-vercel-production
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-args: '--prod'
-
   # Update package versions with changesets.
   changeset:
     timeout-minutes: 8
     runs-on: ubuntu-latest
-    if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror' }}
+    if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'kickjump/kickjump' }}
     steps:
       - name: cancel previous runs
         uses: styfle/cancel-workflow-action@0.9.1

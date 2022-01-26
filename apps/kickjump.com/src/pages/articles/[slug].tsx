@@ -1,13 +1,18 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
+import { Layout } from '~/components/layout';
 import { Mdx } from '~/components/mdx';
 import type { MdxItem } from '~/utils/mdx';
 
-const MarkdownPage = (props: MdxItem) => {
-  return <Mdx {...props} />;
+interface MdxPageProps {
+  page: MdxItem;
+}
+
+const MdxPage = (props: MdxPageProps) => {
+  return <Layout>{props.page ? <Mdx {...props.page} /> : ''}</Layout>;
 };
 
-export const getStaticProps: GetStaticProps<MdxItem> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<MdxPageProps> = async ({ params }) => {
   const { getArticle } = await import('~/utils/mdx');
   const { string } = await import('superstruct');
   const stringSchema = string();
@@ -17,7 +22,7 @@ export const getStaticProps: GetStaticProps<MdxItem> = async ({ params }) => {
     return { notFound: true };
   }
 
-  return { props: await getArticle(slug) };
+  return { props: { page: await getArticle(slug) } };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -28,4 +33,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export default MarkdownPage;
+export default MdxPage;
