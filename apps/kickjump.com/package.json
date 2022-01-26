@@ -58,6 +58,9 @@
     "playwright": "^1.18.0",
     "playwright-watch": "^1.3.23"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "monots": {
     "tsconfigs": {
       "src": false,

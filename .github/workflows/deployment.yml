@@ -48,7 +48,7 @@ jobs:
       #   run: pnpm build
 
       - name: build kickjump.com
-        run: 'pnpm build:kickjump.com'
+        run: pnpm build:kickjump.com
 
       - name: deploy staging website
         id: deploy-vercel-staging
