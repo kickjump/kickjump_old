@@ -127,7 +127,7 @@ jobs:
         run: |
           pnpm setup:tests
           pnpm test
-        working-directory: websites/kickjump.com
+        working-directory: apps/kickjump.com
 
   # Build the project and run tests on built files.
   build_packages:

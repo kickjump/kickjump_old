@@ -17,7 +17,7 @@ module.exports = {
       rules: { 'import/no-default-export': 'off' },
     },
     {
-      files: ['websites/kickjump.com/**'],
+      files: ['apps/kickjump.com/**'],
       extends: ['next/core-web-vitals', 'monots/react'],
     },
   ],

@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "run-p build:packages typecheck",
-    "build:kickjump.com": "pnpm --dir websites/kickjump.com build",
+    "build:kickjump.com": "pnpm --dir apps/kickjump.com build",
     "build:packages": "pnpm monots build",
     "changeset": "changeset",
     "check:pnpm": "node .monots/check-pnpm.js",
@@ -37,7 +37,7 @@
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
-    "test:kickjump.com": "pnpm --dir websites/kickjump.com test",
+    "test:kickjump.com": "pnpm --dir apps/kickjump.com test",
     "test:watch": "vitest watch",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc -b",
