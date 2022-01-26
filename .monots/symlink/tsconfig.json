@@ -18,9 +18,6 @@
     },
     {
       "path": "packages/kickjump/src"
-    },
-    {
-      "path": "apps/kickjump.com"
     }
   ]
 }
