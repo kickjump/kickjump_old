@@ -1,1 +1,2 @@
-export * from './kickjump-db.js';
+export * from './models';
+export * from './prisma';

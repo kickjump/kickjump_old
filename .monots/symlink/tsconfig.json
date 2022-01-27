@@ -14,6 +14,12 @@
       "path": "packages/kickjump__components/src"
     },
     {
+      "path": "packages/kickjump__db"
+    },
+    {
+      "path": "packages/kickjump__db/e2e"
+    },
+    {
       "path": "packages/kickjump__db/src"
     },
     {

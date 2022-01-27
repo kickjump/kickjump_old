@@ -7,30 +7,54 @@
   "license": "MIT",
   "contributors": [],
   "sideEffects": false,
-  "type": "module",
+  "type": "commonjs",
   "exports": {
     ".": {
-      "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./index.js": {
-      "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/*.d.ts"
   },
-  "main": "",
+  "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
-  "browser": "./dist/index.browser.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "migrations",
+    "schema.prisma"
   ],
+  "scripts": {
+    "connect": "pscale connect star-app initial-setup --port 3309",
+    "fix": "pnpm -w ts .monots/fix-prisma.ts",
+    "generate": "prisma generate",
+    "postinstall": "pnpm generate && pnpm fix",
+    "push": "prisma db push && pnpm fix",
+    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push pnpm fix",
+    "test": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite-db.config.ts",
+    "test:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts"
+  },
   "dependencies": {
+    "@prisma/client": "^3.8.1",
     "@swc/helpers": "^0.3.2"
+  },
+  "devDependencies": {
+    "@types/exit": "^0.1.31",
+    "@types/mysql": "^2.15.20",
+    "@types/signal-exit": "^3.0.1",
+    "chalk": "^5.0.0",
+    "exit": "^0.1.2",
+    "mysql": "^2.18.1",
+    "prisma": "^3.8.1",
+    "signal-exit": "^3.0.6",
+    "tree-kill": "^1.2.2",
+    "wait-port": "^0.2.9"
   },
   "publishConfig": {
     "access": "public"
@@ -39,7 +63,16 @@
     "entrypoints": [
       "index.ts"
     ],
-    "tsconfigs": {},
+    "tsconfigs": {
+      "": {},
+      "e2e": {},
+      "src": {
+        "compilerOptions": {
+          "types": [],
+          "noEmit": true
+        }
+      }
+    },
     "mode": "library",
     "externalModules": []
   }

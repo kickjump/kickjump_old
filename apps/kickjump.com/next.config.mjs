@@ -8,13 +8,19 @@ const require = createRequire(import.meta.url);
 const config = {
   reactStrictMode: true,
 
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     // Nullish coalescing assignment is not supported on node 14 (vercel)
     // const resolve = (config.resolve ??= {});
     // const fallback = (resolve.fallback ??= {});
 
     const resolve = config.resolve ?? (config.resolve = {});
     const fallback = resolve.fallback ?? (resolve.fallback = {});
+
+    if (isServer) {
+      config.externals = config.externals ?? [];
+      // config.externals._http_common = '_http_common';
+      config.externals.push('_http_common');
+    }
 
     fallback.fs = false;
     fallback['react-icons'] = false;

@@ -48,17 +48,17 @@
     "@solana/wallet-adapter-react-ui": "^0.9.4",
     "@solana/wallet-adapter-wallets": "^0.14.2",
     "@solana/web3.js": "^1.32.0",
-    "@strata-foundation/react": "^2.2.0",
-    "@strata-foundation/spl-token-bonding": "^2.2.0",
-    "@strata-foundation/spl-token-collective": "^2.2.0",
-    "@strata-foundation/spl-utils": "^2.2.0",
+    "@strata-foundation/react": "^3.0.0",
+    "@strata-foundation/spl-token-bonding": "^3.0.0",
+    "@strata-foundation/spl-token-collective": "^3.0.0",
+    "@strata-foundation/spl-utils": "^3.0.0",
     "@swc/helpers": "^0.3.2",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.0",
     "react-async-hook": "^4.0.0",
     "react-hook-form": "^7.25.0",
     "superstruct": "^0.15.3",
-    "type-fest": "^2.10.0"
+    "type-fest": "^2.11.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.38",

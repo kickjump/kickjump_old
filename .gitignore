@@ -137,8 +137,11 @@ yarn.lock
 /tsconfig.references.json
 /.markdownlint.json
 /vite.config.ts
+/vite-db.config.ts
 /playwright.config.ts
 /.swc
+/.env.example
+/docker-compose.yml
 .parcel-cache/
 .psc-ide-port
 
