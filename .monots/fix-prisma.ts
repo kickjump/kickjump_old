@@ -3,6 +3,9 @@ import fs from 'node:fs/promises';
 
 const TARGET = baseDir('packages/kickjump__db/src/generated/index.js');
 
+// TODO needed to get @kickjump/db to work with esm modules.
+// const TARGET = baseDir('packages/kickjump__db/node_modules/@prisma/client/index.js');
+
 /**
  * Fix a problem in using prisma in the monorepo.
  */

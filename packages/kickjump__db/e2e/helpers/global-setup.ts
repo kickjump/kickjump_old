@@ -1,20 +1,19 @@
 import exit from 'exit';
-import mysql from 'mysql';
 import { type ChildProcess, type SpawnOptions, exec as ex, spawn } from 'node:child_process';
 import { cwd } from 'node:process';
 import { promisify } from 'node:util';
 import onExit from 'signal-exit';
 import treeKill from 'tree-kill';
 import waitForPort from 'wait-port';
+import { prisma } from '../..';
 
 const exec = promisify(ex);
 
 let destroy: (() => Promise<void>) | undefined;
 
 export async function setup() {
-  destroy = await waitForDatabaseConnection({
-    command: 'docker compose up',
-  });
+  console.log(process.env.DATABASE_URL);
+  destroy = await waitForDatabaseConnection({ command: 'docker compose up' });
 }
 
 export async function teardown() {
@@ -34,23 +33,10 @@ interface Options {
   port?: number;
 
   /**
-   * @default root
-   */
-  user?: string;
-
-  /**
-   * @default kickjump
-   */
-  database?: string;
-
-  /**
-   * @default 'kickjump'
-   */
-  password?: string;
-  /**
    * @default 60_000
    */
   timeout?: number;
+
   /**
    * @default 100
    */
@@ -58,16 +44,7 @@ interface Options {
 }
 
 async function waitForDatabaseConnection(options: Options): Promise<() => Promise<void>> {
-  const {
-    command,
-    host = 'localhost',
-    password = 'kickjump',
-    port = 3307,
-    timeout = 60_000,
-    interval = 100,
-    database = 'kickjump',
-    user = 'root',
-  } = options;
+  const { command, host = 'localhost', port = 3307, timeout = 60_000, interval = 100 } = options;
   const startTime = Date.now();
 
   const childProcess = destroyableSpawn(command, { shell: true, cwd: cwd() });
@@ -75,79 +52,49 @@ async function waitForDatabaseConnection(options: Options): Promise<() => Promis
   console.log(`Waiting for port: ${port} to become available at host: ${host}`);
   await waitForPort({ port, host, interval, timeout });
 
-  console.log(`Waiting for MySQL connection`);
-  const connection = await pollForDatabaseConnection({
-    host,
-    password,
-    port,
-    user,
-    timeout,
-    startTime,
-    interval,
-    database,
-  });
+  const destroy = () => childProcess.destroy();
 
-  return async () => {
-    await Promise.all([childProcess.destroy()]);
-    connection.end();
-  };
+  console.log(`Waiting for prisma MySQL connection`);
+  await pollForDatabaseConnection({ timeout, startTime, interval, destroy });
+
+  return destroy;
 }
 
 export interface DestroyableChildProcess extends ChildProcess {
   destroy: () => Promise<void>;
 }
 
-interface PollForDatabaseConnectionProps extends Required<Omit<Options, 'command'>> {
+interface PollForDatabaseConnectionProps {
   timeout: number;
   startTime: number;
   interval: number;
-  keepAlive?: boolean;
+  destroy: () => Promise<void>;
 }
 
-function pollForDatabaseConnection(options: PollForDatabaseConnectionProps) {
-  const {
-    host,
-    database,
-    password,
-    port,
-    user,
-    timeout,
-    startTime,
-    interval,
-    keepAlive = true,
-  } = options;
-
-  return new Promise<mysql.Connection>((resolve, reject) => {
-    const loop = () => {
+async function pollForDatabaseConnection(options: PollForDatabaseConnectionProps) {
+  const { timeout, startTime, interval, destroy } = options;
+  await new Promise<void>((resolve, reject) => {
+    function loop() {
       process.stdout.write('.');
-      const connection = mysql.createConnection({ host, password, port, user, database });
 
-      connection.connect((err) => {
-        if (err) {
-          if (timeout && Date.now() - startTime > timeout) {
-            console.log('\nTimeout');
-            return reject(err);
+      exec('pnpm push:local')
+        .then(async () => {
+          await prisma.$connect();
+          await prisma.$disconnect();
+          resolve();
+        })
+        .catch(async (error) => {
+          if (!timeout || Date.now() - startTime < timeout) {
+            setTimeout(loop, interval);
+            return;
           }
 
-          //  Run the loop again.
-          return setTimeout(loop, interval);
-        }
-
-        console.log('\nMySQL Connected!');
-
-        if (!keepAlive) {
-          connection.end((err) => {
-            if (err) {
-              return reject(err);
-            }
-
-            resolve(connection);
-          });
-        } else {
-          return resolve(connection);
-        }
-      });
-    };
+          console.error('\nTimeout');
+          await exec('docker compose down');
+          await destroy();
+          reject(error);
+        });
+    }
 
     loop();
   });
@@ -173,7 +120,9 @@ function destroyableSpawn(command: string, options: SpawnOptions): DestroyableCh
   childProcess.on('error', () => cleanExit(1));
 
   const removeExitHandler = onExit((code) => {
-    cleanExit(typeof code === 'number' ? code : 1);
+    exec('docker compose down').then(() => {
+      cleanExit(typeof code === 'number' ? code : 1);
+    });
   });
 
   childProcess.destroy = async (): Promise<void> => {
@@ -181,8 +130,14 @@ function destroyableSpawn(command: string, options: SpawnOptions): DestroyableCh
     childProcess.removeAllListeners('exit');
     childProcess.removeAllListeners('error');
 
-    treeKill(childProcess.pid);
+    if (typeof childProcess.pid === 'number') {
+      treeKill(childProcess.pid);
+    }
   };
 
   return childProcess;
+}
+
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

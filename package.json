@@ -38,6 +38,7 @@
     "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio",
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
+    "test:db": "pnpm --dir packages/kickjump__db test",
     "test:kickjump.com": "pnpm --dir apps/kickjump.com test",
     "test:watch": "vitest watch",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",

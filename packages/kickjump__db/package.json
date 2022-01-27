@@ -36,8 +36,8 @@
     "generate": "prisma generate",
     "postinstall": "pnpm generate && pnpm fix",
     "push": "prisma db push && pnpm fix",
-    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push pnpm fix",
-    "test": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite-db.config.ts",
+    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push --skip-generate",
+    "test": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts",
     "test:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts"
   },
   "dependencies": {
@@ -46,11 +46,9 @@
   },
   "devDependencies": {
     "@types/exit": "^0.1.31",
-    "@types/mysql": "^2.15.20",
     "@types/signal-exit": "^3.0.1",
     "chalk": "^5.0.0",
     "exit": "^0.1.2",
-    "mysql": "^2.18.1",
     "prisma": "^3.8.1",
     "signal-exit": "^3.0.6",
     "tree-kill": "^1.2.2",

@@ -7,6 +7,8 @@ datasource db {
 generator client {
   provider        = "prisma-client-js"
   output          = "./src/generated"
+  // TODO needed to get @kickjump/db to work with esm modules.
+  // output          = "./node_modules/@prisma/client"
   previewFeatures = ["referentialIntegrity"]
 }
 
