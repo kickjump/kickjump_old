@@ -22,7 +22,7 @@
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",
     "preinstall": "pnpm symlink:root && pnpm check:pnpm",
-    "postinstall": "pnpm patch && pnpm monots prepare",
+    "postinstall": "pnpm monots prepare",
     "lint": "run-s lint:\\*",
     "lint:build": "pnpm monots check",
     "lint:es": "eslint --ext=.tsx,.ts,.js .",
