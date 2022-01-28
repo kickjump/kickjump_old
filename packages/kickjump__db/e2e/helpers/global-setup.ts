@@ -6,8 +6,6 @@ import onExit from 'signal-exit';
 import treeKill from 'tree-kill';
 import waitForPort from 'wait-port';
 
-import { prisma } from '../..';
-
 const exec = promisify(ex);
 
 let destroy: (() => Promise<void>) | undefined;
@@ -85,8 +83,6 @@ async function pollForDatabaseConnection(options: PollForDatabaseConnectionProps
 
       exec('pnpm push:local')
         .then(async () => {
-          await prisma.$connect();
-          await prisma.$disconnect();
           resolve();
         })
         .catch(async (error) => {

@@ -10,10 +10,12 @@
   "type": "commonjs",
   "exports": {
     ".": {
+      "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./index.js": {
+      "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
@@ -21,6 +23,7 @@
     "./types/*": "./dist/*.d.ts"
   },
   "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",

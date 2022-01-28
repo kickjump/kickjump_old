@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { prisma, UserModel } from '..';
+import { prisma, UserModel } from '../src';
 
 describe('db', () => {
   it('can load prisma', () => {
