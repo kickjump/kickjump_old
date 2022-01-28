@@ -127,14 +127,14 @@ jobs:
         run: pnpm build:kickjump.com
 
       - name: setup playwright test environment
-        run: pnpm setup:tests
-        working-directory: apps/kickjump.com
+        run: pnpm setup:playwright
+        working-directory: tests
 
       - name: run tests
         env:
           TEST_BUILD: 1
-        run: pnpm test
-        working-directory: apps/kickjump.com
+        run: pnpm test:kickjump.com
+        working-directory: tests
 
   database_e2e:
     timeout-minutes: 8
@@ -170,11 +170,11 @@ jobs:
       - name: setup docker compose
         uses: isbang/compose-action@v1.0.0
         with:
-          compose-file: 'packages/kickjump__db/docker-compose.yml'
+          compose-file: docker-compose.yml
 
       - name: run tests
-        run: pnpm test
-        working-directory: packages/kickjump__db
+        run: pnpm test:db
+        working-directory: tests
 
   # Build the project and run tests on built files.
   build_packages:

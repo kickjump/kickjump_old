@@ -1,4 +1,4 @@
-import type { User } from '../generated';
+import type { User } from '@kickjump/prisma';
 import { prisma } from '../prisma';
 
 /**

@@ -22,7 +22,7 @@
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",
     "preinstall": "pnpm symlink:root && pnpm check:pnpm",
-    "postinstall": "run-s dev",
+    "postinstall": "run-s dev prisma:generate",
     "lint": "run-s lint:\\*",
     "lint:build": "pnpm monots check",
     "lint:es": "eslint --ext=.tsx,.ts,.js .",
@@ -31,6 +31,8 @@
     "monots": "monots",
     "patch": "patch-package --patch-dir .monots/patches",
     "prepare": "husky install .monots/.husky || true",
+    "prisma:generate": "pnpm --dir packages/kickjump__prisma generate",
+    "prisma:push:local": "pnpm --dir packages/kickjump__prisma push:local",
     "prerelease": "pnpm build",
     "release": "changeset publish",
     "reset": "pnpm clean; rm pnpm-lock.yaml; pnpm symlink:root; pnpm i -r;",
@@ -38,8 +40,8 @@
     "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio",
     "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
-    "test:db": "pnpm --dir packages/kickjump__db test",
-    "test:kickjump.com": "pnpm --dir apps/kickjump.com test",
+    "test:db": "pnpm --dir tests test:db",
+    "test:kickjump.com": "pnpm --dir tests test:kickjump.com",
     "test:watch": "vitest watch",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc --build --force",
@@ -96,7 +98,8 @@
   "monots": {
     "packages": [
       "packages/*",
-      "apps/*"
+      "apps/*",
+      "tests"
     ],
     "tsconfigPath": "./.monots/symlink/tsconfig.json",
     "baseTsconfig": "./.monots/tsconfig.base.json",

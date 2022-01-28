@@ -1,6 +1,5 @@
+import { prisma, UserModel } from '@kickjump/db';
 import { describe, expect, it } from 'vitest';
-
-import { prisma, UserModel } from '../src';
 
 describe('db', () => {
   it('can load prisma', () => {

@@ -7,7 +7,7 @@
   "license": "MIT",
   "contributors": [],
   "sideEffects": false,
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.esm.js",
@@ -26,37 +26,11 @@
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "migrations",
-    "schema.prisma"
+    "dist"
   ],
-  "scripts": {
-    "connect": "pscale connect kickjump --port 3309",
-    "fix": "pnpm -w ts .monots/fix-prisma.ts",
-    "generate": "prisma generate",
-    "postinstall": "pnpm generate && pnpm fix",
-    "postbuild": "cp -r src/generated dist/generated",
-    "push": "prisma db push && pnpm fix",
-    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push --skip-generate",
-    "test": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts",
-    "test:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts"
-  },
   "dependencies": {
+    "@kickjump/prisma": "^0.0.0",
     "@swc/helpers": "^0.3.2"
-  },
-  "devDependencies": {
-    "@prisma/client": "^3.8.1",
-    "@types/exit": "^0.1.31",
-    "@types/signal-exit": "^3.0.1",
-    "chalk": "^5.0.0",
-    "exit": "^0.1.2",
-    "prisma": "^3.8.1",
-    "signal-exit": "^3.0.6",
-    "tree-kill": "^1.2.2",
-    "wait-port": "^0.2.9"
-  },
-  "peerDependencies": {
-    "@prisma/client": "^3.8.1"
   },
   "publishConfig": {
     "access": "public"
@@ -65,24 +39,7 @@
     "entrypoints": [
       "index.ts"
     ],
-    "tsconfigs": {
-      "": {
-        "files": [
-          "vite.config.ts"
-        ]
-      },
-      "e2e": {
-        "compilerOptions": {
-          "module": "CommonJS"
-        }
-      },
-      "src": {
-        "compilerOptions": {
-          "types": [],
-          "noEmit": true
-        }
-      }
-    },
+    "tsconfigs": {},
     "mode": "library",
     "externalModules": []
   }

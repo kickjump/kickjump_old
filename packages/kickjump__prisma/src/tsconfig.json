@@ -8,11 +8,8 @@
   "extends": "../../../.monots/tsconfig.base.json",
   "compilerOptions": {
     "types": [],
-    "noEmit": false,
-    "declaration": true,
-    "composite": true,
-    "emitDeclarationOnly": true,
-    "outDir": "../dist"
+    "noEmit": true,
+    "module": "CommonJS"
   },
   "references": []
 }

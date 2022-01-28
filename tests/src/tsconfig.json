@@ -1,14 +1,18 @@
 {
   "__AUTO_GENERATED__": [
     "To update the configuration edit the following field in the 'package.json' for this package.",
-    "`monots.tsconfigs.e2e`",
+    "`monots.tsconfigs.src`",
     "",
     "Then run the command to automatically update everything: `monots fix`"
   ],
-  "extends": "../../../.monots/tsconfig.base.json",
+  "extends": "../../.monots/tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true,
-    "declaration": false,
-    "module": "CommonJS"
-  }
+    "types": [],
+    "noEmit": true
+  },
+  "references": [
+    {
+      "path": "../../packages/kickjump__db/src"
+    }
+  ]
 }

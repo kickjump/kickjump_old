@@ -26,10 +26,10 @@ const config: PlaywrightTestConfig = {
   use: { baseURL: process.env.WEBSITE_URL ?? 'http://localhost:3030' },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  globalSetup: require.resolve('./e2e/helpers/global-setup'),
-  globalTeardown: require.resolve('./e2e/helpers/global-teardown'),
+  globalSetup: require.resolve('./helpers/global-setup'),
+  globalTeardown: require.resolve('./helpers/global-teardown'),
   reporter: process.env.CI ? 'dot' : 'list',
-  testMatch: ['e2e/*.test.ts'],
+  testMatch: ['*.test.ts'],
   timeout: 60_000,
   projects,
 };

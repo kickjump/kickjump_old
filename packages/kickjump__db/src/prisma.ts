@@ -1,6 +1,5 @@
-// Required with the current build tool.
-import Module = require('./generated');
+import { PrismaClient } from '@kickjump/prisma';
 
-export * from './generated';
+export * from '@kickjump/prisma';
 
-export const prisma = new Module.PrismaClient();
+export const prisma = new PrismaClient();

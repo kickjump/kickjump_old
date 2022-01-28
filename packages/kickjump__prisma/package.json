@@ -1,0 +1,36 @@
+{
+  "name": "@kickjump/prisma",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The internal KickJump prisma client.",
+  "keywords": [],
+  "license": "MIT",
+  "contributors": [],
+  "sideEffects": false,
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "migrations",
+    "schema.prisma"
+  ],
+  "scripts": {
+    "connect": "pscale connect kickjump --port 3309",
+    "fix": "pnpm -w ts .monots/fix-prisma.ts",
+    "generate": "prisma generate && pnpm fix",
+    "postbuild": "pnpm generate",
+    "push": "prisma db push && pnpm fix",
+    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push --skip-generate && pnpm fix"
+  },
+  "devDependencies": {
+    "@prisma/client": "^3.8.1",
+    "prisma": "^3.8.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "mode": "app"
+  }
+}

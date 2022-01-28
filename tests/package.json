@@ -1,0 +1,37 @@
+{
+  "name": "@kickjump/tests",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "setup:playwright": "playwright install-deps",
+    "test:db": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db/vite.config.ts",
+    "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db/vite.config.ts",
+    "test:kickjump.com": "playwright test --config=kickjump.com/playwright.config.ts",
+    "test:kickjump.com:watch": "E2E_QUICK=1 playwright-watch test --config=kickjump.com/playwright.config.ts"
+  },
+  "dependencies": {
+    "@kickjump/db": "^0.0.0",
+    "@playwright/test": "^1.18.0",
+    "@types/exit": "^0.1.31",
+    "@types/signal-exit": "^3.0.1",
+    "chalk": "^5.0.0",
+    "exit": "^0.1.2",
+    "jest-process-manager": "^0.3.1",
+    "playwright": "^1.18.0",
+    "playwright-watch": "^1.3.23",
+    "signal-exit": "^3.0.6",
+    "tree-kill": "^1.2.2",
+    "wait-port": "^0.2.9"
+  },
+  "monots": {
+    "tsconfigs": {
+      "": {}
+    }
+  }
+}
