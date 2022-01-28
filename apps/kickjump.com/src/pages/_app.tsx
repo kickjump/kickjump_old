@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import superjson from 'superjson';
+import { SessionProvider } from 'next-auth/react';
 
 import { type AppRouter } from '~/server/app-router';
 import { getUrl } from '~/utils/core';
@@ -23,7 +24,10 @@ const App = (props: AppProps) => {
           <meta name='viewport' content='width=device-width,initial-scale=1' />
         </Head>
         <DefaultSeo {...DEFAULT_SEO} />
-        <Component {...pageProps} />
+
+        <SessionProvider session={pageProps.session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </ThemeProvider>
     </Provider>
   );
