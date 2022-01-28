@@ -1,13 +1,24 @@
-import { signIn } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export const SignInWithGithub = () => {
+  const session = useSession();
   return (
     <button
       onClick={() => {
-        signIn('github');
+        if (session.status === 'authenticated') {
+          signOut();
+        } else {
+          signIn('github');
+        }
       }}
     >
-      Sign in with GitHub
+      {session.status === 'loading' ? (
+        'Loading...'
+      ) : session.status === 'unauthenticated' ? (
+        <>Sign in with GitHub</>
+      ) : (
+        'Sign out'
+      )}
     </button>
   );
 };

@@ -20,8 +20,11 @@
     "fix": "pnpm -w scripts fix:prisma",
     "generate": "prisma generate && pnpm fix",
     "postbuild": "pnpm generate",
+    "prisma": "prisma",
     "push": "prisma db push && pnpm fix",
-    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push && pnpm fix"
+    "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push && pnpm fix",
+    "studio": "prisma studio",
+    "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio"
   },
   "devDependencies": {
     "@prisma/client": "^3.8.1",
