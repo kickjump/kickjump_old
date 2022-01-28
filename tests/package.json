@@ -10,10 +10,10 @@
   ],
   "scripts": {
     "setup:playwright": "playwright install-deps",
-    "test:db": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db/vite.config.ts",
-    "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db/vite.config.ts",
-    "test:kickjump.com": "playwright test --config=kickjump.com/playwright.config.ts",
-    "test:kickjump.com:watch": "E2E_QUICK=1 playwright-watch test --config=kickjump.com/playwright.config.ts"
+    "test:db": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db.config.ts",
+    "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db.config.ts",
+    "test:kickjump.com": "playwright test",
+    "test:kickjump.com:watch": "E2E_QUICK=1 playwright-watch test"
   },
   "dependencies": {
     "@kickjump/db": "^0.0.0",
@@ -32,6 +32,7 @@
   "monots": {
     "tsconfigs": {
       "": {}
-    }
+    },
+    "mode": "app"
   }
 }

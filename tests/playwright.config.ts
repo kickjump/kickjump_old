@@ -26,10 +26,10 @@ const config: PlaywrightTestConfig = {
   use: { baseURL: process.env.WEBSITE_URL ?? 'http://localhost:3030' },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  globalSetup: require.resolve('./helpers/global-setup'),
-  globalTeardown: require.resolve('./helpers/global-teardown'),
+  globalSetup: require.resolve('./setup/kickjump.com-setup.js'),
+  globalTeardown: require.resolve('./setup/kickjump.com-teardown.js'),
   reporter: process.env.CI ? 'dot' : 'list',
-  testMatch: ['*.test.ts'],
+  testMatch: ['kickjump.com/*.test.ts'],
   timeout: 60_000,
   projects,
 };

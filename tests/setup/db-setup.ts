@@ -77,25 +77,32 @@ interface PollForDatabaseConnectionProps {
 
 async function pollForDatabaseConnection(options: PollForDatabaseConnectionProps) {
   const { timeout, startTime, interval, destroy } = options;
+
   await new Promise<void>((resolve, reject) => {
-    function loop() {
+    async function loop() {
       process.stdout.write('.');
 
-      exec('pnpm push:local')
-        .then(async () => {
-          resolve();
-        })
-        .catch(async (error) => {
-          if (!timeout || Date.now() - startTime < timeout) {
-            setTimeout(loop, interval);
-            return;
-          }
+      try {
+        const { stdout, stderr } = await exec('pnpm -w prisma:push:local', { cwd: process.cwd() });
 
-          console.error('\nTimeout');
-          await exec('docker compose down');
-          await destroy();
-          reject(error);
-        });
+        if (stdout) {
+          process.stdout.write(stdout);
+        } else {
+          process.stdout.write(stderr);
+        }
+
+        resolve();
+      } catch (error) {
+        if (!timeout || Date.now() - startTime < timeout) {
+          setTimeout(loop, interval);
+          return;
+        }
+
+        console.error('\nTimeout');
+        await exec('docker compose down');
+        await destroy();
+        reject(error);
+      }
     }
 
     loop();
