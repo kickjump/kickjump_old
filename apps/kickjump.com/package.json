@@ -2,9 +2,6 @@
   "name": "kickjump.com",
   "private": true,
   "type": "commonjs",
-  "exports": {
-    "./package.json": "./package.json"
-  },
   "browser": {
     "fs": false
   },
@@ -69,19 +66,20 @@
       "src": false,
       "": {
         "compilerOptions": {
+          "noEmit": true,
+          "declaration": false,
           "target": "ESNext",
           "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
           ],
+          "module": "CommonJS",
           "allowJs": true,
           "skipLibCheck": true,
           "strict": true,
           "forceConsistentCasingInFileNames": true,
-          "noEmit": true,
           "esModuleInterop": true,
-          "module": "esnext",
           "moduleResolution": "node",
           "resolveJsonModule": true,
           "isolatedModules": true,
@@ -119,7 +117,7 @@
     "entrypoints": [
       "index.{ts,tsx}"
     ],
-    "mode": "library",
+    "mode": "app",
     "externalModules": []
   }
 }

@@ -10,12 +10,10 @@
   "type": "commonjs",
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./index.js": {
-      "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
@@ -23,7 +21,6 @@
     "./types/*": "./dist/*.d.ts"
   },
   "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -35,6 +32,7 @@
     "fix": "pnpm -w ts .monots/fix-prisma.ts",
     "generate": "prisma generate",
     "postinstall": "pnpm generate && pnpm fix",
+    "postbuild": "cp -r src/generated dist/generated",
     "push": "prisma db push && pnpm fix",
     "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push --skip-generate",
     "test": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts",
@@ -70,7 +68,11 @@
           "vite.config.ts"
         ]
       },
-      "e2e": {},
+      "e2e": {
+        "compilerOptions": {
+          "module": "CommonJS"
+        }
+      },
       "src": {
         "compilerOptions": {
           "types": [],

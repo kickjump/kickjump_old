@@ -11,6 +11,9 @@
   },
   "references": [
     {
+      "path": "apps/kickjump.com"
+    },
+    {
       "path": "packages/kickjump__components/src"
     },
     {
