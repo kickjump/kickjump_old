@@ -11,6 +11,12 @@
   },
   "references": [
     {
+      "path": ".monots/scripts"
+    },
+    {
+      "path": ".monots/scripts/src"
+    },
+    {
       "path": "apps/kickjump.com"
     },
     {
