@@ -31,7 +31,7 @@
     "schema.prisma"
   ],
   "scripts": {
-    "connect": "pscale connect star-app initial-setup --port 3309",
+    "connect": "pscale connect kickjump --port 3309",
     "fix": "pnpm -w ts .monots/fix-prisma.ts",
     "generate": "prisma generate",
     "postinstall": "pnpm generate && pnpm fix",
