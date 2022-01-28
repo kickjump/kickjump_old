@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 const config = {
+  typescript: { ignoreBuildErrors: true },
   reactStrictMode: true,
 
   webpack: (config, { isServer }) => {

@@ -41,10 +41,10 @@
     "test:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./vite.config.ts"
   },
   "dependencies": {
-    "@prisma/client": "^3.8.1",
     "@swc/helpers": "^0.3.2"
   },
   "devDependencies": {
+    "@prisma/client": "^3.8.1",
     "@types/exit": "^0.1.31",
     "@types/signal-exit": "^3.0.1",
     "chalk": "^5.0.0",
@@ -54,6 +54,9 @@
     "tree-kill": "^1.2.2",
     "wait-port": "^0.2.9"
   },
+  "peerDependencies": {
+    "@prisma/client": "^3.8.1"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -62,7 +65,11 @@
       "index.ts"
     ],
     "tsconfigs": {
-      "": {},
+      "": {
+        "files": [
+          "vite.config.ts"
+        ]
+      },
       "e2e": {},
       "src": {
         "compilerOptions": {

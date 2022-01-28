@@ -5,6 +5,7 @@ import { promisify } from 'node:util';
 import onExit from 'signal-exit';
 import treeKill from 'tree-kill';
 import waitForPort from 'wait-port';
+
 import { prisma } from '../..';
 
 const exec = promisify(ex);
@@ -12,11 +13,16 @@ const exec = promisify(ex);
 let destroy: (() => Promise<void>) | undefined;
 
 export async function setup() {
-  console.log(process.env.DATABASE_URL);
-  destroy = await waitForDatabaseConnection({ command: 'docker compose up' });
+  destroy = await waitForDatabaseConnection({
+    command: process.env.CI ? 'echo "skipping docker command"' : 'docker compose up',
+  });
 }
 
 export async function teardown() {
+  if (process.env.CI) {
+    return destroy?.();
+  }
+
   await Promise.all([exec('docker compose down'), destroy?.()]);
 }
 
@@ -136,8 +142,4 @@ function destroyableSpawn(command: string, options: SpawnOptions): DestroyableCh
   };
 
   return childProcess;
-}
-
-async function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

@@ -28,6 +28,7 @@
     "@kickjump/tokens": "^0.0.1",
     "@monots/next-plugin": "^0.3.0",
     "@next-auth/prisma-adapter": "^1.0.1",
+    "@prisma/client": "^3.8.1",
     "@s-libs/micro-dash": "^13.1.0",
     "@trpc/client": "^9.17.1",
     "@trpc/next": "^9.17.1",
