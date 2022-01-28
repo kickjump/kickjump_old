@@ -9,9 +9,7 @@
 
 import { loadJsonFile } from 'load-json-file';
 import { writeJsonFile } from 'write-json-file';
-import path from 'node:path';
 import chalk from 'chalk';
-import url from 'node:url';
 import { baseDir } from './helpers';
 
 async function main() {

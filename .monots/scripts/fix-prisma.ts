@@ -1,15 +1,14 @@
 import { baseDir } from './helpers';
+import chalk from 'chalk-template';
 import fs from 'node:fs/promises';
 
-const TARGET = baseDir('packages/kickjump__prisma/dist/index.js');
-
-// TODO needed to get @kickjump/prisma to work with esm modules.
-// const TARGET = baseDir('packages/kickjump__prisma/node_modules/@prisma/client/index.js');
+const TARGET = baseDir('packages', 'kickjump__prisma', 'dist', 'index.js');
 
 /**
  * Fix a problem in using prisma in the monorepo.
  */
 async function main() {
+  console.log(chalk`Fixing {bold prisma} in {bold ${TARGET}}`);
   const source = await fs.readFile(TARGET, { encoding: 'utf-8' });
   const updated = source.replace(
     /process\.cwd\(\)/g,
@@ -17,7 +16,7 @@ async function main() {
   );
 
   await fs.writeFile(TARGET, updated);
-  console.log('Successfully fixed prisma cwd().');
+  console.log(chalk`{green Successfully fixed prisma cwd(). }`);
 }
 
 main();

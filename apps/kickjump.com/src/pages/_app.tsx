@@ -4,10 +4,10 @@ import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import superjson from 'superjson';
-import { SessionProvider } from 'next-auth/react';
 
 import { type AppRouter } from '~/server/app-router';
 import { getUrl } from '~/utils/core';

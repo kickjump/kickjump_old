@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "connect": "pscale connect kickjump --port 3309",
-    "fix": "pnpm -w ts .monots/fix-prisma.ts",
+    "fix": "pnpm -w scripts fix:prisma",
     "generate": "prisma generate && pnpm fix",
     "postbuild": "pnpm generate",
     "push": "prisma db push && pnpm fix",

@@ -1,0 +1,13 @@
+[programs.localnet]
+kickjump = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "/Users/ifiokjr/.config/solana/id.json"
+
+[scripts]
+test = "pnpm --dir tests test:anchor"
+watch = "pnpm --dir tests test:anchor:watch"

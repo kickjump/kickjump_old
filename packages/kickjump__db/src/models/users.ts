@@ -1,4 +1,5 @@
 import type { User } from '@kickjump/prisma';
+
 import { prisma } from '../prisma';
 
 /**

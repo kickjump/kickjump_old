@@ -10,7 +10,6 @@
     "build:kickjump.com": "pnpm --dir apps/kickjump.com build",
     "build:packages": "pnpm monots build && pnpm run --recursive --filter ./packages postbuild",
     "changeset": "changeset",
-    "check:pnpm": "node .monots/check-pnpm.js",
     "checks": "run-s lint typecheck test test:kickjump.com test:db build:kickjump.com build:packages",
     "clean": "git clean -xfd -e '*.env'",
     "compose:down": "docker compose down",
@@ -21,7 +20,7 @@
     "fix:es": "pnpm lint:es -- --fix",
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",
-    "preinstall": "pnpm symlink:root && pnpm check:pnpm",
+    "preinstall": "pnpm scripts symlink:root && pnpm scripts check:pnpm",
     "postinstall": "run-s dev prisma:generate",
     "lint": "run-s lint:\\*",
     "lint:build": "pnpm monots check",
@@ -37,8 +36,8 @@
     "release": "changeset publish",
     "reset": "pnpm clean; rm pnpm-lock.yaml; pnpm symlink:root; pnpm i -r;",
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
+    "scripts": "pnpm --dir .monots/scripts run",
     "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio",
-    "symlink:root": "node .monots/symlink-root.js",
     "test": "vitest run",
     "test:db": "pnpm --dir tests test:db",
     "test:kickjump.com": "pnpm --dir tests test:kickjump.com",
@@ -50,9 +49,9 @@
     "vercel": "vercel",
     "version:changeset": "changeset version",
     "version:ci": "run-s version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
-    "version:date": "node .monots/changelog-dates.js",
+    "version:date": "pnpm scripts changelog:dates",
     "version:lockfile": "pnpm install --lockfile-only",
-    "version:pr": "pnpm ts .monots/delete-changset-changelog-property.ts"
+    "version:pr": "pnpm scripts delete:changeset:property"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.4.2",

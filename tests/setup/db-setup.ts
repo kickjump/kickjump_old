@@ -95,13 +95,12 @@ async function pollForDatabaseConnection(options: PollForDatabaseConnectionProps
       } catch (error) {
         if (!timeout || Date.now() - startTime < timeout) {
           setTimeout(loop, interval);
-          return;
+        } else {
+          console.error('\nTimeout');
+          await exec('docker compose down');
+          await destroy();
+          reject(error);
         }
-
-        console.error('\nTimeout');
-        await exec('docker compose down');
-        await destroy();
-        reject(error);
       }
     }
 

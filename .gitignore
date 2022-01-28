@@ -148,3 +148,8 @@ yarn.lock
 .pnpm-store/
 
 .vercel
+
+.anchor
+target
+**/*.rs.bk
+

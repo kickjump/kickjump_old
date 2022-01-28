@@ -26,7 +26,7 @@ const targets = readdirSync(baseDir('.monots', 'symlink'))
  * @param {string[]} paths
  */
 function baseDir(...paths) {
-  return resolve(__dirname, '..', ...paths);
+  return resolve(__dirname, '../..', ...paths);
 }
 
 /**

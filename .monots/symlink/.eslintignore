@@ -27,3 +27,6 @@ website/api/_build
 website/public/build
 
 **/src/generated
+
+.anchor
+target

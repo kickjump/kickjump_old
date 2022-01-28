@@ -2,7 +2,7 @@
   "name": "@kickjump/db",
   "version": "0.0.0",
   "private": true,
-  "description": "Internal database client.",
+  "description": "Internal database client with shared methods",
   "keywords": [],
   "license": "MIT",
   "contributors": [],

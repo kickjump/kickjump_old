@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import { SignInWithGithub } from '~/components/sign-in-with-github';
 
 import { Header } from '~/components/header';
+import { SignInWithGithub } from '~/components/sign-in-with-github';
 
 const Home: NextPage = () => {
   return (
