@@ -5,7 +5,7 @@ import superjson from 'superjson';
 
 import { createRouter } from '~/server/create-router';
 
-import { noopRouter } from './routers';
+import { adhocRouter, noopRouter } from './routers';
 
 /**
  * Create your application's root router
@@ -23,7 +23,7 @@ export const appRouter = createRouter()
    * Optionally do custom error (type safe!) formatting
    * @link https://trpc.io/docs/error-formatting
    */
-  // .formatError(({ shape, error }) => { })
-  .merge('noop.', noopRouter);
+  .merge('noop.', noopRouter)
+  .merge('adhoc.', adhocRouter);
 
 export type AppRouter = typeof appRouter;

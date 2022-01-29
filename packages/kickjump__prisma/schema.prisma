@@ -4,21 +4,35 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-generator client {
+generator js {
   provider        = "prisma-client-js"
   output          = "./dist"
   previewFeatures = ["referentialIntegrity"]
 }
 
 model Account {
+  /// The unique identifier.
   id                       String   @id @default(cuid())
+
+  /// The userId on the authentication service.
   userId                   String   @map("user_id")
+
+  /// The type of account.
   type                     String
+
+  /// The name of the provider for this account. In this case GitHub is the only option.
   provider                 String
   providerAccountId        String   @map("provider_account_id")
   refresh_token            String?  @db.Text
+
+  /// This is a GitHub login specific field which allows for next-auth to
+  //automatically refresh the token.
   refresh_token_expires_in Int?
+
+  /// The access token for this account.
   access_token             String?  @db.Text
+
+  /// The timestamp of when the token expires.
   expires_at               Int?
   token_type               String?
   scope                    String?
@@ -26,8 +40,12 @@ model Account {
   session_state            String?
   oauth_token_secret       String?
   oauth_token              String?
-  createdAt                DateTime @default(now()) @map("created_at")
-  updatedAt                DateTime @updatedAt @map("updated_at")
+
+  /// When the database record was first created.
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  /// When the database record was last updated.
+  updatedAt     DateTime  @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -36,6 +54,7 @@ model Account {
 }
 
 model Session {
+  /// The unique identifier.
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
@@ -46,14 +65,25 @@ model Session {
 }
 
 model User {
+  /// The unique identifier.
   id            String    @id @default(cuid())
+
+  /// The name of the user which is retrieved from their GitHub profile when signing up.
   name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  /// A user can attach multiple wallets to their profile. Once attached a
+  /// wallet can be used to sign in.
+  wallets       UserWallet[]
+
+  /// When the database record was first created.
   createdAt     DateTime  @default(now()) @map("created_at")
+
+  /// When the database record was last updated.
   updatedAt     DateTime  @updatedAt @map("updated_at")
 
   @@map("users")
@@ -66,4 +96,20 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+/// Each wallet can be attached to a maximum of one user.
+model UserWallet {
+  /// The wallet public key. If a user wants to transfer the wallet to another
+  /// user they must first delete it from their current user account.
+  publicKey     String    @unique @map("public_key")
+
+  /// The userId field for the foreign key.
+  userId       String   @map("user_id")
+
+  /// When the database record was first created.
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  /// The owner of this wallet.
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

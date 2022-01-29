@@ -62,4 +62,22 @@ export function removeUndefined<Shape extends object>(data: Shape) {
   return transformed;
 }
 
+const encoder = new TextEncoder();
+
+/**
+ * Encode a string for passing through to an anchor program.
+ */
+export function stringToUint8Array(text: string): Uint8Array {
+  return encoder.encode(text);
+}
+
+const decoder = new TextDecoder();
+
+/**
+ * Decode a Uint8Array to a string.
+ */
+export function uint8ArrayToString(input: Uint8Array) {
+  return decoder.decode(input);
+}
+
 export * as log from 'next/dist/build/output/log';

@@ -25,9 +25,6 @@ function useCreateTokenPage() {
       }
 
       const { bonding } = sdks;
-
-      console.log('creating collective with data', data);
-
       const curve = await createExponentialCurve({ bonding });
 
       const { collective, tokenBonding } = await createCollective({

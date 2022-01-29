@@ -1,14 +1,1 @@
-import { prisma } from '@kickjump/db';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import NextAuth from 'next-auth';
-import GitHubProvider from 'next-auth/providers/github';
-
-export default NextAuth({
-  providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
-  ],
-  adapter: PrismaAdapter(prisma),
-});
+export { authHandler as default } from '~/server/next-auth';

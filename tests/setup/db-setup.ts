@@ -37,7 +37,7 @@ interface Options {
   port?: number;
 
   /**
-   * @default 60_000
+   * @default 120_000
    */
   timeout?: number;
 
@@ -48,7 +48,7 @@ interface Options {
 }
 
 async function waitForDatabaseConnection(options: Options): Promise<() => Promise<void>> {
-  const { command, host = 'localhost', port = 3307, timeout = 60_000, interval = 100 } = options;
+  const { command, host = 'localhost', port = 3307, timeout = 120_000, interval = 100 } = options;
   const startTime = Date.now();
 
   const childProcess = destroyableSpawn(command, { shell: true, cwd: cwd() });

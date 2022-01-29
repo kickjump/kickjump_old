@@ -154,3 +154,5 @@ export function useAnchorProvider(): {
 } {
   return useContext(AnchorContext);
 }
+
+export { useWallet } from '@solana/wallet-adapter-react';
