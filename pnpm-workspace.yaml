@@ -1,4 +1,6 @@
 packages:
+  - '.monots/scripts'
   - 'apps/*'
   - 'packages/*'
   - 'tests'
+  - 'tests/kickjump.com'

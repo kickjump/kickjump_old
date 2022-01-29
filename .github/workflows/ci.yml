@@ -128,13 +128,13 @@ jobs:
 
       - name: setup playwright test environment
         run: pnpm setup:playwright
-        working-directory: tests
+        working-directory: tests/kickjump.com
 
       - name: run tests
         env:
           TEST_BUILD: 1
-        run: pnpm test:kickjump.com
-        working-directory: tests
+        run: pnpm test
+        working-directory: tests/kickjump.com
 
   database_e2e:
     timeout-minutes: 8

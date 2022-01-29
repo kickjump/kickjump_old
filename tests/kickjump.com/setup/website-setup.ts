@@ -7,11 +7,10 @@ async function globalSetup() {
   }
 
   await setup({
-    command:
-      process.env.TEST_BUILD === '1' ? 'pnpm start -- --port=3030' : 'pnpm dev -- --port=3030',
+    command: process.env.TEST_BUILD === '1' ? 'pnpm start' : 'pnpm dev',
     launchTimeout: 60_000,
     port: 3030,
-    usedPortAction: 'ignore',
+    usedPortAction: 'kill',
     debug: !!process.env.DEBUG,
   });
 }

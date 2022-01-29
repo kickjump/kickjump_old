@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/prefer-module */
 import { type PlaywrightTestConfig, devices } from '@playwright/test';
-import { createRequire } from 'node:module';
 
 process.env.TEST = '1';
 
@@ -23,15 +22,14 @@ const projects: PlaywrightTestConfig['projects'] = !process.env.E2E_QUICK
     ]
   : undefined;
 
-const require = createRequire(import.meta.url);
 const config: PlaywrightTestConfig = {
   use: { baseURL: process.env.WEBSITE_URL ?? 'http://localhost:3030' },
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  globalSetup: require.resolve('./setup/kickjump.com-setup.js'),
-  globalTeardown: require.resolve('./setup/kickjump.com-teardown.js'),
+  globalSetup: require.resolve('./setup/website-setup.ts'),
+  globalTeardown: require.resolve('./setup/website-teardown.ts'),
   reporter: process.env.CI ? 'dot' : 'list',
-  testMatch: ['kickjump.com/*.test.ts'],
+  testMatch: ['*.test.ts'],
   timeout: 60_000,
   projects,
 };

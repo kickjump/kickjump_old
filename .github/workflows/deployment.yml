@@ -65,14 +65,14 @@ jobs:
       - name: setup playwright test environment
         env:
           TEST_BUILD: 1
-        run: pnpm setup:tests
-        working-directory: apps/kickjump.com
+        run: pnpm setup:playwright
+        working-directory: tests/kickjump.com
 
       - name: run tests on vercel
         env:
           WEBSITE_URL: ${{ steps.deploy-vercel-staging.outputs.preview-url }}
         run: pnpm test
-        working-directory: apps/kickjump.com
+        working-directory: tests/kickjump.com
 
       - name: deploy production
         uses: amondnet/vercel-action@v20

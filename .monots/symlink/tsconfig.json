@@ -38,6 +38,9 @@
       "path": "tests"
     },
     {
+      "path": "tests/kickjump.com/src"
+    },
+    {
       "path": "tests/src"
     }
   ]

@@ -7,6 +7,7 @@ const config = defineConfig({
   test: {
     include: ['**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     setupFiles: ['./tests/setup/react-setup.ts'],
+    reporters: process.env.CI ? 'dot' : 'default',
   },
 });
 

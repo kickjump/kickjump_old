@@ -9,13 +9,10 @@
     "dist"
   ],
   "scripts": {
-    "setup:playwright": "playwright install-deps",
     "test:anchor": "vitest run --config ./anchor.config.ts",
     "test:anchor:watch": "vitest --config ./anchor.config.ts",
     "test:db": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest run --config ./db.config.ts",
-    "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest --config ./db.config.ts",
-    "test:kickjump.com": "playwright test",
-    "test:kickjump.com:watch": "E2E_QUICK=1 playwright-watch test"
+    "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest --config ./db.config.ts"
   },
   "dependencies": {
     "@kickjump/db": "^0.0.0",

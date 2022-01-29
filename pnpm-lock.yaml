@@ -26,7 +26,6 @@ importers:
       '@types/node': ^17.0.13
       '@types/testing-library__jest-dom': ^5.14.2
       '@vitejs/plugin-react': ^1.1.4
-      chalk: ^5.0.0
       eslint: ^8.7.0
       eslint-config-monots: ^0.6.0
       eslint-config-next: 12.0.9
@@ -35,7 +34,6 @@ importers:
       happy-dom: ^2.28.0
       husky: ^7.0.4
       lint-staged: ^12.3.2
-      load-json-file: ^7.0.1
       npm-run-all: ^4.1.5
       prettier: ^2.5.1
       prettier-config-monots: ^0.1.2
@@ -46,7 +44,6 @@ importers:
       vercel: ^23.1.2
       vite: ^2.7.13
       vitest: ^0.2.5
-      write-json-file: ^5.0.0
     dependencies:
       '@changesets/changelog-github': 0.4.2
       '@changesets/cli': 2.20.0
@@ -62,7 +59,6 @@ importers:
       '@types/node': 17.0.13
       '@types/testing-library__jest-dom': 5.14.2
       '@vitejs/plugin-react': 1.1.4
-      chalk: 5.0.0
       eslint: 8.7.0
       eslint-config-monots: 0.6.0_eslint@8.7.0+typescript@4.5.5
       eslint-config-next: 12.0.9_eslint@8.7.0+typescript@4.5.5
@@ -71,7 +67,6 @@ importers:
       happy-dom: 2.30.1
       husky: 7.0.4
       lint-staged: 12.3.2
-      load-json-file: 7.0.1
       npm-run-all: 4.1.5
       prettier: 2.5.1
       prettier-config-monots: 0.1.2_prettier@2.5.1
@@ -82,6 +77,19 @@ importers:
       vercel: 23.1.2
       vite: 2.7.13
       vitest: 0.2.5_happy-dom@2.30.1
+
+  .monots/scripts:
+    specifiers:
+      '@manypkg/get-packages': ^1.1.3
+      chalk: ^5.0.0
+      chalk-template: ^0.3.1
+      load-json-file: ^7.0.1
+      write-json-file: ^5.0.0
+    dependencies:
+      '@manypkg/get-packages': 1.1.3
+      chalk: 5.0.0
+      chalk-template: 0.3.1
+      load-json-file: 7.0.1
       write-json-file: 5.0.0
 
   apps/kickjump.com:
@@ -99,10 +107,14 @@ importers:
       '@trpc/react': ^9.17.1
       '@trpc/server': ^9.17.1
       '@types/bn.js': ^5.1.0
+      '@types/bs58': ^4.0.1
+      '@types/cookie': ^0.4.1
       '@types/node': ^17.0.13
       '@types/react': ^17.0.38
       '@types/react-dom': ^17.0.11
       bn.js: ^5.2.0
+      bs58: ^4.0.1
+      cookie: ^0.4.1
       gray-matter: ^4.0.3
       mdx-bundler: ^8.0.1
       next: ^12.0.9
@@ -117,6 +129,7 @@ importers:
       superjson: ^1.8.0
       superstruct: ^0.15.3
       ts-extras: ^0.8.0
+      tweetnacl: ^1.0.3
       type-fest: ^2.11.0
     dependencies:
       '@kickjump/components': link:../../packages/kickjump__components
@@ -131,7 +144,10 @@ importers:
       '@trpc/react': 9.17.1_fd16a923a93c01c9fe2274f8ee70c45d
       '@trpc/server': 9.17.1
       '@types/bn.js': 5.1.0
+      '@types/bs58': 4.0.1
       bn.js: 5.2.0
+      bs58: 4.0.1
+      cookie: 0.4.1
       gray-matter: 4.0.3
       mdx-bundler: 8.0.1
       next: 12.0.9_react-dom@17.0.2+react@17.0.2
@@ -146,9 +162,11 @@ importers:
       superjson: 1.8.0
       superstruct: 0.15.3
       ts-extras: 0.8.0
+      tweetnacl: 1.0.3
       type-fest: 2.11.0
     devDependencies:
       '@next/bundle-analyzer': 12.0.9
+      '@types/cookie': 0.4.1
       '@types/node': 17.0.13
       '@types/react': 17.0.38
       '@types/react-dom': 17.0.11
@@ -269,32 +287,36 @@ importers:
   tests:
     specifiers:
       '@kickjump/db': ^0.0.0
-      '@playwright/test': ^1.18.1
       '@project-serum/anchor': ^0.20.1
       '@types/exit': ^0.1.31
       '@types/signal-exit': ^3.0.1
       chalk: ^5.0.0
       exit: ^0.1.2
-      jest-process-manager: ^0.3.1
-      playwright: ^1.18.1
-      playwright-watch: ^1.3.23
       signal-exit: ^3.0.6
       tree-kill: ^1.2.2
       wait-port: ^0.2.9
     dependencies:
       '@kickjump/db': link:../packages/kickjump__db
-      '@playwright/test': 1.18.1
       '@project-serum/anchor': 0.20.1
       '@types/exit': 0.1.31
       '@types/signal-exit': 3.0.1
       chalk: 5.0.0
       exit: 0.1.2
-      jest-process-manager: 0.3.1
-      playwright: 1.18.1
-      playwright-watch: 1.3.23_playwright@1.18.1
       signal-exit: 3.0.6
       tree-kill: 1.2.2
       wait-port: 0.2.9
+
+  tests/kickjump.com:
+    specifiers:
+      '@playwright/test': ^1.18.1
+      jest-process-manager: ^0.3.1
+      playwright: ^1.18.1
+      playwright-watch: ^1.3.23
+    dependencies:
+      '@playwright/test': 1.18.1
+      jest-process-manager: 0.3.1
+      playwright: 1.18.1
+      playwright-watch: 1.3.23_playwright@1.18.1
 
 packages:
 
@@ -4266,6 +4288,10 @@ packages:
       '@types/node': 12.20.42
     dev: false
 
+  /@types/cookie/0.4.1:
+    resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
+    dev: true
+
   /@types/dashdash/1.14.1:
     resolution: {integrity: sha512-3UAiw52g6LARDS9I5lpYwUzj/nBuMvor/0BWiza7ibuOIEaNIo+m3whnVBLLj/ue0DzlcX+96c24YdZCuDwOiQ==}
     dev: false
@@ -5593,6 +5619,13 @@ packages:
       loupe: 2.3.1
       pathval: 1.1.1
       type-detect: 4.0.8
+    dev: false
+
+  /chalk-template/0.3.1:
+    resolution: {integrity: sha512-sbWkBbb9Tfo81aTtQrfP9eBSVCTL8biVvZ0tA1rH9xqVrKoV2T9Y6Bp94wB+DRXtSGl/UXsgV83Np5hLhNRXww==}
+    engines: {node: '>=12'}
+    dependencies:
+      chalk: 4.1.2
     dev: false
 
   /chalk/2.4.2:

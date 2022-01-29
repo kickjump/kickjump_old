@@ -42,7 +42,7 @@
     "scripts": "pnpm --dir .monots/scripts run",
     "test": "vitest run",
     "test:db": "pnpm --dir tests test:db",
-    "test:kickjump.com": "pnpm --dir tests test:kickjump.com",
+    "test:kickjump.com": "pnpm --dir tests/kickjump.com test:kickjump.com",
     "test:watch": "vitest watch",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "typecheck": "tsc --build --force",
@@ -95,10 +95,11 @@
   },
   "monots": {
     "packages": [
-      "packages/*",
       ".monots/scripts",
       "apps/*",
-      "tests"
+      "packages/*",
+      "tests",
+      "tests/kickjump.com"
     ],
     "tsconfigPath": "./.monots/symlink/tsconfig.json",
     "baseTsconfig": "./.monots/tsconfig.base.json",
