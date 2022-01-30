@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
   "changelog": ["@changesets/changelog-github", { "repo": "kickjump/kickjump" }],
   "updateInternalDependencies": "patch",
-  "ignore": ["kickjump.com"],
+  "ignore": ["kickjump.com", "e2e-tests", "test-kickjump.com"],
   "commit": false,
   "linked": [],
   "access": "public",

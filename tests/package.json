@@ -1,5 +1,5 @@
 {
-  "name": "@kickjump/tests",
+  "name": "e2e-tests",
   "private": true,
   "type": "module",
   "exports": {
