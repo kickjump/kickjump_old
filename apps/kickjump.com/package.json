@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@kickjump/components": "^0.0.1",
-    "@kickjump/db": "^0.0.0",
+    "@kickjump/db": "^0.0.1",
     "@kickjump/tokens": "^0.0.1",
     "@monots/next-plugin": "^0.4.0",
     "@next-auth/prisma-adapter": "^1.0.1",
