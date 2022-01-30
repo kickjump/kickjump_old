@@ -11,12 +11,15 @@ export interface NumberFieldProps extends AriaNumberFieldProps {
   onChangeEvent?: ChangeEventHandler<HTMLInputElement>;
 }
 
+function useIncrementRefs() {
+  return [useRef<HTMLButtonElement>(null), useRef<HTMLButtonElement>(null)] as const;
+}
+
 function NumberField(props: NumberFieldProps, ref: ForwardedRef<HTMLInputElement>) {
   const { locale } = useLocale();
   const { label, onChangeEvent, errorMessage } = props;
   const state = useNumberFieldState({ ...props, locale });
-  const incrementRef = useRef<HTMLButtonElement>(null);
-  const decrementRef = useRef<HTMLButtonElement>(null);
+  const [incrementRef, decrementRef] = useIncrementRefs();
   const objectRef = useObjectRef(ref);
   const {
     labelProps,

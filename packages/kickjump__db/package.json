@@ -1,0 +1,45 @@
+{
+  "name": "@kickjump/db",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Internal database client with shared methods",
+  "keywords": [],
+  "license": "MIT",
+  "contributors": [],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./index.js": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/*.d.ts"
+  },
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@kickjump/prisma": "^0.0.0",
+    "@swc/helpers": "^0.3.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "entrypoints": [
+      "index.ts"
+    ],
+    "tsconfigs": {},
+    "mode": "library",
+    "externalModules": []
+  }
+}

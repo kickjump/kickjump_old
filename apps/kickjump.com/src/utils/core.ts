@@ -2,6 +2,8 @@
  * The logger used when running scripts.
  */
 
+import type { Transaction } from '@solana/web3.js';
+
 /**
  * Return `true` when the site is deployed in production.
  */
@@ -60,6 +62,28 @@ export function removeUndefined<Shape extends object>(data: Shape) {
   }
 
   return transformed;
+}
+
+const encoder = new TextEncoder();
+
+/**
+ * Encode a string for passing through to an anchor program.
+ */
+export function stringToUint8Array(text: string): Uint8Array {
+  return encoder.encode(text);
+}
+
+const decoder = new TextDecoder();
+
+/**
+ * Decode a Uint8Array to a string.
+ */
+export function uint8ArrayToString(input: Uint8Array) {
+  return decoder.decode(input);
+}
+
+export function solanaTransactionBytes(transaction: Transaction) {
+  return transaction.serialize();
 }
 
 export * as log from 'next/dist/build/output/log';

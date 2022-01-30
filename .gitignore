@@ -139,6 +139,8 @@ yarn.lock
 /vite.config.ts
 /playwright.config.ts
 /.swc
+/.env.example
+/docker-compose.yml
 .parcel-cache/
 .psc-ide-port
 
@@ -146,3 +148,8 @@ yarn.lock
 .pnpm-store/
 
 .vercel
+
+.anchor
+target
+**/*.rs.bk
+

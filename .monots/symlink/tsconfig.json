@@ -11,13 +11,34 @@
   },
   "references": [
     {
+      "path": ".monots/scripts"
+    },
+    {
+      "path": "apps/kickjump.com"
+    },
+    {
       "path": "packages/kickjump__components/src"
+    },
+    {
+      "path": "packages/kickjump__db/src"
+    },
+    {
+      "path": "packages/kickjump__prisma/src"
     },
     {
       "path": "packages/kickjump__tokens/src"
     },
     {
       "path": "packages/kickjump/src"
+    },
+    {
+      "path": "packages/solana-credentials/src"
+    },
+    {
+      "path": "tests"
+    },
+    {
+      "path": "tests/kickjump.com"
     }
   ]
 }

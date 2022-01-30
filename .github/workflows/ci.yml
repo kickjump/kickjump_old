@@ -92,7 +92,7 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
-  e2e_test:
+  website_e2e:
     timeout-minutes: 8
     runs-on: ubuntu-latest
     steps:
@@ -123,20 +123,66 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
+      - name: setup docker compose
+        uses: isbang/compose-action@v1.0.0
+        with:
+          compose-file: docker-compose.yml
+
       - name: build kickjump.com
         run: pnpm build:kickjump.com
 
       - name: setup playwright test environment
-        run: pnpm setup:tests
-        working-directory: apps/kickjump.com
+        run: pnpm setup:playwright
+        working-directory: tests/kickjump.com
 
       - name: run tests
         env:
           TEST_BUILD: 1
-        run: |
-          pnpm setup:tests
-          pnpm test
-        working-directory: apps/kickjump.com
+          DATABASE_URL: 'mysql://root:kickjump@localhost:3307/kickjump'
+          NEXTAUTH_URL: 'https://dev1.kickjump.co.uk'
+          NEXTAUTH_SECRET: 'not-a-secret-yo'
+        run: pnpm test
+        working-directory: tests/kickjump.com
+
+  database_e2e:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    steps:
+      - name: cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup pnpm caching
+        uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: install and audit
+        uses: ./.github/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: setup docker compose
+        uses: isbang/compose-action@v1.0.0
+        with:
+          compose-file: docker-compose.yml
+
+      - name: run tests
+        run: pnpm test:db
+        working-directory: tests
 
   # Build the project and run tests on built files.
   build_packages:
