@@ -1,8 +1,7 @@
 import type { Program } from '@project-serum/anchor';
 import * as anchor from '@project-serum/anchor';
+import type { Credentials } from 'solana-credentials';
 import { describe, it } from 'vitest';
-
-import type { Credentials } from '../../target/types/credentials';
 
 describe('credentials', () => {
   // Configure the client to use the local cluster.

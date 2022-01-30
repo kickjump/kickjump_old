@@ -31,7 +31,7 @@ importers:
       eslint-config-next: 12.0.9
       eslint-plugin-jest-dom: ^4.0.1
       eslint-plugin-testing-library: ^5.0.4
-      happy-dom: ^2.28.0
+      happy-dom: ^2.31.0
       husky: ^7.0.4
       lint-staged: ^12.3.2
       npm-run-all: ^4.1.5
@@ -64,7 +64,7 @@ importers:
       eslint-config-next: 12.0.9_eslint@8.8.0+typescript@4.5.5
       eslint-plugin-jest-dom: 4.0.1_eslint@8.8.0
       eslint-plugin-testing-library: 5.0.4_eslint@8.8.0+typescript@4.5.5
-      happy-dom: 2.30.1
+      happy-dom: 2.31.0
       husky: 7.0.4
       lint-staged: 12.3.2
       npm-run-all: 4.1.5
@@ -76,7 +76,7 @@ importers:
       typescript: 4.5.5
       vercel: 23.1.2
       vite: 2.7.13
-      vitest: 0.2.5_happy-dom@2.30.1
+      vitest: 0.2.5_happy-dom@2.31.0
 
   .monots/scripts:
     specifiers:
@@ -202,10 +202,10 @@ importers:
       '@solana/wallet-adapter-react-ui': ^0.9.4
       '@solana/wallet-adapter-wallets': ^0.14.2
       '@solana/web3.js': ^1.32.0
-      '@strata-foundation/react': ^3.0.0
-      '@strata-foundation/spl-token-bonding': ^3.0.0
-      '@strata-foundation/spl-token-collective': ^3.0.0
-      '@strata-foundation/spl-utils': ^3.0.0
+      '@strata-foundation/react': ^3.1.0
+      '@strata-foundation/spl-token-bonding': ^3.1.0
+      '@strata-foundation/spl-token-collective': ^3.1.0
+      '@strata-foundation/spl-utils': ^3.1.0
       '@swc/helpers': ^0.3.2
       '@types/bn.js': ^5.1.0
       '@types/react': ^17.0.38
@@ -235,10 +235,10 @@ importers:
       '@solana/wallet-adapter-react-ui': 0.9.4
       '@solana/wallet-adapter-wallets': 0.14.2
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/react': 3.0.0_b3482aaf5744fc7c2aeb7941b0e0a78f
-      '@strata-foundation/spl-token-bonding': 3.0.0
-      '@strata-foundation/spl-token-collective': 3.0.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/react': 3.1.0_b3482aaf5744fc7c2aeb7941b0e0a78f
+      '@strata-foundation/spl-token-bonding': 3.1.0
+      '@strata-foundation/spl-token-collective': 3.1.0
+      '@strata-foundation/spl-utils': 3.1.0
       '@swc/helpers': 0.3.2
       '@types/bn.js': 5.1.0
       bn.js: 5.2.0
@@ -273,9 +273,9 @@ importers:
       '@project-serum/anchor': ^0.20.1
       '@solana/spl-token': ^0.1.8
       '@solana/web3.js': ^1.32.0
-      '@strata-foundation/spl-token-bonding': ^3.0.0
-      '@strata-foundation/spl-token-collective': ^3.0.0
-      '@strata-foundation/spl-utils': ^3.0.0
+      '@strata-foundation/spl-token-bonding': ^3.1.0
+      '@strata-foundation/spl-token-collective': ^3.1.0
+      '@strata-foundation/spl-utils': ^3.1.0
       '@swc/helpers': ^0.3.2
       '@types/bn.js': ^5.1.0
       bn.js: ^5.2.0
@@ -283,9 +283,9 @@ importers:
       '@project-serum/anchor': 0.20.1
       '@solana/spl-token': 0.1.8
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/spl-token-bonding': 3.0.0
-      '@strata-foundation/spl-token-collective': 3.0.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/spl-token-bonding': 3.1.0
+      '@strata-foundation/spl-token-collective': 3.1.0
+      '@strata-foundation/spl-utils': 3.1.0
       '@swc/helpers': 0.3.2
       '@types/bn.js': 5.1.0
       bn.js: 5.2.0
@@ -309,6 +309,7 @@ importers:
       playwright: ^1.18.1
       playwright-watch: ^1.3.23
       signal-exit: ^3.0.6
+      solana-credentials: ^0.0.0
       tree-kill: ^1.2.2
       wait-port: ^0.2.9
     dependencies:
@@ -323,6 +324,7 @@ importers:
       playwright: 1.18.1
       playwright-watch: 1.3.23_playwright@1.18.1
       signal-exit: 3.0.6
+      solana-credentials: link:../packages/solana-credentials
       tree-kill: 1.2.2
       wait-port: 0.2.9
 
@@ -3003,7 +3005,7 @@ packages:
     resolution: {integrity: sha512-2TuBmGUn9qeYz6sJINJlElrBuPsaUAtYyUsJ3XplEBf1pczrANAgs5ceJUFzdiqGEWLn+84ObSdBeChT/AXYFA==}
     engines: {node: '>=11'}
     dependencies:
-      '@project-serum/borsh': 0.2.3_@solana+web3.js@1.32.0
+      '@project-serum/borsh': 0.2.4_@solana+web3.js@1.32.0
       '@solana/web3.js': 1.32.0
       base64-js: 1.5.1
       bn.js: 5.2.0
@@ -3023,8 +3025,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@project-serum/borsh/0.2.3_@solana+web3.js@1.32.0:
-    resolution: {integrity: sha512-lH9zEYADZE3cxrgiFym8+jbUE3NM/LH+WOKYcUjs65CT10Q64Hv45bcAAa/phwYk4Tpz0uQ1x+ergFaAoGt67Q==}
+  /@project-serum/borsh/0.2.4_@solana+web3.js@1.32.0:
+    resolution: {integrity: sha512-tQPc1ktAp1Jtn9D72DmObAfhAic9ivfYBOS5b+T4H7MvkQ84uML88LY1LfvGep30mCy+ua5rf+X9ocPfg6u9MA==}
     engines: {node: '>=10'}
     peerDependencies:
       '@solana/web3.js': ^1.2.0
@@ -3732,8 +3734,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@strata-foundation/react/3.0.0_b3482aaf5744fc7c2aeb7941b0e0a78f:
-    resolution: {integrity: sha512-bwLvJ/Aovn5vtXBbL8MnatX5sxC5/hE0oBkmjhKdxEGpDhjOucJzI8MJh6tZXriH1ZmdmE2Vak1f/x4GHMXh1w==}
+  /@strata-foundation/react/3.1.0_b3482aaf5744fc7c2aeb7941b0e0a78f:
+    resolution: {integrity: sha512-Hwy2whf9DGfW/t8099h3ICM7F49w8XXpQVTU+13CA485IGvkeJ+4fe58cfHpf2RqqYq3yuklQqtuf5wMMQbmHQ==}
     peerDependencies:
       react: ^16.8 || ^17 || ^18
       react-dom: ^16.8 || ^17 || ^18
@@ -3749,9 +3751,9 @@ packages:
       '@solana/wallet-adapter-react': 0.15.2
       '@solana/wallet-adapter-wallets': 0.14.2
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/spl-token-bonding': 3.0.0
-      '@strata-foundation/spl-token-collective': 3.0.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/spl-token-bonding': 3.1.0
+      '@strata-foundation/spl-token-collective': 3.1.0
+      '@strata-foundation/spl-utils': 3.1.0
       '@toruslabs/solana-embed': 0.0.9
       axios: 0.25.0
       buffer: 6.0.3
@@ -3784,12 +3786,12 @@ packages:
       - webpack-cli
     dev: false
 
-  /@strata-foundation/spl-token-bonding/3.0.0:
-    resolution: {integrity: sha512-6EnFGtGvr/260cENuWBG6iXnlUbsTlocUBPQ+ix/MrfOORmJ97f4q2oNb9alVffVBVRY1B+Ny6T9bOIs2X6GQg==}
+  /@strata-foundation/spl-token-bonding/3.1.0:
+    resolution: {integrity: sha512-kouUbJkNVzEgyehdwgbQ6LfinAqlZKflo6seOCOlUvTivLPD5/fMpbnS9FqTC+m5Z+YX5C33p9Zh2+LL0kKhqA==}
     dependencies:
       '@project-serum/anchor': 0.20.1
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/spl-utils': 3.1.0
       bn.js: 5.2.0
       copyfiles: 2.4.1
     transitivePeerDependencies:
@@ -3804,15 +3806,15 @@ packages:
       - webpack-cli
     dev: false
 
-  /@strata-foundation/spl-token-collective/3.0.0:
-    resolution: {integrity: sha512-vvZo/5y35pWsVmUYOLHeFHBsUHPMPITN5BIyA246VN1fK/MSTx/3NmGTPSt3GC7aflJhoUvqr9vOOL5AN8yrTQ==}
+  /@strata-foundation/spl-token-collective/3.1.0:
+    resolution: {integrity: sha512-T6QUxslATu43v4eoNUsQ5sqQfStBEHKcLVe/iup0quRcMtRDDr2fjhyIcA7WzJW6XJhND/gzSteNc/VNLl+hxQ==}
     dependencies:
       '@bonfida/spl-name-service': 0.1.24
       '@project-serum/anchor': 0.20.1
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/spl-token-bonding': 3.0.0
-      '@strata-foundation/spl-token-staking': 3.0.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/spl-token-bonding': 3.1.0
+      '@strata-foundation/spl-token-staking': 3.1.0
+      '@strata-foundation/spl-utils': 3.1.0
       bn.js: 5.2.0
       copyfiles: 2.4.1
     transitivePeerDependencies:
@@ -3827,11 +3829,11 @@ packages:
       - webpack-cli
     dev: false
 
-  /@strata-foundation/spl-token-staking/3.0.0:
-    resolution: {integrity: sha512-d+GTpOim1dNpuGH0cgy6PIJ9BiUTUtq61stnb0UxPrSHJ5RpvLtp4OK+4gWJEKHs6rqRDuJenvoqiZOeBDTzEQ==}
+  /@strata-foundation/spl-token-staking/3.1.0:
+    resolution: {integrity: sha512-weNfb0zHs5gz8/sNfAi8Ouh1kIsmGFsKBQHX3S4eUHy4rXa4mOWvWvoyHt1RP6ZnUjSVYQJjnL/FYlT72Ue0Kg==}
     dependencies:
       '@solana/web3.js': 1.32.0
-      '@strata-foundation/spl-utils': 3.0.0
+      '@strata-foundation/spl-utils': 3.1.0
       bn.js: 5.2.0
       semver: 7.3.5
     transitivePeerDependencies:
@@ -3846,8 +3848,8 @@ packages:
       - webpack-cli
     dev: false
 
-  /@strata-foundation/spl-utils/3.0.0:
-    resolution: {integrity: sha512-QnTqFKrbauMjSYPuOL7FtE2mltBQiKz7SgtEuFYWez6nEWotaZAa5B8KGn+8dmINmVvqTZCcrdBalsHKRN3LTQ==}
+  /@strata-foundation/spl-utils/3.1.0:
+    resolution: {integrity: sha512-1932hP1GqLW+29mIASFOgbmS1D2YI7F17rfeVNU0LUO5JcZ1jXmgfY5ozPPFwILwYzO+zOJIPDEzLUM5H0twPg==}
     dependencies:
       '@metaplex-foundation/mpl-token-metadata': 1.1.0
       '@metaplex/arweave-cost': 1.0.4
@@ -3855,6 +3857,7 @@ packages:
       '@solana/spl-name-service': 0.1.3
       '@solana/web3.js': 1.32.0
       bs58: 4.0.1
+      localstorage-memory: 1.0.3
       superstruct: 0.14.2
       tweetnacl: 1.0.3
     transitivePeerDependencies:
@@ -5445,8 +5448,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001303
-      electron-to-chromium: 1.4.56
+      caniuse-lite: 1.0.30001304
+      electron-to-chromium: 1.4.57
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -5620,8 +5623,8 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /caniuse-lite/1.0.30001303:
-    resolution: {integrity: sha512-/Mqc1oESndUNszJP0kx0UaQU9kEv9nNtJ7Kn8AdA0mNnH8eR1cj0kG+NbNuC1Wq/b21eA8prhKRA3bbkjONegQ==}
+  /caniuse-lite/1.0.30001304:
+    resolution: {integrity: sha512-bdsfZd6K6ap87AGqSHJP/s1V+U6Z5lyrcbBu3ovbCCf8cSYpwTtGrCBObMpJqwxfTbLW6YTIdbb1jEeTelcpYQ==}
     dev: false
 
   /case-it/1.0.1:
@@ -6611,8 +6614,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /electron-to-chromium/1.4.56:
-    resolution: {integrity: sha512-0k/S0FQqRRpJbX7YUjwCcLZ8D42RqGKtaiq90adXBOYgTIWwLA/g3toO8k9yEpqU8iC4QyaWYYWSTBIna8WV4g==}
+  /electron-to-chromium/1.4.57:
+    resolution: {integrity: sha512-FNC+P5K1n6pF+M0zIK+gFCoXcJhhzDViL3DRIGy2Fv5PohuSES1JHR7T+GlwxSxlzx4yYbsuzCZvHxcBSRCIOw==}
     dev: false
 
   /elliptic/6.5.4:
@@ -8400,8 +8403,8 @@ packages:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
     dev: false
 
-  /happy-dom/2.30.1:
-    resolution: {integrity: sha512-Qz3Z/zn/VeUCtVEGoSCDD+zzPcyOEdIYz4p1BvsXvrTSx6vXyGadMDAsxOKf8ZFCRfuyLpLKfqdRHFFPF77qPA==}
+  /happy-dom/2.31.0:
+    resolution: {integrity: sha512-xWMINbteuSF6hkmetrreuXK+r0vBBdRknqwaqDxrjIV6aQBlUcMBvTX/2dZ+KwP5vjrDrqCeop5dPOgQpebHgw==}
     dependencies:
       he: 1.2.0
       node-fetch: 2.6.7
@@ -9683,6 +9686,10 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
+  /localstorage-memory/1.0.3:
+    resolution: {integrity: sha512-t9P8WB6DcVttbw/W4PIE8HOqum8Qlvx5SjR6oInwR9Uia0EEmyUeBh7S+weKByW+l/f45Bj4L/dgZikGFDM6ng==}
+    dev: false
+
   /locate-path/2.0.0:
     resolution: {integrity: sha1-K1aLJl7slExtnA3pw9u7ygNUzY4=}
     engines: {node: '>=4'}
@@ -10635,7 +10642,7 @@ packages:
         optional: true
     dependencies:
       '@next/env': 12.0.9
-      caniuse-lite: 1.0.30001303
+      caniuse-lite: 1.0.30001304
       postcss: 8.4.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -13818,7 +13825,7 @@ packages:
       fsevents: 2.3.2
     dev: false
 
-  /vitest/0.2.5_happy-dom@2.30.1:
+  /vitest/0.2.5_happy-dom@2.31.0:
     resolution: {integrity: sha512-QruEhsNxy8ycLxYG9rrGUfHZzJ8A6YvA9ULZ4w/ecvm0Zejm1nxUar/XkRWkL2xzrqA5AjmfqDSQZ8q2bFbA0Q==}
     engines: {node: '>=14.14.0'}
     hasBin: true
@@ -13840,7 +13847,7 @@ packages:
       '@types/chai': 4.3.0
       '@types/chai-subset': 1.3.3
       chai: 4.3.6
-      happy-dom: 2.30.1
+      happy-dom: 2.31.0
       local-pkg: 0.4.1
       tinypool: 0.1.1
       tinyspy: 0.2.10

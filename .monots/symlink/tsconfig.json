@@ -20,9 +20,6 @@
       "path": "packages/kickjump__components/src"
     },
     {
-      "path": "packages/kickjump__credentials/src"
-    },
-    {
       "path": "packages/kickjump__db/src"
     },
     {
@@ -35,13 +32,13 @@
       "path": "packages/kickjump/src"
     },
     {
+      "path": "packages/solana-credentials/src"
+    },
+    {
       "path": "tests"
     },
     {
       "path": "tests/kickjump.com"
-    },
-    {
-      "path": "tests/src"
     }
   ]
 }

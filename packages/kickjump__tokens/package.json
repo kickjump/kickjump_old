@@ -31,9 +31,9 @@
     "@project-serum/anchor": "^0.20.1",
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.32.0",
-    "@strata-foundation/spl-token-bonding": "^3.0.0",
-    "@strata-foundation/spl-token-collective": "^3.0.0",
-    "@strata-foundation/spl-utils": "^3.0.0",
+    "@strata-foundation/spl-token-bonding": "^3.1.0",
+    "@strata-foundation/spl-token-collective": "^3.1.0",
+    "@strata-foundation/spl-utils": "^3.1.0",
     "@swc/helpers": "^0.3.2",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.0"

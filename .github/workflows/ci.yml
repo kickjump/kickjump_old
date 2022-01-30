@@ -123,6 +123,11 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
+      - name: setup docker compose
+        uses: isbang/compose-action@v1.0.0
+        with:
+          compose-file: docker-compose.yml
+
       - name: build kickjump.com
         run: pnpm build:kickjump.com
 
@@ -133,6 +138,9 @@ jobs:
       - name: run tests
         env:
           TEST_BUILD: 1
+          DATABASE_URL: 'mysql://root:kickjump@localhost:3307/kickjump'
+          NEXTAUTH_URL: 'https://dev1.kickjump.co.uk'
+          NEXTAUTH_SECRET: 'not-a-secret-yo'
         run: pnpm test
         working-directory: tests/kickjump.com
 
