@@ -2,6 +2,8 @@
  * The logger used when running scripts.
  */
 
+import type { Transaction } from '@solana/web3.js';
+
 /**
  * Return `true` when the site is deployed in production.
  */
@@ -78,6 +80,10 @@ const decoder = new TextDecoder();
  */
 export function uint8ArrayToString(input: Uint8Array) {
   return decoder.decode(input);
+}
+
+export function solanaTransactionBytes(transaction: Transaction) {
+  return transaction.serialize();
 }
 
 export * as log from 'next/dist/build/output/log';

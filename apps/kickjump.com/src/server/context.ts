@@ -1,7 +1,8 @@
 import { prisma } from '@kickjump/db';
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
-import * as s from 'superstruct';
+
+import * as s from '~/structs';
 
 import { getServerSession } from './next-auth';
 

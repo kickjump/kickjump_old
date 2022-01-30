@@ -1,10 +1,12 @@
-import { ConnectWallet, useWallet } from '@kickjump/components';
-import { signIn, useSession } from 'next-auth/react';
+import { ConnectWallet } from '@kickjump/components';
+import { type WalletContextState, useWallet } from '@solana/wallet-adapter-react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
 import { useCallback } from 'react';
 
-import { useTrpcMutation } from '~/hooks/use-trpc';
-import { uint8ArrayToString } from '~/utils/core';
-import { getWalletMessage } from '~/utils/solana';
+import type { InferMutationOutput } from '~/hooks/use-trpc';
+import { useMutation, useQuery } from '~/hooks/use-trpc';
+import { stringToUint8Array } from '~/utils/core';
+import { type WalletMessageType, getWalletMessage } from '~/utils/solana';
 
 /**
  * Connect a solana wallet to your KickJump account.
@@ -13,16 +15,17 @@ import { getWalletMessage } from '~/utils/solana';
  */
 export const ConnectWithWallet = () => {
   const { login, status, connect } = useConnectWithWallet();
+
   return status === 'login' ? (
     <button onClick={login}>Login With Wallet</button>
   ) : status === 'connect' ? (
     <button onClick={connect}>Connect My Wallet</button>
-  ) : (
+  ) : status === 'no-wallet' ? (
     <ConnectWallet />
-  );
+  ) : null;
 };
 
-type ConnectionStatus = 'login' | 'connect' | 'no-wallet';
+type ConnectionStatus = 'login' | 'connect' | 'no-wallet' | 'already-connected';
 
 /**
  * use the wallet connection
@@ -30,48 +33,61 @@ type ConnectionStatus = 'login' | 'connect' | 'no-wallet';
 export function useConnectWithWallet() {
   const session = useSession();
   const wallet = useWallet();
-  const nonceMutation = useTrpcMutation(['adhoc.nonce']);
-  const connectMutation = useTrpcMutation(['adhoc.connectWallet']);
+  const nonceMutation = useMutation(['userWallet.nonce']);
+  const connectMutation = useMutation(['userWallet.connect']);
+  const userWalletQuery = useQuery(['userWallet.getAll', { id: session.data?.id as string }], {
+    enabled: !!session.data?.id,
+  });
 
-  const status: ConnectionStatus =
-    session.status !== 'authenticated' ? 'connect' : wallet?.publicKey ? 'login' : 'no-wallet';
+  const status: ConnectionStatus = !wallet.publicKey
+    ? 'no-wallet'
+    : session.status !== 'authenticated'
+    ? 'login'
+    : userWalletQuery.data?.some((item) => item.publicKey === wallet.publicKey?.toBase58())
+    ? 'already-connected'
+    : 'connect';
+
+  const getNonce = useCallback(() => nonceMutation.mutateAsync(), [nonceMutation]);
 
   const connect = useCallback(async () => {
-    if (status !== 'connect' || !wallet.signMessage || !wallet.publicKey) {
-      return;
+    const data = await getWalletSignature({ wallet, getNonce, type: 'connect', status });
+
+    if (data) {
+      await connectMutation.mutateAsync(data);
     }
-
-    const { nonce } = await nonceMutation.mutateAsync();
-    const { publicKey } = wallet;
-
-    await wallet.connect();
-
-    const message = getWalletMessage({ nonce, type: 'connect' });
-    const encodedMessage = new TextEncoder().encode(message);
-    const signature = await wallet.signMessage(encodedMessage);
-
-    await connectMutation.mutateAsync({
-      publicKey: publicKey.toBase58(),
-      signature: uint8ArrayToString(signature),
-    });
-  }, [status, wallet, nonceMutation, connectMutation]);
+  }, [wallet, getNonce, status, connectMutation]);
 
   const login = useCallback(async () => {
-    if (status !== 'login' || !wallet.signMessage || !wallet.publicKey) {
-      return;
+    console.log(await getProviders());
+    const data = await getWalletSignature({ wallet, getNonce, type: 'login', status });
+
+    if (data) {
+      signIn('solana', data);
     }
-
-    const { nonce } = await nonceMutation.mutateAsync();
-    const { publicKey } = wallet;
-
-    await wallet.connect();
-
-    const message = getWalletMessage({ nonce, type: 'login' });
-    const encodedMessage = new TextEncoder().encode(message);
-    const signature = await wallet.signMessage(encodedMessage);
-
-    signIn('solana-wallet', { publicKey, signature, nonce });
-  }, [status, nonceMutation, wallet]);
+  }, [wallet, getNonce, status]);
 
   return { login, connect, status };
+}
+
+interface GetWalletSignature {
+  wallet: WalletContextState;
+  getNonce: () => Promise<InferMutationOutput<'userWallet.nonce'>>;
+  type: WalletMessageType;
+  status: ConnectionStatus;
+}
+
+async function getWalletSignature(props: GetWalletSignature) {
+  const { wallet, getNonce, type, status } = props;
+
+  if (status !== type || !wallet.signMessage || !wallet.publicKey) {
+    return;
+  }
+
+  await wallet.connect();
+
+  const { nonce } = await getNonce();
+  const { default: base58 } = await import('bs58');
+  const encodedMessage = stringToUint8Array(getWalletMessage({ nonce, type }));
+  const signature = await wallet.signMessage(encodedMessage);
+  return { publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
 }

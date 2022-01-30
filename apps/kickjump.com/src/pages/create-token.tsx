@@ -1,4 +1,4 @@
-import '~/utils/polyfill';
+import '~/polyfill';
 
 import {
   type CreateTokenFormProps,

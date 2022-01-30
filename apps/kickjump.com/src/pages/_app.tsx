@@ -1,3 +1,5 @@
+import '~/polyfill';
+
 import { Provider } from '@kickjump/components';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
@@ -7,6 +9,7 @@ import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'react-hot-toast';
 import superjson from 'superjson';
 
 import { type AppRouter } from '~/server/app-router';
@@ -26,6 +29,7 @@ const App = (props: AppProps) => {
         <DefaultSeo {...DEFAULT_SEO} />
 
         <SessionProvider session={pageProps.session}>
+          <Toaster />
           <Component {...pageProps} />
         </SessionProvider>
       </ThemeProvider>

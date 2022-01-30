@@ -4,17 +4,18 @@
  * TODO make this use a i18n string - perhaps lingui.
  */
 export function getWalletMessage(props: GetWalletMessageProps) {
-  const { nonce, type } = props;
-
-  const messages = {
-    connect: `Sign this message for authenticating with your wallet.\n\nSecurity Nonce: ${nonce}`,
-    login: `Login with your wallet.\n\nSecurity Nonce: ${nonce}`,
-  };
-
-  return messages[type];
+  return WalletMessage[props.type](props.nonce);
 }
 
 interface GetWalletMessageProps {
   nonce: string;
-  type: 'connect' | 'login';
+  type: WalletMessageType;
 }
+
+export const WalletMessage = {
+  connect: (nonce: string) =>
+    `Sign this message for authenticating with your wallet.\n\nSecurity Nonce: ${nonce}`,
+  login: (nonce: string) => `Login with your wallet.\n\nSecurity Nonce: ${nonce}`,
+};
+
+export type WalletMessageType = keyof typeof WalletMessage;

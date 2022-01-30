@@ -4,13 +4,35 @@ import { serialize } from 'cookie';
 import crypto from 'node:crypto';
 
 import { createRouter } from '~/server/create-router';
+import * as s from '~/structs';
 
-import { VerifySolanaPublicKey, verifySolanaPublicKey } from '../utils';
+import { verifySolanaWallet } from '../verify-solana-wallet';
 
 /**
  * The utility api endpoints that I'm not sure where to place.
  */
-export const adhocRouter = createRouter()
+export const userWalletRouter = createRouter()
+  /** Get all the wallets owned by the user */
+  .query('getAll', {
+    input: s.type({ id: s.nonempty(s.string()) }),
+    async resolve({ ctx, input }) {
+      const { id } = input;
+      const session = await ctx.getSession();
+
+      if (session?.id !== id) {
+        throw new TRPCError({
+          message: 'Not authorized to view the requested resource.',
+          code: 'UNAUTHORIZED',
+        });
+      }
+
+      const wallets = await prisma.userWallet.findMany({
+        where: { userId: id },
+      });
+
+      return wallets;
+    },
+  })
   .mutation('nonce', {
     input: () => {},
     async resolve({ ctx }) {
@@ -23,11 +45,11 @@ export const adhocRouter = createRouter()
       return { nonce };
     },
   })
-  .mutation('connectWallet', {
-    input: VerifySolanaPublicKey,
+  .mutation('connect', {
+    input: s.VerifySolanaWallet,
     async resolve({ ctx, input }) {
       const { getSession, req } = ctx;
-      const { publicKey, signature } = input;
+      const { publicKey, signature: signature } = input;
       const session = await getSession();
 
       if (!session) {
@@ -46,7 +68,7 @@ export const adhocRouter = createRouter()
         });
       }
 
-      verifySolanaPublicKey({ nonce, publicKey, signature, type: 'connect' });
+      verifySolanaWallet({ nonce, publicKey, signature: signature, type: 'connect' });
 
       const { id } = session;
       const [user, wallet] = await Promise.all([
@@ -77,7 +99,6 @@ export const adhocRouter = createRouter()
 
       return prisma.userWallet.create({
         data: { publicKey, user: { connect: { id } } },
-        include: { user: true },
       });
     },
   });
