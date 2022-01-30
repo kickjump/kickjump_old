@@ -6,7 +6,6 @@
   "keywords": [],
   "license": "MIT",
   "contributors": [],
-  "sideEffects": false,
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

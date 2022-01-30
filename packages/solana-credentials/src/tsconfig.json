@@ -5,10 +5,14 @@
     "",
     "Then run the command to automatically update everything: `monots fix`"
   ],
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../../.monots/tsconfig.base.json",
   "compilerOptions": {
     "types": [],
-    "noEmit": true
+    "noEmit": false,
+    "declaration": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist"
   },
   "references": []
 }

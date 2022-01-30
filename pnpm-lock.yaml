@@ -81,12 +81,14 @@ importers:
   .monots/scripts:
     specifiers:
       '@manypkg/get-packages': ^1.1.3
+      case-it: ^1.0.1
       chalk: ^5.0.0
       chalk-template: ^0.3.1
       load-json-file: ^7.0.1
       write-json-file: ^5.0.0
     dependencies:
       '@manypkg/get-packages': 1.1.3
+      case-it: 1.0.1
       chalk: 5.0.0
       chalk-template: 0.3.1
       load-json-file: 7.0.1
@@ -287,6 +289,12 @@ importers:
       '@swc/helpers': 0.3.2
       '@types/bn.js': 5.1.0
       bn.js: 5.2.0
+
+  packages/solana-credentials:
+    specifiers:
+      '@swc/helpers': ^0.3.2
+    dependencies:
+      '@swc/helpers': 0.3.2
 
   tests:
     specifiers:
@@ -5614,6 +5622,10 @@ packages:
 
   /caniuse-lite/1.0.30001303:
     resolution: {integrity: sha512-/Mqc1oESndUNszJP0kx0UaQU9kEv9nNtJ7Kn8AdA0mNnH8eR1cj0kG+NbNuC1Wq/b21eA8prhKRA3bbkjONegQ==}
+    dev: false
+
+  /case-it/1.0.1:
+    resolution: {integrity: sha512-hxjXhD5fWVfBv2DglhN22wqtGTdImfpRyUB3FGofZL9LgHhyFwr+7Zbtqxj53W9DPzzDTfBuDB4XkeaGFGUijA==}
     dev: false
 
   /caseless/0.12.0:
