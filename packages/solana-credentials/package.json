@@ -1,6 +1,6 @@
 {
   "name": "solana-credentials",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Manage non-transferrable credentials for solana accounts.",
   "keywords": [],
   "license": "MIT",
