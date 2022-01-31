@@ -138,9 +138,13 @@ jobs:
       - name: run tests
         env:
           TEST_BUILD: 1
-          DATABASE_URL: 'mysql://root:kickjump@localhost:3307/kickjump'
-          NEXTAUTH_URL: 'https://dev1.kickjump.co.uk'
-          NEXTAUTH_SECRET: 'not-a-secret-yo'
+          DATABASE_URL: mysql://root:kickjump@localhost:3307/kickjump
+          NEXTAUTH_URL: https://dev1.kickjump.co.uk
+          NEXTAUTH_SECRET: not-a-secret-yo
+          JWT_SECRET: abcdefghijklmnopqrstuvwxyz
+          SOLANA_RPC_SECRET: ''
+          WEBSITE_URL: ''
+          NEXT_PUBLIC_VERCEL_URL: ''
         run: pnpm test
         working-directory: tests/kickjump.com
 

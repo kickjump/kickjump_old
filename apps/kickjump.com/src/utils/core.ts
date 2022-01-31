@@ -16,17 +16,13 @@ export function isProduction() {
  * deploy preview or similar.
  */
 export function getUrl(path?: string): string {
-  // In the browser we just use a relative URL and everything works perfectly
+  // In the browser we just use a relative URL and everything works.
   if (process.browser) {
     return path ?? '';
   }
 
   if (process.env.WEBSITE_URL) {
     return `${process.env.WEBSITE_URL}${path ?? ''}`;
-  }
-
-  if (process.env.NODE_ENV === `development`) {
-    return `http://localhost:3000${path ?? ''}`;
   }
 
   if (process.env.NEXTAUTH_URL) {
@@ -40,6 +36,10 @@ export function getUrl(path?: string): string {
   if (PROVIDER_URL && !isProduction()) {
     // We replace https:// from the URL if it exists and add it ourselves always at the beginning as the above environment variables are not guaranteed to include it
     return `https://${PROVIDER_URL.replace(/^https?:\/\//, '')}${path ?? ''}`;
+  }
+
+  if (process.env.NODE_ENV === `development`) {
+    return `http://localhost:3000${path ?? ''}`;
   }
 
   return `https://kickjump.com${path ?? ''}`;

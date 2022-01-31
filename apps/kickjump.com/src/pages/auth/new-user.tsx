@@ -1,5 +1,11 @@
+import { Layout } from '~/components/layout';
+
 const NewUserPage = () => {
-  return <h1>New User Page</h1>;
+  return (
+    <Layout>
+      <h1>New User Page</h1>
+    </Layout>
+  );
 };
 
 export default NewUserPage;

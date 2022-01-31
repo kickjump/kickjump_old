@@ -45,6 +45,16 @@ The problem is that almost none of the value created is passed onto the teams be
 - Project specific rules based on the needs and requirements.
 - Provide a suite of tools to enhance value creation of project stakeholders via zero-effort revenue share arrangements.
 
+## Contributing
+
+To experiment with the GitHub API you will need to create your own development GitHub application.
+
+Set the url of the app to `dev1.kickjump.co.uk` and run the following command to tunnel localhost through the server.
+
+```bash
+ssh -R dev1.kickjump.co.uk:80:localhost:3000 plan@localhost.run
+```
+
 ## License
 
 BSD 3-Clause, see the [LICENSE](./LICENSE) file.
