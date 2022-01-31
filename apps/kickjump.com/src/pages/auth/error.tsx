@@ -1,5 +1,11 @@
+import { Layout } from '~/components/layout';
+
 const ErrorPage = () => {
-  return <h1>Error!!</h1>;
+  return (
+    <Layout>
+      <h1>Error!!</h1>
+    </Layout>
+  );
 };
 
 export default ErrorPage;

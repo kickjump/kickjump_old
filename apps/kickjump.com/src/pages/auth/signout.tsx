@@ -1,5 +1,11 @@
+import { Layout } from '~/components/layout';
+
 const SignOutPage = () => {
-  return <h1>Sign Out Page</h1>;
+  return (
+    <Layout>
+      <h1>Sign Out Page</h1>
+    </Layout>
+  );
 };
 
 export default SignOutPage;

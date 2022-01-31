@@ -94,7 +94,9 @@ async function pollForDatabaseConnection(options: PollForDatabaseConnectionProps
         resolve();
       } catch (error) {
         if (!timeout || Date.now() - startTime < timeout) {
-          setTimeout(loop, interval);
+          setTimeout(() => {
+            loop();
+          }, interval);
         } else {
           console.error('\nTimeout');
           await exec('docker compose down');

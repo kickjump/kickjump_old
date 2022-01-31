@@ -1,6 +1,6 @@
 import { ConnectWallet } from '@kickjump/components';
 import { type WalletContextState, useWallet } from '@solana/wallet-adapter-react';
-import { getProviders, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useCallback } from 'react';
 
 import type { InferMutationOutput } from '~/hooks/use-trpc';
@@ -58,11 +58,10 @@ export function useConnectWithWallet() {
   }, [wallet, getNonce, status, connectMutation]);
 
   const login = useCallback(async () => {
-    console.log(await getProviders());
     const data = await getWalletSignature({ wallet, getNonce, type: 'login', status });
 
     if (data) {
-      signIn('solana', data);
+      await signIn('solana', data);
     }
   }, [wallet, getNonce, status]);
 
@@ -89,5 +88,5 @@ async function getWalletSignature(props: GetWalletSignature) {
   const { default: base58 } = await import('bs58');
   const encodedMessage = stringToUint8Array(getWalletMessage({ nonce, type }));
   const signature = await wallet.signMessage(encodedMessage);
-  return { publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
+  return { nonce, publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
 }

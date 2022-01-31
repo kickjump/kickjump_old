@@ -1,6 +1,5 @@
 import { prisma } from '@kickjump/db';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { TRPCError } from '@trpc/server';
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import { getServerSession as getSession } from 'next-auth/next';
@@ -17,29 +16,24 @@ const SolanaCredential = s.type({
   nonce: s.string(),
 });
 
-function SolanaProvider(cookies: Record<string, string | undefined>) {
+function SolanaProvider(_: Record<string, string | undefined>) {
   return CredentialProvider({
     id: 'solana',
     name: 'Solana',
     type: 'credentials',
     // TODO fix the missing cookies for some reason.
     authorize: async (creds) => {
-      const nonce = cookies['auth-nonce'];
+      const { publicKey, signature, nonce } = s.create(creds, SolanaCredential);
 
-      if (!nonce) {
-        throw new TRPCError({ message: 'No security nonce found!', code: 'UNAUTHORIZED' });
-      }
-
-      const { publicKey, signature } = s.create(creds, SolanaCredential);
+      // Ensure the public key and signature are valid.
       verifySolanaWallet({ nonce, publicKey, signature: signature, type: 'login' });
 
-      /// Only allow the user to
+      // Only allow login when the wallet provided is already connected to a
+      // user account.
       const wallet = await prisma.userWallet.findUnique({
         where: { publicKey },
         include: { user: true },
       });
-
-      console.log({ wallet });
 
       return wallet?.user ?? null;
     },
@@ -60,7 +54,9 @@ export function createAuthOptions(cookies: Record<string, string | undefined>): 
       SolanaProvider(cookies),
     ],
     adapter: PrismaAdapter(prisma),
-    // session: { strategy: 'jwt', },
+    session: { strategy: 'jwt' },
+    jwt: { secret: process.env.JWT_SECRET },
+    cookies: {},
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
       signIn: '/auth/signin',
@@ -89,7 +85,6 @@ export function createAuthOptions(cookies: Record<string, string | undefined>): 
 }
 
 export function authHandler(req: NextApiRequest, res: NextApiResponse) {
-  console.log({ url: req.url, method: req.method, body: req.cookies });
   return NextAuth(req, res, createAuthOptions(req.cookies));
 }
 
