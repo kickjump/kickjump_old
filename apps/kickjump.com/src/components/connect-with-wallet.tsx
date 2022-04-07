@@ -88,5 +88,7 @@ async function getWalletSignature(props: GetWalletSignature) {
   const { default: base58 } = await import('bs58');
   const encodedMessage = stringToUint8Array(getWalletMessage({ nonce, type }));
   const signature = await wallet.signMessage(encodedMessage);
-  return { nonce, publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
+  return {
+    /** This is a secret key */
+    nonce, publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
 }

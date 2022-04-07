@@ -20,8 +20,8 @@ export const Header = () => {
           </Link>
         </li>
         <li>
-          <Link href='/articles' aria-label='Articles'>
-            <a>Articles&nbsp;</a>
+          <Link href='/projects' aria-label='Projects'>
+            <a>Projects&nbsp;</a>
           </Link>
         </li>
       </ul>

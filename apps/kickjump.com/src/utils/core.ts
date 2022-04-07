@@ -86,4 +86,12 @@ export function solanaTransactionBytes(transaction: Transaction) {
   return transaction.serialize();
 }
 
+/**
+ * Decode a base64 string. Used to decode the GitHub App secret which is stored
+ * as a base64 string.
+ */
+export function decodeBase64(value: string) {
+  return Buffer.from(value, 'base64').toString('utf-8');
+}
+
 export * as log from 'next/dist/build/output/log';

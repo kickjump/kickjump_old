@@ -5,7 +5,7 @@ import superjson from 'superjson';
 
 import { createRouter } from '~/server/create-router';
 
-import { userWalletRouter } from './routers';
+import { githubRouter, userWalletRouter } from './routers';
 
 /**
  * Create your application's root router
@@ -23,6 +23,7 @@ export const appRouter = createRouter()
    * Optionally do custom error (type safe!) formatting
    * @link https://trpc.io/docs/error-formatting
    */
-  .merge('userWallet.', userWalletRouter);
+  .merge('userWallet.', userWalletRouter)
+  .merge('github.', githubRouter);
 
 export type AppRouter = typeof appRouter;

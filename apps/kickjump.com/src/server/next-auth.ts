@@ -8,6 +8,7 @@ import GitHubProvider from 'next-auth/providers/github';
 
 import * as s from '~/structs';
 
+import { env } from './env';
 import { verifySolanaWallet } from './verify-solana-wallet';
 
 const SolanaCredential = s.type({
@@ -48,16 +49,19 @@ export function createAuthOptions(cookies: Record<string, string | undefined>): 
   return {
     providers: [
       GitHubProvider({
-        clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        clientId: env.GITHUB_CLIENT_ID,
+        clientSecret: env.GITHUB_CLIENT_SECRET,
+        // Available Scopes
+        // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+        authorization: { params: { scope: 'read:user public_repo read:org' } },
       }),
       SolanaProvider(cookies),
     ],
     adapter: PrismaAdapter(prisma),
     session: { strategy: 'jwt' },
-    jwt: { secret: process.env.JWT_SECRET },
+    jwt: { secret: env.JWT_SECRET },
     cookies: {},
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
     pages: {
       signIn: '/auth/signin',
       signOut: '/auth/signout',
