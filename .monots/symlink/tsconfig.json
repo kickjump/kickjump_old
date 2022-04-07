@@ -23,9 +23,6 @@
       "path": "packages/kickjump__db/src"
     },
     {
-      "path": "packages/kickjump__prisma/src"
-    },
-    {
       "path": "packages/kickjump__tokens/src"
     },
     {

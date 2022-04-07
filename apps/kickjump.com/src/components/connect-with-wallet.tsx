@@ -90,5 +90,8 @@ async function getWalletSignature(props: GetWalletSignature) {
   const signature = await wallet.signMessage(encodedMessage);
   return {
     /** This is a secret key */
-    nonce, publicKey: wallet.publicKey.toBase58(), signature: base58.encode(signature) };
+    nonce,
+    publicKey: wallet.publicKey.toBase58(),
+    signature: base58.encode(signature),
+  };
 }

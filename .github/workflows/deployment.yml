@@ -43,8 +43,6 @@ jobs:
 
       - name: install and audit
         uses: ./.github/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: deploy staging website
         id: deploy-vercel-staging
