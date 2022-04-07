@@ -1,6 +1,6 @@
-export interface Credentials {
-  version: '0.1.0';
-  name: 'credentials';
+export interface SolanaCredentials {
+  version: '0.0.0';
+  name: 'solana_credentials';
   instructions: [
     {
       name: 'initialize';
@@ -10,9 +10,9 @@ export interface Credentials {
   ];
 }
 
-export const IDL: Credentials = {
-  version: '0.1.0',
-  name: 'credentials',
+export const IDL: SolanaCredentials = {
+  version: '0.0.0',
+  name: 'solana_credentials',
   instructions: [
     {
       name: 'initialize',

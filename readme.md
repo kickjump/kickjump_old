@@ -40,12 +40,25 @@ The problem is that almost none of the value created is passed onto the teams be
 
 **KickJump** solves this fundamental problem by providing a toolkit for open source developers to build financially sustainable projects.
 
-- Stakeholders can financially speculate on via project tokens.
+- Stakeholders can financially speculate on projects via their tokens.
 - Governance is incentivized and monetized via tokens and credentials.
 - Project specific rules based on the needs and requirements.
 - Provide a suite of tools to enhance value creation of project stakeholders via zero-effort revenue share arrangements.
 
 ## Contributing
+
+You will need the following installed on your machine:
+
+- node >= 16
+- rust
+
+```bash
+npm run bootstrap
+```
+
+This initializes the project and all requirements. The first time this runs it might take a few minutes while installing `anchor`.
+
+The package manager used is `pnpm` which will be available after running the initial command.
 
 To experiment with the GitHub API you will need to create your own development GitHub application.
 

@@ -1,3 +1,9 @@
+const path = require('node:path');
+
+function baseDir(...paths) {
+  return path.join(__dirname, '../..', ...paths);
+}
+
 module.exports = {
   extends: ['monots'],
   overrides: [
@@ -5,7 +11,7 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       extends: ['monots/full'],
       parserOptions: {
-        project: ['./.monots/tsconfig.lint.json'],
+        project: [baseDir('./.monots/tsconfig.lint.json')],
       },
     },
     {

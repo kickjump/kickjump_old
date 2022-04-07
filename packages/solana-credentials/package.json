@@ -31,7 +31,7 @@
     "dist"
   ],
   "scripts": {
-    "generate": "cp ../../target/types/credentials.ts src/generated.ts"
+    "fix:idl": "cp ../../target/types/solana_credentials.ts src/generated.ts && eslint --fix src/generated.ts && prettier --write src/generated.ts"
   },
   "dependencies": {
     "@swc/helpers": "^0.3.8"
