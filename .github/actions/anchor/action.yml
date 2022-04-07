@@ -1,0 +1,17 @@
+name: 'Setup Anchor'
+description: 'Setup Anchor'
+inputs:
+  anchor-version: # id of input
+    description: 'The version of anchor to install'
+    required: false
+    default: 0.22.1
+runs:
+  using: 'composite'
+  steps:
+    - name: setup rust
+      id: setup-rust
+      uses: ./.github/actions/rust
+
+    - run: cargo install --git https://github.com/project-serum/anchor --tag "v${{ inputs.anchor-version }}" anchor-cli --locked
+      shell: bash
+      if: steps.setup-rust.outputs.cache-hit != 'true'
