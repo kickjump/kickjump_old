@@ -28,7 +28,7 @@
     "dist"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.3.2"
+    "@swc/helpers": "^0.3.8"
   },
   "publishConfig": {
     "access": "public"

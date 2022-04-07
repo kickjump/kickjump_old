@@ -34,7 +34,7 @@
     "generate": "cp ../../target/types/credentials.ts src/generated.ts"
   },
   "dependencies": {
-    "@swc/helpers": "^0.3.2"
+    "@swc/helpers": "^0.3.8"
   },
   "publishConfig": {
     "access": "public"
