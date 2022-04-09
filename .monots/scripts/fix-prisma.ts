@@ -12,11 +12,12 @@ async function main() {
   const source = await fs.readFile(TARGET, { encoding: 'utf-8' });
   const updated = source.replace(
     /process\.cwd\(\)/g,
-    JSON.stringify(baseDir('packages/kickjump__prisma')),
+    // JSON.stringify(baseDir('packages/kickjump__prisma')),
+    `path.join(__dirname, '..')`,
   );
 
   await fs.writeFile(TARGET, updated);
-  console.log(chalk`{green Successfully fixed prisma cwd(). }`);
+  console.log(chalk`{green Successfully replaced prisma \`process.cwd()\`. }`);
 }
 
 main();

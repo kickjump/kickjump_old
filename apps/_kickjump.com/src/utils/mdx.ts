@@ -32,7 +32,7 @@ async function getFile(props: GetFileProps): Promise<string> {
   const { filename, type } = props;
   const filePath = getPath(type, filename);
 
-  return fs.readFile(filePath, { encoding: 'utf-8' });
+  return fs.readFile(filePath, { encoding: 'utf8' });
 }
 
 interface MdxListItem {

@@ -91,7 +91,7 @@ export function solanaTransactionBytes(transaction: Transaction) {
  * as a base64 string.
  */
 export function decodeBase64(value: string) {
-  return Buffer.from(value, 'base64').toString('utf-8');
+  return Buffer.from(value, 'base64').toString('utf8');
 }
 
 export * as log from 'next/dist/build/output/log';

@@ -1,0 +1,41 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field in the 'package.json' for this package.",
+    "`monots.tsconfigs.`",
+    "",
+    "Then run the command to automatically update everything: `monots fix`"
+  ],
+  "extends": "../../.monots/tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "CommonJS",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["./*"]
+    },
+    "types": ["node", "@testing-library/jest-dom"]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "target": "ESNext",
+      "module": "CommonJS"
+    }
+  }
+}

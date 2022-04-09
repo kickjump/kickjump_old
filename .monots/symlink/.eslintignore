@@ -1,7 +1,5 @@
 !.eslintrc.js
 !**/.eslintrc.js
-**/lib
-lib
 dist
 **/dist
 **/dist/**
@@ -14,7 +12,6 @@ coverage
 .cache
 **/.next
 lerna.json
-.vscode
 .yarn/**
 
 **/temp/**
@@ -22,9 +19,6 @@ lerna.json
 pnpm-lock.yaml
 /pnpm-lock.yaml
 .pnpm-store/
-
-website/api/_build
-website/public/build
 
 **/src/generated
 

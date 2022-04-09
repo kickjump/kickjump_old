@@ -8,6 +8,16 @@ services:
       MYSQL_ROOT_PASSWORD: kickjump
       MYSQL_DATABASE: kickjump
       MYSQL_USER: kickjump
-
     ports:
       - '3307:3306'
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=kickjump
+      - POSTGRES_PASSWORD=kickjump
+      - POSTGRES_DB=kickjump
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data

@@ -141,6 +141,10 @@ yarn.lock
 /.swc
 /.env.example
 /docker-compose.yml
+/Dockerfile
+/fly.toml
+/Anchor.toml
+/.dockerignore
 .parcel-cache/
 .psc-ide-port
 
