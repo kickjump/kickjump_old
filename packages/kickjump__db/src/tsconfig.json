@@ -7,6 +7,7 @@
   ],
   "extends": "../../../.monots/tsconfig.base.json",
   "compilerOptions": {
+    "module": "NodeNext",
     "types": [],
     "noEmit": false,
     "declaration": true,

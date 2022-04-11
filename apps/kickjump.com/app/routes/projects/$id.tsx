@@ -3,43 +3,42 @@ import { json, redirect } from '@remix-run/node';
 import { Form, useCatch, useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
 
-import type { Note } from '~/models/note.server';
-import { deleteNote, getNote } from '~/models/note.server';
-import { requireUserId } from '~/session.server';
+import { requireUserId } from '~/utils/auth.server';
+import { type Project, ProjectModel } from '~/utils/db.server';
 
 interface LoaderData {
-  note: Note;
+  project: Project;
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
-  invariant(params.noteId, 'noteId not found');
+  invariant(params.id, 'project not found');
 
-  const note = await getNote({ userId, id: params.noteId });
+  const project = await ProjectModel.get({ userId, id: params.id });
 
-  if (!note) {
+  if (!project) {
     throw new Response('Not Found', { status: 404 });
   }
 
-  return json<LoaderData>({ note });
+  return json<LoaderData>({ project });
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
-  invariant(params.noteId, 'noteId not found');
+  invariant(params.id, 'project not found');
 
-  await deleteNote({ userId, id: params.noteId });
+  await ProjectModel.remove({ userId, id: params.id });
 
-  return redirect('/notes');
+  return redirect('/projects');
 };
 
 export default function NoteDetailsPage() {
-  const data = useLoaderData();
+  const data = useLoaderData<LoaderData>();
 
   return (
     <div>
-      <h3 className='text-2xl font-bold'>{data.note.title}</h3>
-      <p className='py-6'>{data.note.body}</p>
+      <h3 className='text-2xl font-bold'>{data.project.title}</h3>
+      <p className='py-6'>{data.project.description}</p>
       <hr className='my-4' />
       <Form method='post'>
         <button

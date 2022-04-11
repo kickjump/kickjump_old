@@ -1,2 +1,2 @@
-export * from './models';
-export * from './prisma';
+export * from './models/index.js';
+export * from './prisma.js';

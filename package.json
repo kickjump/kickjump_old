@@ -45,6 +45,7 @@
     "scripts": "pnpm --dir .monots/scripts run",
     "setup:anchor": "pnpm scripts setup:anchor && anchor build",
     "setup:rust": "cargo upgrade -h || cargo install cargo-edit",
+    "start:kickjump.com": "pnpm --dir apps/kickjump.com start",
     "test": "run-p -c test:kickjump.com test:packages test:db",
     "test:db": "pnpm --dir tests test:db",
     "test:kickjump.com": "pnpm --dir tests/kickjump.com test",
@@ -125,6 +126,12 @@
     "onlyBuiltDependencies": [
       "@parcel/css-cli"
     ],
-    "overrides": {}
+    "overrides": {
+      "node-forge@<1.3.0": ">=1.3.0",
+      "glob-parent@<5.1.2": ">=5.1.2",
+      "node-fetch@<2.6.7": ">=2.6.7",
+      "node-forge@<1.0.0": ">=1.0.0",
+      "trim-newlines@<3.0.1": ">=3.0.1"
+    }
   }
 }

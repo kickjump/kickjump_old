@@ -10,71 +10,90 @@ generator js {
   previewFeatures = ["referentialIntegrity"]
 }
 
+/// Users can have multiple ID's
 model Account {
-  /// The unique identifier.
-  id String @id @default(cuid())
-
+  /// The account id.
+  id                    String   @id @default(cuid())
   /// The userId on the authentication service.
-  userId String @map("user_id")
-
+  userId                String   @map("user_id")
   /// The type of account.
-  type String
-
-  /// The name of the provider for this account. In this case GitHub is the only option.
-  provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-
+  type                  String
+  /// The name of the provider for this account. In this case GitHub is the only
+  /// option.
+  provider              String
+  providerAccountId     String   @map("provider_account_id")
+  refreshToken          String?  @map("refresh_token") @db.Text
   /// This is a GitHub login specific field which allows for next-auth to
   //automatically refresh the token.
-  refresh_token_expires_in Int?
-
+  refreshTokenExpiresIn Int?     @map("refresh_token_expires_in")
   /// The access token for this account.
-  access_token String? @db.Text
-
+  accessToken           String?  @map("access_token") @db.Text
   /// The timestamp of when the token expires.
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
-
+  expiresAt             Int?     @map("expires_at")
+  tokenType             String?  @map("token_type")
+  scope                 String?
+  idToken               String?  @map("id_token") @db.Text
+  sessionState          String?  @map("session_state")
+  oauthTokenSecret      String?  @map("oauth_token_secret")
+  oauthToken            String?  @map("oauth_token")
   /// When the database record was first created.
-  createdAt DateTime @default(now()) @map("created_at")
-
+  createdAt             DateTime @default(now()) @map("created_at")
   /// When the database record was last updated.
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt             DateTime @updatedAt @map("updated_at")
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
+/// A user model. Be careful when populating to avoid sending sensitive data to
+/// the client.
+///
+/// It might be worthwhile splitting up the model for safety in the future.
 model User {
-  /// The unique identifier.
-  id            String       @id @default(cuid())
-  /// The name of the user which is retrieved from their GitHub profile when signing up.
-  name          String?
-  /// The primary email address for this user.
-  email         String?      @unique
-  /// The date the email was verified.
-  emailVerified DateTime?    @map("email_verified")
+  /// The user id.
+  id           String       @id @default(cuid())
+  /// The name of the user which is retrieved from their GitHub profile when
+  /// signing up.
+  name         String?
+  /// The primary email address for this user. Only verified email address can
+  /// be set as primary.
+  primaryEmail String?      @map("primary_email")
+  /// The emails for this user.
+  emails       Email[]
   /// A profile image url if one exists.
-  image         String?
+  image        String?
+  /// The user password is seperated from the user to prevent unitentionally
+  /// sending it to the client.
+  password     Password?
   /// Connected authentication accounts for this user.
-  accounts      Account[]
+  accounts     Account[]
   /// A user can attach multiple wallets to their profile. Once attached a
   /// wallet can be used to sign in.
-  wallets       UserWallet[]
+  wallets      UserWallet[]
+  /// Projects created by this user.
+  projects     Project[]
   /// When the database record was first created.
-  createdAt     DateTime     @default(now()) @map("created_at")
+  createdAt    DateTime     @default(now()) @map("created_at")
   /// When the database record was last updated.
-  updatedAt     DateTime     @updatedAt @map("updated_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+/// Rather than storing a single email per user, a user may store multiple email
+/// address and set one as their primary.
+model Email {
+  /// The primary email address for this user.
+  email         String?   @unique
+  /// The date the email was verified.
+  emailVerified DateTime? @map("email_verified")
+  /// The userId field for the relation.
+  userId        String    @unique @map("user_id")
+  /// When the database record was first created.
+  createdAt     DateTime  @default(now()) @map("created_at")
+  /// The owner of this email address.
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -90,14 +109,37 @@ model VerificationToken {
 model UserWallet {
   /// The wallet public key. If a user wants to transfer the wallet to another
   /// user they must first delete it from their current user account.
-  publicKey String @unique @map("public_key")
-
-  /// The userId field for the foreign key.
-  userId String @map("user_id")
-
+  publicKey String   @unique @map("public_key")
+  /// The userId field for the relation.
+  userId    String   @map("user_id")
   /// When the database record was first created.
   createdAt DateTime @default(now()) @map("created_at")
-
   /// The owner of this wallet.
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Password {
+  /// The hashed password.
+  hash   String
+  /// The user this password is for.
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  /// The user id for the relation.
+  userId String @unique @map("user_id")
+}
+
+model Project {
+  /// The project id.
+  id          String   @id @default(cuid())
+  /// The project title.
+  title       String
+  /// The project description as a markdown compatible string.
+  description String
+  /// When the database record was first created.
+  createdAt   DateTime @default(now()) @map("created_at")
+  /// When the database record was last updated.
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  /// The owner of this project.
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  /// The id of the user that owns this project.
+  userId      String   @map("user_id")
 }

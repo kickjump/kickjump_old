@@ -1,7 +1,3 @@
-/**
- * The logger used when running scripts.
- */
-
 import type { Transaction } from '@solana/web3.js';
 
 /**
@@ -17,7 +13,7 @@ export function isProduction() {
  */
 export function getUrl(path?: string): string {
   // In the browser we just use a relative URL and everything works.
-  if (process.browser) {
+  if (typeof document !== 'undefined') {
     return path ?? '';
   }
 

@@ -1,4 +1,4 @@
-import { validateEmail } from './utils';
+import { validateEmail } from '../app/hooks/use-optional-user';
 
 test('validateEmail returns false for non-emails', () => {
   expect(validateEmail()).toBe(false);

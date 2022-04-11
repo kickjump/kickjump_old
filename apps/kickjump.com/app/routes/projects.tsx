@@ -2,22 +2,22 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Form, Link, NavLink, Outlet, useLoaderData } from '@remix-run/react';
 
-import { getNoteListItems } from '~/models/note.server';
-import { requireUserId } from '~/session.server';
-import { useUser } from '~/utils';
+import { useUser } from '~/hooks/use-user';
+import { requireUserId } from '~/utils/auth.server';
+import { ProjectModel } from '~/utils/db.server';
 
 interface LoaderData {
-  noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
+  projects: Awaited<ReturnType<typeof ProjectModel['getForUser']>>;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return json<LoaderData>({ noteListItems });
+  const projects = await ProjectModel.getForUser({ userId });
+  return json<LoaderData>({ projects });
 };
 
-export default function NotesPage() {
-  const data = useLoaderData();
+export default function ProjectsPage() {
+  const data = useLoaderData<LoaderData>();
   const user = useUser();
 
   return (
@@ -45,19 +45,19 @@ export default function NotesPage() {
 
           <hr />
 
-          {data.noteListItems.length === 0 ? (
-            <p className='p-4'>No notes yet</p>
+          {data.projects.length === 0 ? (
+            <p className='p-4'>No projects yet</p>
           ) : (
             <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
+              {data.projects.map((project) => (
+                <li key={project.id}>
                   <NavLink
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? 'bg-white' : ''}`
                     }
-                    to={note.id}
+                    to={project.id}
                   >
-                    📝 {note.title}
+                    📝 {project.title}
                   </NavLink>
                 </li>
               ))}

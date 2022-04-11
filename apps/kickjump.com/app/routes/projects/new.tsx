@@ -3,13 +3,13 @@ import { json, redirect } from '@remix-run/node';
 import { Form, useActionData } from '@remix-run/react';
 import * as React from 'react';
 
-import { createNote } from '~/models/note.server';
-import { requireUserId } from '~/session.server';
+import { requireUserId } from '~/utils/auth.server';
+import { ProjectModel } from '~/utils/db.server';
 
 interface ActionData {
   errors?: {
     title?: string;
-    body?: string;
+    description?: string;
   };
 }
 
@@ -18,31 +18,31 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formData = await request.formData();
   const title = formData.get('title');
-  const body = formData.get('body');
+  const description = formData.get('description');
 
   if (typeof title !== 'string' || title.length === 0) {
     return json<ActionData>({ errors: { title: 'Title is required' } }, { status: 400 });
   }
 
-  if (typeof body !== 'string' || body.length === 0) {
-    return json<ActionData>({ errors: { body: 'Body is required' } }, { status: 400 });
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>({ errors: { description: 'Body is required' } }, { status: 400 });
   }
 
-  const note = await createNote({ title, body, userId });
+  const project = await ProjectModel.create({ title, description, userId });
 
-  return redirect(`/notes/${note.id}`);
+  return redirect(`/projects/${project.id}`);
 };
 
 export default function NewNotePage() {
   const actionData = useActionData() as ActionData;
   const titleRef = React.useRef<HTMLInputElement>(null);
-  const bodyRef = React.useRef<HTMLTextAreaElement>(null);
+  const descriptionRef = React.useRef<HTMLTextAreaElement>(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.title) {
       titleRef.current?.focus();
-    } else if (actionData?.errors?.body) {
-      bodyRef.current?.focus();
+    } else if (actionData?.errors?.description) {
+      descriptionRef.current?.focus();
     }
   }, [actionData]);
 
@@ -78,17 +78,17 @@ export default function NewNotePage() {
         <label className='flex w-full flex-col gap-1'>
           <span>Body: </span>
           <textarea
-            ref={bodyRef}
-            name='body'
+            ref={descriptionRef}
+            name='description'
             rows={8}
             className='w-full flex-1 rounded-md border-2 border-blue-500 py-2 px-3 text-lg leading-6'
-            aria-invalid={actionData?.errors?.body ? true : undefined}
-            aria-errormessage={actionData?.errors?.body ? 'body-error' : undefined}
+            aria-invalid={actionData?.errors?.description ? true : undefined}
+            aria-errormessage={actionData?.errors?.description ? 'description-error' : undefined}
           />
         </label>
-        {actionData?.errors?.body && (
-          <div className='pt-1 text-red-700' id='body-error'>
-            {actionData.errors.body}
+        {actionData?.errors?.description && (
+          <div className='pt-1 text-red-700' id='description-error'>
+            {actionData.errors.description}
           </div>
         )}
       </div>
