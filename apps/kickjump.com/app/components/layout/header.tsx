@@ -32,16 +32,12 @@ const webLinks = [
 
 const mobileLinks = [
   { name: `About`, path: `/about` },
-  // { name: `Open Source`, path: `/open-source` },
-  // { name: `Blog`, path: `/blog` },
   { name: `Tech Stack`, path: `/tech-stack` },
   { name: `Achievements`, path: `/achievements` },
 ];
 
 const dropdownLinks = [
   { name: `Tech Stack`, path: `/tech-stack` },
-  // { name: `Open Source`, path: `/open-source` },
-  // { name: `Developer Story`, path: `/developer-story` },
   { name: `Achievements`, path: `/achievements` },
 ];
 
@@ -103,9 +99,7 @@ const MenuLink = (props: MenuLinkProps) => {
         bg={props.rPath === props.path ? props.bg : undefined}
       >
         <HStack>
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore:next-line */}
-          {iconsObj[props.path]}
+          {iconsObj[props.path as keyof typeof iconsObj]}
           <Text>{props.name}</Text>
         </HStack>
       </MenuItem>
@@ -117,6 +111,9 @@ export function Header() {
   const user = useOptionalUser();
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const nextUrl = ['/login', '/join'].some((path) => location.pathname.startsWith(path))
+    ? ''
+    : location.pathname;
 
   const menuProps = {
     bg: useColorModeValue(`gray.200`, `gray.900`),
@@ -134,6 +131,7 @@ export function Header() {
         as='header'
       >
         <Flex
+          className='h-16'
           // h={16}
           alignItems={`center`}
           justifyContent={`space-between`}
@@ -151,7 +149,7 @@ export function Header() {
           <HStack spacing={8} alignItems={`center`}>
             <Box>
               <RemixLink to='/'>
-                <Logo size={50} />
+                <Logo size={40} />
               </RemixLink>
             </Box>
             <HStack as={`nav`} spacing={4} display={{ base: `none`, md: `flex` }}>
@@ -198,18 +196,10 @@ export function Header() {
           <Flex alignItems={`center`}>
             {user ? null : (
               <>
-                <Button
-                  variant='ghost'
-                  as={RemixLink}
-                  to={addNextUrlToQuery('/login', location.pathname)}
-                >
-                  Sign in
+                <Button variant='ghost' as={RemixLink} to={addNextUrlToQuery('/login', nextUrl)}>
+                  Login
                 </Button>
-                <Button
-                  variant='primary'
-                  as={RemixLink}
-                  to={addNextUrlToQuery('/join', location.pathname)}
-                >
+                <Button variant='ghost' as={RemixLink} to={addNextUrlToQuery('/join', nextUrl)}>
                   Join
                 </Button>
               </>

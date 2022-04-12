@@ -1,4 +1,5 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, theme } from '@chakra-ui/react';
+import { Logo, SolanaProvider } from '@kickjump/components';
 import { type ReactNode } from 'react';
 import { AuthenticityTokenProvider } from 'remix-utils';
 
@@ -14,10 +15,17 @@ export const AppProvider = (props: AppProviderProps) => {
   const { csrf, user } = useRootLoader();
 
   return (
-    <ChakraProvider>
-      <AuthenticityTokenProvider token={csrf}>
-        <UserContext.Provider value={user}>{children}</UserContext.Provider>
-      </AuthenticityTokenProvider>
+    <ChakraProvider theme={theme}>
+      {/* <WalletKitProvider
+        defaultNetwork='devnet'
+        app={{ name: 'KickJump', icon: <Logo size='1em' /> }}
+      > */}
+      <SolanaProvider>
+        <AuthenticityTokenProvider token={csrf}>
+          <UserContext.Provider value={user}>{children}</UserContext.Provider>
+        </AuthenticityTokenProvider>
+      </SolanaProvider>
+      {/* </WalletKitProvider> */}
     </ChakraProvider>
   );
 };

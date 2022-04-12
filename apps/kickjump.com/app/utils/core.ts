@@ -18,6 +18,10 @@ export function isProduction() {
  * absolute URL.
  */
 export function getAbsoluteUrl(path?: string, forceProtocol = false): string {
+  if (path === '/') {
+    path = undefined;
+  }
+
   invariant(
     path === undefined || (path.length > 1 && path.startsWith('/')),
     'The path must either be left empty or start with `/`',
@@ -94,7 +98,10 @@ export function decodeBase64(value: string) {
  */
 export function addNextUrlToQuery(to: string, next: string) {
   const url = new URL(getAbsoluteUrl(to, true));
-  url.searchParams.set(NEXT_URL_KEY, encodeURIComponent(next));
+
+  if (next) {
+    url.searchParams.set(NEXT_URL_KEY, encodeURIComponent(next));
+  }
 
   return `${url.pathname}${url.search}`;
 }

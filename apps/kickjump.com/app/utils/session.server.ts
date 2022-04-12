@@ -3,6 +3,7 @@ import { type Session, createCookieSessionStorage } from '@remix-run/node';
 import { env } from '~/utils/env.server';
 
 import { NEXT_URL_KEY, SESSION_NAME } from './constants';
+import { getAbsoluteUrl } from './core';
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -52,17 +53,10 @@ export async function addNextUrlToSession(request: Request, forceRedirect?: stri
  *
  * This will default to the session in the current URL if one exists.
  */
-export async function getNextUrlFromSession(request: Request, fallback = '/'): Promise<string> {
-  const nextUrl = new URL(request.url).searchParams.get(NEXT_URL_KEY);
-
-  // Prefer the url from the query string.
-  if (nextUrl) {
-    return decodeURIComponent(nextUrl);
-  }
-
-  // fallback to the session (this is used for oauth redirects).
+export async function getNextUrlFromSession(request: Request, fallback?: string): Promise<string> {
   const session = await getSession(request);
-  return decodeURIComponent(session.get(NEXT_URL_KEY) ?? fallback);
-}
+  const nextUrl =
+    new URL(request.url).searchParams.get(NEXT_URL_KEY) || session.get(NEXT_URL_KEY) || fallback;
 
-declare const a: object;
+  return getAbsoluteUrl(nextUrl ? decodeURIComponent(nextUrl) : undefined);
+}

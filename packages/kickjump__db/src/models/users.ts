@@ -1,12 +1,31 @@
-import type { Prisma } from '@kickjump/prisma';
+import type { Prisma, UserWallet } from '@kickjump/prisma';
 
+import { ACCOUNT_FIELDS, NESTED_POPULATED_USER, POPULATED_USER } from '../constants.js';
 import { prisma } from '../prisma.js';
-import { ACCOUNT_FIELDS, NESTED_POPULATED_USER, POPULATED_USER } from './model-constants';
-import type { PopulatedAccount, PopulatedUser } from './model-types';
+import type { PopulatedAccount, PopulatedUser } from '../types.js';
 
+/**
+ * Get the populated user from their email address.
+ */
 export async function getByEmail(email: string): Promise<PopulatedUser | undefined> {
   const result = await prisma.email.findUnique({
-    where: { email: email ?? undefined },
+    where: { email },
+    include: NESTED_POPULATED_USER,
+  });
+
+  if (!result) {
+    return;
+  }
+
+  return result.user;
+}
+
+/**
+ * Get the user by their wallet public key.
+ */
+export async function getByWallet(publicKey: string): Promise<PopulatedUser | undefined> {
+  const result = await prisma.userWallet.findUnique({
+    where: { publicKey },
     include: NESTED_POPULATED_USER,
   });
 
@@ -90,4 +109,24 @@ interface ByAccountProps {
  */
 export async function unlinkAccount(provider_providerAccountId: ByAccountProps) {
   await prisma.account.delete({ where: { provider_providerAccountId } });
+}
+
+interface LinkWalletProps {
+  userId: string;
+  publicKey: string;
+}
+
+/**
+ * Link the provided wallet.
+ */
+export async function linkWallet({ userId, publicKey }: LinkWalletProps): Promise<UserWallet> {
+  return prisma.userWallet.create({ data: { userId, publicKey } });
+}
+
+/**
+ * Unlink the wallet. Check that the wallet belongs to the correct user before
+ * using this method.
+ */
+export async function unlinkWallet(publicKey: string): Promise<UserWallet> {
+  return prisma.userWallet.delete({ where: { publicKey } });
 }

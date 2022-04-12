@@ -1,11 +1,12 @@
 import type { AnchorProviderProp, StrataSdks, StrataSdksProp } from '@kickjump/tokens';
-import { Provider as AnchorProvider } from '@project-serum/anchor';
+import { AnchorProvider } from '@project-serum/anchor';
 import { type AnchorWallet, useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
+import type { ConfirmOptions, Signer, Transaction } from '@solana/web3.js';
 import { type Connection, sendAndConfirmRawTransaction } from '@solana/web3.js';
 import { SplTokenBonding } from '@strata-foundation/spl-token-bonding';
 import { SplTokenCollective } from '@strata-foundation/spl-token-collective';
 import { SplTokenMetadata } from '@strata-foundation/spl-utils';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { type ReactNode, createContext, useContext, useMemo, useState } from 'react';
 import { useAsync } from 'react-async-hook';
 
 import { type BaseProviderProps } from './types';
@@ -31,7 +32,11 @@ function createAnchorProvider(props: CreateAnchorProviderProps) {
   const provider = new AnchorProvider(connection, wallet, {});
 
   // The default implementation of send does not use the transaction resulting from wallet.signTransaction. So we need to fix it.
-  provider.send = async function updatedProviderSend(transaction, signers, options) {
+  (provider as any).send = async function updatedProviderSend(
+    transaction: Transaction,
+    signers: Signer[],
+    options: ConfirmOptions,
+  ) {
     if (signers === undefined) {
       signers = [];
     }
@@ -129,7 +134,13 @@ const StrataSdksProvider = (props: BaseProviderProps) => {
   return <StrataContext.Provider value={value}>{children}</StrataContext.Provider>;
 };
 
-export const StrataProvider: React.FC = ({ children }) => {
+interface StrataProviderProps {
+  children: ReactNode;
+}
+
+export const StrataProvider = (props: StrataProviderProps) => {
+  const { children } = props;
+
   return (
     <AnchorContextProvider>
       <StrataSdksProvider>{children}</StrataSdksProvider>

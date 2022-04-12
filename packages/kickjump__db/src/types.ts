@@ -1,11 +1,14 @@
-export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+import type { Prisma } from '@kickjump/prisma';
 
-/**
- * XOR is needed to have a real mutually exclusive union type
- * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
- */
-export type XOR<T, U> = T extends object
-  ? U extends object
-    ? (Without<T, U> & U) | (Without<U, T> & T)
-    : U
-  : T;
+import type { ACCOUNT_FIELDS, POPULATED_USER } from './constants.js';
+
+interface Include<Type> {
+  include: Type;
+}
+
+interface Select<Type> {
+  select: Type;
+}
+
+export type PopulatedUser = Prisma.UserGetPayload<Include<typeof POPULATED_USER>>;
+export type PopulatedAccount = Prisma.AccountGetPayload<Select<typeof ACCOUNT_FIELDS>>;

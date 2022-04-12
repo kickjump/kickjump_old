@@ -1,2 +1,1 @@
-export * from './icon.js';
-export * from './icon-variant.js';
+export * from './solana-icon.js';

@@ -18,6 +18,7 @@ module.exports = {
     '@strata-foundation/spl-token-collective',
     'superstruct',
     '@solana/wallet-adapter-phantom',
+    '@solana/wallet-adapter-glow',
     '@solana/wallet-adapter-base',
     '@solana/spl-token',
     '@solana/buffer-layout-utils',

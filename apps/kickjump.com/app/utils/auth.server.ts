@@ -1,14 +1,20 @@
 import { redirect } from '@remix-run/node';
+import { PublicKey } from '@solana/web3.js';
+import base58 from 'bs58';
 import { Authenticator, AuthorizationError } from 'remix-auth';
 import { FormStrategy } from 'remix-auth-form';
 import type { GitHubScope } from 'remix-auth-socials';
 import { GitHubStrategy, SocialsProvider } from 'remix-auth-socials';
+import nacl from 'tweetnacl';
 
+import { UserModel } from '~/utils/db.server';
 import { env } from '~/utils/env.server';
 import { sessionStorage } from '~/utils/session.server';
+import { getWalletMessage } from '~/utils/solana';
 
-import { addNextUrlToQuery, getAbsoluteUrl } from './core';
-import { UserModel } from './db.server';
+import { addNextUrlToQuery, getAbsoluteUrl, stringToUint8Array } from './core';
+import type { SolanaLoginSchema } from './validators';
+import { solanaLoginValidator } from './validators';
 
 /**
  * The user data that is stored in the session.
@@ -94,8 +100,30 @@ authenticator.use(
 );
 
 authenticator.use(
-  new FormStrategy(async ({ form }) => {
-    return { id: '' };
+  new FormStrategy(async ({ form, context }) => {
+    // validate the data
+    const result = await solanaLoginValidator.validate(form);
+
+    if (result.error) {
+      throw result.error;
+    }
+
+    // The hash is passed through in the context.
+    if (!context.hash) {
+      throw new AuthorizationError('No hash detected in the session.');
+    }
+
+    // Ensure that the provided data is a valid wallet signature.
+    verifySolanaWallet({ hash: context.hash, type: 'login', ...result.data });
+
+    // Find the user, if existing.
+    const user = await UserModel.getByWallet(result.data.publicKey);
+
+    if (!user) {
+      throw new AuthorizationError('The provided wallet has not been connected to a user.');
+    }
+
+    return { id: user.id };
   }),
   'solana',
 );
@@ -151,4 +179,40 @@ export async function requireUser(request: Request) {
 
 export function logout(request: Request): Promise<void> {
   return authenticator.logout(request, { redirectTo: '/' });
+}
+
+interface VerifySolanaWallet extends SolanaLoginSchema {
+  /**
+   * `connect` - should be used when user is already logged in and would like to
+   * add a wallet to their account.
+   *
+   * `login` - once a wallet has been connected it can be used to login to the
+   * user account.
+   */
+  type: 'connect' | 'login';
+
+  /**
+   * The hash is stored in a secure cookie and used to mangle the signature so
+   * that if the request is intercepted it can't be used to validate the wallet
+   * falsely.
+   */
+  hash: string;
+}
+
+/**
+ * Will throw an error if the public key is not valid.
+ */
+export function verifySolanaWallet(props: VerifySolanaWallet) {
+  const { type, publicKey, signature, hash } = props;
+  const messageBytes = stringToUint8Array(getWalletMessage({ hash, type }));
+  const publicKeyBytes = new PublicKey(publicKey).toBuffer();
+  const signatureBytes = base58.decode(signature);
+  const verified = nacl.sign.detached.verify(messageBytes, signatureBytes, publicKeyBytes);
+
+  if (!verified) {
+    console.error(`solana public key validation failed`);
+    throw new AuthorizationError(
+      'The provided solana wallet could not be verified with the given signature.',
+    );
+  }
 }

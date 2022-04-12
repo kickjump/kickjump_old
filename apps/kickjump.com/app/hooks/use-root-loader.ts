@@ -8,10 +8,12 @@ export interface RootLoaderData {
 }
 
 function isRootLoaderData(data: unknown): data is RootLoaderData {
-  console.log('check', typeof data);
   return typeof data === 'object';
 }
 
+/**
+ * Get the data from the root loader.
+ */
 export function useRootLoader(): RootLoaderData {
   const data = useMatchesData('root');
 

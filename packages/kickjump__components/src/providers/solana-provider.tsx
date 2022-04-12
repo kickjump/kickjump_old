@@ -1,12 +1,21 @@
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { GlowWalletAdapter } from '@solana/wallet-adapter-glow';
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import type { Commitment } from '@solana/web3.js';
 import { clusterApiUrl } from '@solana/web3.js';
-import { ErrorHandlerProvider } from '@strata-foundation/react';
 import { type ReactNode, useMemo } from 'react';
 
-import { StrataProvider } from './strata-provider';
+// These dependencies break the remix build
+// import { ErrorHandlerProvider } from '@strata-foundation/react';
+// import { SplTokenBonding } from '@strata-foundation/spl-token-bonding';
+// import { SplTokenCollective } from '@strata-foundation/spl-token-collective';
+// import { SplTokenMetadata } from '@strata-foundation/spl-utils';
+// import { StrataProvider } from './strata-provider';
+
+// console.log(SplTokenBonding);
+// console.log(SplTokenCollective);
+// console.log(SplTokenMetadata);
 
 interface SolanaProviderProps {
   children: ReactNode;
@@ -23,13 +32,16 @@ export const SolanaProvider = (props: SolanaProviderProps) => {
   const { children } = props;
 
   return (
-    <ErrorHandlerProvider>
+    <>
+      {/* <ErrorHandlerProvider> */}
       <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} autoConnect>
-          <StrataProvider>{children}</StrataProvider>
+        <WalletProvider wallets={wallets}>
+          {children}
+          {/* <StrataProvider>{children}</StrataProvider> */}
         </WalletProvider>
       </ConnectionProvider>
-    </ErrorHandlerProvider>
+      {/* </ErrorHandlerProvider> */}
+    </>
   );
 };
 
@@ -39,7 +51,7 @@ function useConnectWallet() {
 
   // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
   // Only the wallets you configure here will be compiled into your application
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+  const wallets = useMemo(() => [new PhantomWalletAdapter(), new GlowWalletAdapter()], []);
 
   return { endpoint, wallets };
 }
