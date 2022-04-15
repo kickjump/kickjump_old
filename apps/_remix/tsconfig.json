@@ -20,21 +20,14 @@
       "ESNext"
     ],
     "isolatedModules": true,
-    "rootDirs": [
-      "./",
-      "./.svelte-kit/types"
-    ],
-    "types": [
-      "node",
-      "node-fetch"
-    ],
+    "jsx": "react-jsx",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "$lib": [
-        "src/lib"
-      ],
-      "$lib/*": [
-        "src/lib/*"
+      "~/*": [
+        "./app/*"
       ]
     },
     "skipLibCheck": true

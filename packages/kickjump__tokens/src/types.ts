@@ -25,4 +25,4 @@ export interface AnchorProviderProp {
   provider: AnchorProvider;
 }
 
-export { Provider as AnchorProvider } from '@project-serum/anchor';
+export type { Provider as AnchorProvider } from '@project-serum/anchor';

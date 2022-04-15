@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@kickjump/db": "^0.0.1",
-    "@metaplex-foundation/amman": "^0.3.2",
+    "@metaplex-foundation/amman": "^0.5.0",
     "@playwright/test": "^1.20.2",
-    "@project-serum/anchor": "^0.23.0",
+    "@project-serum/anchor": "^0.24.2",
     "@types/exit": "^0.1.31",
     "@types/signal-exit": "^3.0.1",
     "chalk": "^5.0.1",

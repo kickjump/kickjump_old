@@ -14,13 +14,10 @@
       "path": ".monots/scripts"
     },
     {
-      "path": "apps/_kickjump.com"
+      "path": "apps/_remix"
     },
     {
       "path": "apps/kickjump.com"
-    },
-    {
-      "path": "packages/kickjump__components/src"
     },
     {
       "path": "packages/kickjump__db/src"
