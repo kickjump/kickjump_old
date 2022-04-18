@@ -135,6 +135,8 @@ yarn.lock
 /.markdownlint.json
 /vite.config.ts
 /playwright.config.ts
+/tailwind.config.cjs
+/postcss.config.cjs
 /.swc
 /.env.example
 /docker-compose.yml

@@ -1,3 +1,7 @@
+const config = require('prettier-config-monots/svelte');
+config.bracketSameLine;
 module.exports = {
-  ...require('prettier-config-monots'),
+  ...config,
+  bracketSameLine: false,
+  htmlWhitespaceSensitivity: 'strict',
 };

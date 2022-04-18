@@ -1,0 +1,28 @@
+<script lang="ts">
+  import { range } from '$lib/utils/helpers';
+
+  import cx from 'clsx';
+
+  import { generateSketchProps, type SketchOptions } from './generate-sketch-props';
+
+  export let seed: number = 90;
+  export let iterations = 2;
+  export let filters: SketchOptions['filters'] = [];
+  export let shapes: SketchOptions['shapes'] = undefined;
+  export let rotations: SketchOptions['rotations'] = [];
+  export let rotationClamp: SketchOptions['rotationClamp'] = [0, 2];
+
+  let className: string = '';
+  export { className as class };
+
+  $: props = generateSketchProps(seed, { iterations, filters, shapes, rotationClamp, rotations });
+  $: baseClass = cx('absolute', 'inset-0', 'transition-all', 'antialiased', className);
+  $: classes = range(props.iterations).map((_, index) => ({
+    class: cx(baseClass, props.shapes[index], props.filters[index]),
+    rotation: `rotate(${props.rotations[index]}deg)`,
+  }));
+</script>
+
+{#each classes as cls}
+  <span class={cls.class} style:transform={cls.rotation} />
+{/each}

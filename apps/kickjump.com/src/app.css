@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body,
+  svg {
+    @apply antialiased;
+  }
+
+  p,
+  button,
+  a {
+    @apply font-body;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-normal;
+  }
+
+  h1 {
+    @apply text-5xl md:text-6xl;
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h3 {
+    @apply md:text-3xl text-2xl;
+  }
+
+  h4 {
+    @apply md:text-2xl text-xl;
+  }
+
+  h5 {
+    @apply text-base;
+  }
+
+  h6 {
+    @apply text-xs;
+  }
+}
+
+@layer utilities {
+  .sketch-icon {
+    filter: url(#hand-drawn-icon-1);
+  }
+
+  .sketch-border {
+    filter: url(#hand-drawn-border-1);
+  }
+
+  .sketch-background {
+    filter: url(#hand-drawn-background-1);
+  }
+
+  .decoration-thickness-1 {
+    text-decoration-thickness: 1px;
+  }
+
+  .decoration-thickness-2 {
+    text-decoration-thickness: 2px;
+  }
+
+  .decoration-thickness-3 {
+    text-decoration-thickness: 3px;
+  }
+
+  .decoration-thickness-4 {
+    text-decoration-thickness: 4px;
+  }
+}
+
+:root {
+  --color-primary: 248, 49%, 60%;
+  --color-primary-hover: 242, 63%, 68%;
+  --color-primary-active: 255, 40%, 53%;
+  --color-primary-outline: 269, 47%, 39%;
+  --color-primary-ghost: 222, 100%, 84%;
+  --color-secondary: 34, 100%, 49%;
+  --color-secondary-hover: 39, 100%, 49%;
+  --color-secondary-active: 22, 100%, 48%;
+  --color-secondary-outline: 22, 100%, 48%;
+  --color-secondary-ghost: 42, 100%, 84%;
+  --color-background: 0, 0%, 100%;
+  --color-border: 0, 0%, 10%;
+  --color-text: 0, 0%, 0%;
+  --color-button-text: 0, 0%, 100%;
+  --color-focus-static: hsla(207, 73%, 57%, 0.6);
+  --color-focus-offset: 0, 0%, 100%;
+}
+
+/** For now dark mode inverts the current colors. */
+html[data-theme='dark'] {
+  filter: invert(1);
+
+  img,
+  video {
+    filter: invert(1);
+  }
+}

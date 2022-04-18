@@ -6,36 +6,18 @@
     "Then run the command to automatically update everything: `monots fix`"
   ],
   "extends": "../../.monots/tsconfig.base.json",
-  "include": [
-    "remix.env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "noEmit": true,
     "declaration": false,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "isolatedModules": true,
-    "rootDirs": [
-      "./",
-      "./.svelte-kit/types"
-    ],
-    "types": [
-      "node",
-      "node-fetch"
-    ],
+    "rootDirs": ["./", "./.svelte-kit/types"],
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "$lib": [
-        "src/lib"
-      ],
-      "$lib/*": [
-        "src/lib/*"
-      ]
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"]
     },
     "skipLibCheck": true
   }
