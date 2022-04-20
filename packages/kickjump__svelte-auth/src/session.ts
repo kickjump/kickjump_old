@@ -43,23 +43,23 @@ export interface ServerSession {
   /**
    * Sets a value in the session for the given `name`.
    */
-  set: (name: ServerSessionKeys, value: any) => void;
+  set: (name: ServerSessionKeys, value: any) => ServerSession;
 
   /**
    * Sets a value in the session that is only valid until the next `get()`.
    * This can be useful for temporary values, like error messages.
    */
-  flash: (name: ServerSessionKeys, value: any) => void;
+  flash: (name: ServerSessionKeys, value: any) => ServerSession;
 
   /**
    * Removes a value from the session.
    */
-  unset: (name: ServerSessionKeys) => void;
+  unset: (name: ServerSessionKeys) => ServerSession;
 
   /**
    * Refresh the expiry date of the session.
    */
-  refresh: (daysUntilExpiry?: number) => boolean;
+  refresh: (daysUntilExpiry?: number) => ServerSession;
 
   /**
    * Delete the session value
@@ -74,75 +74,9 @@ export function handleSession(
   options: SessionOptions,
   passedHandle: Handle = async ({ event, resolve }) => resolve(event),
 ): Handle {
-  // Names that are removed from the session after being read one time on the
-  // server.
-
   return async function handle({ event, resolve }) {
     const { session, cookies } = createCookieSession(event.request.headers, options);
-
-    event.locals.session = {
-      get data() {
-        const { __flash, ...data } = session.data;
-        return data;
-      },
-
-      has(name) {
-        return !!session.data[name];
-      },
-
-      get(name) {
-        const { __flash, ...data } = session.data;
-        const flash = getFlash(__flash);
-
-        if (flash.has(name)) {
-          const value = data[name];
-          flash.delete(name);
-          session.data = { [name]: undefined, __flash: [...flash] };
-
-          return value;
-        }
-
-        return data[name];
-      },
-
-      set(name, value) {
-        const flash = getFlash(session.data.__flash);
-        const data: BaseSession['data'] = { [name]: value };
-
-        if (flash.has(name)) {
-          flash.delete(name);
-          data.__flash = [...flash];
-        }
-
-        session.data = data;
-      },
-
-      unset(name) {
-        const flash = getFlash(session.data.__flash);
-        const data: BaseSession['data'] = { [name]: undefined };
-
-        if (flash.has(name)) {
-          flash.delete(name);
-          data.__flash = [...flash];
-        }
-
-        session.data = data;
-      },
-
-      flash(name, value) {
-        const flash = getFlash(session.data.__flash);
-        flash.add(name);
-        session.data = { [name]: value, __flash: [...flash] };
-      },
-
-      refresh(daysUntilExpiry) {
-        return session.refresh(daysUntilExpiry);
-      },
-
-      destroy() {
-        return session.destroy();
-      },
-    };
+    event.locals.session = createSessionMethods(session);
     event.locals.cookies = cookies;
     createCsrf(event);
 
@@ -157,6 +91,71 @@ export function handleSession(
 
     return response;
   };
+}
+
+function createSessionMethods(session: BaseSession): ServerSession {
+  const serverSession: ServerSession = {
+    get data() {
+      const { __flash, ...data } = session.data;
+      return data;
+    },
+
+    has(name) {
+      return !!session.data[name];
+    },
+
+    get(name) {
+      const { __flash, ...data } = session.data;
+      const flash = getFlash(__flash);
+
+      if (flash.has(name)) {
+        const value = data[name];
+        flash.delete(name);
+        session.data = { [name]: undefined, __flash: [...flash] };
+
+        return value;
+      }
+
+      return data[name];
+    },
+
+    set(name, value) {
+      const flash = getFlash(session.data.__flash);
+      const data: BaseSession['data'] = { [name]: value };
+
+      if (flash.has(name)) {
+        flash.delete(name);
+        data.__flash = [...flash];
+      }
+
+      session.data = data;
+
+      return serverSession;
+    },
+
+    unset(name) {
+      return serverSession.set(name, undefined);
+    },
+
+    flash(name, value) {
+      const flash = getFlash(session.data.__flash);
+      flash.add(name);
+      session.data = { [name]: value, __flash: [...flash] };
+
+      return serverSession;
+    },
+
+    refresh(daysUntilExpiry) {
+      session.refresh(daysUntilExpiry);
+      return serverSession;
+    },
+
+    destroy() {
+      return session.destroy();
+    },
+  };
+
+  return serverSession;
 }
 
 function getFlash(maybeFlash: string[] | undefined): Set<string> {

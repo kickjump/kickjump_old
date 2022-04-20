@@ -9,29 +9,38 @@ export interface SessionUser extends App.User {
   strategy: string;
 }
 
-interface BaseRedirectOptions {
+interface BaseRedirectOptions extends RequestEvent {
   /**
-   * The current redirect url.
+   * The current redirect url taken from the request url.
    */
-  url: URL;
-
-  /**
-   * The original event which triggered the authentication login.
-   */
-  event: RequestEvent;
+  redirectTo: URL;
 }
 
 interface SuccessRedirectOptions extends BaseRedirectOptions {
   user: SessionUser;
   error?: never;
+  action?: never;
+  strategy?: never;
 }
 
 interface FailureRedirectOptions extends BaseRedirectOptions {
   error: unknown;
   user?: never;
+  action?: never;
+  strategy?: never;
 }
 
-export type RedirectOptions = SuccessRedirectOptions | FailureRedirectOptions;
+interface StrategyRedirectOptions extends BaseRedirectOptions {
+  error?: never;
+  user?: never;
+  action: string;
+  strategy: string;
+}
+
+export type RedirectOptions =
+  | SuccessRedirectOptions
+  | FailureRedirectOptions
+  | StrategyRedirectOptions;
 
 /**
  * Extra information from the Authenticator to the strategy
@@ -75,6 +84,32 @@ export interface AuthenticatorOptions extends AuthenticateOptions {
   authPath?: string;
 }
 
+export interface AuthenticateProps extends RequestEvent {
+  /**
+   * The strategy to use for authentication.
+   */
+  strategy: string;
+
+  /**
+   * The action string to use for authentication.
+   */
+  action: string;
+}
+
+export interface StrategyRequestEvent extends RequestEvent {
+  /**
+   * The options that were passed to the strategy.
+   */
+  options: Required<AuthenticateOptions>;
+}
+
+export interface StrategyAuthenticateProps extends StrategyRequestEvent {
+  /**
+   * The action that was invoked.
+   */
+  action: string;
+}
+
 declare global {
   namespace App {
     interface User {}
@@ -89,6 +124,12 @@ declare global {
        * The user data  which is defined when the user is logged in.
        */
       user?: SessionUser;
+
+      /**
+       * A one time hash token. This can be used to provide an additional
+       * security step when connecting crypto wallets.
+       */
+      hash?: string;
     }
   }
 }

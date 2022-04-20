@@ -1,11 +1,9 @@
-import type { RequestHandlerOutput } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 
 import { ServerError } from '../errors.js';
 import { redirect } from '../utils.js';
-import { type AuthenticatorOptions } from './auth-types.js';
-import type { AnyStrategy } from './strategy.js';
-import { type Strategy } from './strategy.js';
+import { type AuthenticateProps, type AuthenticatorOptions } from './auth-types.js';
+import { type AnyStrategy, type Strategy } from './strategy.js';
 
 export type AuthenticateCallback<User> = (user: User) => Promise<Response>;
 
@@ -17,6 +15,10 @@ export class Authenticator {
   readonly #strategies = new Map<string, Strategy<never>>();
 
   readonly #options: Required<AuthenticatorOptions>;
+
+  get options(): Required<AuthenticatorOptions> {
+    return this.#options;
+  }
 
   /**
    * Create a new instance of the Authenticator.
@@ -74,14 +76,25 @@ export class Authenticator {
    *   });
    * };
    */
-  authenticate(strategy: string, event: RequestEvent): Promise<App.User> {
+  async authenticate(props: AuthenticateProps): Promise<Response> {
+    const { action, strategy, ...event } = props;
     const instance = this.#strategies.get(strategy);
 
     if (!instance) {
-      throw new ServerError('NotFound', `Strategy ${strategy} not found.`);
+      throw new ServerError('BadRequest', `The provided strategy: ${strategy} is not valid.`);
     }
 
-    return instance.authenticate({ ...event, request: event.request.clone() }, this.#options);
+    const user = await instance.authenticate({
+      ...event,
+      action,
+      request: event.request.clone(),
+      options: this.#options,
+    });
+
+    // Store the user in the session.
+    event.locals.session.set('user', { ...user, strategy });
+
+    return redirect(instance.getRedirectUrl({ ...event, options: this.#options }));
   }
 
   isAuthenticated(event: RequestEvent): boolean {
@@ -89,18 +102,12 @@ export class Authenticator {
   }
 
   /**
-   * Destroy the user session throw a redirect to another URL.
-   * @example
-   * let action: ActionFunction = async ({ request }) => {
-   *   await authenticator.logout(request, { redirectTo: "/login" });
-   * }
+   * Destroy the user session and return a redirect to another URL.
    */
-  async logout(
-    event: RequestEvent,
-    options: { redirectTo: string },
-  ): Promise<RequestHandlerOutput> {
-    event.locals.session.unset('user');
+  logout(event: RequestEvent & { redirectTo: string | URL }): Response {
+    const { session } = event.locals;
+    session.unset('user').unset('authError');
 
-    return redirect(options.redirectTo);
+    return redirect(event.redirectTo);
   }
 }

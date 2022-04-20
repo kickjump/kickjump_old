@@ -1,8 +1,4 @@
-import type { RequestEvent } from '@sveltejs/kit/types/private';
-
-import { ServerError } from '../errors.js';
-import { redirect } from '../utils.js';
-import { type AuthenticateOptions, type SessionUser } from './auth-types.js';
+import { type StrategyAuthenticateProps, type StrategyRequestEvent } from './auth-types.js';
 
 /**
  * A function which will be called to find the user using the information the
@@ -34,9 +30,9 @@ export abstract class Strategy<VerifyOptions> {
    * This will be used by the Authenticator to identify and retrieve the
    * strategy.
    */
-  public abstract name: string;
+  abstract name: string;
 
-  public constructor(protected verify: StrategyVerifyCallback<VerifyOptions>) {}
+  constructor(protected verify: StrategyVerifyCallback<VerifyOptions>) {}
 
   /**
    * The authentication flow of the strategy.
@@ -47,47 +43,19 @@ export abstract class Strategy<VerifyOptions> {
    * At the end of the flow, it will return a Response to be used by the
    * application.
    */
-  public abstract authenticate(
-    event: RequestEvent,
-    options: AuthenticateOptions,
-  ): Promise<App.User>;
+  abstract authenticate(event: StrategyAuthenticateProps): Promise<App.User>;
 
   /**
-   * Redirect and to the redirectURL and add a session error.
+   * Can be overridden for each custom strategy.
    */
-  protected async failure(
-    error: unknown,
-    event: RequestEvent,
-    options: Required<AuthenticateOptions>,
-  ): Promise<Response> {
-    const url = getRedirectFromURL({
+  getRedirectUrl(event: StrategyRequestEvent): URL {
+    const { options, url } = event;
+
+    return getRedirectFromURL({
+      url,
       redirectParam: options.redirectParam,
-      url: event.url,
       defaultRedirect: options.defaultRedirect,
     });
-    const redirectUrl = await options.redirect({ event, error, url });
-
-    event.locals.session.flash('authError', ServerError.as(error).toJSON());
-
-    return redirect(redirectUrl.toString());
-  }
-
-  /**
-   * Processes the redirect on successful completion of the authentication.
-   */
-  protected async success(
-    user: SessionUser,
-    event: RequestEvent,
-    options: Required<AuthenticateOptions>,
-  ): Promise<Response> {
-    const url = getRedirectFromURL({
-      redirectParam: options.redirectParam,
-      url: event.url,
-      defaultRedirect: options.defaultRedirect,
-    });
-    const redirectUrl = await options.redirect({ event, user, url });
-
-    return redirect(redirectUrl.toString());
   }
 }
 
@@ -97,7 +65,7 @@ interface GetRedirectFromUrl {
   defaultRedirect: string;
 }
 
-function getRedirectFromURL(options: GetRedirectFromUrl): URL {
+export function getRedirectFromURL(options: GetRedirectFromUrl): URL {
   const url = typeof options.url === 'string' ? new URL(options.url) : options.url;
   const redirect = url.searchParams.get(options.redirectParam);
 
