@@ -1,9 +1,7 @@
 import type { Writable } from 'svelte/store';
-import Tabs from './Tabs.svelte';
-import Tab from './Tab.svelte';
 
 export interface iTab {
-  key: Object,
+  key: Object;
   label: string;
   header?: HTMLElement;
   show: () => void;
@@ -11,12 +9,13 @@ export interface iTab {
 }
 
 export interface TabDataType {
-  activeTab: number | string,
-  tabs: Writable<iTab[]>
+  activeTab: number | string;
+  tabs: Writable<iTab[]>;
 }
 
 export function genControlLabel(label: string): string {
   return `paper-tab-${label}`;
 }
 
-export { Tabs, Tab };
+export { default as Tab } from './Tab.svelte';
+export { default as Tabs } from './Tabs.svelte';

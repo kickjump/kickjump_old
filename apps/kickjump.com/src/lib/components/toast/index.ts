@@ -28,7 +28,9 @@ interface ToastMethods {
 type OpenWithTypeParams = Omit<ToastProps, 'type'>;
 
 export function open(props: ToastProps | string) {
-  if (typeof props === 'string') props = { message: props };
+  if (typeof props === 'string') {
+    props = { message: props };
+  }
 
   new Toast({
     target: document.body,
@@ -44,8 +46,11 @@ function openType(type: PaperType) {
       message: '',
     };
 
-    if (typeof options === 'string') props.message = options;
-    else Object.assign(props, options);
+    if (typeof options === 'string') {
+      props.message = options;
+    } else {
+      Object.assign(props, options);
+    }
 
     new Toast({
       target: document.body,

@@ -13,6 +13,15 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    vite: {
+      // ...
+      define: {
+        'process.env.BROWSER': true,
+      },
+      optimizeDeps: {
+        include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
+      },
+    },
   },
 };
 

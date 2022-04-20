@@ -66,7 +66,11 @@ const config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('tailwindcss-animate'),
+  ],
 };
 
 module.exports = config;

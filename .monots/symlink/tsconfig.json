@@ -23,6 +23,9 @@
       "path": "packages/kickjump__db/src"
     },
     {
+      "path": "packages/kickjump__svelte-auth/src"
+    },
+    {
       "path": "packages/kickjump__tokens/src"
     },
     {

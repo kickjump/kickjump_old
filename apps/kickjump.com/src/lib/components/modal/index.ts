@@ -4,7 +4,7 @@ function open(props) {
   const modal = new Modal({
     target: document.body,
     props: { active: true, ...props },
-    intro: true
+    intro: true,
   });
 
   modal.close = modal.$destroy;
@@ -14,4 +14,4 @@ function open(props) {
 
 (Modal as any).open = open;
 
-export default Modal;
+export { default } from './Modal.svelte';

@@ -2,7 +2,7 @@ import type { Prisma, UserWallet } from '@kickjump/prisma';
 
 import { ACCOUNT_FIELDS, NESTED_POPULATED_USER, POPULATED_USER } from '../constants.js';
 import { prisma } from '../prisma.js';
-import type { PopulatedAccount, PopulatedUser } from '../types.js';
+import type { LinkAccountToUser, PopulatedAccount, PopulatedUser } from '../types.js';
 
 /**
  * Get the populated user from their email address.
@@ -90,12 +90,10 @@ export async function remove(id: string) {
   return prisma.user.delete({ where: { id } });
 }
 
-type LinkAccountProps = Prisma.XOR<Prisma.AccountCreateInput, Prisma.AccountUncheckedCreateInput>;
-
 /**
  * Link the account
  */
-export async function linkAccount(data: LinkAccountProps): Promise<PopulatedAccount> {
+export async function linkAccount(data: LinkAccountToUser): Promise<PopulatedAccount> {
   return prisma.account.create({ data, select: ACCOUNT_FIELDS });
 }
 

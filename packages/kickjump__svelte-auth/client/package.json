@@ -1,0 +1,17 @@
+{
+  "exports": {
+    ".": {
+      "browser": "./../dist/client.browser.esm.js",
+      "import": "./../dist/client.esm.js",
+      "types": "./../dist/client.d.ts"
+    },
+    "./index.js": {
+      "browser": "./../dist/client.browser.esm.js",
+      "import": "./../dist/client.esm.js",
+      "types": "./../dist/client.d.ts"
+    }
+  },
+  "module": "../dist/client.esm.js",
+  "browser": "../dist/client.browser.esm.js",
+  "types": "../dist/client.d.ts"
+}

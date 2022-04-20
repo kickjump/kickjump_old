@@ -10,6 +10,12 @@ generator js {
   previewFeatures = ["referentialIntegrity"]
 }
 
+// generator client {
+//   provider      = "prisma-client-rust"
+//   output        = "../../crates/kickjump_prisma/src/db.rs"
+//   binaryTargets = ["native"]
+// }
+
 /// Users can have multiple ID's
 model Account {
   /// The account id.
