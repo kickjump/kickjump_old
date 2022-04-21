@@ -1,4 +1,4 @@
-import { type LinkAccountToUser, UserModel } from '@kickjump/db';
+import type { LinkAccountToUser, UserModel } from '@kickjump/db';
 import type { OAuth2Provider, OAuth2ProviderConfig } from 'sk-auth/dist/providers/oauth2';
 import type { GitHubTokens } from 'sk-auth/providers';
 import { GitHubOAuth2Provider } from 'sk-auth/providers';
@@ -105,6 +105,7 @@ export async function getGitHubProfile(
   const { access_token: accessToken, expires_in: expiresIn } = tokens;
   const providerAccountId = profile.id.toString();
   const provider = 'github';
+  const { UserModel } = await import('@kickjump/db');
   let existingUser = await UserModel.getByAccount({ provider, providerAccountId });
 
   // Since the account already exists return the user
@@ -121,7 +122,7 @@ export async function getGitHubProfile(
   const newAccount: Omit<LinkAccountToUser, 'userId'> = {
     provider,
     providerAccountId,
-    type: 'oauth',
+    accountType: 'oauth',
     accessToken,
     scope: GITHUB_SCOPE.join(','),
     expiresAt,
@@ -152,4 +153,5 @@ export async function getGitHubProfile(
 
   // the user exists; account doesn't; create the account and attach to user
   return { user: existingUser, provider, error: false };
+  // throw new Error();
 }

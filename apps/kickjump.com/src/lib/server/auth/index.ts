@@ -3,7 +3,7 @@ import { SvelteKitAuth } from 'sk-auth';
 import { getAbsoluteUrl } from '$lib/utils/core';
 import { env } from '$lib/utils/env';
 
-import { getGitHubProfile, GITHUB_SCOPE, GitHubProvider } from './github-provider';
+import { getGitHubProfile, GITHUB_SCOPE, GitHubProvider } from './github-provider.js';
 
 // Customize AuthConfig settings for development. Assumes callback URL
 // of http://localhost:3000/api/auth/callback/github configured on GitHub.

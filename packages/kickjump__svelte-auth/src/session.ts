@@ -1,3 +1,4 @@
+import invariant from 'tiny-invariant';
 import { type Handle } from '@sveltejs/kit';
 import {
   type Session as CookieSession,
@@ -74,11 +75,14 @@ export function handleSession(
   options: SessionOptions,
   passedHandle: Handle = async ({ event, resolve }) => resolve(event),
 ): Handle {
+  const secret = Array.isArray(options.secret) ? options.secret[0]?.secret : options.secret;
+  invariant(secret, 'Must provide a valid secret key');
+
   return async function handle({ event, resolve }) {
     const { session, cookies } = createCookieSession(event.request.headers, options);
     event.locals.session = createSessionMethods(session);
     event.locals.cookies = cookies;
-    createCsrf(event);
+    createCsrf({ locals: event.locals, request: event.request, secret });
 
     const response = await passedHandle({ event, resolve });
 
@@ -96,8 +100,10 @@ export function handleSession(
 function createSessionMethods(session: BaseSession): ServerSession {
   const serverSession: ServerSession = {
     get data() {
-      const { __flash, ...data } = session.data;
-      return data;
+      // Remove all private data from the session data which is exposed to the client.
+      return Object.fromEntries(
+        Object.entries(session.data).filter(([name]) => !name.startsWith('__')),
+      );
     },
 
     has(name) {

@@ -102,6 +102,8 @@ html[data-theme='dark'] {
   filter: invert(1);
 
   img,
+  svg,
+  .no-invert,
   video {
     filter: invert(1);
   }

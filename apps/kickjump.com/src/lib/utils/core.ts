@@ -1,8 +1,8 @@
 import type { Transaction } from '@solana/web3.js';
 import invariant from 'tiny-invariant';
 
-import { NEXT_URL_KEY } from '$utils/constants';
-import { env } from '$utils/env';
+import { NEXT_URL_KEY } from '$lib/utils/constants';
+import { env } from '$lib/utils/env';
 
 /**
  * Return `true` when the site is deployed in production.
@@ -19,12 +19,12 @@ export function isProduction() {
  * absolute URL.
  */
 export function getAbsoluteUrl(path?: string, forceProtocol = false): string {
-  if (path === '/') {
-    path = undefined;
+  if (path === '/' || path === undefined) {
+    path = '';
   }
 
   invariant(
-    path === undefined || (path.length > 1 && path.startsWith('/')),
+    path === '' || (path.length > 1 && path.startsWith('/')),
     'The path must either be left empty or start with `/`',
   );
 

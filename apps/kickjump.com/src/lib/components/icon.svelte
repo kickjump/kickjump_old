@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Icon, { IconifyIcon, IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import { IconType } from '$lib/utils/icons';
-  import { Maybe } from '$lib/types';
+  import Icon, { type IconifyIcon, type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import { type IconType } from '$lib/utils/icons';
+  import { type Maybe } from '$lib/types';
   import cx from 'clsx';
 
   export let icon: IconType | IconifyIcon;

@@ -18,8 +18,10 @@ const config = {
       define: {
         'process.env.BROWSER': true,
       },
+
       optimizeDeps: {
-        include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
+        // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
+        include: ['@kickjump/db > @kickjump/prisma'],
       },
     },
   },

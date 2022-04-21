@@ -27,4 +27,5 @@ export const getSession: GetSession = async (request) => {
   const session = await auth.getSession(request);
 
   return { ...session, error: request.locals.error };
+  // return { i: 'am', a: 'session', thing: 'awesome!' };
 };

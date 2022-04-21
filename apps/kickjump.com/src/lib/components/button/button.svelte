@@ -4,7 +4,7 @@
     type ButtonVariant,
     BUTTON_SIZE,
     type ButtonSize,
-    ButtonTheme,
+    type ButtonTheme,
     BUTTON_THEME,
   } from '$lib/components/button/constants';
   import cx from 'clsx';
