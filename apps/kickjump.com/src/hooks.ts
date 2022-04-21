@@ -23,9 +23,12 @@ export const handler = sequence(
   },
 );
 
-export const getSession: GetSession = async (request) => {
-  const session = await auth.getSession(request);
+export const getSession: GetSession = async (event) => {
+  const session = await auth.getSession(event);
+  const languageHeader = event.request.headers.get('accept-language')?.split(';')[0] ?? '';
+  const acceptedLanguages = languageHeader.split(',').map((lang) => lang.toLowerCase());
+  const preferredLanguage = acceptedLanguages[0] ?? 'en';
+  const error = event.locals.error;
 
-  return { ...session, error: request.locals.error };
-  // return { i: 'am', a: 'session', thing: 'awesome!' };
+  return { ...session, error, acceptedLanguages, preferredLanguage };
 };

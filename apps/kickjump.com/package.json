@@ -12,13 +12,15 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "dev": "svelte-kit dev",
+    "generate:intl": "pnpm -w ts ./apps/kickjump.com/generate-intl-types.ts",
     "package": "svelte-kit package",
-    "prepare": "svelte-kit sync",
+    "prepare": "svelte-kit sync && pnpm generate:intl",
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.5.1",
     "@felte/validator-zod": "^1.0.7",
+    "@formatjs/icu-messageformat-parser": "^2.0.19",
     "@iconify-icons/ri": "^1.2.1",
     "@iconify-json/logos": "^1.1.5",
     "@iconify/svelte": "^2.2.1",
@@ -51,17 +53,20 @@
     "bn.js": "^5.2.0",
     "bs58": "^5.0.0",
     "buffer": "^6.0.3",
+    "case-it": "^1.0.1",
     "clsx": "^1.1.1",
     "container-query-polyfill": "^0.1.2",
     "dotenv": "^16.0.0",
     "envsafe": "^2.0.3",
     "fast-sort": "^3.1.3",
     "octokit": "^1.7.1",
+    "precompile-intl-runtime": "^0.4.15",
     "sk-auth": "^0.4.1",
     "solana-credentials": "^0.0.1",
     "superjson": "^1.8.1",
     "svelte": "^3.47.0",
     "svelte-check": "^2.7.0",
+    "svelte-intl-precompile": "^0.9.0",
     "svelte-kit-cookie-session": "^2.1.3",
     "svelte-preprocess": "^4.10.6",
     "svelte-themes": "^0.0.98",
@@ -85,14 +90,15 @@
           "./src/**/*.svelte"
         ],
         "compilerOptions": {
-          "noEmit": null,
-          "declaration": null,
+          "noEmit": false,
+          "declaration": true,
           "lib": [
             "DOM",
             "DOM.Iterable",
             "ESNext"
           ],
           "preserveValueImports": true,
+          "importsNotUsedAsValues": "error",
           "isolatedModules": true,
           "rootDirs": [
             "./",
@@ -108,6 +114,9 @@
             ],
             "$lib/*": [
               "src/lib/*"
+            ],
+            "$locales/*": [
+              "locales/*"
             ]
           },
           "skipLibCheck": true

@@ -10,3 +10,9 @@
 <Button variant="ghost">Ghost</Button>
 <Button variant="link">Link</Button>
 <Icon icon="github" class="text-primary" size={500} />
+
+<h4>Ideas for more sketchy borders</h4>
+<ol>
+  <li><a href="https://codepen.io/jackharner/pen/oMaBpZ">Borders with images</a></li>
+  <li><a href="https://codepen.io/piccalilli/pen/MPLzay">Borders with <code>::before</code></a></li>
+</ol>

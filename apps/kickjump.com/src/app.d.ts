@@ -45,6 +45,18 @@ declare namespace App {
      * Whether an error occurred during session request.
      */
     error: boolean;
+
+    /**
+     * The preferred language.
+     *
+     * @default 'en'
+     */
+    preferredLanguage: string;
+
+    /**
+     * The accepted languages in case the preferred language doesn't have a translation.
+     */
+    acceptedLanguages: string[];
   }
 
   interface Stuff {}

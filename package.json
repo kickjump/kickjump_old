@@ -6,7 +6,7 @@
   "contributors": [],
   "type": "module",
   "scripts": {
-    "bootstrap": "corepack enable && pnpm i && run-p setup:rust setup:prisma setup:anchor",
+    "bootstrap": "corepack enable && pnpm i && run-p setup:rust setup:anchor",
     "build": "run-p build:packages typecheck",
     "build:kickjump.com": "pnpm --dir apps/kickjump.com build",
     "build:packages": "pnpm monots build && pnpm run --recursive --filter ./packages postbuild",
@@ -44,7 +44,6 @@
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "scripts": "pnpm --dir .monots/scripts run",
     "setup:anchor": "pnpm scripts setup:anchor && anchor build",
-    "setup:prisma": "prisma-client-rust -h || cargo install prisma-client-rust-cli",
     "setup:rust": "cargo upgrade -h || cargo install cargo-edit",
     "start:kickjump.com": "pnpm --dir apps/kickjump.com start",
     "test": "run-p -c test:kickjump.com test:packages test:db",

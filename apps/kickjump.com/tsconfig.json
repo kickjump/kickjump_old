@@ -5,18 +5,23 @@
     "",
     "Then run the command to automatically update everything: `monots fix`"
   ],
-  "extends": "./.svelte-kit/tsconfig.json",
+  "extends": "../../.monots/tsconfig.base.json",
+  "include": ["./src/**/*.js", "./src/**/*.ts", "./src/**/*.svelte"],
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
     "preserveValueImports": true,
     "isolatedModules": true,
+    "rootDirs": ["./", "./.svelte-kit/types"],
+    "importsNotUsedAsValues": "error",
     "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"],
+      "$locales/*": ["locales/*"]
+    },
     "skipLibCheck": true
   }
 }
