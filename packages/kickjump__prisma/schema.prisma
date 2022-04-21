@@ -1,3 +1,4 @@
+// => CLIENT START
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
@@ -10,11 +11,7 @@ generator js {
   previewFeatures = ["referentialIntegrity"]
 }
 
-// generator client {
-//   provider      = "prisma-client-rust"
-//   output        = "../../crates/kickjump_prisma/src/db.rs"
-//   binaryTargets = ["native"]
-// }
+// => CLIENT END
 
 /// Users can have multiple ID's
 model Account {
@@ -23,7 +20,7 @@ model Account {
   /// The userId on the authentication service.
   userId                String   @map("user_id")
   /// The type of account.
-  type                  String
+  accountType           String   @map("account_type")
   /// The name of the provider for this account. In this case GitHub is the only
   /// option.
   provider              String

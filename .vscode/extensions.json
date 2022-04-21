@@ -4,5 +4,6 @@
     "esbenp.prettier-vscode",
     "matklad.rust-analyzer",
     "svelte.svelte-vscode"
+    // "nativescript.nativescript"
   ]
 }

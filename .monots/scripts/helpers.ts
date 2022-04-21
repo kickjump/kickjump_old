@@ -1,6 +1,8 @@
 import path from 'node:path';
 import url from 'node:url';
 import { Package } from '@manypkg/get-packages';
+import cp from 'node:child_process';
+import { promisify } from 'node:util';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -16,3 +18,5 @@ export function baseDir(...paths: string[]) {
 export type Pkg = Package['packageJson'] & {
   location: string;
 };
+
+export const exec = promisify(cp.exec);
