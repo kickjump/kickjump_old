@@ -7,7 +7,43 @@ import {
 } from 'precompile-intl-runtime';
 import type { Readable } from 'svelte/store';
 
-export { locale, locales, date, number, json } from 'precompile-intl-runtime';
+import { browser } from '$app/env';
+
+/**
+ * @see https://lingohub.com/academy/best-practices/rtl-language-list
+ */
+const RTL_CODES = [
+  'ar', //	Arabic
+  'arc', //	Aramaic
+  'dv', //	Divehi
+  'fa', //	Persian
+  'ha', //	Hausa
+  'he', //	Hebrew
+  'khw', //	Khowar
+  'ks', //	Kashmiri
+  'ku', //	Kurdish
+  'ps', //	Pashto
+  'ur', //	Urdu
+  'yi', //	Yiddish
+];
+
+/**
+ * Get the direction for the provided county code.
+ */
+export function getDirFromCountryCode(countryCode: string) {
+  return RTL_CODES.some((code) => countryCode.startsWith(code)) ? 'rtl' : 'ltr';
+}
+
+export function getLocaleFromNavigator(ssrDefault?: string) {
+  if (!browser) {
+    return ssrDefault || null;
+  }
+
+  console.log(window.navigator.languages);
+  return window.navigator.language || window.navigator.languages[0];
+}
+
+export { date, json, locale, locales, number } from 'precompile-intl-runtime';
 
 export const t = baseT as Readable<MessageFormatter>;
 
@@ -23,12 +59,12 @@ interface MessageObject<Values extends object> extends BaseMessageObject {
 
 interface MessageFormatter {
   <Key extends keyof App.LocaleMessages>(
-    ...args: {} extends App.LocaleMessages[Key]
+    ...args: object extends App.LocaleMessages[Key]
       ? [id: Key, options?: BaseMessageObject]
       : [id: Key, options: MessageObject<App.LocaleMessages[Key]>]
   ): string;
   <Key extends keyof App.LocaleMessages>(
-    object: { id: Key } & {} extends App.LocaleMessages[Key]
+    object: { id: Key } & object extends App.LocaleMessages[Key]
       ? BaseMessageObject
       : MessageObject<App.LocaleMessages[Key]>,
   ): string;

@@ -26,7 +26,7 @@ export const handler = sequence(
 export const getSession: GetSession = async (event) => {
   const session = await auth.getSession(event);
   const languageHeader = event.request.headers.get('accept-language')?.split(';')[0] ?? '';
-  const acceptedLanguages = languageHeader.split(',').map((lang) => lang.toLowerCase());
+  const acceptedLanguages = languageHeader.split(','); //.map((lang) => lang.toLowerCase());
   const preferredLanguage = acceptedLanguages[0] ?? 'en';
   const error = event.locals.error;
 

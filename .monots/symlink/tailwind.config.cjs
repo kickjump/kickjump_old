@@ -28,6 +28,8 @@ const config = {
         outline: '0 0 0 3px hsl(207deg 73% 57% / 60%)',
       },
       borderRadius: {
+        toggleSwitch: '50% 45% 40% 50% / 40% 50% 50% 45%',
+        toggleBorder: '30% 35% 30% 30% / 30% 50% 30% 45%',
         paper1: '255px 15px 15px 225px / 15px 225px 255px 15px',
         paper2: '125px 10px 185px 20px / 25px 205px',
         paper3: '15px 255px 225px 15px / 225px 15px 15px 255px',

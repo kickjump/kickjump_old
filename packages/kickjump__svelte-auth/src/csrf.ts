@@ -82,7 +82,10 @@ interface VerifyCsrfProps {
  */
 export async function verifyCsrf(props: VerifyCsrfProps) {
   if (!props.locals.csrfTokenIsVerified) {
-    throw new ServerError('UnprocessableEntityWebDav', 'The CSRF has not been verified.');
+    throw new ServerError({
+      code: 'UnprocessableEntityWebDav',
+      message: 'The CSRF has not been verified.',
+    });
   }
 }
 

@@ -21,6 +21,7 @@
   export let href: Maybe<string> = undefined;
   export let seed: number = 100;
   export let borderWidth: BorderWidth = 'md';
+  export let active: boolean = false;
   let className: Maybe<string> = undefined;
   export { className as class };
 
@@ -51,6 +52,7 @@
     block && 'w-full',
     variant === 'link' && 'zero-padding',
     variant !== 'link' && BUTTON_THEME[theme][variant].bg,
+    active && BUTTON_THEME[theme][variant].active,
     generateBorderClasses({ seed, variant, width: borderWidth }),
     className,
   );

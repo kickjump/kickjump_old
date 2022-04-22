@@ -45,10 +45,11 @@
     "superstruct": "^0.15.4",
     "svelte-kit-cookie-session": "^2.1.3",
     "tiny-invariant": "^1.2.0",
+    "ts-extras": "^0.10.2",
     "type-fest": "^2.12.2"
   },
   "devDependencies": {
-    "@sveltejs/kit": "next"
+    "@sveltejs/kit": "1.0.0-next.318"
   },
   "peerDependencies": {
     "@sveltejs/kit": "next"

@@ -8,11 +8,19 @@ module.exports = {
   extends: ['monots'],
   overrides: [
     {
+      files: ['*.svelte'],
+      extends: ['monots/svelte', 'monots/full'],
+      parserOptions: {
+        project: [baseDir('./.monots/tsconfig.lint.json')],
+        extraFileExtensions: ['.svelte'],
+      },
+    },
+    {
       files: ['*.ts', '*.tsx'],
       extends: ['monots/full'],
-      parserOptions: { project: [baseDir('./.monots/tsconfig.lint.json')] },
+      parserOptions: {
+        project: [baseDir('./.monots/tsconfig.lint.json')],
+      },
     },
-    { files: ['*.tsx'], extends: ['monots/react'] },
-    { files: ['apps/kickjump.com/'], extends: ['monots/svelte'] },
   ],
 };

@@ -21,54 +21,66 @@ export const BUTTON_THEME = /*tw*/ {
     solid: {
       bg: 'bg-primary hover:bg-primaryHover active:bg-primaryActive',
       current: 'text-white',
+      active: 'bg-primaryActive',
     },
     outline: {
       bg: 'bg-white group hover:bg-purple-100 active:bg-purple-200',
       current: 'text-primary hover:text-primaryHover active:text-primaryActive',
+      active: 'bg-purple-200 text-primaryActive',
     },
     ghost: {
       bg: 'bg-white group hover:bg-purple-100 active:bg-purple-200',
       current: 'text-primary hover:text-primaryHover active:text-primaryActive',
+      active: 'bg-purple-200 text-primaryActive',
     },
     link: {
       bg: 'bg-white group',
       current: 'text-primary hover:text-primaryHover active:text-primaryActive',
+      active: 'text-primaryActive',
     },
   },
   secondary: {
     solid: {
       bg: 'bg-secondary hover:bg-secondaryHover active:bg-secondaryActive',
       current: 'text-white',
+      active: 'bg-secondaryActive',
     },
     outline: {
       bg: 'bg-white group hover:bg-orange-100 active:bg-orange-200',
       current: 'text-secondary hover:text-secondaryHover active:text-secondaryActive',
+      active: 'bg-orange-200 text-secondaryActive',
     },
     ghost: {
       bg: 'bg-white group hover:bg-orange-100 active:bg-orange-200',
       current: 'text-secondary hover:text-secondaryHover active:text-secondaryActive',
+      active: 'bg-orange-200 text-secondaryActive',
     },
     link: {
       bg: 'bg-white group',
       current: 'text-secondary hover:text-secondaryHover active:text-secondaryActive',
+      active: 'text-secondaryActive',
     },
   },
   success: {
     solid: {
       bg: 'bg-green-600 hover:bg-green-700 active:bg-green-800',
       current: 'text-white',
+      active: 'bg-green-800',
     },
     outline: {
       bg: 'bg-white hover:bg-green-100 active:bg-green-200',
       current: 'text-green-600 hover:text-green-700 active:text-green-800',
+      active: 'bg-green-200 text-green-800',
     },
     ghost: {
       bg: 'bg-white hover:bg-green-100 active:bg-green-200',
       current: 'text-green-600 hover:text-green-700 active:text-green-800',
+      active: 'bg-green-200 text-green-800',
     },
     link: {
       bg: 'bg-white',
       current: 'text-green-600 hover:text-green-700 active:text-green-800',
+      active: 'text-green-800',
     },
   },
   // warning: {
@@ -93,18 +105,22 @@ export const BUTTON_THEME = /*tw*/ {
     solid: {
       bg: 'bg-gray-700 hover:bg-gray-800 active:bg-gray-800',
       current: 'text-white',
+      active: 'bg-gray-800',
     },
     outline: {
       bg: 'bg-white hover:bg-gray-100 active:bg-gray-200',
       current: 'text-gray-700 hover:text-gray-800 active:text-gray-800',
+      active: 'text-gray-800 bg-gray-200',
     },
     ghost: {
       bg: 'bg-white hover:bg-gray-100 active:bg-gray-200',
       current: 'text-gray-700 hover:text-gray-800 active:text-gray-800',
+      active: 'bg-gray-200 text-gray-800',
     },
     link: {
       bg: 'bg-white',
       current: 'text-gray-700 hover:text-gray-800 active:text-gray-800',
+      active: 'text-gray-800',
     },
   },
 };
