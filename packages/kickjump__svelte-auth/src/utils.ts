@@ -15,7 +15,11 @@ export function redirect(url: string | URL, init?: number | ResponseInit): Respo
 
   if (typeof init === 'number') {
     responseInit = { status: init };
-  } else if (typeof init?.status === 'undefined') {
+  } else {
+    responseInit = init ?? {};
+  }
+
+  if (!responseInit.status) {
     responseInit.status = 302;
   }
 

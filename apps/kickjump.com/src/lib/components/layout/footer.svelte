@@ -14,13 +14,13 @@
     <div
       class="grid place-items-start grid-flow-col gap-4 md:place-self-center md:justify-self-end"
     >
-      <a href="/external/github" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/github" target="_blank" class="hover:text-gray-300 active:text-gray-400">
         <Icon icon="github" size="2em" />
       </a>
-      <a href="/external/discord" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/discord" target="_blank" class="hover:text-gray-300 active:text-gray-400">
         <Icon icon="discord" size="2em" />
       </a>
-      <a href="/external/twitter" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/twitter" target="_blank" class="hover:text-gray-300 active:text-gray-400">
         <Icon icon="twitter" size="2em" />
       </a>
     </div>

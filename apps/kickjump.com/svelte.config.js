@@ -24,6 +24,7 @@ const config = {
   ],
 
   kit: {
+    routes: (filepath) => !/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external))/.test(filepath),
     adapter: adapter(),
     vite: {
       plugins: [

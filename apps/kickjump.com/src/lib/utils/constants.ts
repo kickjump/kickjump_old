@@ -15,3 +15,16 @@ export const SESSION_NAME = '_session';
  * The key used to store numbers used only one.
  */
 export const SOLANA_HASH_KEY = 'solana-hash';
+
+interface Redirects {
+  [from: string]: { to: string; status?: number };
+}
+
+/**
+ * The redirects
+ */
+export const REDIRECTS: Redirects = {
+  '/r/twitter': { to: 'https://twitter.com/kickjumpco', status: 302 },
+  '/r/discord': { to: 'https://discord.gg/mzaFsAUn22', status: 302 },
+  '/r/github': { to: 'https://github.com/kickjump/kickjump', status: 302 },
+};

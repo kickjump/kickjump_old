@@ -17,8 +17,6 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "$lib": ["src/lib"],
-      "$lib/*": ["src/lib/*"],
       "$components": ["src/lib/components"],
       "$components/*": ["src/lib/components/*"],
       "$directives": ["src/lib/directives"],
@@ -29,7 +27,8 @@
       "$types/*": ["src/lib/types/*"],
       "$utils": ["src/lib/utils"],
       "$utils/*": ["src/lib/utils/*"],
-      "$locales/*": ["locales/*"]
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"]
     },
     "skipLibCheck": true
   }

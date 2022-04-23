@@ -8,11 +8,12 @@
   },
   "files": [],
   "scripts": {
-    "build": "svelte-kit build",
+    "build": "svelte-kit build && pnpm generate:redirects",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "dev": "svelte-kit dev",
     "generate:intl": "pnpm -w ts ./apps/kickjump.com/generate-intl-types.ts",
+    "generate:redirects": "pnpm -w ts ./apps/kickjump.com/generate-redirects.ts",
     "package": "svelte-kit package",
     "prepare": "svelte-kit sync && pnpm generate:intl",
     "preview": "svelte-kit preview"
@@ -28,6 +29,7 @@
     "@iconify/types": "^1.1.0",
     "@iconify/utils": "^1.0.32",
     "@kickjump/db": "^0.0.1",
+    "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/tokens": "^0.0.1",
     "@leveluptuts/svelte-element-query": "^1.0.5",
     "@octokit/app": "^12.0.5",
@@ -111,12 +113,6 @@
           ],
           "baseUrl": ".",
           "paths": {
-            "$lib": [
-              "src/lib"
-            ],
-            "$lib/*": [
-              "src/lib/*"
-            ],
             "$components": [
               "src/lib/components"
             ],
@@ -147,8 +143,11 @@
             "$utils/*": [
               "src/lib/utils/*"
             ],
-            "$locales/*": [
-              "locales/*"
+            "$lib": [
+              "src/lib"
+            ],
+            "$lib/*": [
+              "src/lib/*"
             ]
           },
           "skipLibCheck": true
