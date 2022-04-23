@@ -1,5 +1,5 @@
 <script>
-  import Button from '$components/button/button.svelte';
+  import Button from '$components/buttons/button.svelte';
   import { t, locale, locales } from '$utils/intl';
   let count = 1;
   let time = new Date();

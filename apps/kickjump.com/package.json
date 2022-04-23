@@ -104,6 +104,7 @@
           ],
           "preserveValueImports": true,
           "isolatedModules": true,
+          "importsNotUsedAsValues": "error",
           "rootDirs": [
             "./",
             "./.svelte-kit/types"

@@ -12,6 +12,7 @@
     "declaration": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "preserveValueImports": true,
+    "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "rootDirs": ["./", "./.svelte-kit/types"],
     "types": ["node"],

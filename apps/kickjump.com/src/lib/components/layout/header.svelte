@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import Logo from '$components/logo/logo.svelte';
-  import { Button } from '$components/button';
-  import Switch from '../toggles/switch.svelte';
+  import { Button } from '$components/buttons';
+  import { IconToggle } from '../toggles';
   import themeStore, { setTheme } from 'svelte-themes';
   import Icon from '../icon.svelte';
   import { matchesHref } from '$utils/core';
@@ -49,11 +49,15 @@
       {/each}
     </div>
 
-    <div class="border-l-text border-l-2 pl-8 justify-self-end flex flex-row gap-x-1">
-      <span class="hidden sm:flex flex-row gap-x-1 justify-center items-center text-gray-600">
-        <Icon icon="sunFill" size="1em" />
-        <Switch checked={isDark} on:change={toggleTheme} />
-        <Icon icon="moonFill" size="1em" />
+    <div class="pl-8 justify-self-end flex flex-row gap-x-1">
+      <span class="hidden sm:flex flex-row gap-x-1 justify-center items-center">
+        <IconToggle
+          checked={isDark}
+          on:change={toggleTheme}
+          size="2em"
+          swap="moonFill"
+          initial="sunFill"
+        />
       </span>
       <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
         <Icon icon="menuLine" size="2em" />
