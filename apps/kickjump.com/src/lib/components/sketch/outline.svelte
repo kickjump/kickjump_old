@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { range } from '$lib/utils/helpers';
+  import { range } from '$utils/helpers';
   import { type BorderWidth, BORDER_WIDTH } from './generate-sketch-props';
 
   import cx from 'clsx';

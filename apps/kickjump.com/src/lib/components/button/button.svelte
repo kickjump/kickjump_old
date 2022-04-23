@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { type Maybe } from '$lib/types';
+  import { type Maybe } from '$types';
   import {
     type ButtonVariant,
     BUTTON_SIZE,
     type ButtonSize,
     type ButtonTheme,
     BUTTON_THEME,
-  } from '$lib/components/button/constants';
+  } from '$components/button/constants';
   import cx from 'clsx';
   import { generateBorderClasses, type BorderWidth } from '../sketch/generate-sketch-props';
 
@@ -18,6 +18,7 @@
   export let type: Maybe<'submit' | 'reset' | 'button'> = undefined;
   export let isLink: boolean = false;
   export let external: boolean = false;
+  export let refresh: boolean = false;
   export let href: Maybe<string> = undefined;
   export let seed: number = 100;
   export let borderWidth: BorderWidth = 'md';
@@ -27,7 +28,9 @@
 
   $: element = href || isLink ? 'a' : 'button';
   $: props =
-    element === 'a' ? { href, target: external ? '_blank' : '_self', role: 'button' } : { type };
+    element === 'a'
+      ? { href, target: external ? '_blank' : refresh ? '_self' : undefined, role: 'button' }
+      : { type };
   $: wrapperClass = cx(
     'relative',
     'focus:shadow-outline',
@@ -52,9 +55,9 @@
     block && 'w-full',
     variant === 'link' && 'zero-padding',
     variant !== 'link' && BUTTON_THEME[theme][variant].bg,
-    active && BUTTON_THEME[theme][variant].active,
     generateBorderClasses({ seed, variant, width: borderWidth }),
     className,
+    active && BUTTON_THEME[theme][variant].active,
   );
 </script>
 

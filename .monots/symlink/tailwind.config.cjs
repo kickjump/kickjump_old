@@ -16,6 +16,7 @@ const config = {
         secondaryGhost: withOpacityValue('--color-secondary-ghost'),
         background: withOpacityValue('--color-background'),
         text: withOpacityValue('--color-text'),
+        neutral: withOpacityValue('--color-neutral'),
         buttonText: withOpacityValue('--color-button-text'),
         border: withOpacityValue('--color-border'),
         colorFocusStatic: withOpacityValue('--color-focus-static'),
@@ -65,6 +66,9 @@ const config = {
       },
       gridTemplateRows: {
         layout: 'auto 1fr auto',
+      },
+      gridTemplateColumns: {
+        navbar: 'auto 1fr auto',
       },
     },
   },

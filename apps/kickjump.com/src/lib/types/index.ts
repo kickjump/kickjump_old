@@ -18,7 +18,7 @@ export type NumberTuple<Size extends number> = TupleOf<number, Size>;
  * Extract the valid index union from a provided tuple.
  *
  * ```ts
- * import { IndexUnionFromTuple } from '$lib/types';
+ * import { IndexUnionFromTuple } from '$types';
  *
  * const tuple = ['a', 'b', 'c'];
  * type Index = IndexUnionFromTuple<typeof tuple> => 0 | 1 | 2

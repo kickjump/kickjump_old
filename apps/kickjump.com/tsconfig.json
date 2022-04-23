@@ -19,6 +19,16 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
+      "$components": ["src/lib/components"],
+      "$components/*": ["src/lib/components/*"],
+      "$directives": ["src/lib/directives"],
+      "$directives/*": ["src/lib/directives/*"],
+      "$server": ["src/lib/server"],
+      "$server/*": ["src/lib/server/*"],
+      "$types": ["src/lib/types"],
+      "$types/*": ["src/lib/types/*"],
+      "$utils": ["src/lib/utils"],
+      "$utils/*": ["src/lib/utils/*"],
       "$locales/*": ["locales/*"]
     },
     "skipLibCheck": true

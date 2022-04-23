@@ -25,6 +25,8 @@ declare module '$locales/es.js' {
 declare namespace App {
   interface LocaleMessages {
     home: {};
+    projects: {};
+    about: {};
     plain: {};
     interpolated: { val: Primitive };
     time: { now: Date | number };

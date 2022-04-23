@@ -1,7 +1,7 @@
 import type { GetSession } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { auth } from '$lib/server/auth';
+import { auth } from '$server/auth';
 
 export const handler = sequence(
   /**

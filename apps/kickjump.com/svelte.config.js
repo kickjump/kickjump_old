@@ -1,8 +1,10 @@
-import { mdsvex } from 'mdsvex';
-import mdsvexConfig from './mdsvex.config.js';
 import adapter from '@sveltejs/adapter-auto';
+import { mdsvex } from 'mdsvex';
+import path from 'node:path';
 import precompileIntl from 'svelte-intl-precompile/sveltekit-plugin';
 import preprocess from 'svelte-preprocess';
+
+import mdsvexConfig from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -35,6 +37,17 @@ const config = {
       optimizeDeps: {
         // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
         include: ['@kickjump/db > @kickjump/prisma'],
+      },
+
+      resolve: {
+        alias: {
+          $components: path.resolve('./src/lib/components'),
+          $directives: path.resolve('./src/lib/directives'),
+          $lib: path.resolve('./src/lib'),
+          $server: path.resolve('./src/lib/server'),
+          $types: path.resolve('./src/lib/types'),
+          $utils: path.resolve('./src/lib/utils'),
+        },
       },
     },
   },

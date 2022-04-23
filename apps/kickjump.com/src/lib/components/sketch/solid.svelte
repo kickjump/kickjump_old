@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { range } from '$lib/utils/helpers';
+  import { range } from '$utils/helpers';
 
   import cx from 'clsx';
 

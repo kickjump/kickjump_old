@@ -1,55 +1,5 @@
 import type { Transaction } from '@solana/web3.js';
-import invariant from 'tiny-invariant';
-
-import { NEXT_URL_KEY } from '$lib/utils/constants';
-import { env } from '$lib/utils/env';
-
-/**
- * Return `true` when the site is deployed in production.
- */
-export function isProduction() {
-  return env.NODE_ENV === 'production' && env.CF_PAGES_BRANCH === 'production'; // TODO: verify that this is the right way to do this
-}
-
-/**
- * Consistently determine the API URL for the current client even when in a
- * deploy preview or similar.
- *
- * Non empty paths should be left empty or prefixed with a `/` to represent the
- * absolute URL.
- */
-export function getAbsoluteUrl(path?: string, forceProtocol = false): string {
-  if (path === '/' || path === undefined) {
-    path = '';
-  }
-
-  invariant(
-    path === '' || (path.length > 1 && path.startsWith('/')),
-    'The path must either be left empty or start with `/`',
-  );
-
-  // In the browser we just use a relative URL and everything works.
-  if (typeof document !== 'undefined') {
-    return forceProtocol ? new URL(path || '', window.location.origin).toString() : path || '/';
-  }
-
-  // This should be populated on cloudflare pages.
-  if (env.CF_PAGES_URL) {
-    return env.CF_PAGES_URL;
-  }
-
-  // This is used for local deployments.
-  if (env.WEBSITE_URL) {
-    return `${env.WEBSITE_URL}${path}`;
-  }
-
-  if (!isProduction()) {
-    // We replace https:// from the URL if it exists and add it ourselves always at the beginning as the above environment variables are not guaranteed to include it
-    return `https://dev.kickjump.com${path}`;
-  }
-
-  return `https://kickjump.com${path}`;
-}
+import type { Page } from '@sveltejs/kit';
 
 /**
  * Removes all undefined values from an object. Neither Firestore nor the RealtimeDB allow `undefined` as a value.
@@ -100,15 +50,6 @@ export function decodeBase64(value: string) {
   return Buffer.from(value, 'base64').toString('utf8');
 }
 
-/**
- * Add the desired `nextUrl` to the query string of the provided url.
- */
-export function addNextUrlToQuery(to: string, next: string) {
-  const url = new URL(getAbsoluteUrl(to, true));
-
-  if (next) {
-    url.searchParams.set(NEXT_URL_KEY, encodeURIComponent(next));
-  }
-
-  return `${url.pathname}${url.search}`;
+export function matchesHref(page: Page, href: string) {
+  return !['/', ''].includes(page.url.pathname) && page.url.pathname.startsWith(href);
 }

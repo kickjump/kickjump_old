@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Button } from '$lib/components/button';
-  import Icon from '$lib/components/icon.svelte';
+  import { Button } from '$components/button';
+  import Logo from '$components/icon.svelte';
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -9,7 +9,7 @@
 <Button variant="outline" theme="primary">Outline</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="link">Link</Button>
-<Icon icon="github" class="text-primary" size={500} />
+<Logo icon="github" class="text-primary" size={500} />
 
 <h4>Ideas for more sketchy borders</h4>
 <ol>

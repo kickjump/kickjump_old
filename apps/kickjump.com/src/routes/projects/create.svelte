@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { t } from '$lib/utils/intl';
-  import { Button } from '$lib/components/button';
+  import { t } from '$utils/intl';
+  import { Button } from '$components/button';
 </script>
 
 <Button>{$t('home')}</Button>

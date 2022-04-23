@@ -1,4 +1,4 @@
-import { isDomNode } from '$lib/utils/dom';
+import { isDomNode } from '$utils/dom';
 
 export function clickOutside(node: HTMLElement) {
   const handleClick = (event: MouseEvent) => {

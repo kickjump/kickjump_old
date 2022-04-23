@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { isDomNode } from '$lib/utils/dom.js';
+  import { isDomNode } from '$utils/dom.js';
 
   interface OnSomethingDetail {
     foo: string;

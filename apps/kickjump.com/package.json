@@ -21,6 +21,7 @@
     "@cloudflare/workers-types": "^3.7.1",
     "@felte/validator-zod": "^1.0.7",
     "@formatjs/icu-messageformat-parser": "^2.0.19",
+    "@iconify-icons/bi": "^1.2.2",
     "@iconify-icons/ri": "^1.2.1",
     "@iconify-json/logos": "^1.1.5",
     "@iconify/svelte": "^2.2.1",
@@ -44,8 +45,8 @@
     "@svelte-on-solana/wallet-adapter-anchor": "^1.0.12-alpha.0",
     "@svelte-on-solana/wallet-adapter-core": "^1.0.3-alpha.0",
     "@svelte-on-solana/wallet-adapter-ui": "^1.0.12-alpha.0",
-    "@sveltejs/adapter-auto": "1.0.0-next.36",
-    "@sveltejs/kit": "1.0.0-next.318",
+    "@sveltejs/adapter-auto": "1.0.0-next.38",
+    "@sveltejs/kit": "1.0.0-next.320",
     "@types/bcryptjs": "^2.4.2",
     "@types/bn.js": "^5.1.0",
     "@types/bs58": "^4.0.1",
@@ -115,6 +116,36 @@
             ],
             "$lib/*": [
               "src/lib/*"
+            ],
+            "$components": [
+              "src/lib/components"
+            ],
+            "$components/*": [
+              "src/lib/components/*"
+            ],
+            "$directives": [
+              "src/lib/directives"
+            ],
+            "$directives/*": [
+              "src/lib/directives/*"
+            ],
+            "$server": [
+              "src/lib/server"
+            ],
+            "$server/*": [
+              "src/lib/server/*"
+            ],
+            "$types": [
+              "src/lib/types"
+            ],
+            "$types/*": [
+              "src/lib/types/*"
+            ],
+            "$utils": [
+              "src/lib/utils"
+            ],
+            "$utils/*": [
+              "src/lib/utils/*"
             ],
             "$locales/*": [
               "locales/*"

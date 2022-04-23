@@ -1,3 +1,3 @@
-import { auth } from '$lib/server/auth';
+import { auth } from '$server/auth';
 
 export const { get, post } = auth;

@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is';
 
-import type { TupleRange } from '$lib/types';
+import type { TupleRange } from '$types';
 
 /**
  * Create a range from start to end.

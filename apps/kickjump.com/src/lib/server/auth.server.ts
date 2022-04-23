@@ -12,7 +12,8 @@ import { env } from '~/utils/env.server';
 import { sessionStorage } from '~/utils/session.server';
 import { getWalletMessage } from '~/utils/solana';
 
-import { addNextUrlToQuery, getAbsoluteUrl, stringToUint8Array } from '../utils/core';
+import { addNextUrlToQuery, stringToUint8Array } from '../utils/core';
+import { getAbsoluteUrl } from '../utils/get-absolute-url-url';
 import type { SolanaLoginSchema } from './validators';
 import { solanaLoginValidator } from './validators';
 

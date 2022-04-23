@@ -4,10 +4,17 @@
 
   export let checked: boolean;
   export let description = '';
+  export let animated = true;
   let className = '';
   export { className as class };
 
-  $: classes = cx('switch', checked && 'checked', 'inline-block', className);
+  $: classes = cx(
+    'switch',
+    checked && 'checked',
+    'inline-block',
+    animated && 'animated',
+    className,
+  );
 </script>
 
 <Switch {checked} on:change class={classes}>
@@ -44,7 +51,6 @@
       position: absolute;
       border: 2px solid #555;
       border-radius: 50% 45% 40% 50% / 40% 50% 50% 45%;
-      transition: left 0.15s ease-in-out;
       top: 0;
       left: 0;
       background-color: #555;
@@ -53,5 +59,9 @@
 
   :global(.switch.checked)::after {
     left: 18px;
+  }
+
+  :global(.switch.animated)::after {
+    transition: left 0.15s ease-in-out;
   }
 </style>

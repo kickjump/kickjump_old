@@ -1,7 +1,7 @@
 import { SvelteKitAuth } from 'sk-auth';
 
-import { getAbsoluteUrl } from '$lib/utils/core';
-import { env } from '$lib/utils/env';
+import { env } from '$utils/env';
+import { getAbsoluteUrl } from '$utils/get-absolute-url';
 
 import { getGitHubProfile, GITHUB_SCOPE, GitHubProvider } from './github-provider.js';
 

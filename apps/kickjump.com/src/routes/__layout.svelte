@@ -12,14 +12,13 @@
 
 <script lang="ts">
   import '../app.css';
-  import { getDirFromCountryCode, getLocaleFromNavigator } from '$lib/utils/intl';
-  import Header from '$lib/components/layout/header.svelte';
-  import Footer from '$lib/components/layout/footer.svelte';
-  import SvgFilters from '$lib/components/svg-filters.svelte';
+  import { getLocaleFromNavigator } from '$utils/intl';
+  import Header from '$components/layout/header.svelte';
+  import Footer from '$components/layout/footer.svelte';
+  import SvgFilters from '$components/svg-filters.svelte';
   import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 
   const lang = getLocaleFromNavigator($session.preferredLanguage) ?? 'en';
-  const dir = getDirFromCountryCode(lang);
 
   init({
     fallbackLocale: 'en',
@@ -28,7 +27,7 @@
 </script>
 
 <svelte:head>
-  <html {lang} {dir} />
+  <!-- <html {lang} {dir} /> -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
   <link
@@ -36,14 +35,13 @@
     rel="stylesheet"
   />
 </svelte:head>
+
 <SvelteTheme />
 
-<div class="grid min-h-full grid-rows-layout px-6 gap-8">
-  <header class="inline-grid place-items-center"><Header /></header>
-  <main class="max-w-full overflow-x-hidden"><slot /></main>
-  <footer class=""><Footer /></footer>
+<div class="grid min-h-full grid-rows-layout">
+  <Header />
+  <main class="max-w-full overflow-x-hidden px-6 gap-8"><slot /></main>
+  <Footer />
 </div>
 
 <SvgFilters />
-
-<style lang="postcss"></style>

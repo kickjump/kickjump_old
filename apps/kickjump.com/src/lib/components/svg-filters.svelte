@@ -7,8 +7,8 @@
       color-interpolation-filters="sRGB"
     >
       <feTurbulence
-        baseFrequency="0.01,0.01"
-        numOctaves="1"
+        baseFrequency="0.007"
+        numOctaves={2}
         type="fractalNoise"
         seed="20"
         stitchTiles="noStitch"
@@ -21,16 +21,16 @@
       <feDisplacementMap
         in="SourceGraphic"
         in2="turbulenceResult"
-        xChannelSelector="A"
-        yChannelSelector="G"
-        scale="20"
+        xChannelSelector="R"
+        yChannelSelector="B"
+        scale="8"
         result="displacement"
       />
     </filter>
     <filter id="hand-drawn-border-1" shape-rendering="optimizeSpeed">
       <feTurbulence
         baseFrequency="0.005"
-        numOctaves="1.5"
+        numOctaves={2}
         type="fractalNoise"
         seed="51"
         stitchTiles="stitch"
@@ -59,7 +59,7 @@
     <filter id="hand-drawn-background-1">
       <feTurbulence
         baseFrequency="0.01"
-        numOctaves="2"
+        numOctaves={2}
         type="fractalNoise"
         seed="36"
         result="turbulenceResult"
@@ -82,7 +82,7 @@
         filterUnits="objectBoundingBox"
         id="roughPaper"
       >
-        <feTurbulence type="fractalNoise" baseFrequency="128" numOctaves="1" result="noise" />
+        <feTurbulence type="fractalNoise" baseFrequency="128" numOctaves={1} result="noise" />
         <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="1" result="diffLight">
           <feDistantLight azimuth="45" elevation="55" />
         </feDiffuseLighting>
@@ -106,7 +106,7 @@
         filterUnits="objectBoundingBox"
         id="PencilTexture"
       >
-        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" result="noise" />
+        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves={3} result="noise" />
         <feDisplacementMap
           xChannelSelector="R"
           yChannelSelector="G"
@@ -126,7 +126,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="2"
-          numOctaves="5"
+          numOctaves={5}
           stitchTiles="stitch"
           result="f1"
         />
@@ -148,7 +148,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.5"
-          numOctaves="5"
+          numOctaves={5}
           stitchTiles="stitch"
           result="f1"
         />
@@ -158,7 +158,7 @@
           result="f2"
         />
         <feComposite operator="in" in2="f2b" in="SourceGraphic" result="f3" />
-        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" result="noise" />
+        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves={3} result="noise" />
         <feDisplacementMap
           xChannelSelector="R"
           yChannelSelector="G"
@@ -178,7 +178,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="1"
           result="f1"
         />
@@ -193,7 +193,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="10"
           result="f2"
         />
@@ -208,7 +208,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="100"
           result="f3"
         />
@@ -234,7 +234,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="2"
-          numOctaves="5"
+          numOctaves={5}
           stitchTiles="stitch"
           result="t1"
         />
@@ -247,7 +247,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="1"
           result="f1"
         />
@@ -262,7 +262,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="10"
           result="f2"
         />
@@ -277,7 +277,7 @@
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.03"
-          numOctaves="5"
+          numOctaves={5}
           seed="100"
           result="f3"
         />
