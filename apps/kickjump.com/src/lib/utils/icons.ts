@@ -2,6 +2,7 @@ import { addIcon } from '@iconify/svelte/offline';
 import type _ from '@iconify/types';
 import warning from '@iconify-icons/ri/alert-line';
 import checkboxCircle from '@iconify-icons/ri/checkbox-circle-line';
+import close from '@iconify-icons/ri/close-line';
 import discord from '@iconify-icons/ri/discord-fill';
 import error from '@iconify-icons/ri/error-warning-line';
 import github from '@iconify-icons/ri/github-fill';
@@ -15,6 +16,7 @@ import twitter from '@iconify-icons/ri/twitter-fill';
 
 const ICONS = {
   checkboxCircle,
+  close,
   discord,
   error,
   github,

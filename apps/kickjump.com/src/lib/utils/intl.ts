@@ -39,7 +39,6 @@ export function getLocaleFromNavigator(ssrDefault?: string) {
     return ssrDefault || null;
   }
 
-  console.log(window.navigator.languages);
   return window.navigator.language || window.navigator.languages[0];
 }
 

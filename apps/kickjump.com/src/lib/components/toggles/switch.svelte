@@ -1,10 +1,12 @@
 <script lang="ts">
   import { Switch } from '@rgossiaux/svelte-headlessui';
+  import type { Maybe } from '$types';
   import cx from 'clsx';
 
   export let checked: boolean;
   export let description = '';
   export let animated = true;
+  export let name: Maybe<string> = undefined;
   let className = '';
   export { className as class };
 
@@ -18,6 +20,9 @@
 </script>
 
 <Switch {checked} on:change class={classes}>
+  {#if name}
+    <input type="hidden" {name} value={checked} />
+  {/if}
   <span class="sr-only">{description}</span>
 </Switch>
 

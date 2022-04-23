@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Alert, Button } from '$components';
+  import { Alert, Button, ButtonGroup } from '$components';
 </script>
 
 <div class="gap-y-5 grid grid-flow-row pt-8 mb-24">
@@ -11,9 +11,9 @@
     <Alert type="warning">This is an alert</Alert>
     <Alert type="error">This is an alert</Alert>
   </section>
-  <div class="flex flex-col gap-y-3 items-center">
+  <div class="flex flex-col gap-y-3">
     <h2 class="">Buttons</h2>
-    <div class="flex flex-wrap flex-row gap-x-2 justify-center">
+    <div class="flex flex-wrap flex-row gap-x-2">
       <h3>Themes</h3>
       <Button theme="default">Default</Button>
       <Button theme="primary">Button</Button>
@@ -25,12 +25,21 @@
       <Button theme="error">Button</Button>
     </div>
 
-    <div class="flex flex-wrap flex-row gap-x-2 justify-center">
+    <div class="flex flex-wrap flex-row gap-x-2">
       <h3>Variants</h3>
       <Button theme="primary">Button</Button>
       <Button theme="primary" variant="outline">Outline</Button>
       <Button theme="primary" variant="ghost">Ghost</Button>
       <Button theme="primary" variant="link">Link</Button>
+    </div>
+
+    <div class="flex flex-wrap flex-row gap-x-2">
+      <h3>Group</h3>
+      <ButtonGroup>
+      <Button theme="primary">1</Button>
+      <Button theme="secondary">2</Button>
+      <Button theme="accent">3</Button>
+    </ButtonGroup>
     </div>
   </div>
 </div>
