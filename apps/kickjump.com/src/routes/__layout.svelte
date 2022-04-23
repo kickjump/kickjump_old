@@ -1,6 +1,6 @@
-<script context="module">
+<script context="module" lang="ts">
+  import type { Load } from '@sveltejs/kit';
   import { addMessages, init } from 'svelte-intl-precompile';
-  import { session } from '$app/stores';
   import en from '$locales/en.js';
   import enGb from '$locales/en-gb.js';
   import es from '$locales/es.js';
@@ -8,26 +8,26 @@
   addMessages('en', en);
   addMessages('en-GB', enGb);
   addMessages('es', es);
+
+  export const load: Load = ({ url, session }) => ({
+    props: { key: url.href, lang: session.preferredLanguage },
+  });
 </script>
 
 <script lang="ts">
   import '../app.css';
   import { getLocaleFromNavigator } from '$utils/intl';
-  import Header from '$components/layout/header.svelte';
-  import Footer from '$components/layout/footer.svelte';
-  import SvgFilters from '$components/svg-filters.svelte';
+  import { Header, Footer, Filters, PageTransition } from '$components';
   import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 
-  const lang = getLocaleFromNavigator($session.preferredLanguage) ?? 'en';
+  export let key: string;
+  export let lang: string | undefined;
+  const initialLocale = getLocaleFromNavigator(lang) ?? 'en';
 
-  init({
-    fallbackLocale: 'en',
-    initialLocale: lang,
-  });
+  init({ fallbackLocale: 'en', initialLocale });
 </script>
 
 <svelte:head>
-  <!-- <html {lang} {dir} /> -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
   <link
@@ -40,8 +40,12 @@
 
 <div class="grid min-h-full grid-rows-layout">
   <Header />
-  <main class="max-w-full overflow-x-hidden px-6 gap-8"><slot /></main>
+  <main class="max-w-full overflow-x-hidden px-6 gap-8">
+    <PageTransition refresh={key}>
+      <slot />
+    </PageTransition>
+  </main>
   <Footer />
 </div>
 
-<SvgFilters />
+<Filters />
