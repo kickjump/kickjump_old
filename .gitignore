@@ -143,6 +143,7 @@ yarn.lock
 /Dockerfile
 /fly.toml
 /Anchor.toml
+/.vscode
 /.dockerignore
 .parcel-cache/
 .psc-ide-port

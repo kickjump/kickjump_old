@@ -12,7 +12,7 @@
     "build:packages": "pnpm monots build && pnpm run --recursive --filter ./packages postbuild",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test test:kickjump.com test:db build:kickjump.com build:packages",
-    "clean": "git clean -xfd -e '*.env'",
+    "clean": "git clean -xfd -e '*.env' -e '.vscode' -e 'Anchor.toml'",
     "compose:down": "docker compose down",
     "compose:up": "docker compose up",
     "dev": "pnpm monots prepare",
