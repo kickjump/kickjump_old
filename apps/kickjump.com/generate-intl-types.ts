@@ -1,9 +1,10 @@
 import { type MessageFormatElement, parse } from '@formatjs/icu-messageformat-parser';
 import { TYPE } from '@formatjs/icu-messageformat-parser/types';
-import json from './locales/en.json';
 import { readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import json from './locales/en.json';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,7 +24,7 @@ for (const [name, value] of Object.entries(json)) {
   const valuesObject = generateValuesObject(messageFormat)
     .map(([key, type]) => `${key}: ${type}`)
     .join('; ');
-  translationEntries.push(`${getSafeKey(name)}: ${valuesObject ? `{ ${valuesObject} }` : '{}'}`);
+  translationEntries.push(`${getSafeKey(name)}: ${valuesObject ? `{ ${valuesObject} }` : 'never'}`);
 }
 
 type ParseResult = Array<[key: string, value: string]>;
@@ -81,16 +82,31 @@ function generateValuesObject(value: MessageFormatElement[]): ParseResult {
 }
 
 function getSafeKey(value: string) {
-  return /^[a-z_][a-z_0-9]*$/i.test(value) ? value : `'${value}'`;
+  return /^[_a-z]\w*$/i.test(value) ? value : `'${value}'`;
 }
 
+const locales = new Set<string>();
+
 async function createLocaleModules() {
+  const modules: string[] = [];
   const files = await readdir(baseDir('locales'));
-  return files
-    .filter((file) => file.endsWith('.json'))
-    .map((file) => `$locales/${file.replace('.json', '.js')}`)
-    .map((file) => createLocaleModule(file))
-    .join('\n\n');
+
+  for (const file of files) {
+    if (!file.endsWith('.json')) {
+      continue;
+    }
+
+    const name = file.replace('.json', '');
+    const jsFile = `$locales/${name}.js`;
+    const [country, region] = name.split('-');
+    const locale = `${country}${region ? `-${region.toUpperCase()}` : ''}`;
+
+    locales.add(country);
+    locales.add(locale);
+    modules.push(createLocaleModule(jsFile));
+  }
+
+  return modules.join('\n\n');
 }
 
 function createLocaleModule(name: string) {
@@ -110,6 +126,8 @@ type LiteralUnion<LiteralType, BaseType extends Primitive > = LiteralType | (Bas
 ${await createLocaleModules()}
 
 declare namespace App {
+  type Locales = ${[...locales].map((locale) => `'${locale}'`).join(' | ')};
+
   interface LocaleMessages {
     ${translationEntries.join(';\n    ')};
   }

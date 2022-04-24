@@ -32,9 +32,9 @@
 
 Open source software has taken over the world.
 
-Everything we work on, whether as employees, artistic souls, musically inclined or a side project junkies, we are reliant on open source software at some layer.
+Everything we work on, whether as employees, artistic souls, musically inclined or a side project junkies, we are reliant on open source software.
 
-The value created by open source developers is astounding.
+The value created by open source developers projects and developers is astounding.
 
 The problem is that almost none of the value created is passed onto the teams behind these open source projects. This is true even of ecosystem critical projects. Creators find themselves pleading for enough to sustain their work.
 

@@ -9,8 +9,8 @@
 <h1>Sample intl</h1>
 
 <section>
-  <p>{$t('plain')}</p>
-  <p>{$t('interpolated', { values: { val: 'apple' } })}</p>
+  <p>{$t('plain', {})}</p>
+  <p>{$t('interpolated', { values: { val: 'apples' } })}</p>
   <p>{$t('time', { values: { time } })}</p>
   <p>{$t('number', { values: { n: count } })}</p>
   <p>{$t('pluralized', { values: { count } })}</p>

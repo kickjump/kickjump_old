@@ -8,8 +8,8 @@ const config = {
   plugins: [
     postcssNested(),
     tailwindcss(),
-    autoprefixer({ cascade: true }),
     postcssImport(),
+    autoprefixer({ cascade: true }),
     postcssPresetEnv({ stage: 0, features: { 'nesting-rules': false } }),
   ],
 };

@@ -3,7 +3,7 @@
   import AltLogo from '$components/logo/alt-logo.svelte';
 </script>
 
-<footer class="grid w-full items-center bg-neutral sketchy-footer">
+<footer class="grid w-full items-center bg-neutral sketchy-footer relative">
   <div class="footer items-center p-4 bg-neutral text-neutral-content container place-self-center">
     <div class="items-center grid-flow-col">
       <AltLogo size="3em" class="text-neutral" />

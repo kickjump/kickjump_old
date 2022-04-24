@@ -23,11 +23,13 @@ declare module '$locales/es.js' {
 }
 
 declare namespace App {
+  type Locales = 'en' | 'en-GB' | 'es';
+
   interface LocaleMessages {
-    home: {};
-    projects: {};
-    about: {};
-    plain: {};
+    home: never;
+    projects: never;
+    about: never;
+    plain: never;
     interpolated: { val: Primitive };
     time: { now: Date | number };
     number: { n: number };
