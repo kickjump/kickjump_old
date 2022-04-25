@@ -1,8 +1,53 @@
 <script lang="ts">
-  import { Alert, Button, ButtonGroup } from '$components';
+  import {
+    IconButton,
+    Alert,
+    Button,
+    ButtonGroup,
+    Modal,
+    ModalDescription,
+    ModalTitle,
+  } from '$components';
+  import WalletAdapter from '$components/solana/wallet-adapter.svelte';
+  let isOpen = false;
+
+  const onToggle = () => {
+    isOpen = !isOpen;
+  };
+
+  $: message = isOpen ? 'Close' : 'Open';
 </script>
 
-<div class="gap-y-5 grid grid-flow-row pt-8 mb-24">
+<div class="place-self-center container gap-y-5 grid grid-flow-row pt-8 mb-24">
+  <section class="flex flex-col gap-y-3">
+    <h2 class="">Modal</h2>
+    <span><Button onClick={onToggle} theme="primary">{message}</Button></span>
+    <Modal bind:isOpen>
+      <ModalTitle as="h3" slot="heading">Title</ModalTitle>
+      <svelte:fragment slot="content">
+        <ModalDescription>This is the content. And it is pretty.</ModalDescription>
+      </svelte:fragment>
+      <svelte:fragment slot="footer">
+        <!-- <ButtonGroup> -->
+        <Button theme="default" onClick={() => (isOpen = false)}>Default</Button>
+        <Button theme="primary">Button</Button>
+        <!-- </ButtonGroup> -->
+      </svelte:fragment>
+    </Modal>
+  </section>
+  <section class="flex flex-col gap-y-3">
+    <h2 class="">Custom Icons</h2>
+    <div>
+      <IconButton icon="glow" />
+      <IconButton icon="phantom" />
+    </div>
+  </section>
+  <section class="flex flex-col gap-y-3">
+    <h2 class="">Solana</h2>
+    <div>
+      <WalletAdapter />
+    </div>
+  </section>
   <section class="flex flex-col gap-y-3">
     <h2 class="">Alerts</h2>
     <Alert type="default">This is an alert</Alert>
@@ -36,10 +81,10 @@
     <div class="flex flex-wrap flex-row gap-x-2">
       <h3>Group</h3>
       <ButtonGroup>
-      <Button theme="primary">1</Button>
-      <Button theme="secondary">2</Button>
-      <Button theme="accent">3</Button>
-    </ButtonGroup>
+        <Button theme="primary">1</Button>
+        <Button theme="secondary">2</Button>
+        <Button theme="accent">3</Button>
+      </ButtonGroup>
     </div>
   </div>
 </div>

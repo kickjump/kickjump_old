@@ -1,8 +1,8 @@
-import { isDomNode } from '$utils/dom';
+import { isElement } from '$utils/dom';
 
 export function clickOutside(node: HTMLElement) {
   const handleClick = (event: MouseEvent) => {
-    if (isDomNode(event.target) && !node.contains(event.target)) {
+    if (isElement(event.target) && !node.contains(event.target)) {
       node.dispatchEvent(
         new CustomEvent<ClickOutsideDetails>('clickoutside', { detail: { target: event.target } }),
       );

@@ -1,0 +1,27 @@
+<script lang="ts">
+  import { PageTransition, Header, Footer, Filters } from '$components';
+  import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
+
+  export let refresh: string;
+</script>
+
+<svelte:head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Patrick+Hand+SC&family=Short+Stack&display=swap"
+    rel="stylesheet"
+  />
+</svelte:head>
+
+<SvelteTheme />
+
+<div class="grid min-h-full grid-rows-layout">
+  <Header />
+  <PageTransition {refresh}>
+    <slot />
+  </PageTransition>
+  <Footer />
+</div>
+
+<Filters />

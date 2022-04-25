@@ -58,7 +58,6 @@
   export let shape: ButtonShape = 'default';
   export let disabled: boolean = false;
   export let type: Maybe<'submit' | 'reset' | 'button'> = undefined;
-  export let isLink: boolean = false;
   export let external: boolean = false;
   export let refresh: boolean = false;
   export let href: Maybe<string> = undefined;
@@ -66,10 +65,11 @@
   export let glass = false;
   export let disableAnimation = false;
   export let loading = false;
+  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
   let className: Maybe<string> = undefined;
   export { className as class };
 
-  $: element = href || isLink ? 'a' : 'button';
+  $: element = href ? 'a' : 'button';
   $: props =
     element === 'a'
       ? { href, target: external ? '_blank' : refresh ? '_self' : undefined, role: 'button' }
@@ -89,7 +89,7 @@
   );
 </script>
 
-<svelte:element this={element} on:click class={wrapperClass} {...props}>
+<svelte:element this={element} on:click={onClick} class={wrapperClass} {...props}>
   <slot name="leftIcon" />
   <slot />
   <slot name="rightIcon" />

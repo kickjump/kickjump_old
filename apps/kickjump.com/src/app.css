@@ -3,11 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  body,
-  svg {
-    @apply antialiased;
-  }
-
   p,
   button,
   a {
@@ -60,6 +55,24 @@
       @apply hover:underline active:underline underline-offset-4 decoration-thickness-2;
     }
   }
+
+  .modal-box {
+    @apply sketchy-2;
+  }
+
+  .page-wrapper {
+    display: grid;
+    grid-template-columns: 1fr min(65ch, 100%) 1fr;
+
+    & > * {
+      grid-column: 2;
+    }
+  }
+
+  .page-full-bleed {
+    width: 100%;
+    grid-column: 1 / 4;
+  }
 }
 
 @layer utilities {
@@ -74,6 +87,19 @@
     -moz-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+
+    &::selection,
+    & > ::selection {
+      /* background-color: #8289f1;
+      background-image: linear-gradient(180deg, #8289f1 0%, #0e9cc3 100%);
+      background-size: 100%; */
+      -webkit-background-clip: text;
+      background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: white;
+      -moz-text-fill-color: white;
+      text-fill-color: white;
+    }
   }
 
   .sketchy-outline {
@@ -134,7 +160,7 @@
   }
 
   .sketch-icon {
-    filter: url(#hand-drawn-icon-1);
+    filter: url(#icon-filter);
   }
 
   .sketch-border {
@@ -166,15 +192,14 @@
   --btn-text-case: capitalize;
   --border-btn: 3px;
 }
-
+/*
 html::after {
   content: '';
   position: fixed;
   width: 100%;
-  /* margin-top: 150px; */
+  margin-top: 150px;
   height: 999px;
   bottom: -100%;
   z-index: -1;
   background-color: green;
-  /* background-color: hsl(var(--n) / var(--tw-bg-opacity)); */
-}
+} */

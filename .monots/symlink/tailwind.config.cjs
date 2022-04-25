@@ -16,6 +16,7 @@ const config = {
         heading: '"Patrick Hand SC", cursive',
         subHeading: '"Patrick Hand", cursive',
       },
+      spacing: {},
 
       minWidth: (theme) => {
         return {
@@ -51,6 +52,7 @@ const config = {
     require('tailwindcss-animate'),
     require('daisyui'),
   ],
+
   daisyui: {
     themes: [
       {
@@ -60,6 +62,7 @@ const config = {
           secondary: 'hsl(34, 100%, 49%)',
           'primary-focus': 'hsl(255, 40%, 53%)',
           'secondary-focus': 'hsl(22, 100%, 48%)',
+          'base-content': 'hsl(248, 50%, 17%)',
         },
       },
       {

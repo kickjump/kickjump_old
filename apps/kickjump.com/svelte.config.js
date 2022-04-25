@@ -24,7 +24,7 @@ const config = {
   ],
 
   kit: {
-    routes: (filepath) => !/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external))/.test(filepath),
+    routes: (filepath) => !/(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external)/.test(filepath),
     adapter: adapter(),
     vite: {
       plugins: [
@@ -43,11 +43,12 @@ const config = {
       resolve: {
         alias: {
           $components: path.resolve('./src/lib/components'),
-          $directives: path.resolve('./src/lib/directives'),
-          $lib: path.resolve('./src/lib'),
+          $layout: path.resolve('./src/lib/layout'),
+          $actions: path.resolve('./src/lib/actions'),
           $server: path.resolve('./src/lib/server'),
           $types: path.resolve('./src/lib/types'),
           $utils: path.resolve('./src/lib/utils'),
+          $lib: path.resolve('./src/lib'),
         },
       },
     },

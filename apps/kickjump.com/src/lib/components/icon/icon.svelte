@@ -1,13 +1,55 @@
+<script lang="ts" context="module">
+  import { addIcon } from '@iconify/svelte/offline';
+  import { glow, phantom } from './custom-icons';
+  import type _ from '@iconify/types';
+  import warning from '@iconify-icons/ri/alert-line';
+  import checkboxCircle from '@iconify-icons/ri/checkbox-circle-line';
+  import close from '@iconify-icons/ri/close-line';
+  import discord from '@iconify-icons/ri/discord-fill';
+  import error from '@iconify-icons/ri/error-warning-line';
+  import github from '@iconify-icons/ri/github-fill';
+  import info from '@iconify-icons/ri/information-line';
+  import menuLine from '@iconify-icons/ri/menu-line';
+  import moonFill from '@iconify-icons/ri/moon-fill';
+  import moonLine from '@iconify-icons/ri/moon-line';
+  import sunFill from '@iconify-icons/ri/sun-fill';
+  import sunLine from '@iconify-icons/ri/sun-line';
+  import twitter from '@iconify-icons/ri/twitter-fill';
+
+  const ICONS = {
+    checkboxCircle,
+    close,
+    discord,
+    error,
+    github,
+    glow,
+    info,
+    menuLine,
+    moonFill,
+    moonLine,
+    phantom,
+    sunFill,
+    sunLine,
+    twitter,
+    warning,
+  };
+
+  for (const icon of Object.entries(ICONS)) {
+    addIcon(...icon);
+  }
+
+  export type IconType = keyof typeof ICONS;
+</script>
+
 <script lang="ts">
   import Icon, { type IconifyIcon, type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import { type IconType } from '$utils/icons';
   import { type Maybe } from '$types';
   import cx from 'clsx';
 
   export let icon: IconType | IconifyIcon;
   let className: Maybe<string> = undefined;
 
-  export let size: IconProps['height'] = 24;
+  export let size: IconProps['height'] = '1em';
   export let align: IconProps['align'] = undefined;
   export let color: IconProps['color'] = undefined;
   export let flip: IconProps['flip'] = undefined;

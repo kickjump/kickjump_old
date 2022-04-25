@@ -1,13 +1,3 @@
----
-layout: page
----
-
-<script>
-  import { Button } from '$components';
-</script>
-
-# About
-
 - X% of projects worldwide use open source software as some part of their infrastructure..
 - Open source is literally eating the world.
 - Software developers, designers and engineers who open source their work are creating huge amounts of value for the ecosystem.
@@ -37,5 +27,3 @@ Rather then going through a recruiter, the top developers with top accreditation
 - Enterprise open source - https://www.redhat.com/en/enterprise-open-source-report/2022
 - Outdated software https://www.securitymagazine.com/articles/92368-synopsys-study-shows-91-of-commercial-applications-contain-outdated-or-abandoned-open-source-components
 - Top websites https://trends.builtwith.com/cms/open-source
-
-<Button>Hello</Button>

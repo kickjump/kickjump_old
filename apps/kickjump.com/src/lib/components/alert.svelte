@@ -2,7 +2,7 @@
   import { type Maybe } from '$types';
   import clsx from 'clsx';
   import Button from './buttons/button.svelte';
-  import Icon from './icon.svelte';
+  import Icon from './icon/icon.svelte';
   import { createEventDispatcher } from 'svelte';
 
   const ALERT_TYPE = /*tw*/ {

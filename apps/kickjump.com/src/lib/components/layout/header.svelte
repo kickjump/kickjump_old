@@ -4,7 +4,7 @@
   import { Button } from '$components/buttons';
   import { IconToggle } from '../toggles';
   import themeStore, { setTheme } from 'svelte-themes';
-  import Icon from '../icon.svelte';
+  import Icon from '../icon/icon.svelte';
   import { matchesHref } from '$utils/core';
   import { t } from '$utils/intl';
 
@@ -37,7 +37,9 @@
   }
 </script>
 
-<header class="inline-grid place-items-center">
+<header
+  class="inline-grid place-items-center backdrop-blur-sm sticky top-0 sketchy-1 shadow-lg bg-base-100/50 z-10"
+>
   <navbar class="h-20 container grid gap-x-8 items-center grid-cols-navbar">
     <a href="/" aria-label="Home" class="justify-self-center">
       <Logo size="4em" />
@@ -47,18 +49,11 @@
       {#each items as { href, label } (href)}
         <Button {href} variant="ghost" active={matchesHref($page, href)}>{label}</Button>
       {/each}
+      <IconToggle checked={isDark} on:change={toggleTheme} swap="moonFill" initial="sunFill" />
     </div>
 
     <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-      <span class="hidden sm:flex flex-row gap-x-1 justify-center items-center">
-        <IconToggle
-          checked={isDark}
-          on:change={toggleTheme}
-          size="2em"
-          swap="moonFill"
-          initial="sunFill"
-        />
-      </span>
+      <span class="hidden sm:flex flex-row gap-x-1 justify-center items-center" />
       <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
         <Icon icon="menuLine" size="2em" />
       </Button>

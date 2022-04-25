@@ -111,6 +111,14 @@ async function createLocaleModules() {
 
 function createLocaleModule(name: string) {
   return `\
+declare module '$locales' {
+  /** Registers all locales found in \`localesRoot\`. */
+  export const registerAll: () => void
+
+  /** A list of all locales that will be registered by {@link registerAll()}. */
+  export const availableLocales: string[]
+}
+
 declare module '${name}' {
   import { DeepDictionary } from 'precompile-intl-runtime/dist/modules/types';
 

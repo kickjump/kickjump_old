@@ -310,8 +310,9 @@ importers:
 
   apps/kickjump.com:
     specifiers:
+      '@chakra-ui/utils': ^1.10.4
       '@cloudflare/workers-types': ^3.7.1
-      '@felte/validator-zod': ^1.0.7
+      '@felte/validator-zod': ^1.0.8
       '@formatjs/icu-messageformat-parser': ^2.0.19
       '@iconify-icons/bi': ^1.2.2
       '@iconify-icons/ri': ^1.2.1
@@ -375,8 +376,9 @@ importers:
       type-fest: ^2.12.2
       zod: ^3.14.4
     devDependencies:
+      '@chakra-ui/utils': 1.10.4
       '@cloudflare/workers-types': 3.7.1
-      '@felte/validator-zod': 1.0.7_zod@3.14.4
+      '@felte/validator-zod': 1.0.8_zod@3.14.4
       '@formatjs/icu-messageformat-parser': 2.0.19
       '@iconify-icons/bi': 1.2.2
       '@iconify-icons/ri': 1.2.1
@@ -3157,7 +3159,6 @@ packages:
       css-box-model: 1.2.1
       framesync: 5.3.0
       lodash.mergewith: 4.6.2
-    dev: false
 
   /@chakra-ui/visually-hidden/1.1.6_dk35huphsgard7grehwvu2mo4q:
     resolution: {integrity: sha512-Xzy5bA0UA+IyMgwJizQYSEdgz8cC/tHdmFB3CniXzmpKTSK8mJddeEBl+cGbXHBzxEUhH7xF1eaS41O+0ezWEQ==}
@@ -3982,8 +3983,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /@felte/validator-zod/1.0.7_zod@3.14.4:
-    resolution: {integrity: sha512-Mdp2X61gh2n0DVPs2B2TzNKbJXLkdVvlW/6KCFLj0825a9C+3E4C3XsEoxDeNTcUdZWS3BQcLim0+mf/TtC2iA==}
+  /@felte/validator-zod/1.0.8_zod@3.14.4:
+    resolution: {integrity: sha512-kO3kDbgCsn/DY+myfqQPrQOmjp9SGHR5u1tK/hhxdCPUJVYQ8nT6LGOxExpX5kf/GcAGGDxrSWkzNPUEAeIITQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     peerDependencies:
       zod: ^3.2.0
@@ -6675,7 +6676,6 @@ packages:
     resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
     dependencies:
       '@types/lodash': 4.14.181
-    dev: false
 
   /@types/lodash/4.14.181:
     resolution: {integrity: sha512-n3tyKthHJbkiWhDZs3DkhkCzt2MexYHXlX0td5iMplyfwketaOeKboEVBqzceH7juqvEg3q5oUoBFxSLu7zFag==}
@@ -7798,7 +7798,7 @@ packages:
   /async-mutex/0.3.2:
     resolution: {integrity: sha512-HuTK7E7MT7jZEh1P9GtRW9+aTWiDWWi9InbZ5hjxrnRa39KS4BW04+xLBhYNS2aXhHUIKZSw3gj4Pn1pj+qGAA==}
     dependencies:
-      tslib: 2.3.1
+      tslib: 2.4.0
 
   /async-retry/1.3.3:
     resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
@@ -9058,7 +9058,6 @@ packages:
     resolution: {integrity: sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw==}
     dependencies:
       tiny-invariant: 1.2.0
-    dev: false
 
   /css-has-pseudo/3.0.4_postcss@8.4.12:
     resolution: {integrity: sha512-Vse0xpR1K9MNlp2j5w1pgWIJtm1a8qS0JwS9goFYcImjlHEmywP9VUF05aGBXzGpDJF86QXk4L0ypBmwPhGArw==}
@@ -11759,8 +11758,7 @@ packages:
   /framesync/5.3.0:
     resolution: {integrity: sha512-oc5m68HDO/tuK2blj7ZcdEBRx3p1PjrgHazL8GYEpvULhrtGIFbQArN6cQS2QhW8mitffaB+VYzMjDqBxxQeoA==}
     dependencies:
-      tslib: 2.3.1
-    dev: false
+      tslib: 2.4.0
 
   /framesync/6.0.1:
     resolution: {integrity: sha512-fUY88kXvGiIItgNC7wcTOl0SNRCVXMKSWW2Yzfmn7EKNc+MpCzcz9DhdHcdjbrtN3c6R4H5dTY2jiCpPdysEjA==}
@@ -13829,7 +13827,6 @@ packages:
 
   /lodash.mergewith/4.6.2:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
-    dev: false
 
   /lodash.once/4.1.1:
     resolution: {integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=}

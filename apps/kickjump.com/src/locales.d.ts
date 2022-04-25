@@ -1,6 +1,14 @@
 type Primitive = null | undefined | string | number | boolean | symbol | bigint;
 type LiteralUnion<LiteralType, BaseType extends Primitive > = LiteralType | (BaseType & Record<never, never>);
 
+declare module '$locales' {
+  /** Registers all locales found in `localesRoot`. */
+  export const registerAll: () => void
+
+  /** A list of all locales that will be registered by {@link registerAll()}. */
+  export const availableLocales: string[]
+}
+
 declare module '$locales/en-gb.js' {
   import { DeepDictionary } from 'precompile-intl-runtime/dist/modules/types';
 
@@ -8,11 +16,27 @@ declare module '$locales/en-gb.js' {
   export default localeData;
 }
 
+declare module '$locales' {
+  /** Registers all locales found in `localesRoot`. */
+  export const registerAll: () => void
+
+  /** A list of all locales that will be registered by {@link registerAll()}. */
+  export const availableLocales: string[]
+}
+
 declare module '$locales/en.js' {
   import { DeepDictionary } from 'precompile-intl-runtime/dist/modules/types';
 
   const localeData: DeepDictionary;
   export default localeData;
+}
+
+declare module '$locales' {
+  /** Registers all locales found in `localesRoot`. */
+  export const registerAll: () => void
+
+  /** A list of all locales that will be registered by {@link registerAll()}. */
+  export const availableLocales: string[]
 }
 
 declare module '$locales/es.js' {

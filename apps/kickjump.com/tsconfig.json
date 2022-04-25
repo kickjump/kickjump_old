@@ -21,6 +21,8 @@
       "$components/*": ["src/lib/components/*"],
       "$directives": ["src/lib/directives"],
       "$directives/*": ["src/lib/directives/*"],
+      "$layout": ["src/lib/layout"],
+      "$layout/*": ["src/lib/layout/*"],
       "$server": ["src/lib/server"],
       "$server/*": ["src/lib/server/*"],
       "$types": ["src/lib/types"],

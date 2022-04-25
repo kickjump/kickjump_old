@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { isDomNode } from '$utils/dom.js';
+  import { isElement } from '$utils/dom.js';
 
   interface OnSomethingDetail {
     foo: string;
@@ -18,7 +18,7 @@
 
   function something(node: HTMLElement) {
     const handleClick = (event: MouseEvent) => {
-      if (isDomNode(event.target) && !node.contains(event.target)) {
+      if (isElement(event.target) && !node.contains(event.target)) {
         node.dispatchEvent(
           new CustomEvent<OnSomethingDetail>('something', {
             detail: { foo: '', bar: 0 },
