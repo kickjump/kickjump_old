@@ -57,6 +57,12 @@ declare namespace App {
      * The accepted languages in case the preferred language doesn't have a translation.
      */
     acceptedLanguages: string[];
+
+    /**
+     * The user agent string provided by the request. This is useful to deciding
+     * whether the device is mobile or desktop.
+     */
+    userAgent: string;
   }
 
   interface Stuff {}

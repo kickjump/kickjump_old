@@ -8,8 +8,12 @@
     ModalDescription,
     ModalTitle,
   } from '$components';
+  import ConnectionProvider from '$components/solana/connection-provider.svelte';
   import WalletAdapter from '$components/solana/wallet-adapter.svelte';
+  import WalletProvider from '$components/solana/wallet-provider.svelte';
+  import WalletSteps from '$components/solana/wallet-steps.svelte';
   let isOpen = false;
+  let button: Button | undefined;
 
   const onToggle = () => {
     isOpen = !isOpen;
@@ -20,9 +24,15 @@
 
 <div class="place-self-center container gap-y-5 grid grid-flow-row pt-8 mb-24">
   <section class="flex flex-col gap-y-3">
+    <h2 class="">Solana</h2>
+    <ConnectionProvider />
+    <WalletProvider />
+    <div><WalletSteps /></div>
+  </section>
+  <section class="flex flex-col gap-y-3">
     <h2 class="">Modal</h2>
     <span><Button onClick={onToggle} theme="primary">{message}</Button></span>
-    <Modal bind:isOpen>
+    <Modal bind:isOpen initialFocus={button?.getElement()}>
       <ModalTitle as="h3" slot="heading">Title</ModalTitle>
       <svelte:fragment slot="content">
         <ModalDescription>This is the content. And it is pretty.</ModalDescription>
@@ -30,7 +40,7 @@
       <svelte:fragment slot="footer">
         <!-- <ButtonGroup> -->
         <Button theme="default" onClick={() => (isOpen = false)}>Default</Button>
-        <Button theme="primary">Button</Button>
+        <Button theme="primary" bind:this={button}>Button</Button>
         <!-- </ButtonGroup> -->
       </svelte:fragment>
     </Modal>

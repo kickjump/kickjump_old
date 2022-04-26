@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
+  import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import { type Maybe } from '$types';
+  import cx from 'clsx';
   import { addIcon } from '@iconify/svelte/offline';
-  import { glow, phantom } from './custom-icons';
+  import { CUSTOM_ICONS, type ColoredIconifyIcon } from './custom-icons';
   import type _ from '@iconify/types';
   import warning from '@iconify-icons/ri/alert-line';
   import checkboxCircle from '@iconify-icons/ri/checkbox-circle-line';
@@ -15,19 +18,20 @@
   import sunFill from '@iconify-icons/ri/sun-fill';
   import sunLine from '@iconify-icons/ri/sun-line';
   import twitter from '@iconify-icons/ri/twitter-fill';
+  import back from '@iconify-icons/ri/arrow-left-s-line';
 
   const ICONS = {
+    ...CUSTOM_ICONS,
+    back,
     checkboxCircle,
     close,
     discord,
     error,
     github,
-    glow,
     info,
     menuLine,
     moonFill,
     moonLine,
-    phantom,
     sunFill,
     sunLine,
     twitter,
@@ -38,20 +42,20 @@
     addIcon(...icon);
   }
 
+  function getPreferredColor(icon: IconType | ColoredIconifyIcon) {
+    return typeof icon === 'string' ? (ICONS[icon] as ColoredIconifyIcon)?.color : icon.color;
+  }
+
   export type IconType = keyof typeof ICONS;
 </script>
 
 <script lang="ts">
-  import Icon, { type IconifyIcon, type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import { type Maybe } from '$types';
-  import cx from 'clsx';
-
-  export let icon: IconType | IconifyIcon;
+  export let icon: IconType | ColoredIconifyIcon;
   let className: Maybe<string> = undefined;
 
   export let size: IconProps['height'] = '1em';
   export let align: IconProps['align'] = undefined;
-  export let color: IconProps['color'] = undefined;
+  export let color: IconProps['color'] = getPreferredColor(icon);
   export let flip: IconProps['flip'] = undefined;
   export let hAlign: IconProps['hAlign'] = undefined;
   export let hFlip: IconProps['hFlip'] = undefined;

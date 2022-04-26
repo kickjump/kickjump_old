@@ -52,6 +52,18 @@ declare namespace App {
   interface LocaleMessages {
     home: never;
     projects: never;
+    'walletStep.selectWallet.title': never;
+    'walletStep.selectWallet.show': { count: number };
+    'walletStep.selectWallet.hide': { count: number };
+    'walletStep.selectWallet.item.uninstalled': never;
+    'walletStep.installWallet.redirect': never;
+    'walletStep.installWallet.instructions': { name: Primitive; mode: LiteralUnion<'browser' | 'mobile', string> };
+    'walletStep.installWallet.warning': { url: Primitive };
+    'walletStep.installWallet.finished': never;
+    'walletStep.installWallet.refresh': never;
+    'walletStep.installWallet.install': never;
+    'walletStep.installWallet.cancel': never;
+    'walletStep.connect': never;
     about: never;
     plain: never;
     interpolated: { val: Primitive };

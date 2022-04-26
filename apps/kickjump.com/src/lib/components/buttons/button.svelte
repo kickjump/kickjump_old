@@ -1,4 +1,7 @@
 <script lang="ts" context="module">
+  import type { Maybe } from '$types';
+  import cx from 'clsx';
+  import { Icon, type IconType, type ColoredIconifyIcon } from '$components/icon';
   const BUTTON_THEME = {
     default: '',
     /** Button with `primary` color */
@@ -46,12 +49,16 @@
   };
 
   export type ButtonShape = keyof typeof BUTTON_SHAPE;
+
+  export const ICON_TEXT_SIZE: Record<ButtonSize, string> = /*tw*/ {
+    xs: 'text-base',
+    sm: 'text-2xl',
+    md: 'text-3xl',
+    lg: 'text-6xl',
+  };
 </script>
 
 <script lang="ts">
-  import type { Maybe } from '$types';
-  import cx from 'clsx';
-
   export let theme: ButtonTheme = 'default';
   export let variant: ButtonVariant = 'solid';
   export let size: ButtonSize = 'md';
@@ -66,16 +73,24 @@
   export let disableAnimation = false;
   export let loading = false;
   export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
+  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
+  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
   let className: Maybe<string> = undefined;
-  export { className as class };
 
-  $: element = href ? 'a' : 'button';
+  let element: HTMLButtonElement | HTMLAnchorElement;
+
+  export function getElement() {
+    return element;
+  }
+
+  $: tag = href ? 'a' : 'button';
   $: props =
-    element === 'a'
+    tag === 'a'
       ? { href, target: external ? '_blank' : refresh ? '_self' : undefined, role: 'button' }
       : { type };
   $: wrapperClass = cx(
     'btn',
+    'gap-x-3',
     BUTTON_THEME[theme],
     BUTTON_VARIANT[variant],
     BUTTON_SIZE[size],
@@ -87,10 +102,23 @@
     disableAnimation && 'no-animation',
     className,
   );
+  $: iconClass = ICON_TEXT_SIZE[size];
+
+  export { className as class };
 </script>
 
-<svelte:element this={element} on:click={onClick} class={wrapperClass} {...props}>
-  <slot name="leftIcon" />
-  <slot />
-  <slot name="rightIcon" />
+<svelte:element this={tag} bind:this={element} on:click={onClick} class={wrapperClass} {...props}>
+  {#if leftIcon}
+    <Icon icon={leftIcon} class={iconClass} />
+  {:else}
+    <slot name="leftIcon" />
+  {/if}
+
+  <slot {element} />
+
+  {#if rightIcon}
+    <Icon icon={rightIcon} class={iconClass} />
+  {:else}
+    <slot name="rightIcon" />
+  {/if}
 </svelte:element>

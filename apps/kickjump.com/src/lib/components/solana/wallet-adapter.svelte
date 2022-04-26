@@ -3,7 +3,6 @@
   import { clusterApiUrl } from '@solana/web3.js';
   import type { Adapter } from '@solana/wallet-adapter-base';
   import {
-    workSpace,
     WalletProvider,
     WalletMultiButton,
     ConnectionProvider,

@@ -29,6 +29,7 @@ export const getSession: GetSession = async (event) => {
   const acceptedLanguages = languageHeader.split(','); //.map((lang) => lang.toLowerCase());
   const preferredLanguage = acceptedLanguages[0] ?? 'en';
   const error = event.locals.error;
+  const userAgent = event.request.headers.get('user-agent') ?? '';
 
-  return { ...session, error, acceptedLanguages, preferredLanguage };
+  return { ...session, error, acceptedLanguages, preferredLanguage, userAgent };
 };
