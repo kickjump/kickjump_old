@@ -1,6 +1,3 @@
-type Primitive = null | undefined | string | number | boolean | symbol | bigint;
-type LiteralUnion<LiteralType, BaseType extends Primitive > = LiteralType | (BaseType & Record<never, never>);
-
 declare module '$locales' {
   /** Registers all locales found in `localesRoot`. */
   export const registerAll: () => void
@@ -57,8 +54,8 @@ declare namespace App {
     'walletStep.selectWallet.hide': { count: number };
     'walletStep.selectWallet.item.uninstalled': never;
     'walletStep.installWallet.redirect': never;
-    'walletStep.installWallet.instructions': { name: Primitive; mode: LiteralUnion<'browser' | 'mobile', string> };
-    'walletStep.installWallet.warning': { url: Primitive };
+    'walletStep.installWallet.instructions': { name: import('type-fest').Primitive; mode: import('type-fest').LiteralUnion<'browser' | 'mobile', string> };
+    'walletStep.installWallet.warning': { url: import('type-fest').Primitive };
     'walletStep.installWallet.finished': never;
     'walletStep.installWallet.refresh': never;
     'walletStep.installWallet.install': never;
@@ -66,11 +63,11 @@ declare namespace App {
     'walletStep.connect': never;
     about: never;
     plain: never;
-    interpolated: { val: Primitive };
+    interpolated: { val: import('type-fest').Primitive };
     time: { now: Date | number };
     number: { n: number };
     pluralized: { count: number };
     'pluralized-with-hash': { count: number };
-    selected: { gender: LiteralUnion<'male' | 'female', string> };
+    selected: { gender: import('type-fest').LiteralUnion<'male' | 'female', string> };
   }
 }

@@ -44,7 +44,7 @@ function generateValuesObject(value: MessageFormatElement[]): ParseResult {
       case TYPE.pound:
         continue;
       case TYPE.argument:
-        results.push([getSafeKey(element.value), 'Primitive']);
+        results.push([getSafeKey(element.value), `import('type-fest').Primitive`]);
         continue;
 
       case TYPE.number:
@@ -64,7 +64,10 @@ function generateValuesObject(value: MessageFormatElement[]): ParseResult {
           .filter((key) => key !== 'other')
           .map((key) => `'${key}'`)
           .join(' | ');
-        results.push([getSafeKey(element.value), `LiteralUnion<${keys}, string>`]);
+        results.push([
+          getSafeKey(element.value),
+          `import('type-fest').LiteralUnion<${keys}, string>`,
+        ]);
         continue;
       }
 
@@ -128,9 +131,6 @@ declare module '${name}' {
 }
 
 const result = `\
-type Primitive = null | undefined | string | number | boolean | symbol | bigint;
-type LiteralUnion<LiteralType, BaseType extends Primitive > = LiteralType | (BaseType & Record<never, never>);
-
 ${await createLocaleModules()}
 
 declare namespace App {

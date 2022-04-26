@@ -72,7 +72,10 @@
 
   $: heightValue = height || size;
   $: widthValue = width || size;
-  $: classes = cx('sketch-icon', className);
+  $: classes = cx(
+    // 'sketch-icon',
+    className,
+  );
 </script>
 
 <Icon

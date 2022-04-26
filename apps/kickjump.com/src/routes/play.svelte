@@ -12,14 +12,14 @@
   import WalletAdapter from '$components/solana/wallet-adapter.svelte';
   import WalletProvider from '$components/solana/wallet-provider.svelte';
   import WalletSteps from '$components/solana/wallet-steps.svelte';
-  let isOpen = false;
+  let open = false;
   let button: Button | undefined;
 
   const onToggle = () => {
-    isOpen = !isOpen;
+    open = !open;
   };
 
-  $: message = isOpen ? 'Close' : 'Open';
+  $: message = open ? 'Close' : 'Open';
 </script>
 
 <div class="place-self-center container gap-y-5 grid grid-flow-row pt-8 mb-24">
@@ -32,14 +32,21 @@
   <section class="flex flex-col gap-y-3">
     <h2 class="">Modal</h2>
     <span><Button onClick={onToggle} theme="primary">{message}</Button></span>
-    <Modal bind:isOpen initialFocus={button?.getElement()}>
+    <Modal
+      {open}
+      onClose={() => {
+        console.log('closing!!!');
+        open = false;
+      }}
+      initialFocus={button?.getElement()}
+    >
       <ModalTitle as="h3" slot="heading">Title</ModalTitle>
       <svelte:fragment slot="content">
         <ModalDescription>This is the content. And it is pretty.</ModalDescription>
       </svelte:fragment>
       <svelte:fragment slot="footer">
         <!-- <ButtonGroup> -->
-        <Button theme="default" onClick={() => (isOpen = false)}>Default</Button>
+        <Button theme="default" onClick={() => (open = false)}>Default</Button>
         <Button theme="primary" bind:this={button}>Button</Button>
         <!-- </ButtonGroup> -->
       </svelte:fragment>

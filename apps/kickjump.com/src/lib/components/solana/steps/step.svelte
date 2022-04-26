@@ -1,12 +1,11 @@
 <script lang="ts">
   import { getStepContext } from './step-context';
 
-  export let index: number;
+  export let id: string;
 
   const { step, nextStep, previousStep } = getStepContext();
-  console.log({ $step, index });
 </script>
 
-{#if $step === index}
+{#if $step === id}
   <slot {nextStep} {previousStep} />
 {/if}

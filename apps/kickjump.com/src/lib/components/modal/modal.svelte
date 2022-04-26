@@ -8,27 +8,31 @@
   } from '@rgossiaux/svelte-headlessui';
   import IconButton from '$components/buttons/icon-button.svelte';
   import clsx, { type ClassValue } from 'clsx';
-  import { setModalContext } from './modal-context';
+  import { setModalContext, type ModalCloseHandler } from './modal-context';
+  import { fade, scale, type FadeParams, type ScaleParams } from 'svelte/transition';
+  import { cubicIn, cubicOut, cubicInOut } from 'svelte/easing';
 
-  export { DialogTitle as ModalTitle, DialogDescription as ModalDescription };
+  const SCALE_IN: ScaleParams = { start: 0.2, opacity: 0, duration: 300, easing: cubicIn };
+  const SCALE_OUT: ScaleParams = { start: 0.2, opacity: 0, duration: 300, easing: cubicOut };
+  const FADE: FadeParams = { duration: 300, easing: cubicInOut };
 
   const SECTION_CLASS = 'bg-base-100 sketchy-1 relative w-full shadow-lg max-w-lg p-0';
+
+  export { DialogTitle as ModalTitle, DialogDescription as ModalDescription };
 </script>
 
 <script lang="ts">
-  export let isOpen = false;
+  export let open: boolean;
   export let disableOverlay = false;
   export let hideCloseButton = false;
   export let initialFocus: Maybe<HTMLElement | 'close'> = undefined;
   export let sectionClass: Maybe<ClassValue> = undefined;
-  export let onClose: (method?: 'context' | 'event') => void = () => (isOpen = false);
+  export let onClose: ModalCloseHandler;
   let close: Maybe<IconButton>;
   let className: Maybe<ClassValue> = undefined;
   export { className as class };
 
-  setModalContext({
-    close: () => onClose('context'),
-  });
+  setModalContext({ onClose });
 
   $: initialFocusDerived = initialFocus === 'close' ? close?.getElement() : initialFocus;
   $: sectionClasses = clsx(
@@ -42,17 +46,19 @@
   );
 </script>
 
-<Dialog open={isOpen} {initialFocusDerived} on:close={() => onClose('event')} class={classes}>
+<Dialog {open} {initialFocusDerived} on:close={() => onClose('event')} class={classes}>
   {#if !disableOverlay}
-    <DialogOverlay class="fixed inset-0 bg-neutral-focus/40" />
+    <span transition:fade={FADE}>
+      <DialogOverlay class="fixed inset-0 bg-neutral-focus/40" />
+    </span>
   {/if}
 
   {#if $$slots.custom}
-    <section class={sectionClasses}>
+    <section class={sectionClasses} in:scale={SCALE_IN} out:scale={SCALE_OUT}>
       <slot name="custom" />
     </section>
   {:else}
-    <section class={sectionClasses}>
+    <section class={sectionClasses} in:scale={SCALE_IN} out:scale={SCALE_OUT}>
       {#if $$slots.heading}
         <header class="px-6">
           <slot name="heading" />
@@ -66,7 +72,7 @@
           class="absolute top-6 right-4"
           size="sm"
           onClick={() => {
-            isOpen = false;
+            onClose('close-button');
           }}
         />
       {/if}

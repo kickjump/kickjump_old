@@ -37,7 +37,7 @@ const config = {
 
       optimizeDeps: {
         // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
-        include: ['@kickjump/db > @kickjump/prisma', '@solana/web3.js'],
+        include: ['@kickjump/db > @kickjump/prisma'],
       },
 
       resolve: {

@@ -1,5 +1,6 @@
 import { json as baseJson, t as baseT } from 'precompile-intl-runtime';
 import type { Readable } from 'svelte/store';
+import type { LiteralUnion } from 'type-fest';
 
 import { browser } from '$app/env';
 

@@ -4,15 +4,25 @@
   import { t } from '$utils/intl';
   import { type Maybe } from '$types';
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { getWalletProviders, createRefreshUrl, cleanUrl } from '../wallet-providers';
+  import { getWalletProviders, cleanUrl } from '../wallet-providers';
+  import { addUrlParams } from '$utils/url';
   import type { ProviderInfo } from '../types';
   import { getStepContext } from './step-context';
   import { onMount } from 'svelte';
   import { session } from '$app/stores';
 
+  export const SELECT_WALLET_ID = 'select-wallet' as const;
+
   declare module './step-context' {
     interface StepContextData {
       selectedProvider?: ProviderInfo;
+    }
+  }
+
+  declare module '$utils/url' {
+    export interface KnownUrlParams {
+      stepId: string | undefined;
+      steps: string | undefined;
     }
   }
 </script>
@@ -57,7 +67,9 @@
   $: footerText = showUninstalled
     ? $t('walletStep.selectWallet.hide', { values: { count: uninstalledNumber } })
     : $t('walletStep.selectWallet.show', { values: { count: uninstalledNumber } });
-  $: refreshUrl = providerToInstall ? createRefreshUrl() : undefined;
+  $: refreshUrl = providerToInstall
+    ? addUrlParams({ params: { stepId: SELECT_WALLET_ID, steps: '1' }, href: location.href })
+    : undefined;
   $: contentClasses = clsx(
     'overflow-y-scroll grid grid-flow-row auto-rows-min',
     providerToInstall ? 'h-64' : 'h-72',

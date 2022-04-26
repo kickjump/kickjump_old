@@ -1,44 +1,69 @@
 <script lang="ts">
+  import {
+    fade,
+    type FadeParams,
+    // fly, type FlyParams
+  } from 'svelte/transition';
+  import {
+    cubicInOut,
+    // cubicIn, cubicOut
+  } from 'svelte/easing';
   import { IconButton } from '$components/buttons';
   import { getModalContext } from '$components/modal';
   import { getStepContext } from './step-context';
 
+  // const FLY_IN: FlyParams = { x: -20, duration: 200, delay: 300, easing: cubicIn };
+  // const FLY_OUT: FlyParams = { x: -20, duration: 200, easing: cubicOut };
+  const FADE: FadeParams = { duration: 300, easing: cubicInOut };
+
   $: ({ close } = getModalContext());
-  $: ({ step, previousStep } = getStepContext());
+  $: ({ stepIndex, previousStep, step } = getStepContext());
 </script>
 
-<header class="px-6 flex flex-row gap-x-4 items-start justify-center mb-8">
-  <div class="flex-shrink-0">
-    {#if $step > 0}
-      <IconButton
-        icon="back"
-        size="sm"
-        onClick={() => {
-          previousStep();
-        }}
-      />
-    {/if}
-  </div>
-  <div class="flex-1 self-center justify-center items-center ">
-    <slot name="heading" />
-  </div>
-</header>
+<!-- {#key step} -->
+<!-- <div
+  class="py-8 flex flex-col gap-y-4 step-height flex-1 row-[1/1] col-[1/1]"
+  in:fly={FLY_IN}
+  out:fly={FLY_OUT}
+> -->
+<div
+  class="py-8 flex flex-col gap-y-4 step-height flex-1 row-[1/1] col-[1/1]"
+  transition:fade|local={FADE}
+>
+  <header class="px-6 flex flex-row gap-x-4 place-items-center mb-8">
+    <div class="flex flex-shrink-0 place-items-center w-8 h-8">
+      {#if $stepIndex > 0}
+        <IconButton
+          icon="back"
+          size="sm"
+          onClick={() => {
+            previousStep();
+          }}
+        />
+      {/if}
+    </div>
+    <div class="flex-1 flex place-items-center">
+      <slot name="heading" />
+    </div>
+  </header>
 
-<IconButton
-  icon="close"
-  class="absolute top-6 right-4"
-  size="sm"
-  onClick={() => {
-    close();
-  }}
-/>
+  <IconButton
+    icon="close"
+    class="absolute top-8 right-6"
+    size="sm"
+    onClick={() => {
+      close('close-button');
+    }}
+  />
 
-<div class="px-6 flex-1">
-  <slot name="content" />
+  <div class="px-6 flex-1">
+    <slot name="content" />
+  </div>
+
+  {#if $$slots.footer}
+    <footer class="flex gap-x-2 px-6 justify-end items-center empty:hidden">
+      <slot name="footer" />
+    </footer>
+  {/if}
 </div>
-
-{#if $$slots.footer}
-  <footer class="flex gap-x-2 px-6 justify-end items-center empty:hidden">
-    <slot name="footer" />
-  </footer>
-{/if}
+<!-- {/key} -->

@@ -1,27 +1,10 @@
 <script lang="ts">
-  import { writable } from 'svelte/store';
   import { setStepContext, type StepContextData } from './step-context';
-  export let initialStep = 0;
+  export let stepIds: readonly [string, ...string[]];
+  export let initialStep = stepIds[0];
   export let initialData: StepContextData = {};
 
-  let step = writable(initialStep);
-  let data = writable(initialData);
-
-  function nextStep() {
-    $step += 1;
-  }
-
-  function previousStep() {
-    if ($step > 0) {
-      $step -= 1;
-    }
-  }
-
-  function updateData(newData: Partial<StepContextData>) {
-    $data = { ...$data, ...newData };
-  }
-
-  setStepContext({ step, nextStep, previousStep, data, updateData });
+  const { nextStep, previousStep, step } = setStepContext({ initialData, stepIds, initialStep });
 </script>
 
-<slot {nextStep} {previousStep} />
+<slot {nextStep} {previousStep} step={$step} />
