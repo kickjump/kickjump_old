@@ -2,10 +2,10 @@
   import type { Maybe } from '$types';
   import cx from 'clsx';
   import { Icon, type IconType, type ColoredIconifyIcon } from '$components/icon';
-  import {
-    getTransitionConfig,
-    type TransitionWithOptions,
-  } from '$lib/directives/transition-handler';
+  // import {
+  //   getTransitionConfig,
+  //   type TransitionWithOptions,
+  // } from '$lib/directives/transition-handler';
   const BUTTON_THEME = {
     default: '',
     /** Button with `primary` color */
@@ -79,9 +79,9 @@
   export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
   export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
   export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
-  let _transition: Maybe<TransitionWithOptions> = undefined;
-  let _in: Maybe<TransitionWithOptions> = undefined;
-  let _out: Maybe<TransitionWithOptions> = undefined;
+  // let _transition: Maybe<TransitionWithOptions> = undefined;
+  // let _in: Maybe<TransitionWithOptions> = undefined;
+  // let _out: Maybe<TransitionWithOptions> = undefined;
   let className: Maybe<string> = undefined;
 
   let element: HTMLButtonElement | HTMLAnchorElement;
@@ -110,13 +110,16 @@
     className,
   );
   $: iconClass = ICON_TEXT_SIZE[size];
-  $: [transitionIn, transitionInConfig] = getTransitionConfig(_in ?? _transition);
-  $: [transitionOut, transitionOutConfig] = getTransitionConfig(_out ?? _transition);
+  // $: [transitionIn, transitionInConfig] = getTransitionConfig(_in ?? _transition);
+  // $: [transitionOut, transitionOutConfig] = getTransitionConfig(_out ?? _transition);
 
-  export { _transition as transition, _in as in, _out as out, className as class };
+  export {
+    // _transition as transition, _in as in, _out as out,
+    className as class,
+  };
 </script>
 
-<svelte:element
+<!-- <svelte:element
   this={tag}
   bind:this={element}
   on:click={onClick}
@@ -124,7 +127,8 @@
   {...props}
   in:transitionIn={transitionInConfig}
   out:transitionOut={transitionOutConfig}
->
+> -->
+<svelte:element this={tag} bind:this={element} on:click={onClick} class={wrapperClass} {...props}>
   {#if leftIcon}
     <Icon icon={leftIcon} class={iconClass} />
   {:else}

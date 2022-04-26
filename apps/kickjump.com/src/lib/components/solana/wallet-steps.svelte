@@ -36,7 +36,7 @@
   Login with solana
 </Button>
 <StepProvider {stepIds} {initialStep}>
-  <Modal {open} {onClose} class="my-14" sectionClass="max-w-md grid">
+  <Modal {open} {onClose} class="my-14 mx-4 sm:mx-0" sectionClass="max-w-md grid">
     <svelte:fragment slot="custom">
       <Step id={SELECT_WALLET_ID}>
         <SelectWallet />

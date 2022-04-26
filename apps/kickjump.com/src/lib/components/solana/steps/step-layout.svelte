@@ -17,7 +17,11 @@
   const FADE: FadeParams = { duration: 300, easing: cubicInOut };
 
   $: ({ close } = getModalContext());
-  $: ({ stepIndex, previousStep, step } = getStepContext());
+  $: ({
+    stepIndex,
+    previousStep,
+    // step
+  } = getStepContext());
 </script>
 
 <!-- {#key step} -->
@@ -56,12 +60,12 @@
     }}
   />
 
-  <div class="px-6 flex-1">
+  <div class="px-6 flex-1 grid">
     <slot name="content" />
   </div>
 
   {#if $$slots.footer}
-    <footer class="flex gap-x-2 px-6 justify-end items-center empty:hidden">
+    <footer class="grid gap-x-2 px-6 justify-end items-center empty:hidden">
       <slot name="footer" />
     </footer>
   {/if}

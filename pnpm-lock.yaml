@@ -4,6 +4,7 @@ onlyBuiltDependencies:
   - '@parcel/css-cli'
 
 overrides:
+  idb-keyval: ^6.1.0
   '@solana/web3.js': 1.39.1
   '@project-serum/anchor': ^0.24.2
   cross-fetch: ^3.1.5
@@ -323,6 +324,7 @@ importers:
       '@kickjump/svelte-auth': ^0.0.0
       '@kickjump/tokens': ^0.0.1
       '@leveluptuts/svelte-element-query': ^1.0.5
+      '@macfja/svelte-persistent-store': ^1.3.0
       '@octokit/app': ^12.0.5
       '@octokit/auth-app': ^3.6.1
       '@octokit/core': ^3.6.0
@@ -387,6 +389,7 @@ importers:
       '@kickjump/svelte-auth': link:../../packages/kickjump__svelte-auth
       '@kickjump/tokens': link:../../packages/kickjump__tokens
       '@leveluptuts/svelte-element-query': 1.0.5
+      '@macfja/svelte-persistent-store': 1.3.0_svelte@3.47.0
       '@octokit/app': 12.0.5
       '@octokit/auth-app': 3.6.1
       '@octokit/core': 3.6.0
@@ -4218,6 +4221,17 @@ packages:
 
   /@leveluptuts/svelte-element-query/1.0.5:
     resolution: {integrity: sha512-BQ2/cMpm+xk2OiWoOv5LZc0PbYQSgwKZY+lxgQvdjjIvTFWaFF3BFH6x6Moj6e5FZn2TLiS/KcP8U+DUBcl8cQ==}
+    dev: true
+
+  /@macfja/svelte-persistent-store/1.3.0_svelte@3.47.0:
+    resolution: {integrity: sha512-3lPsEAFe28zCNTyA+/pYfUgzRrH6KZvoG0i4IHVhYOs3Xzaqg9hN7LdHa+Qrv7GncXn/6XhDEpb36hB0f7CzXA==}
+    peerDependencies:
+      svelte: ^3.0
+    dependencies:
+      browser-cookies: 1.2.0
+      esserializer: 1.3.2
+      idb-keyval: 6.1.0
+      svelte: 3.47.0
     dev: true
 
   /@manypkg/cli/0.19.1:
@@ -8064,6 +8078,10 @@ packages:
   /brorand/1.1.0:
     resolution: {integrity: sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=}
 
+  /browser-cookies/1.2.0:
+    resolution: {integrity: sha1-/KP/ubamOq3E2MCZnGtX0Pp9KbU=}
+    dev: true
+
   /browser-readablestream-to-it/1.0.3:
     resolution: {integrity: sha512-+12sHB+Br8HIh6VAMVEG5r3UXCyESIgDW7kzk3BjIXa43DVqVwL7GC5TW3jeh+72dtcH99pPVpw0X8i0jt+/kw==}
     dev: false
@@ -10603,6 +10621,10 @@ packages:
       estraverse: 5.3.0
     dev: false
 
+  /esserializer/1.3.2:
+    resolution: {integrity: sha512-48xQjlQ9Wr6dUfjLAC1IQF0bMIk6m62mN7BH0PklRP0NDfm2ISY16EXM8t2Wfc6WcLKser+X8ggeeFwieBkufQ==}
+    dev: true
+
   /estraverse/4.3.0:
     resolution: {integrity: sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw==}
     engines: {node: '>=4.0'}
@@ -12036,7 +12058,6 @@ packages:
     resolution: {integrity: sha512-u/qHZ75rlD3gH+Zah8dAJVJcGW/RfCnfNrFkElC5RpRCnpsCXXhqjVk+6MoVKJ3WhmNbRYdI6IIVP88e+5sxGw==}
     dependencies:
       safari-14-idb-fix: 3.0.0
-    dev: false
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -16795,7 +16816,6 @@ packages:
 
   /safari-14-idb-fix/3.0.0:
     resolution: {integrity: sha512-eBNFLob4PMq8JA1dGyFn6G97q3/WzNtFK4RnzT1fnLq+9RyrGknzYiM/9B12MnKAxuj1IXr7UKYtTNtjyKMBog==}
-    dev: false
 
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}

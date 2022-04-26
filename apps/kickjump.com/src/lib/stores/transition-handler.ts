@@ -2,7 +2,7 @@ import type { TransitionConfig } from 'svelte/transition';
 
 import type { Maybe } from '$types';
 
-const ANY_TRANSITION: TransitionAction = () => ({});
+const ANY_TRANSITION: TransitionAction = () => ({ delay: 0, duration: 0 });
 
 export type TransitionAction = <Element extends HTMLElement, Config extends object>(
   element: Element,
@@ -22,5 +22,5 @@ export function getTransitionConfig(options: Maybe<TransitionWithOptions>): Tran
     return [options, {}];
   }
 
-  return options || [ANY_TRANSITION, {}];
+  return options || ([ANY_TRANSITION, undefined] as any);
 }
