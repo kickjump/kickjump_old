@@ -1,6 +1,10 @@
 {
   "home": "Home",
   "projects": "Projects",
+  "walletStep.connectWallet.connecting": "Connecting...",
+  "walletStep.connectWallet.unlock": "Please unlock your {name} wallet.",
+  "walletStep.connectWallet.trouble": "Having trouble?",
+  "walletStep.connectWallet.back": "Go back",
   "walletStep.selectWallet.title": "Select Wallet",
   "walletStep.selectWallet.show": "Show uninstalled {count, plural, =1 {wallet} other {wallets}}",
   "walletStep.selectWallet.hide": "Hide uninstalled {count, plural, =1 {wallet} other {wallets}}",

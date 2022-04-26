@@ -77,13 +77,3 @@ export function cleanUrl(url: string) {
     return url;
   }
 }
-
-export function createRefreshUrl() {
-  if (!browser) {
-    return;
-  }
-
-  const url = new URL(window.location.href);
-  url.searchParams.set('openModal', 'true');
-  return url.href;
-}

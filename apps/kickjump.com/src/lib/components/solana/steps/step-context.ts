@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { type Readable, derived, writable } from 'svelte/store';
+import { type Readable, derived, get, writable } from 'svelte/store';
 import invariant from 'tiny-invariant';
 
 export const STEP_CONTEXT_NAME = '$$step-wizard$$';
@@ -69,21 +69,45 @@ interface StepProps {
   initialData?: Partial<StepContextData>;
   initialStep?: string;
   stepIds: readonly [string, ...string[]];
+  onFinish: () => void;
 }
 
 export function setStepContext(props: StepProps) {
-  const { stepIds, initialData = {}, initialStep = stepIds[0] } = props;
+  const { stepIds, initialData = {}, initialStep = stepIds[0], onFinish } = props;
   const step = writable(initialStep);
   const stepIndex = derived(step, getStepIndex);
   const data = writable(initialData);
+  const isFinalStep = derived(
+    stepIndex,
+    (value, set) => {
+      if (value >= stepIds.length - 1) {
+        console.log('finished!');
+        set(true);
+      } else {
+        console.log('NOT finished!!');
+        set(false);
+      }
+    },
+    false,
+  );
 
   function getStepIndex($step: string): number {
-    return stepIds.indexOf($step);
+    const newIndex = stepIds.indexOf($step);
+    console.log({ newIndex });
+    return newIndex;
   }
 
   function nextStep() {
     step.update((value) => {
       const next = getStepIndex(value) + 1;
+
+      if (next > stepIds.length - 1) {
+        console.log('oops', { next, length: stepIds.length });
+        // onFinish();
+        return value;
+      }
+
+      console.log({ next, stepIds });
       const stepId = next >= stepIds.length ? value : stepIds[next];
       invariant(
         stepId,
@@ -99,7 +123,8 @@ export function setStepContext(props: StepProps) {
   function previousStep() {
     step.update((value) => {
       const previous = getStepIndex(value) - 1;
-      const stepId = previous < 0 ? stepIds[0] : stepIds[previous];
+      console.log({ previous, stepIds });
+      const stepId = previous <= 0 ? stepIds[0] : stepIds[previous];
       invariant(
         stepId,
         `'previousStep' produced an invalid stepId: ${stepId}, not found in stepIds: ${stepIds.join(

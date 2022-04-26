@@ -35,7 +35,7 @@
 <Button onClick={() => (open = !open)} theme="default" variant="solid" rightIcon="solana">
   Login with solana
 </Button>
-<StepProvider {stepIds} {initialStep}>
+<StepProvider {stepIds} {initialStep} onFinish={() => (open = false)}>
   <Modal {open} {onClose} class="my-14 mx-4 sm:mx-0" sectionClass="max-w-md grid">
     <svelte:fragment slot="custom">
       <Step id={SELECT_WALLET_ID}>

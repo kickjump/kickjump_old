@@ -2,119 +2,62 @@
   import { ModalTitle } from '$components/modal';
   import StepLayout from './step-layout.svelte';
   import { t } from '$utils/intl';
-  import { type Maybe } from '$types';
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { getWalletProviders, createRefreshUrl, cleanUrl } from '../wallet-providers';
-  import type { ProviderInfo } from '../types';
   import { getStepContext } from './step-context';
-  import { onMount } from 'svelte';
-  import { session } from '$app/stores';
+  import { SELECT_WALLET_ID } from './select-wallet.svelte';
+  import LoadingBars from '$components/icon/loading-bars.svelte';
+  import type { WalletName } from '@solana/wallet-adapter-base';
+  import { fly, type FlyParams } from 'svelte/transition';
+  import { quintIn } from 'svelte/easing';
+
+  const FLY_IN: FlyParams = { duration: 400, easing: quintIn, y: 75 };
 
   export const CONNECT_WALLET_ID = 'connect-wallet' as const;
 </script>
 
 <script lang="ts">
-  import Button from '$components/buttons/button.svelte';
-  import SelectWalletItem from './select-wallet-item.svelte';
-  import { Icon } from '$components/icon';
-  import clsx from 'clsx';
-
-  let showUninstalled = false;
-  let providers = getWalletProviders($session.userAgent);
-  let providerToInstall: Maybe<ProviderInfo> = undefined;
-
-  onMount(() => {
-    // update the selected provider once in the browser to update the ui to know
-    // whether the wallet is installed.
-    providers = getWalletProviders();
-  });
-
-  function onSelectFactory(selectedProvider: ProviderInfo) {
-    return () => {
-      $walletStore.disconnect().then(() => {
-        updateData({ selectedProvider });
-        nextStep();
-      });
-    };
+  $: ({ data, jumpToStep, nextStep, previousStep, step } = getStepContext());
+  $: ({ selectedProvider } = $data);
+  $: name = selectedProvider?.info.name;
+  $: if (!selectedProvider) {
+    jumpToStep(SELECT_WALLET_ID);
   }
-
-  function onInstallFactory(info: ProviderInfo) {
-    return () => {
-      providerToInstall = info;
-      // window.open(providerToInstall.info.url, '_blank', 'noopener');
-    };
+  $: if (name) {
+    $walletStore.walletsByName[name as WalletName]?.connect().then(() => {
+      nextStep();
+    });
   }
-
-  $: ({ updateData, nextStep } = getStepContext());
-  $: uninstalledNumber = providers.filter((provider) => provider.isUninstalled).length;
-  $: displayedProviders = providers.filter((provider) =>
-    showUninstalled ? true : !provider.isUninstalled,
-  );
-  $: footerText = showUninstalled
-    ? $t('walletStep.selectWallet.hide', { values: { count: uninstalledNumber } })
-    : $t('walletStep.selectWallet.show', { values: { count: uninstalledNumber } });
-  $: refreshUrl = providerToInstall ? createRefreshUrl() : undefined;
-  $: contentClasses = clsx(
-    'overflow-y-scroll grid grid-flow-row auto-rows-min',
-    providerToInstall ? 'h-64' : 'h-72',
-  );
-  $: cleanedUrl = providerToInstall ? cleanUrl(providerToInstall?.info.url) : '';
 </script>
 
-<StepLayout>
-  <ModalTitle as="h3" slot="heading">{$t('walletStep.selectWallet.title')}</ModalTitle>
-  <div slot="content" class={contentClasses}>
-    {#if providerToInstall}
-      <div class="flex flex-row pb-4 gap-x-4 justify-center items-center">
-        <Icon icon={providerToInstall.info.icon} size="3rem" />
-        <h3 class="flex-1 ">{providerToInstall.info.name}</h3>
-      </div>
-      <h4 class="pb-4">{$t('walletStep.installWallet.redirect')}</h4>
-      <p class="pb-2 text-sm">
-        {$t('walletStep.installWallet.instructions', {
-          values: { mode: 'browser', name: providerToInstall.info.name },
-        })}
-      </p>
-      <p class="text-sm">
-        {$t('walletStep.installWallet.warning', {
-          values: { url: cleanedUrl },
-        })}
-      </p>
-    {:else}
-      {#each displayedProviders as provider (provider.info.url)}
-        <SelectWalletItem
-          {provider}
-          onInstall={onInstallFactory(provider)}
-          onSelect={onSelectFactory(provider)}
-        />
-      {/each}
-    {/if}
-  </div>
-  <svelte:fragment slot="footer">
-    {#if providerToInstall}
-      <div class="flex-1 flex flex-col justify-end items-end gap-y-2">
-        <div class="flex gap-x-7 justify-end items-end">
-          <Button size="sm" theme="error" onClick={() => (providerToInstall = undefined)}>
-            {$t('walletStep.installWallet.cancel')}
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => window.open(providerToInstall?.info.url, '_blank', 'noopener')}
-          >
-            {$t('walletStep.installWallet.install')}
-          </Button>
+{#if selectedProvider}
+  <StepLayout>
+    <svelte:fragment slot="content">
+      {#key $step}
+        <div class="row-[1/1] col-[1/1] grid place-items-center" in:fly={FLY_IN}>
+          <ModalTitle as="h3" class="text-center">
+            {$t('walletStep.connectWallet.connecting')}
+          </ModalTitle>
+          <p
+            >{$t('walletStep.connectWallet.unlock', {
+              values: { name: selectedProvider.info.name },
+            })}
+          </p>
+          <div class="h-8" />
+          <div>
+            <LoadingBars size={80} class="text-primary/50" />
+          </div>
+          <div class="h-8" />
+          <p class="text-center text-xs">
+            {$t('walletStep.connectWallet.trouble')}{' '}
+            <button
+              class="inline bold underline underline-offset-1"
+              on:click={() => previousStep()}
+            >
+              {$t('walletStep.connectWallet.back')}
+            </button>
+          </p>
         </div>
-        <span class="text-xs text-center"
-          >{$t('walletStep.installWallet.finished')}
-          <a class="bold underline underline-offset-1" href={refreshUrl} target="_self">
-            {$t('walletStep.installWallet.refresh')}
-          </a>
-        </span>
-      </div>
-    {:else if uninstalledNumber > 0}
-      <Button size="sm" variant="link" onClick={() => (showUninstalled = !showUninstalled)}>
-        {footerText}
-      </Button>
-    {/if}
-  </svelte:fragment>
-</StepLayout>
+      {/key}
+    </svelte:fragment>
+  </StepLayout>
+{/if}

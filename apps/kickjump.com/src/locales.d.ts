@@ -49,6 +49,10 @@ declare namespace App {
   interface LocaleMessages {
     home: never;
     projects: never;
+    'walletStep.connectWallet.connecting': never;
+    'walletStep.connectWallet.unlock': { name: import('type-fest').Primitive };
+    'walletStep.connectWallet.trouble': never;
+    'walletStep.connectWallet.back': never;
     'walletStep.selectWallet.title': never;
     'walletStep.selectWallet.show': { count: number };
     'walletStep.selectWallet.hide': { count: number };
