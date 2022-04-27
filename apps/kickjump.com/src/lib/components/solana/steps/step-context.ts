@@ -16,13 +16,6 @@ export interface StepContext {
   stepIndex: Readable<number>;
 
   /**
-   * The steps that have been registered.
-   *
-   * TODO
-   */
-  // registeredSteps: Readable<number>;
-
-  /**
    * The data that can be customized by each step.
    */
   data: Readable<Partial<StepContextData>>;
@@ -46,21 +39,11 @@ export interface StepContext {
    * Update the data provided.
    */
   updateData: (update: Partial<StepContextData>) => void;
-
-  /**
-   * Register a new step.
-   */
-  // registerStep: (index: number) => void;
 }
 
 export function getStepContext(): StepContext {
   const context = getContext<StepContext | undefined>(STEP_CONTEXT_NAME);
-
-  if (!context) {
-    throw new Error(
-      'StepWizard compound components cannot be rendered outside the StepWizard component',
-    );
-  }
+  invariant(context, 'StepProvider compound components cannot be rendered outside the context');
 
   return context;
 }
@@ -72,24 +55,11 @@ interface StepProps {
   onFinish: () => void;
 }
 
-export function setStepContext(props: StepProps) {
+export function createStepContext(props: StepProps) {
   const { stepIds, initialData = {}, initialStep = stepIds[0], onFinish } = props;
   const step = writable(initialStep);
   const stepIndex = derived(step, getStepIndex);
   const data = writable(initialData);
-  const isFinalStep = derived(
-    stepIndex,
-    (value, set) => {
-      if (value >= stepIds.length - 1) {
-        console.log('finished!');
-        set(true);
-      } else {
-        console.log('NOT finished!!');
-        set(false);
-      }
-    },
-    false,
-  );
 
   function getStepIndex($step: string): number {
     const newIndex = stepIds.indexOf($step);
@@ -103,11 +73,10 @@ export function setStepContext(props: StepProps) {
 
       if (next > stepIds.length - 1) {
         console.log('oops', { next, length: stepIds.length });
-        // onFinish();
+        onFinish();
         return value;
       }
 
-      console.log({ next, stepIds });
       const stepId = next >= stepIds.length ? value : stepIds[next];
       invariant(
         stepId,
@@ -142,11 +111,11 @@ export function setStepContext(props: StepProps) {
     });
   }
 
-  function updateData(update: Partial<StepContextData>) {
+  function updateData(update: UpdateDataParam) {
     data.update((value) => {
       return {
         ...value,
-        ...update,
+        ...(typeof update === 'function' ? update(value) : update),
       };
     });
   }
@@ -168,5 +137,9 @@ export function setStepContext(props: StepProps) {
 function asReadable<Type, Store extends Readable<Type>>(store: Store): Readable<Type> {
   return { subscribe: store.subscribe };
 }
+
+type UpdateDataParam =
+  | Partial<StepContextData>
+  | ((data: Partial<StepContextData>) => Partial<StepContextData>);
 
 export interface StepContextData {}

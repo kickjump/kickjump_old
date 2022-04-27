@@ -47,7 +47,9 @@
       <svelte:fragment slot="footer">
         <!-- <ButtonGroup> -->
         <Button theme="default" onClick={() => (open = false)}>Default</Button>
-        <Button theme="primary" bind:this={button}>Button</Button>
+        <ConnectionProvider />
+        <WalletProvider />
+        <div><WalletSteps /></div>
         <!-- </ButtonGroup> -->
       </svelte:fragment>
     </Modal>

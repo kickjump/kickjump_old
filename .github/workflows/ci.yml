@@ -82,7 +82,6 @@ jobs:
 
       - name: setup playwright test environment
         run: pnpm setup:playwright
-        working-directory: tests/kickjump.com
 
       - name: run tests
         env:

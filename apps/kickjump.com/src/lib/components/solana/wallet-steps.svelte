@@ -5,17 +5,17 @@
 
   import Button from '$components/buttons/button.svelte';
   import { Modal, type ModalCloseMethod } from '$components/modal';
-  import ConnectWallet, { CONNECT_WALLET_ID } from './steps/connect-wallet.svelte';
-  import SelectWallet, { SELECT_WALLET_ID } from './steps/select-wallet.svelte';
+  import { ConnectWallet, CONNECT_WALLET_ID } from './steps/connect';
+  import { SelectWallet, SELECT_WALLET_ID } from './steps/select';
   import StepProvider from './steps/step-provider.svelte';
   import Step from './steps/step.svelte';
-  const stepIds = [SELECT_WALLET_ID, 'connect-wallet'] as const;
 
+  const stepIds = [SELECT_WALLET_ID, CONNECT_WALLET_ID] as const;
   let open: boolean = getUrlParam($page.url, 'steps') === '1';
   let initialStep = getUrlParam($page.url, 'stepId') || stepIds[0];
 
   // Need a way to differentiate depending on how the modal was closed.
-  const onClose = async (method?: ModalCloseMethod) => {
+  async function onClose(method?: ModalCloseMethod) {
     // ignore escape and clicking outside the modal
     if (method === 'event') return;
 
@@ -29,7 +29,7 @@
     }
 
     open = false;
-  };
+  }
 </script>
 
 <Button onClick={() => (open = !open)} theme="default" variant="solid" rightIcon="solana">

@@ -1,10 +1,9 @@
 /// <reference types="vitest" />
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { defineConfig } from 'vitest/config';
 
 const config = defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [svelte({ hot: !process.env.VITEST })],
   test: {
     include: ['**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     setupFiles: ['./tests/setup/react-setup.ts'],

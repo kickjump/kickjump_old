@@ -64,7 +64,6 @@ jobs:
         env:
           TEST_BUILD: 1
         run: pnpm setup:playwright
-        working-directory: tests/kickjump.com
 
       - name: run tests on vercel
         env:

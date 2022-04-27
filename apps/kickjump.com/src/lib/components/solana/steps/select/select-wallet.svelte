@@ -3,53 +3,72 @@
   import { Skeleton } from '$components/loaders';
   import { quintInOut } from 'svelte/easing';
   import { ModalTitle } from '$components/modal';
-  import StepLayout from './step-layout.svelte';
+  import StepLayout from '../step-layout.svelte';
   import { t } from '$utils/intl';
   import { type Maybe } from '$types';
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { getWalletProviders, cleanUrl } from '../wallet-providers';
+  import { getWalletProviders, cleanUrl } from '$components/solana/wallet-providers';
   import { addUrlParams } from '$utils/url';
-  import type { ProviderInfo } from '../types';
-  import { getStepContext } from './step-context';
+  import type { ProviderInfo } from '$components/solana/types';
+  import { getStepContext } from '../step-context';
   import { onMount } from 'svelte';
   import { session } from '$app/stores';
   import { showUninstalledWallets } from '$lib/stores/persistent-data';
+  import Button from '$components/buttons/button.svelte';
+  import SelectWalletItem from './item.svelte';
+  import { Icon } from '$components/icon';
+  import clsx from 'clsx';
 
   export const SELECT_WALLET_ID = 'select-wallet' as const;
   // const FADE_IN: FadeParams = { duration: 300, delay: 400, easing: quintInOut };
   const FADE_OUT: FadeParams = { duration: 250, easing: quintInOut };
 
-  declare module './step-context' {
+  declare module '../step-context' {
     interface StepContextData {
+      /**
+       * The chosen provider by the user.
+       */
       selectedProvider?: ProviderInfo;
+
+      /**
+       * True when the providers have already been loaded since the last
+       * refresh. Prevents the loading skeleton from being shown on every render
+       * of the providers.
+       */
+      providersLoadedInBrowser?: boolean;
     }
   }
 
   declare module '$utils/url' {
     export interface KnownUrlParams {
+      /**
+       * The current step id.
+       */
       stepId: string | undefined;
+
+      /**
+       * The steps def
+       */
       steps: string | undefined;
     }
   }
 </script>
 
 <script lang="ts">
-  import Button from '$components/buttons/button.svelte';
-  import SelectWalletItem from './select-wallet-item.svelte';
-  import { Icon } from '$components/icon';
-  import clsx from 'clsx';
-
   let providers = getWalletProviders($session.userAgent);
   let providerToInstall: Maybe<ProviderInfo> = undefined;
-  let loading = true;
 
   onMount(() => {
     // update the selected provider once in the browser to update the ui to know
     // whether the wallet is installed.
     providers = getWalletProviders();
-    setTimeout(() => {
-      loading = false;
-    }, 500);
+    const timeout = setTimeout(() => {
+      updateData({ providersLoadedInBrowser: true });
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   });
 
   function onSelectFactory(selectedProvider: ProviderInfo) {
@@ -68,7 +87,9 @@
     };
   }
 
-  $: ({ updateData, nextStep } = getStepContext());
+  $: ({ updateData, nextStep, data } = getStepContext());
+  $: loading = !$data?.providersLoadedInBrowser;
+
   $: uninstalledNumber = providers.filter((provider) => provider.isUninstalled).length;
   $: displayedProviders = providers.filter((provider) =>
     $showUninstalledWallets ? true : !provider.isUninstalled,
@@ -94,8 +115,9 @@
     {#if loading}
       <div class={contentClasses} transition:fade={FADE_OUT}>
         {#each providers as _}
-          <Skeleton height={100}>
-            <rect width="96" height="72" x="0" y="0" rx="12" ry="12" />
+          <Skeleton height={100} width="100%">
+            <circle cx="50" cy="50" r="40" />
+            <!-- <rect width="96" height="72" x="0" y="0" rx="12" ry="12" /> -->
             <rect width="260" height="10" x="108" y="19" rx="5" ry="5" />
             <rect width="150" height="10" x="108" y="43" rx="5" ry="5" />
           </Skeleton>

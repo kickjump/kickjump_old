@@ -1,14 +1,14 @@
 <script lang="ts" context="module">
   import { ModalTitle } from '$components/modal';
-  import StepLayout from './step-layout.svelte';
+  import StepLayout from '$components/solana/steps/step-layout.svelte';
   import { t } from '$utils/intl';
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { getStepContext } from './step-context';
-  import { SELECT_WALLET_ID } from './select-wallet.svelte';
+  import { getStepContext } from '../step-context';
   import LoadingBars from '$components/icon/loading-bars.svelte';
   import type { WalletName } from '@solana/wallet-adapter-base';
   import { fly, type FlyParams } from 'svelte/transition';
   import { quintIn } from 'svelte/easing';
+  import { onDestroy } from 'svelte';
 
   const FLY_IN: FlyParams = { duration: 400, easing: quintIn, y: 75 };
 
@@ -16,17 +16,20 @@
 </script>
 
 <script lang="ts">
-  $: ({ data, jumpToStep, nextStep, previousStep, step } = getStepContext());
+  $: ({ data, previousStep, step } = getStepContext());
+  $: console.log(selectedProvider);
   $: ({ selectedProvider } = $data);
   $: name = selectedProvider?.info.name;
-  $: if (!selectedProvider) {
-    jumpToStep(SELECT_WALLET_ID);
-  }
   $: if (name) {
     $walletStore.walletsByName[name as WalletName]?.connect().then(() => {
-      nextStep();
+      // nextStep();
+      console.log('hmmmm!');
     });
   }
+
+  onDestroy(() => {
+    console.log('being destroyed!');
+  });
 </script>
 
 {#if selectedProvider}
