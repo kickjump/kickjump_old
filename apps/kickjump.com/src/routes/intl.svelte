@@ -1,8 +1,9 @@
 <script>
   import Button from '$components/buttons/button.svelte';
-  import { t, locale, locales } from '$utils/intl';
+  import { locale, locales, t } from '$utils/intl';
+
   let count = 1;
-  let time = new Date();
+  export let time = new Date();
   let gender = 'female';
 </script>
 

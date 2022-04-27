@@ -1,14 +1,16 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import Logo from '$components/logo/logo.svelte';
-  import { Button } from '$components/buttons';
-  import { IconToggle } from '../toggles';
   import themeStore, { setTheme } from 'svelte-themes';
-  import Icon from '../icon/icon.svelte';
+  
+  import { page } from '$app/stores';
+  import { Button } from '$components/buttons';
+  import Logo from '$components/logo/logo.svelte';
   import { matchesHref } from '$utils/core';
   import { t } from '$utils/intl';
+  
+  import Icon from '../icon/icon.svelte';
+  import { IconToggle } from '../toggles';
 
-  let open: boolean = false;
+  let open = false;
 
   function toggleTheme() {
     setTheme(isDark ? 'light' : 'dark');

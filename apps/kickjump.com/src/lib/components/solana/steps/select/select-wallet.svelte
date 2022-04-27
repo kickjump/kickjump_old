@@ -1,23 +1,25 @@
 <script lang="ts" context="module">
-  import { fade, type FadeParams } from 'svelte/transition';
-  import { Skeleton } from '$components/loaders';
-  import { quintInOut } from 'svelte/easing';
-  import { ModalTitle } from '$components/modal';
-  import StepLayout from '../step-layout.svelte';
-  import { t } from '$utils/intl';
-  import { type Maybe } from '$types';
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { getWalletProviders, cleanUrl } from '$components/solana/wallet-providers';
-  import { addUrlParams } from '$utils/url';
-  import type { ProviderInfo } from '$components/solana/types';
-  import { getStepContext } from '../step-context';
-  import { onMount } from 'svelte';
-  import { session } from '$app/stores';
-  import { showUninstalledWallets } from '$lib/stores/persistent-data';
-  import Button from '$components/buttons/button.svelte';
-  import SelectWalletItem from './item.svelte';
-  import { Icon } from '$components/icon';
   import clsx from 'clsx';
+  import { onMount } from 'svelte';
+  import { quintInOut } from 'svelte/easing';
+  import { type FadeParams,fade } from 'svelte/transition';
+  
+  import { session } from '$app/stores';
+  import Button from '$components/buttons/button.svelte';
+  import { Icon } from '$components/icon';
+  import { Skeleton } from '$components/loaders';
+  import { ModalTitle } from '$components/modal';
+  import type { ProviderInfo } from '$components/solana/types';
+  import { cleanUrl,getWalletProviders } from '$components/solana/wallet-providers';
+  import { showUninstalledWallets } from '$lib/stores/persistent-data';
+  import { type Maybe } from '$types';
+  import { t } from '$utils/intl';
+  import { addUrlParams } from '$utils/url';
+  
+  import { getStepContext } from '../step-context';
+  import StepLayout from '../step-layout.svelte';
+  import SelectWalletItem from './item.svelte';
 
   export const SELECT_WALLET_ID = 'select-wallet' as const;
   // const FADE_IN: FadeParams = { duration: 300, delay: 400, easing: quintInOut };
@@ -56,7 +58,7 @@
 
 <script lang="ts">
   let providers = getWalletProviders($session.userAgent);
-  let providerToInstall: Maybe<ProviderInfo> = undefined;
+  let providerToInstall: Maybe<ProviderInfo> = null;
 
   onMount(() => {
     // update the selected provider once in the browser to update the ui to know
@@ -160,7 +162,7 @@
         transition:fade={FADE_OUT}
       >
         <div class="flex gap-x-7 justify-end items-end">
-          <Button size="sm" theme="error" onClick={() => (providerToInstall = undefined)}>
+          <Button size="sm" theme="error" onClick={() => (providerToInstall = null)}>
             {$t('walletStep.installWallet.cancel')}
           </Button>
           <Button

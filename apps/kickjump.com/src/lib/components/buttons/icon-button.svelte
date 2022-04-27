@@ -1,30 +1,32 @@
 <script lang="ts">
-  import type { Maybe } from '$types';
+  import clsx from 'clsx';
+  
+  import type { IconType } from '$components/icon';
   import Icon from '$components/icon/icon.svelte';
+  import type { Maybe } from '$types';
+  
   import Button, {
-    type ButtonVariant,
-    type ButtonTheme,
     type ButtonSize,
+    type ButtonTheme,
+    type ButtonVariant,
     ICON_TEXT_SIZE,
   } from './button.svelte';
-  import type { IconType } from '$components/icon';
-  import clsx from 'clsx';
 
   export let icon: IconType;
   export let theme: ButtonTheme = 'default';
   export let variant: ButtonVariant = 'ghost';
   export let size: ButtonSize = 'md';
-  export let disabled: boolean = false;
-  export let type: Maybe<'submit' | 'reset' | 'button'> = undefined;
-  export let external: boolean = false;
-  export let refresh: boolean = false;
-  export let href: Maybe<string> = undefined;
-  export let active: boolean = false;
+  export let disabled = false;
+  export let type: Maybe<'submit' | 'reset' | 'button'> = null;
+  export let external = false;
+  export let refresh = false;
+  export let href: Maybe<string> = null;
+  export let active = false;
   export let glass = false;
   export let disableAnimation = false;
   export let loading = false;
-  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
-  let className: Maybe<string> = undefined;
+  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = null;
+  let className: Maybe<string> = null;
   let element: HTMLButtonElement | HTMLAnchorElement;
 
   export function getElement() {

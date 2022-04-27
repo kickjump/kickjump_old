@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { range } from '$utils/helpers';
-
   import cx from 'clsx';
+  
+  import { range } from '$utils/helpers';
+  
+  import { type SketchOptions,generateSketchProps } from './generate-sketch-props';
 
-  import { generateSketchProps, type SketchOptions } from './generate-sketch-props';
-
-  export let seed: number = 90;
+  export let seed = 90;
   export let iterations = 2;
   export let filters: SketchOptions['filters'] = [];
-  export let shapes: SketchOptions['shapes'] = undefined;
+  export let shapes: SketchOptions['shapes'] = null;
   export let rotations: SketchOptions['rotations'] = [];
   export let rotationClamp: SketchOptions['rotationClamp'] = [0, 2];
 
-  let className: string = '';
+  let className = '';
   export { className as class };
 
   $: props = generateSketchProps(seed, { iterations, filters, shapes, rotationClamp, rotations });

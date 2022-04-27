@@ -2,8 +2,8 @@
   "extends": "@monots/tsconfig/tsconfig.json",
   "compilerOptions": {
     "checkJs": false,
-    "allowJs": false
+    "allowJs": true
   },
-  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js", "../**/*.svelte"],
+  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js"],
   "exclude": ["../**/dist/", "../**/public/", "../**/.cache/", "../**/node_modules/**"]
 }

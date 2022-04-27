@@ -1,11 +1,9 @@
 <script lang="ts" context="module">
   import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import { type Maybe } from '$types';
-  import cx from 'clsx';
   import { addIcon } from '@iconify/svelte/offline';
-  import { CUSTOM_ICONS, type ColoredIconifyIcon } from './custom-icons';
   import type _ from '@iconify/types';
   import warning from '@iconify-icons/ri/alert-line';
+  import back from '@iconify-icons/ri/arrow-left-s-line';
   import checkboxCircle from '@iconify-icons/ri/checkbox-circle-line';
   import close from '@iconify-icons/ri/close-line';
   import discord from '@iconify-icons/ri/discord-fill';
@@ -18,7 +16,11 @@
   import sunFill from '@iconify-icons/ri/sun-fill';
   import sunLine from '@iconify-icons/ri/sun-line';
   import twitter from '@iconify-icons/ri/twitter-fill';
-  import back from '@iconify-icons/ri/arrow-left-s-line';
+  import cx from 'clsx';
+  
+  import { type Maybe } from '$types';
+  
+  import { type ColoredIconifyIcon,CUSTOM_ICONS } from './custom-icons';
 
   const ICONS = {
     ...CUSTOM_ICONS,
@@ -51,23 +53,23 @@
 
 <script lang="ts">
   export let icon: IconType | ColoredIconifyIcon;
-  let className: Maybe<string> = undefined;
+  let className: Maybe<string> = null;
 
   export let size: IconProps['height'] = '1em';
-  export let align: IconProps['align'] = undefined;
+  export let align: IconProps['align'] = null;
   export let color: IconProps['color'] = getPreferredColor(icon);
-  export let flip: IconProps['flip'] = undefined;
-  export let hAlign: IconProps['hAlign'] = undefined;
-  export let hFlip: IconProps['hFlip'] = undefined;
-  export let id: IconProps['id'] = undefined;
-  export let inline: IconProps['inline'] = undefined;
-  export let rotate: IconProps['rotate'] = undefined;
-  export let slice: IconProps['slice'] = undefined;
-  export let style: IconProps['style'] = undefined;
-  export let vAlign: IconProps['vAlign'] = undefined;
-  export let vFlip: IconProps['vFlip'] = undefined;
-  export let height: IconProps['height'] = undefined;
-  export let width: IconProps['width'] = undefined;
+  export let flip: IconProps['flip'] = null;
+  export let hAlign: IconProps['hAlign'] = null;
+  export let hFlip: IconProps['hFlip'] = null;
+  export let id: IconProps['id'] = null;
+  export let inline: IconProps['inline'] = null;
+  export let rotate: IconProps['rotate'] = null;
+  export let slice: IconProps['slice'] = null;
+  export let style: IconProps['style'] = null;
+  export let vAlign: IconProps['vAlign'] = null;
+  export let vFlip: IconProps['vFlip'] = null;
+  export let height: IconProps['height'] = null;
+  export let width: IconProps['width'] = null;
   export { className as class };
 
   $: heightValue = height || size;

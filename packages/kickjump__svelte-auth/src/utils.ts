@@ -13,11 +13,7 @@ export function getSession(event: RequestEvent): App.Session {
 export function redirect(url: string | URL, init?: number | ResponseInit): Response {
   let responseInit: ResponseInit = {};
 
-  if (typeof init === 'number') {
-    responseInit = { status: init };
-  } else {
-    responseInit = init ?? {};
-  }
+  responseInit = typeof init === 'number' ? { status: init } : init ?? {};
 
   if (!responseInit.status) {
     responseInit.status = 302;

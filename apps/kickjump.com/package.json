@@ -22,7 +22,7 @@
     "@chakra-ui/utils": "^1.10.4",
     "@cloudflare/workers-types": "^3.7.1",
     "@felte/validator-zod": "^1.0.8",
-    "@formatjs/icu-messageformat-parser": "^2.0.19",
+    "@formatjs/icu-messageformat-parser": "^2.1.0",
     "@iconify-icons/bi": "^1.2.2",
     "@iconify-icons/ri": "^1.2.1",
     "@iconify-json/logos": "^1.1.5",

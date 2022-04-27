@@ -2,7 +2,7 @@
   import type { Maybe } from '$types';
 
   export let size: number;
-  let className: Maybe<string> = undefined;
+  let className: Maybe<string> = null;
   export { className as class };
 </script>
 

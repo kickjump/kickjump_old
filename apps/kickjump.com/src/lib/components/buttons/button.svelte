@@ -1,11 +1,9 @@
 <script lang="ts" context="module">
-  import type { Maybe } from '$types';
   import cx from 'clsx';
-  import { Icon, type IconType, type ColoredIconifyIcon } from '$components/icon';
-  // import {
-  //   getTransitionConfig,
-  //   type TransitionWithOptions,
-  // } from '$lib/directives/transition-handler';
+
+  import { type ColoredIconifyIcon, type IconType, Icon } from '$components/icon';
+  import type { Maybe } from '$types';
+
   const BUTTON_THEME = {
     default: '',
     /** Button with `primary` color */
@@ -67,22 +65,22 @@
   export let variant: ButtonVariant = 'solid';
   export let size: ButtonSize = 'md';
   export let shape: ButtonShape = 'default';
-  export let disabled: boolean = false;
-  export let type: Maybe<'submit' | 'reset' | 'button'> = undefined;
-  export let external: boolean = false;
-  export let refresh: boolean = false;
-  export let href: Maybe<string> = undefined;
-  export let active: boolean = false;
+  export let disabled = false;
+  export let type: Maybe<'submit' | 'reset' | 'button'> = null;
+  export let external = false;
+  export let refresh = false;
+  export let href: Maybe<string> = null;
+  export let active = false;
   export let glass = false;
   export let disableAnimation = false;
   export let loading = false;
-  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
-  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
-  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
-  // let _transition: Maybe<TransitionWithOptions> = undefined;
-  // let _in: Maybe<TransitionWithOptions> = undefined;
-  // let _out: Maybe<TransitionWithOptions> = undefined;
-  let className: Maybe<string> = undefined;
+  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = null;
+  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = null;
+  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = null;
+  // let _transition: Maybe<TransitionWithOptions> = null;
+  // let _in: Maybe<TransitionWithOptions> = null;
+  // let _out: Maybe<TransitionWithOptions> = null;
+  let className: Maybe<string> = null;
 
   let element: HTMLButtonElement | HTMLAnchorElement;
 

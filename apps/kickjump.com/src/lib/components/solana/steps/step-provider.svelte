@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createStepContext, type StepContextData } from './step-context';
+  import { type StepContextData,createStepContext } from './step-context';
   export let stepIds: readonly [string, ...string[]];
   export let initialStep = stepIds[0];
   export let initialData: StepContextData = {};

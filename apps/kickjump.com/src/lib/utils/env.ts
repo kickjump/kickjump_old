@@ -1,4 +1,5 @@
 import 'dotenv/config';
+
 import { browser } from '$app/env';
 
 const ERROR_STRING = '$$_ERROR_RORRE_$$';

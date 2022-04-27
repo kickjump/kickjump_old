@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Maybe } from '$types';
   import { useId } from '$lib/stores/use-id';
+  import type { Maybe } from '$types';
 
   export let secondaryColor = '#F5F5F7'; // do not use rgba() - not working in Safari on iOS 11
   export let primaryColor = '#EBECEF';
@@ -9,9 +9,9 @@
   export let speed = 2;
   export let animate = true;
   export let secondaryColorPercentWidth = 100;
-  export let ariaLabel: Maybe<string> = undefined;
-  let idClip = `skeleton-loader-clip${useId()}`;
-  let idGradient = `skeleton-loader-gradient${useId()}`;
+  export let ariaLabel: Maybe<string> = null;
+  const idClip = `skeleton-loader-clip${useId()}`;
+  const idGradient = `skeleton-loader-gradient${useId()}`;
 </script>
 
 <svg {width} {height} aria-label={ariaLabel} preserveAspectRatio="none">

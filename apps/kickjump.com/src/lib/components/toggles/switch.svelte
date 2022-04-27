@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Switch } from '@rgossiaux/svelte-headlessui';
-  import type { Maybe } from '$types';
   import cx from 'clsx';
+  
+  import type { Maybe } from '$types';
 
   export let checked: boolean;
   export let description = '';
   export let animated = true;
-  export let name: Maybe<string> = undefined;
+  export let name: Maybe<string> = null;
   let className = '';
   export { className as class };
 

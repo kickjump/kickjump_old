@@ -6,10 +6,10 @@
    * added to the __layout file for the relevent section of the site.
    */
 
-  import { onMount } from 'svelte';
   import type { Adapter } from '@solana/wallet-adapter-base';
-  import { initialize } from '@svelte-on-solana/wallet-adapter-core';
   import type { WalletError } from '@solana/wallet-adapter-base';
+  import { initialize } from '@svelte-on-solana/wallet-adapter-core';
+  import { onMount } from 'svelte';
 
   export let localStorageKey = 'wallet-storage';
   export let autoConnect = false;

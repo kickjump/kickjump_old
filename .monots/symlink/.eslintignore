@@ -28,4 +28,4 @@ pnpm-lock.yaml
 .anchor
 target
 
-
+**/.svelte-kit

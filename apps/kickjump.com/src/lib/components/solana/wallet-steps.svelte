@@ -1,26 +1,26 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { addUrlParams, getUrlParam } from '$utils/url';
-
+  import { page } from '$app/stores';
   import Button from '$components/buttons/button.svelte';
-  import { Modal, type ModalCloseMethod } from '$components/modal';
-  import { ConnectWallet, CONNECT_WALLET_ID } from './steps/connect';
-  import { SelectWallet, SELECT_WALLET_ID } from './steps/select';
-  import StepProvider from './steps/step-provider.svelte';
+  import { type ModalCloseMethod,Modal } from '$components/modal';
+  import { addUrlParams, getUrlParam } from '$utils/url';
+  
+  import { CONNECT_WALLET_ID,ConnectWallet } from './steps/connect';
+  import { SELECT_WALLET_ID,SelectWallet } from './steps/select';
   import Step from './steps/step.svelte';
+  import StepProvider from './steps/step-provider.svelte';
 
   const stepIds = [SELECT_WALLET_ID, CONNECT_WALLET_ID] as const;
   let open: boolean = getUrlParam($page.url, 'steps') === '1';
-  let initialStep = getUrlParam($page.url, 'stepId') || stepIds[0];
+  const initialStep = getUrlParam($page.url, 'stepId') || stepIds[0];
 
   // Need a way to differentiate depending on how the modal was closed.
   async function onClose(method?: ModalCloseMethod) {
     // ignore escape and clicking outside the modal
-    if (method === 'event') return;
+    if (method === 'event') {return;}
 
     if (method === 'close-button') {
-      let url = addUrlParams({
+      const url = addUrlParams({
         params: { stepId: undefined, steps: undefined },
         href: location.href,
       });

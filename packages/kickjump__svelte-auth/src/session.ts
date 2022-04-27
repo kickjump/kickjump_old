@@ -1,4 +1,3 @@
-import invariant from 'tiny-invariant';
 import { type Handle } from '@sveltejs/kit';
 import {
   type Session as CookieSession,
@@ -6,6 +5,7 @@ import {
   cookieSession,
 } from 'svelte-kit-cookie-session';
 import { type PrivateSession } from 'svelte-kit-cookie-session/dist/esm/types';
+import invariant from 'tiny-invariant';
 import type { LiteralUnion } from 'type-fest';
 
 import { createCsrf } from './csrf';

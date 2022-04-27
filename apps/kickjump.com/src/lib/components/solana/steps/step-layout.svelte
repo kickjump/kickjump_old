@@ -1,15 +1,17 @@
 <script lang="ts">
   import {
-    fade,
-    type FadeParams,
-    // fly, type FlyParams
-  } from 'svelte/transition';
-  import {
     cubicInOut,
     // cubicIn, cubicOut
   } from 'svelte/easing';
+  import {
+    type FadeParams,
+    fade,
+    // fly, type FlyParams
+  } from 'svelte/transition';
+  
   import { IconButton } from '$components/buttons';
   import { getModalContext } from '$components/modal';
+  
   import { getStepContext } from './step-context';
 
   // const FLY_IN: FlyParams = { x: -20, duration: 200, delay: 300, easing: cubicIn };

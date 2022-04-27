@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { range } from '$utils/helpers';
-  import { type BorderWidth, BORDER_WIDTH } from './generate-sketch-props';
-
   import cx from 'clsx';
+  
+  import { range } from '$utils/helpers';
+  
+  import { type BorderWidth, BORDER_WIDTH } from './generate-sketch-props';
+  import { type SketchOptions,generateSketchProps } from './generate-sketch-props';
 
-  import { generateSketchProps, type SketchOptions } from './generate-sketch-props';
-
-  export let seed: number = 40;
+  export let seed = 40;
   export let iterations = 1;
-  export let filters: SketchOptions['filters'] = undefined;
-  export let shapes: SketchOptions['shapes'] = undefined;
+  export let filters: SketchOptions['filters'] = null;
+  export let shapes: SketchOptions['shapes'] = null;
   export let rotations: SketchOptions['rotations'] = [];
   export let rotationClamp: SketchOptions['rotationClamp'] = [0, 2];
   export let border: BorderWidth = 'md';
 
-  let className: string = '';
+  let className = '';
   export { className as class };
 
   $: props = generateSketchProps(seed, { iterations, filters, shapes, rotationClamp, rotations });

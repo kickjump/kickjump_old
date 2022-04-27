@@ -1,12 +1,14 @@
 <script context="module" lang="ts">
   import '../app.css';
+
   import type { Load } from '@sveltejs/kit';
-  import { init, addMessages } from 'svelte-intl-precompile';
-  import { getLocaleFromNavigator } from '$utils/intl';
+  import { addMessages, init } from 'svelte-intl-precompile';
+
   import MainLayout from '$layout/main.svelte';
   import en from '$locales/en.js';
   import enGb from '$locales/en-gb.js';
   import es from '$locales/es.js';
+  import { getLocaleFromNavigator } from '$utils/intl';
 
   addMessages('en', en);
   addMessages('en-GB', enGb);

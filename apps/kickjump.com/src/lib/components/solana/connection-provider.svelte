@@ -1,10 +1,11 @@
 <script lang="ts">
   import {
-    Connection,
-    clusterApiUrl,
     type Commitment,
     type ConnectionConfig,
+    clusterApiUrl,
+    Connection,
   } from '@solana/web3.js';
+  
   import { workspace } from '$components/solana/workspace';
 
   export let network: string = clusterApiUrl('devnet');
