@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import RandomNumberGenerator from 'tiny-rng';
 
-import { type Maybe } from '$types';
+import type { Maybe } from '$types';
 import { range } from '$utils/helpers';
 
-import { type ButtonVariant } from '../button/constants';
+import type { ButtonVariant } from '../button/constants';
 
 export interface SketchOptions {
   /**

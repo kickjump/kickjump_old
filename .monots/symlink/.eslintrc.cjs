@@ -9,8 +9,15 @@ const config = {
   overrides: [
     {
       files: ['*.svelte'],
+      plugins: ['import'],
       extends: ['monots/svelte'],
       globals: { svelte: true },
+      rules: {
+        'unicorn/prefer-export-from': 'off',
+        'unicorn/no-useless-undefined': 'off',
+        'import/no-duplicates': 'error',
+        'import/no-cycle': 'error',
+      },
     },
     {
       files: ['*.ts'],

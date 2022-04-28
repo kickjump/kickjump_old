@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
   import clsx from 'clsx';
   import { createEventDispatcher } from 'svelte';
-  
-  import { type Maybe } from '$types';
-  
+
+  import type { Maybe } from '$types';
+
   import Button from './buttons/button.svelte';
   import Icon from './icon/icon.svelte';
 
@@ -47,9 +47,9 @@
   const dispatch = createEventDispatcher<{ interaction: AlertResult }>();
 
   export let type: AlertType = 'default';
-  export let title: Maybe<string> = null;
-  export let config: Maybe<AlertInteraction> = null;
-  let className: Maybe<string> = null;
+  export let title: Maybe<string> = undefined;
+  export let config: Maybe<AlertInteraction> = undefined;
+  let className: Maybe<string> = undefined;
 
   $: value = ALERT_TYPE[type];
   $: combinedClass = clsx('alert', 'shadow-lg', className, value.style);

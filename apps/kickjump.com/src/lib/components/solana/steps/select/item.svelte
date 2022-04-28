@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '$components/icon/icon.svelte';
-  import { type ProviderInfo } from '$components/solana/types';
+  import type { ProviderInfo } from '$components/solana/types';
   import { cleanUrl } from '$components/solana/wallet-providers';
   import { t } from '$utils/intl';
 

@@ -66,21 +66,21 @@
   export let size: ButtonSize = 'md';
   export let shape: ButtonShape = 'default';
   export let disabled = false;
-  export let type: Maybe<'submit' | 'reset' | 'button'> = null;
+  export let type: Maybe<'submit' | 'reset' | 'button'> = undefined;
   export let external = false;
   export let refresh = false;
-  export let href: Maybe<string> = null;
+  export let href: Maybe<string> = undefined;
   export let active = false;
   export let glass = false;
   export let disableAnimation = false;
   export let loading = false;
-  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = null;
-  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = null;
-  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = null;
-  // let _transition: Maybe<TransitionWithOptions> = null;
-  // let _in: Maybe<TransitionWithOptions> = null;
-  // let _out: Maybe<TransitionWithOptions> = null;
-  let className: Maybe<string> = null;
+  export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
+  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
+  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
+  // let _transition: Maybe<TransitionWithOptions> = undefined;
+  // let _in: Maybe<TransitionWithOptions> = undefined;
+  // let _out: Maybe<TransitionWithOptions> = undefined;
+  let className: Maybe<string> = undefined;
 
   let element: HTMLButtonElement | HTMLAnchorElement;
 

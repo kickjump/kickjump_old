@@ -6,10 +6,11 @@
    * added to the __layout file for the relevent section of the site.
    */
 
-  import type { Adapter } from '@solana/wallet-adapter-base';
-  import type { WalletError } from '@solana/wallet-adapter-base';
+  import type { Adapter, WalletError } from '@solana/wallet-adapter-base';
   import { initialize } from '@svelte-on-solana/wallet-adapter-core';
   import { onMount } from 'svelte';
+
+  import { DEFAULT_WALLET_PROVIDERS } from './wallet-providers';
 
   export let localStorageKey = 'wallet-storage';
   export let autoConnect = false;
@@ -17,11 +18,13 @@
   let wallets: Adapter[];
 
   onMount(async () => {
-    const { PhantomWalletAdapter, SolflareWalletAdapter, GlowWalletAdapter } = await import(
-      '@solana/wallet-adapter-wallets'
-    );
+    const temp: Adapter[] = [];
 
-    wallets = [new PhantomWalletAdapter(), new GlowWalletAdapter(), new SolflareWalletAdapter()];
+    for (const [_, provider] of Object.entries(DEFAULT_WALLET_PROVIDERS)) {
+      temp.push(provider.makeAdapter('', ''));
+    }
+
+    wallets = temp;
   });
 
   $: wallets && initialize({ wallets, autoConnect, localStorageKey, onError });

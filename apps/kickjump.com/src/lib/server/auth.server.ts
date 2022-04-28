@@ -3,8 +3,7 @@ import { PublicKey } from '@solana/web3.js';
 import base58 from 'bs58';
 import { Authenticator, AuthorizationError } from 'remix-auth';
 import { FormStrategy } from 'remix-auth-form';
-import type { GitHubScope } from 'remix-auth-socials';
-import { GitHubStrategy, SocialsProvider } from 'remix-auth-socials';
+import { type GitHubScope, GitHubStrategy, SocialsProvider } from 'remix-auth-socials';
 import nacl from 'tweetnacl';
 
 import { UserModel } from '~/utils/db.server';
@@ -14,8 +13,7 @@ import { getWalletMessage } from '~/utils/solana';
 
 import { addNextUrlToQuery, stringToUint8Array } from '../utils/core';
 import { getAbsoluteUrl } from '../utils/get-absolute-url-url';
-import type { SolanaLoginSchema } from './validators';
-import { solanaLoginValidator } from './validators';
+import { type SolanaLoginSchema, solanaLoginValidator } from './validators';
 
 /**
  * The user data that is stored in the session.

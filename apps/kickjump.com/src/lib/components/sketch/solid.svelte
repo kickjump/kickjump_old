@@ -1,14 +1,14 @@
 <script lang="ts">
   import cx from 'clsx';
-  
+
   import { range } from '$utils/helpers';
-  
-  import { type SketchOptions,generateSketchProps } from './generate-sketch-props';
+
+  import { type SketchOptions, generateSketchProps } from './generate-sketch-props';
 
   export let seed = 90;
   export let iterations = 2;
   export let filters: SketchOptions['filters'] = [];
-  export let shapes: SketchOptions['shapes'] = null;
+  export let shapes: SketchOptions['shapes'] = undefined;
   export let rotations: SketchOptions['rotations'] = [];
   export let rotationClamp: SketchOptions['rotationClamp'] = [0, 2];
 

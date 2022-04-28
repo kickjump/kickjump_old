@@ -1,15 +1,19 @@
 <script lang="ts">
   import cx from 'clsx';
-  
+
   import { range } from '$utils/helpers';
-  
-  import { type BorderWidth, BORDER_WIDTH } from './generate-sketch-props';
-  import { type SketchOptions,generateSketchProps } from './generate-sketch-props';
+
+  import {
+    type BorderWidth,
+    type SketchOptions,
+    BORDER_WIDTH,
+    generateSketchProps,
+  } from './generate-sketch-props';
 
   export let seed = 40;
   export let iterations = 1;
-  export let filters: SketchOptions['filters'] = null;
-  export let shapes: SketchOptions['shapes'] = null;
+  export let filters: SketchOptions['filters'] = undefined;
+  export let shapes: SketchOptions['shapes'] = undefined;
   export let rotations: SketchOptions['rotations'] = [];
   export let rotationClamp: SketchOptions['rotationClamp'] = [0, 2];
   export let border: BorderWidth = 'md';

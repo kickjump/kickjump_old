@@ -1,12 +1,12 @@
 <script lang="ts">
   import clsx from 'clsx';
   // import { onMount } from 'svelte';
-  import { type FlyParams,fly } from 'svelte/transition';
-  
+  import { type FlyParams, fly } from 'svelte/transition';
+
   import type { Maybe } from '$types';
   export let refresh: string;
   const reducedMotion = false;
-  let className: Maybe<string> = null;
+  let className: Maybe<string> = undefined;
 
   export { className as class };
 

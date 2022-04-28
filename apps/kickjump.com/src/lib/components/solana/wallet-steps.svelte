@@ -2,11 +2,11 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '$components/buttons/button.svelte';
-  import { type ModalCloseMethod,Modal } from '$components/modal';
+  import { type ModalCloseMethod, Modal } from '$components/modal';
   import { addUrlParams, getUrlParam } from '$utils/url';
-  
-  import { CONNECT_WALLET_ID,ConnectWallet } from './steps/connect';
-  import { SELECT_WALLET_ID,SelectWallet } from './steps/select';
+
+  import { CONNECT_WALLET_ID, ConnectWallet } from './steps/connect';
+  import { SELECT_WALLET_ID, SelectWallet } from './steps/select';
   import Step from './steps/step.svelte';
   import StepProvider from './steps/step-provider.svelte';
 
@@ -17,7 +17,9 @@
   // Need a way to differentiate depending on how the modal was closed.
   async function onClose(method?: ModalCloseMethod) {
     // ignore escape and clicking outside the modal
-    if (method === 'event') {return;}
+    if (method === 'event') {
+      return;
+    }
 
     if (method === 'close-button') {
       const url = addUrlParams({

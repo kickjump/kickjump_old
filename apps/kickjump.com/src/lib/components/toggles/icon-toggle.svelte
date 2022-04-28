@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { IconType } from '$components/icon';
-  import Icon from '$components/icon/icon.svelte';
+  import { type IconType, Icon } from '$components/icon';
 
   export let checked: boolean;
   export let initial: IconType;
   export let swap: IconType;
-  export let size: string | number | undefined = null;
+  export let size: string | number | undefined = undefined;
 </script>
 
 <label class="swap swap-rotate hover:bg-base-content hover:bg-opacity-20 px-3 sketchy-5">

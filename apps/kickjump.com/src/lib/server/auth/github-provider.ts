@@ -1,7 +1,6 @@
-import type { LinkAccountToUser, UserModel } from '@kickjump/db';
+import type { LinkAccountToUser } from '@kickjump/db';
 import type { OAuth2Provider, OAuth2ProviderConfig } from 'sk-auth/dist/providers/oauth2';
-import type { GitHubTokens } from 'sk-auth/providers';
-import { GitHubOAuth2Provider } from 'sk-auth/providers';
+import { type GitHubTokens, GitHubOAuth2Provider } from 'sk-auth/providers';
 
 import { AuthorizationError } from './error';
 

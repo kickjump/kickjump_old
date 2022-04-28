@@ -1,5 +1,4 @@
-import type { BinaryLike} from 'node:crypto';
-import { createHash, randomBytes } from 'node:crypto';
+import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
 
 import { ServerError } from './errors';
 

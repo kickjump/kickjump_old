@@ -1,4 +1,4 @@
-import { type IconifyIcon } from '@iconify/types';
+import type { IconifyIcon } from '@iconify/types';
 
 export interface ColoredIconifyIcon extends IconifyIcon {
   color?: string;

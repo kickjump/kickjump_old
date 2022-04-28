@@ -6,7 +6,6 @@
     "Then run the command to automatically update everything: `monots fix`"
   ],
   "extends": "../../.monots/tsconfig.base.json",
-  "include": ["./src/**/*.js", "./src/**/*.ts", "./src/**/*.svelte"],
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
@@ -15,12 +14,13 @@
     "isolatedModules": true,
     "rootDirs": ["./", "./.svelte-kit/types"],
     "types": ["node"],
+    "importsNotUsedAsValues": "error",
     "baseUrl": ".",
     "paths": {
       "$components": ["src/lib/components"],
       "$components/*": ["src/lib/components/*"],
-      "$directives": ["src/lib/stores"],
-      "$directives/*": ["src/lib/stores/*"],
+      "$directives": ["src/lib/directives"],
+      "$directives/*": ["src/lib/directives/*"],
       "$layout": ["src/lib/layout"],
       "$layout/*": ["src/lib/layout/*"],
       "$server": ["src/lib/server"],
@@ -33,5 +33,7 @@
       "$lib/*": ["src/lib/*"]
     },
     "skipLibCheck": true
-  }
+  },
+  "include": ["./src/**/*.js", "./src/**/*.ts", "./src/**/*.svelte"],
+  "exclude": ["./node_modules", "./svelte-kit/**"]
 }

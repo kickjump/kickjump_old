@@ -1,6 +1,6 @@
-import type { BaseSignerWalletAdapter } from '@solana/wallet-adapter-base';
+import { type BaseSignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import type { IconType } from '$components/icon';
+import { type IconType } from '$components/icon';
 
 export interface WalletProviderInfo {
   readonly name: string;

@@ -21,7 +21,9 @@ interface ModalProps {
 export function setModalContext(props: ModalProps): ModalContext {
   const { onClose } = props;
   const context: ModalContext = {
-    close: (method = 'context') => onClose(method),
+    close: (method = 'context') => {
+      onClose(method);
+    },
   };
 
   setContext(MODAL_CONTEXT, context);

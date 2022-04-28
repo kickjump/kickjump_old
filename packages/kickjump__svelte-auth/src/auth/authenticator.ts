@@ -2,8 +2,8 @@ import type { RequestEvent } from '@sveltejs/kit/types/private';
 
 import { ServerError } from '../errors.js';
 import { redirect } from '../utils.js';
-import { type AuthenticateProps, type AuthenticatorOptions } from './auth-types.js';
-import { type AnyStrategy, type Strategy } from './strategy.js';
+import type { AuthenticateProps, AuthenticatorOptions } from './auth-types.js';
+import type { AnyStrategy, Strategy } from './strategy.js';
 
 export type AuthenticateCallback<User> = (user: User) => Promise<Response>;
 

@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { type Readable, derived, get, writable } from 'svelte/store';
+import { type Readable, derived, writable } from 'svelte/store';
 import invariant from 'tiny-invariant';
 
 export const STEP_CONTEXT_NAME = '$$step-wizard$$';

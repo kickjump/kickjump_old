@@ -3,13 +3,13 @@
   import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
   import { onDestroy } from 'svelte';
   import { quintIn } from 'svelte/easing';
-  import { type FlyParams,fly } from 'svelte/transition';
-  
+  import { type FlyParams, fly } from 'svelte/transition';
+
   import LoadingBars from '$components/icon/loading-bars.svelte';
   import { ModalTitle } from '$components/modal';
   import StepLayout from '$components/solana/steps/step-layout.svelte';
   import { t } from '$utils/intl';
-  
+
   import { getStepContext } from '../step-context';
 
   const FLY_IN: FlyParams = { duration: 400, easing: quintIn, y: 75 };
@@ -22,7 +22,7 @@
   $: console.log(selectedProvider);
   $: ({ selectedProvider } = $data);
   $: name = selectedProvider?.info.name;
-  
+
   $: if (name) {
     $walletStore.walletsByName[name as WalletName]?.connect().then(() => {
       // nextStep();

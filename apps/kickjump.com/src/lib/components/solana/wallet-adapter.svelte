@@ -8,17 +8,17 @@
   } from '@svelte-on-solana/wallet-adapter-ui';
   import { onMount } from 'svelte';
 
+  import { DEFAULT_WALLET_PROVIDERS } from './wallet-providers';
+
   const localStorageKey = 'walletAdapter';
   const network = clusterApiUrl('devnet'); // localhost or mainnet
 
   let wallets: Adapter[] = [];
 
   onMount(async () => {
-    const { PhantomWalletAdapter, SolflareWalletAdapter, GlowWalletAdapter } = await import(
-      '@solana/wallet-adapter-wallets'
-    );
-
-    wallets = [new PhantomWalletAdapter(), new GlowWalletAdapter(), new SolflareWalletAdapter()];
+    for (const [_, provider] of Object.entries(DEFAULT_WALLET_PROVIDERS)) {
+      wallets = [...wallets, provider.makeAdapter('', '')];
+    }
   });
 </script>
 

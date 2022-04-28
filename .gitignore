@@ -136,6 +136,8 @@ yarn.lock
 /vite.config.ts
 /vitest.config.ts
 /playwright.config.ts
+/playwright
+**/playwright-report
 /tailwind.config.cjs
 /postcss.config.cjs
 /.swc

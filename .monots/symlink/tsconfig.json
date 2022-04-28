@@ -33,9 +33,6 @@
     },
     {
       "path": "tests"
-    },
-    {
-      "path": "tests/kickjump.com"
     }
   ]
 }

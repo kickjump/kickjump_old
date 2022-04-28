@@ -4,6 +4,7 @@ import path from 'node:path';
 import precompileIntl from 'svelte-intl-precompile/sveltekit-plugin';
 import preprocess from 'svelte-preprocess';
 
+// import tsconfigPaths from 'vite-tsconfig-paths';
 import mdsvexConfig from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -28,7 +29,11 @@ const config = {
     adapter: adapter(),
     vite: {
       plugins: [
-        precompileIntl('locales'), // if your translations are defined in /locales/[lang].json
+        // tsconfigPaths({
+        //   projects: ['tsconfig.json'],
+        //   extensions: ['.ts', '.svelte', '.tsx', '.js', '.jsx', '.mjs'],
+        // }),
+        precompileIntl('locales'), // if your translations are defined in /locales/[lang].json,
       ],
       // ...
       define: {

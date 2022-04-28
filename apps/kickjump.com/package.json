@@ -16,7 +16,8 @@
     "generate:redirects": "pnpm -w ts ./apps/kickjump.com/generate-redirects.ts",
     "package": "svelte-kit package",
     "prepare": "svelte-kit sync && pnpm generate:intl",
-    "preview": "svelte-kit preview"
+    "preview": "svelte-kit preview",
+    "test:playwright": "playwright test"
   },
   "devDependencies": {
     "@chakra-ui/utils": "^1.10.4",
@@ -42,9 +43,17 @@
     "@rgossiaux/svelte-headlessui": "^1.0.0-beta.12",
     "@sindresorhus/is": "^4.6.0",
     "@solana/wallet-adapter-base": "^0.9.5",
+    "@solana/wallet-adapter-clover": "^0.4.4",
+    "@solana/wallet-adapter-coin98": "^0.5.4",
     "@solana/wallet-adapter-glow": "^0.1.1",
+    "@solana/wallet-adapter-huobi": "^0.1.0",
+    "@solana/wallet-adapter-mathwallet": "^0.9.3",
     "@solana/wallet-adapter-phantom": "^0.9.3",
-    "@solana/wallet-adapter-wallets": "^0.16.0",
+    "@solana/wallet-adapter-slope": "^0.5.4",
+    "@solana/wallet-adapter-solflare": "^0.6.6",
+    "@solana/wallet-adapter-sollet": "^0.11.1",
+    "@solana/wallet-adapter-solong": "^0.9.3",
+    "@solana/wallet-adapter-torus": "^0.11.11",
     "@solana/web3.js": "1.41.0",
     "@svelte-on-solana/wallet-adapter-anchor": "^1.0.12-alpha.0",
     "@svelte-on-solana/wallet-adapter-core": "^1.0.3-alpha.0",
@@ -91,11 +100,6 @@
     "tsconfigs": {
       "src": false,
       "": {
-        "include": [
-          "./src/**/*.js",
-          "./src/**/*.ts",
-          "./src/**/*.svelte"
-        ],
         "compilerOptions": {
           "noEmit": false,
           "declaration": true,
@@ -113,6 +117,7 @@
           "types": [
             "node"
           ],
+          "importsNotUsedAsValues": "error",
           "baseUrl": ".",
           "paths": {
             "$components": [
@@ -159,7 +164,16 @@
             ]
           },
           "skipLibCheck": true
-        }
+        },
+        "include": [
+          "./src/**/*.js",
+          "./src/**/*.ts",
+          "./src/**/*.svelte"
+        ],
+        "exclude": [
+          "./node_modules",
+          "./svelte-kit/**"
+        ]
       }
     }
   }

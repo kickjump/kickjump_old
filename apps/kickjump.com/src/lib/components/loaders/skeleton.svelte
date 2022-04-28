@@ -9,7 +9,7 @@
   export let speed = 2;
   export let animate = true;
   export let secondaryColorPercentWidth = 100;
-  export let ariaLabel: Maybe<string> = null;
+  export let ariaLabel: Maybe<string> = undefined;
   const idClip = `skeleton-loader-clip${useId()}`;
   const idGradient = `skeleton-loader-gradient${useId()}`;
 </script>

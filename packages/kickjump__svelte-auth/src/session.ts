@@ -1,10 +1,10 @@
-import { type Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit';
 import {
   type Session as CookieSession,
   type SessionOptions,
   cookieSession,
 } from 'svelte-kit-cookie-session';
-import { type PrivateSession } from 'svelte-kit-cookie-session/dist/esm/types';
+import type { PrivateSession } from 'svelte-kit-cookie-session/dist/esm/types';
 import invariant from 'tiny-invariant';
 import type { LiteralUnion } from 'type-fest';
 

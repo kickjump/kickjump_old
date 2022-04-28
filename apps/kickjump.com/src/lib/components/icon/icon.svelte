@@ -17,10 +17,10 @@
   import sunLine from '@iconify-icons/ri/sun-line';
   import twitter from '@iconify-icons/ri/twitter-fill';
   import cx from 'clsx';
-  
-  import { type Maybe } from '$types';
-  
-  import { type ColoredIconifyIcon,CUSTOM_ICONS } from './custom-icons';
+
+  import type { Maybe } from '$types';
+
+  import { type ColoredIconifyIcon, CUSTOM_ICONS } from './custom-icons';
 
   const ICONS = {
     ...CUSTOM_ICONS,
@@ -53,23 +53,23 @@
 
 <script lang="ts">
   export let icon: IconType | ColoredIconifyIcon;
-  let className: Maybe<string> = null;
+  let className: Maybe<string> = undefined;
 
   export let size: IconProps['height'] = '1em';
-  export let align: IconProps['align'] = null;
+  export let align: IconProps['align'] = undefined;
   export let color: IconProps['color'] = getPreferredColor(icon);
-  export let flip: IconProps['flip'] = null;
-  export let hAlign: IconProps['hAlign'] = null;
-  export let hFlip: IconProps['hFlip'] = null;
-  export let id: IconProps['id'] = null;
-  export let inline: IconProps['inline'] = null;
-  export let rotate: IconProps['rotate'] = null;
-  export let slice: IconProps['slice'] = null;
-  export let style: IconProps['style'] = null;
-  export let vAlign: IconProps['vAlign'] = null;
-  export let vFlip: IconProps['vFlip'] = null;
-  export let height: IconProps['height'] = null;
-  export let width: IconProps['width'] = null;
+  export let flip: IconProps['flip'] = undefined;
+  export let hAlign: IconProps['hAlign'] = undefined;
+  export let hFlip: IconProps['hFlip'] = undefined;
+  export let id: IconProps['id'] = undefined;
+  export let inline: IconProps['inline'] = undefined;
+  export let rotate: IconProps['rotate'] = undefined;
+  export let slice: IconProps['slice'] = undefined;
+  export let style: IconProps['style'] = undefined;
+  export let vAlign: IconProps['vAlign'] = undefined;
+  export let vFlip: IconProps['vFlip'] = undefined;
+  export let height: IconProps['height'] = undefined;
+  export let width: IconProps['width'] = undefined;
   export { className as class };
 
   $: heightValue = height || size;
