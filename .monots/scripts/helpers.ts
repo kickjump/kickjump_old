@@ -1,6 +1,6 @@
 import path from 'node:path';
 import url from 'node:url';
-import { Package } from '@manypkg/get-packages';
+import type { Package } from '@manypkg/get-packages';
 import cp from 'node:child_process';
 import { promisify } from 'node:util';
 

@@ -1,6 +1,6 @@
-import { type BaseSignerWalletAdapter } from '@solana/wallet-adapter-base';
+import type { BaseSignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { type IconType } from '$components/icon';
+import type { IconType } from '$components/icon';
 
 export interface WalletProviderInfo {
   readonly name: string;
@@ -27,11 +27,3 @@ export interface ProviderInfo {
   info: WalletProviderInfo;
   isUninstalled: boolean;
 }
-
-export const WalletStep = {
-  Select: 'select-wallet-provider',
-  Install: 'install-wallet-provider',
-  Connect: 'connect-wallet-provider',
-  Login: 'login-wallet-provider',
-} as const;
-export type WalletStep = typeof WalletStep[keyof typeof WalletStep];

@@ -49,6 +49,7 @@ const config = {
         alias: {
           $components: path.resolve('./src/lib/components'),
           $layout: path.resolve('./src/lib/layout'),
+          $stores: path.resolve('./src/lib/stores'),
           $actions: path.resolve('./src/lib/actions'),
           $server: path.resolve('./src/lib/server'),
           $types: path.resolve('./src/lib/types'),

@@ -1,5 +1,1 @@
-[toolchain]
-# The default profile includes rustc, rust-std, cargo, rust-docs, rustfmt and clippy.
-# https://rust-lang.github.io/rustup/concepts/profiles.html
-channel = "1.60.0"
-profile = "default"
+/Users/ifiokjr/Developer/kickjump/.monots/symlink/rust-toolchain.toml

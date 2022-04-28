@@ -144,7 +144,6 @@ yarn.lock
 /.env.example
 /docker-compose.yml
 /Dockerfile
-/fly.toml
 /Anchor.toml
 /.vscode
 /.dockerignore

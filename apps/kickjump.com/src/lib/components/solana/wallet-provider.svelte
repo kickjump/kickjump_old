@@ -10,7 +10,7 @@
   import { initialize } from '@svelte-on-solana/wallet-adapter-core';
   import { onMount } from 'svelte';
 
-  import { DEFAULT_WALLET_PROVIDERS } from './wallet-providers';
+  import { DEFAULT_WALLET_PROVIDERS } from '$stores/solana/wallet-providers';
 
   export let localStorageKey = 'wallet-storage';
   export let autoConnect = false;

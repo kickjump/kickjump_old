@@ -27,6 +27,7 @@ importers:
       '@gokiprotocol/walletkit': ^1.6.8
       '@manypkg/cli': ^0.19.1
       '@manypkg/get-packages': ^1.1.3
+      '@milahu/patch-package': ^6.4.11
       '@monots/cli': ^0.12.4
       '@monots/tsconfig': ^0.1.0
       '@parcel/css-cli': ^1.8.1
@@ -57,7 +58,6 @@ importers:
       husky: ^7.0.4
       lint-staged: ^12.4.0
       npm-run-all: ^4.1.5
-      patch-package: npm:@milahu/patch-package-with-pnpm-support
       playwright: 1.22.0-alpha-apr-27-2022
       playwright-watch: ^1.3.23
       postcss: ^8.4.12
@@ -66,8 +66,6 @@ importers:
       postcss-preset-env: ^7.4.4
       prettier: ^2.6.2
       prettier-config-monots: ^0.2.1
-      react: ^18.1.0
-      react-dom: ^18.1.0
       svelte: ^3.47.0
       tailwindcss: ^3.0.24
       tailwindcss-animate: ^1.0.5
@@ -81,15 +79,16 @@ importers:
       '@changesets/changelog-github': 0.4.4
       '@changesets/cli': 2.22.0
       '@cloudflare/wrangler': 1.19.12
-      '@gokiprotocol/walletkit': 1.6.10_ef5jwxihqo6n7gxfmzogljlgcm
+      '@gokiprotocol/walletkit': 1.6.10
       '@manypkg/cli': 0.19.1
       '@manypkg/get-packages': 1.1.3
+      '@milahu/patch-package': 6.4.11
       '@monots/cli': 0.12.4
       '@monots/tsconfig': 0.1.0
       '@parcel/css-cli': 1.8.1
       '@playwright/experimental-ct-svelte': 0.0.6_svelte@3.47.0
       '@playwright/test': 1.22.0-alpha-apr-27-2022
-      '@remix-run/eslint-config': 1.4.3_sqqtp5r7mnpq327rftfpkybb5u
+      '@remix-run/eslint-config': 1.4.3_5wgcfyoq5s2bom5manjnkh6vqi
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.42_svelte@3.47.0
       '@tailwindcss/forms': 0.5.0_tailwindcss@3.0.24
       '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.24
@@ -103,7 +102,7 @@ importers:
       autoprefixer: 10.4.5_postcss@8.4.12
       daisyui: 2.14.2_gqs2i3chewhgvvijxr6nzz7kka
       eslint: 8.14.0
-      eslint-config-monots: 0.11.0_2ljjm7shefbqqptnlesegp7vvi
+      eslint-config-monots: 0.11.0_bxqkukntoo2dwnqufv7p4etun4
       eslint-config-next: 12.1.5_5wgcfyoq5s2bom5manjnkh6vqi
       eslint-plugin-import: 2.26.0_eslint@8.14.0
       eslint-plugin-jest-dom: 4.0.1_eslint@8.14.0
@@ -114,7 +113,6 @@ importers:
       husky: 7.0.4
       lint-staged: 12.4.1
       npm-run-all: 4.1.5
-      patch-package: /@milahu/patch-package-with-pnpm-support/6.4.10
       playwright: 1.22.0-alpha-apr-27-2022
       playwright-watch: 1.3.23_uy5lt2h2aojl4dundjh43ev5tm
       postcss: 8.4.12
@@ -123,8 +121,6 @@ importers:
       postcss-preset-env: 7.4.4_postcss@8.4.12
       prettier: 2.6.2
       prettier-config-monots: 0.2.1_sqtt6dzjlskmywoml5ykunxlce
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
       svelte: 3.47.0
       tailwindcss: 3.0.24_ts-node@10.7.0
       tailwindcss-animate: 1.0.5_tailwindcss@3.0.24
@@ -186,6 +182,7 @@ importers:
       '@solana/wallet-adapter-huobi': ^0.1.0
       '@solana/wallet-adapter-mathwallet': ^0.9.3
       '@solana/wallet-adapter-phantom': ^0.9.3
+      '@solana/wallet-adapter-react': ^0.15.4
       '@solana/wallet-adapter-slope': ^0.5.4
       '@solana/wallet-adapter-solflare': ^0.6.6
       '@solana/wallet-adapter-sollet': ^0.11.1
@@ -197,6 +194,7 @@ importers:
       '@svelte-on-solana/wallet-adapter-ui': ^1.0.12-alpha.0
       '@sveltejs/adapter-auto': 1.0.0-next.40
       '@sveltejs/kit': 1.0.0-next.323
+      '@sveltestack/svelte-query': ^1.6.0
       '@testing-library/svelte': ^3.1.1
       '@types/bcryptjs': ^2.4.2
       '@types/bn.js': ^5.1.0
@@ -219,7 +217,7 @@ importers:
       svelte: ^3.47.0
       svelte-check: ^2.7.0
       svelte-intl-precompile: ^0.9.0
-      svelte-kit-cookie-session: ^2.1.3
+      svelte-kit-cookie-session: ^2.1.4
       svelte-preprocess: ^4.10.6
       svelte-themes: ^0.0.98
       tiny-invariant: ^1.2.0
@@ -260,6 +258,7 @@ importers:
       '@solana/wallet-adapter-huobi': 0.1.0
       '@solana/wallet-adapter-mathwallet': 0.9.3
       '@solana/wallet-adapter-phantom': 0.9.3
+      '@solana/wallet-adapter-react': 0.15.4
       '@solana/wallet-adapter-slope': 0.5.4
       '@solana/wallet-adapter-solflare': 0.6.6
       '@solana/wallet-adapter-sollet': 0.11.1
@@ -271,6 +270,7 @@ importers:
       '@svelte-on-solana/wallet-adapter-ui': 1.0.12-alpha.0
       '@sveltejs/adapter-auto': 1.0.0-next.40
       '@sveltejs/kit': 1.0.0-next.323_svelte@3.47.0
+      '@sveltestack/svelte-query': 1.6.0
       '@testing-library/svelte': 3.1.1_svelte@3.47.0
       '@types/bcryptjs': 2.4.2
       '@types/bn.js': 5.1.0
@@ -293,7 +293,7 @@ importers:
       svelte: 3.47.0
       svelte-check: 2.7.0_svelte@3.47.0
       svelte-intl-precompile: 0.9.0_svelte@3.47.0
-      svelte-kit-cookie-session: 2.1.3
+      svelte-kit-cookie-session: 2.1.4
       svelte-preprocess: 4.10.6_svelte@3.47.0
       svelte-themes: 0.0.98
       tiny-invariant: 1.2.0
@@ -342,7 +342,7 @@ importers:
       nanoid: ^3.3.3
       path-to-regexp: 6.2.0
       superstruct: ^0.15.4
-      svelte-kit-cookie-session: ^2.1.3
+      svelte-kit-cookie-session: ^2.1.4
       tiny-invariant: ^1.2.0
       ts-extras: ^0.10.2
       type-fest: ^2.12.2
@@ -351,7 +351,7 @@ importers:
       nanoid: 3.3.3
       path-to-regexp: 6.2.0
       superstruct: 0.15.4
-      svelte-kit-cookie-session: 2.1.3
+      svelte-kit-cookie-session: 2.1.4
       tiny-invariant: 1.2.0
       ts-extras: 0.10.2
       type-fest: 2.12.2
@@ -2469,7 +2469,7 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /@gokiprotocol/walletkit/1.6.10_ef5jwxihqo6n7gxfmzogljlgcm:
+  /@gokiprotocol/walletkit/1.6.10:
     resolution: {integrity: sha512-nn/g77qx/cYuVUDhxzIHUC28Pz22YCmuJwkdbEKTtIXTU7F717/0t9Ws2dVO8496K2i8iHxmunb3YKr1OIuIbw==}
     peerDependencies:
       '@emotion/react': ^11
@@ -2480,12 +2480,10 @@ packages:
       react: ^17 || ^18
       react-dom: ^17 || ^18
     dependencies:
-      '@react-spring/web': 9.4.5-beta.1_ef5jwxihqo6n7gxfmzogljlgcm
+      '@react-spring/web': 9.4.5-beta.1
       '@types/react': 18.0.8
-      react: 18.1.0
-      react-device-detect: 2.2.2_ef5jwxihqo6n7gxfmzogljlgcm
-      react-dom: 18.1.0_react@18.1.0
-      react-use-gesture: 9.1.3_react@18.1.0
+      react-device-detect: 2.2.2
+      react-use-gesture: 9.1.3
       tslib: 2.4.0
     dev: false
 
@@ -2857,10 +2855,9 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@milahu/patch-package-with-pnpm-support/6.4.10:
-    resolution: {integrity: sha512-v39Gi8NffnZsxbg0EPVEKGiHA6LAzhbCHyWjT/J9QCuwUvoMihPBjtUzUA+jLBDQZcwIezzsy/g84l6BJDK4Xw==}
+  /@milahu/patch-package/6.4.11:
+    resolution: {integrity: sha512-5FX4Uy9ffccIhhHa0nkOaKoNYNu9lmi2A6WUST7UjPiAC0FL8AYXA7/XWht0far8hXVLf3QJ+q1CUGqGtMG3zw==}
     engines: {npm: '>5'}
-    deprecated: the package was renamed to @milahu/patch-package
     hasBin: true
     dependencies:
       '@types/dashdash': 1.14.1
@@ -3361,61 +3358,56 @@ packages:
       '@randlabs/communication-bridge': 1.0.0
     dev: false
 
-  /@react-spring/animated/9.4.5-beta.1_react@18.1.0:
+  /@react-spring/animated/9.4.5-beta.1:
     resolution: {integrity: sha512-52vHhd0wYkAeQaU6celeZtrXJaOVvKo+5d8keAG3aY9NJs2YDARPg9uu8lLVf+fRTnruSb+gfFxsCTnq3g7OUQ==}
     peerDependencies:
       react: ^16.8.0  || >=17.0.0 || >=18.0.0
     dependencies:
-      '@react-spring/shared': 9.4.5-beta.1_react@18.1.0
+      '@react-spring/shared': 9.4.5-beta.1
       '@react-spring/types': 9.4.5-beta.1
-      react: 18.1.0
     dev: false
 
-  /@react-spring/core/9.4.5-beta.1_react@18.1.0:
+  /@react-spring/core/9.4.5-beta.1:
     resolution: {integrity: sha512-t7rFpy0jWLKqWqsdfgCijxgX9AN3MCS8Iu66cSbRzf56Eli7UO1su2mH6YERrlIo+4TeDnm2Hz23QiC6tzsO+w==}
     peerDependencies:
       react: ^16.8.0  || >=17.0.0 || >=18.0.0
     dependencies:
-      '@react-spring/animated': 9.4.5-beta.1_react@18.1.0
+      '@react-spring/animated': 9.4.5-beta.1
       '@react-spring/rafz': 9.4.5-beta.1
-      '@react-spring/shared': 9.4.5-beta.1_react@18.1.0
+      '@react-spring/shared': 9.4.5-beta.1
       '@react-spring/types': 9.4.5-beta.1
-      react: 18.1.0
     dev: false
 
   /@react-spring/rafz/9.4.5-beta.1:
     resolution: {integrity: sha512-hORwrd0LJRnKEdVmQyUCv+4oVqNkpTc/9/6BC0IfyXSIzUkYs/LUkOeXD811gFR07UBVScSbWXXNgLBJY+pNlg==}
     dev: false
 
-  /@react-spring/shared/9.4.5-beta.1_react@18.1.0:
+  /@react-spring/shared/9.4.5-beta.1:
     resolution: {integrity: sha512-EHAWYn/Hl6ec6/oBWVvxqm3Tl3dVZ+HmeaBssmqWqbHSfexJOiwmXLdRN18rRuNbnzmmfLkDWbe1RLUHJwLOIQ==}
     peerDependencies:
       react: ^16.8.0  || >=17.0.0 || >=18.0.0
     dependencies:
       '@react-spring/rafz': 9.4.5-beta.1
       '@react-spring/types': 9.4.5-beta.1
-      react: 18.1.0
     dev: false
 
   /@react-spring/types/9.4.5-beta.1:
     resolution: {integrity: sha512-i5GLUdu1EQHbCl54QE5/Ro1Ck4IQvTcLZ7HKG3/0HoLNHVjTAtfu4OCFaAXvwCsBdAD8BhROM6Tec1FLt6nImA==}
     dev: false
 
-  /@react-spring/web/9.4.5-beta.1_ef5jwxihqo6n7gxfmzogljlgcm:
+  /@react-spring/web/9.4.5-beta.1:
     resolution: {integrity: sha512-N/Mb6TJgzfnkSrjAbFhhPsvN4BJ73Z6v8zbXNDdmH9Lckxbg6UlVnY23AqtwmyVMTrC87QnQdZg0fLBBNQJ9OA==}
     peerDependencies:
       react: ^16.8.0  || >=17.0.0 || >=18.0.0
       react-dom: ^16.8.0  || >=17.0.0 || >=18.0.0
     dependencies:
-      '@react-spring/animated': 9.4.5-beta.1_react@18.1.0
-      '@react-spring/core': 9.4.5-beta.1_react@18.1.0
-      '@react-spring/shared': 9.4.5-beta.1_react@18.1.0
+      '@react-spring/animated': 9.4.5-beta.1
+      '@react-spring/core': 9.4.5-beta.1
+      '@react-spring/shared': 9.4.5-beta.1
       '@react-spring/types': 9.4.5-beta.1
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
-  /@remix-run/eslint-config/1.4.3_sqqtp5r7mnpq327rftfpkybb5u:
+  /@remix-run/eslint-config/1.4.3_5wgcfyoq5s2bom5manjnkh6vqi:
     resolution: {integrity: sha512-eDWw9e0vId9ogC1lI75514wJeIFqE4bcSOl1u3JwC6H8rEXBuuPuAQQzjBdL61naEmAvS1yKfbUzmbP6ghEPog==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -3444,8 +3436,6 @@ packages:
       eslint-plugin-react: 7.29.4_eslint@8.14.0
       eslint-plugin-react-hooks: 4.5.0_eslint@8.14.0
       eslint-plugin-testing-library: 5.3.1_5wgcfyoq5s2bom5manjnkh6vqi
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
       typescript: 4.7.0-beta
     transitivePeerDependencies:
       - jest
@@ -3676,6 +3666,19 @@ packages:
 
   /@solana/wallet-adapter-phantom/0.9.3:
     resolution: {integrity: sha512-XBDgG5BzxRolHW2OchaIccvsPeQ0PKl/Xy303x7oHS3rW+HUwjIMqaKKpmV66A6rMr1x+ytL+tp6p7t3M2oD3Q==}
+    dependencies:
+      '@solana/wallet-adapter-base': 0.9.5
+      '@solana/web3.js': 1.41.1
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: true
+
+  /@solana/wallet-adapter-react/0.15.4:
+    resolution: {integrity: sha512-QB8tE1IqYxvHrdDZP3DGICuCq6xydvjUYhW+usIahORmHniFF62Mp/LPfdAGZRDFF7U2/rZPktGFiOxWUJA7Qw==}
+    peerDependencies:
+      react: ^17.0.0
     dependencies:
       '@solana/wallet-adapter-base': 0.9.5
       '@solana/web3.js': 1.41.1
@@ -4035,6 +4038,15 @@ packages:
       vite: 2.9.6
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@sveltestack/svelte-query/1.6.0:
+    resolution: {integrity: sha512-C0wWuh6av1zu3Pzwrg6EQmX3BhDZQ4gMAdYu6Tfv4bjbEZTB00uEDz52z92IZdONh+iUKuyo0xRZ2e16k2Xifg==}
+    peerDependencies:
+      broadcast-channel: ^4.5.0
+    peerDependenciesMeta:
+      broadcast-channel:
+        optional: true
     dev: true
 
   /@swc/core-android-arm-eabi/1.2.172:
@@ -7228,7 +7240,7 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /eslint-config-monots/0.11.0_2ljjm7shefbqqptnlesegp7vvi:
+  /eslint-config-monots/0.11.0_bxqkukntoo2dwnqufv7p4etun4:
     resolution: {integrity: sha512-+Kkz9Ad4E6cK407juOd+6CtHDJPaWAN7gXC4w6w9zLeqIEY5Q2cDRSImBow9xPfBtmNNISRdSNMJ8WULxzOXlw==}
     peerDependencies:
       eslint: ^7 || ^8
@@ -7268,8 +7280,6 @@ packages:
       eslint-plugin-svelte3: 3.4.1_2vfxa6cecroc3y2fsbrsrarodq
       eslint-plugin-testing-library: 5.3.1_5wgcfyoq5s2bom5manjnkh6vqi
       eslint-plugin-unicorn: 42.0.0_eslint@8.14.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
       svelte: 3.47.0
       typescript: 4.7.0-beta
     transitivePeerDependencies:
@@ -11683,25 +11693,13 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
-  /react-device-detect/2.2.2_ef5jwxihqo6n7gxfmzogljlgcm:
+  /react-device-detect/2.2.2:
     resolution: {integrity: sha512-zSN1gIAztUekp5qUT/ybHwQ9fmOqVT1psxpSlTn1pe0CO+fnJHKRLOWWac5nKxOxvOpD/w84hk1I+EydrJp7SA==}
     peerDependencies:
       react: '>= 0.14.0'
       react-dom: '>= 0.14.0'
     dependencies:
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
       ua-parser-js: 1.0.2
-    dev: false
-
-  /react-dom/18.1.0_react@18.1.0:
-    resolution: {integrity: sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==}
-    peerDependencies:
-      react: ^18.1.0
-    dependencies:
-      loose-envify: 1.4.0
-      react: 18.1.0
-      scheduler: 0.22.0
     dev: false
 
   /react-is/16.13.1:
@@ -11711,20 +11709,11 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  /react-use-gesture/9.1.3_react@18.1.0:
+  /react-use-gesture/9.1.3:
     resolution: {integrity: sha512-CdqA2SmS/fj3kkS2W8ZU8wjTbVBAIwDWaRprX7OKaj7HlGwBasGEFggmk5qNklknqk9zK/h8D355bEJFTpqEMg==}
     deprecated: This package is no longer maintained. Please use @use-gesture/react instead
     peerDependencies:
       react: '>= 16.8.0'
-    dependencies:
-      react: 18.1.0
-    dev: false
-
-  /react/18.1.0:
-    resolution: {integrity: sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /read-cache/1.0.0:
@@ -12116,12 +12105,6 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: false
-
-  /scheduler/0.22.0:
-    resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /schema-utils/1.0.0:
@@ -13008,8 +12991,8 @@ packages:
       - svelte
     dev: true
 
-  /svelte-kit-cookie-session/2.1.3:
-    resolution: {integrity: sha512-7Xk3CNbpLAi1KodlsV5W5jULQ2NxQunaXtAYqAuzIEXIq2EwC4oDa25kdmHjNe33epV0t4r0WwxZOuSdJPsapg==}
+  /svelte-kit-cookie-session/2.1.4:
+    resolution: {integrity: sha512-z/ckxHWguYyy66UqfId4Lu+A77ft/3mV5oozbRTI9bnQY0tyJfns/SM0ikdkj7OV5GiI8kq7GSOGvajWwyGeZw==}
 
   /svelte-preprocess/4.10.6_svelte@3.47.0:
     resolution: {integrity: sha512-I2SV1w/AveMvgIQlUF/ZOO3PYVnhxfcpNyGt8pxpUVhPfyfL/CZBkkw/KPfuFix5FJ9TnnNYMhACK3DtSaYVVQ==}

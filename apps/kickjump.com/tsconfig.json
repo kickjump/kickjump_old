@@ -19,8 +19,8 @@
     "paths": {
       "$components": ["src/lib/components"],
       "$components/*": ["src/lib/components/*"],
-      "$directives": ["src/lib/directives"],
-      "$directives/*": ["src/lib/directives/*"],
+      "$stores": ["src/lib/stores"],
+      "$stores/*": ["src/lib/stores/*"],
       "$layout": ["src/lib/layout"],
       "$layout/*": ["src/lib/layout/*"],
       "$server": ["src/lib/server"],
