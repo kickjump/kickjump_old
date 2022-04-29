@@ -78,6 +78,8 @@ namespace NodeJS {
     GITHUB_APP_ID: string;
     GITHUB_APP_PRIVATE_KEY: string;
     DATABASE_URL: string;
+    VITE_WEB3_AUTH_CLIENT_ID: string;
+    WEB3_AUTH_CLIENT_SECRET: string;
   }
 }
 

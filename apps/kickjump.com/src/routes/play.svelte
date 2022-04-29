@@ -8,10 +8,8 @@
     ModalDescription,
     ModalTitle,
   } from '$components';
-  import ConnectionProvider from '$components/solana/connection-provider.svelte';
-  import WalletAdapter from '$components/solana/wallet-adapter.svelte';
-  import WalletProvider from '$components/solana/wallet-provider.svelte';
-  import WalletSteps from '$components/solana/wallet-steps.svelte';
+  import { SolanaProvider, WalletSteps } from '$components/solana';
+
   let open = false;
   let button: Button | undefined;
 
@@ -25,8 +23,7 @@
 <div class="place-self-center container gap-y-5 grid grid-flow-row pt-8 mb-24">
   <section class="flex flex-col gap-y-3">
     <h2 class="">Solana</h2>
-    <ConnectionProvider />
-    <WalletProvider />
+    <SolanaProvider />
     <div><WalletSteps /></div>
   </section>
   <section class="flex flex-col gap-y-3">
@@ -47,8 +44,7 @@
       <svelte:fragment slot="footer">
         <!-- <ButtonGroup> -->
         <Button theme="default" onClick={() => (open = false)}>Default</Button>
-        <ConnectionProvider />
-        <WalletProvider />
+        <SolanaProvider />
         <div><WalletSteps /></div>
         <!-- </ButtonGroup> -->
       </svelte:fragment>
@@ -59,12 +55,6 @@
     <div>
       <IconButton icon="glow" />
       <IconButton icon="phantom" />
-    </div>
-  </section>
-  <section class="flex flex-col gap-y-3">
-    <h2 class="">Solana</h2>
-    <div>
-      <WalletAdapter />
     </div>
   </section>
   <section class="flex flex-col gap-y-3">

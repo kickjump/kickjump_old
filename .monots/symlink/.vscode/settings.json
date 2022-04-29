@@ -99,5 +99,25 @@
     "svelte"
   ],
   "eslint.alwaysShowStatus": true,
-  "eslint.format.enable": true
+  "eslint.format.enable": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#7c42ba",
+    "activityBar.activeBorder": "#c58e5a",
+    "activityBar.background": "#7c42ba",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#c58e5a",
+    "activityBarBadge.foreground": "#15202b",
+    "sash.hoverBorder": "#7c42ba",
+    "statusBar.background": "#633594",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#7c42ba",
+    "statusBarItem.remoteBackground": "#633594",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#633594",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#63359499",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#633594"
 }

@@ -1,13 +1,11 @@
 <script lang="ts" context="module">
-  import type { WalletName } from '@solana/wallet-adapter-base';
-  import { walletStore } from '@svelte-on-solana/wallet-adapter-core';
-  import { onDestroy } from 'svelte';
   import { quintIn } from 'svelte/easing';
   import { type FlyParams, fly } from 'svelte/transition';
 
   import LoadingBars from '$components/icon/loading-bars.svelte';
   import { ModalTitle } from '$components/modal';
   import StepLayout from '$components/solana/steps/step-layout.svelte';
+  import { solana } from '$stores/solana';
   import { t } from '$utils/intl';
 
   import { getStepContext } from '../step-context';
@@ -18,24 +16,26 @@
 </script>
 
 <script lang="ts">
-  $: ({ data, previousStep, step } = getStepContext());
-  $: console.log(selectedProvider);
-  $: ({ selectedProvider } = $data);
-  $: name = selectedProvider?.info.name;
+  $: ({ data, previousStep, nextStep, step } = getStepContext());
+  $: name = $data.selectedWallet?.adapter.name;
 
   $: if (name) {
-    $walletStore.walletsByName[name as WalletName]?.connect().then(() => {
-      // nextStep();
-      console.log('hmmmm!');
+    console.log('name found', { name });
+    $solana.selectWallet(name).then(() => {
+      return $solana.connect();
     });
+  } else {
+    console.log('no name', { name });
+    $solana.disconnect();
   }
 
-  onDestroy(() => {
-    console.log('being destroyed!');
-  });
+  $: if (name && $solana.connected) {
+    console.log('connected!');
+    nextStep();
+  }
 </script>
 
-{#if selectedProvider}
+{#if $data.selectedWallet}
   <StepLayout>
     <svelte:fragment slot="content">
       {#key $step}
@@ -45,7 +45,7 @@
           </ModalTitle>
           <p
             >{$t('walletStep.connectWallet.unlock', {
-              values: { name: selectedProvider.info.name },
+              values: { name: $data.selectedWallet?.adapter.name },
             })}
           </p>
           <div class="h-8" />

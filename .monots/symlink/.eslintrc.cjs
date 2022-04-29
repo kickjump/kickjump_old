@@ -37,6 +37,10 @@ const config = {
       files: ['*.spec.ts'],
       extends: ['monots/jest', 'monots/jest-dom', 'monots/testing-library'],
     },
+    {
+      files: ['apps/kickjump.com/**/*.test.ts', 'tests/kickjump.com/*.test.ts'],
+      extends: ['plugin:playwright/playwright-test'],
+    },
   ],
   settings: {
     jest: { version: 28 },
