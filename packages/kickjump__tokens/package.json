@@ -34,7 +34,7 @@
     "@strata-foundation/spl-token-bonding": "^3.5.5",
     "@strata-foundation/spl-token-collective": "^3.5.5",
     "@strata-foundation/spl-utils": "^3.5.5",
-    "@swc/helpers": "^0.3.8",
+    "@swc/helpers": "^0.3.9",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.0"
   },
