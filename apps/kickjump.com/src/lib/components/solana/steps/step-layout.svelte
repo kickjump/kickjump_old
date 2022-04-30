@@ -8,11 +8,11 @@
     fade,
     // fly, type FlyParams
   } from 'svelte/transition';
-  
+
   import { IconButton } from '$components/buttons';
   import { getModalContext } from '$components/modal';
-  
-  import { getStepContext } from './step-context';
+
+  import { StepContext } from './step-context';
 
   // const FLY_IN: FlyParams = { x: -20, duration: 200, delay: 300, easing: cubicIn };
   // const FLY_OUT: FlyParams = { x: -20, duration: 200, easing: cubicOut };
@@ -23,7 +23,7 @@
     stepIndex,
     previousStep,
     // step
-  } = getStepContext());
+  } = StepContext.context);
 </script>
 
 <!-- {#key step} -->

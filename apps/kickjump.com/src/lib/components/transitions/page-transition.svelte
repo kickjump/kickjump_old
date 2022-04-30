@@ -22,7 +22,7 @@
   $: classes = clsx('max-w-full overflow-x-hidden', className);
 </script>
 
-{#if reducedMotion === true}
+{#if reducedMotion}
   <main class={classes}><slot /></main>
 {:else}
   {#key refresh}

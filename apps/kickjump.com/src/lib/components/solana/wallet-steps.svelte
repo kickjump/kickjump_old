@@ -6,6 +6,7 @@
   import { addUrlParams, getUrlParam } from '$utils/url';
 
   import { CONNECT_WALLET_ID, ConnectWallet } from './steps/connect';
+  import { WALLET_RESULTS_ID, WalletResults } from './steps/results';
   import { SELECT_WALLET_ID, SelectWallet } from './steps/select';
   import Step from './steps/step.svelte';
   import StepProvider from './steps/step-provider.svelte';
@@ -45,6 +46,9 @@
       </Step>
       <Step id={CONNECT_WALLET_ID}>
         <ConnectWallet />
+      </Step>
+      <Step id={WALLET_RESULTS_ID}>
+        <WalletResults />
       </Step>
     </svelte:fragment>
   </Modal>

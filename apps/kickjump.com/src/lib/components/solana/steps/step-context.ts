@@ -1,79 +1,120 @@
-import { getContext, setContext } from 'svelte';
-import { type Readable, derived, writable } from 'svelte/store';
+import { getContext, hasContext, setContext } from 'svelte';
+import { type Readable, type Writable, derived, writable } from 'svelte/store';
 import invariant from 'tiny-invariant';
 
-export const STEP_CONTEXT_NAME = '$$step-wizard$$';
+import { asReadable } from '$stores/utils';
 
-export interface StepContext {
-  /**
-   * The current step id.
-   */
-  step: Readable<string>;
+const CONTEXT_KEY = Symbol('$$step-context$$');
 
-  /**
-   * The current step index.
-   */
+interface Writables {
+  step: Writable<string>;
+  data: Writable<Partial<StepContextData>>;
+  errors: Writable<string[]>;
+}
+
+interface Readables {
   stepIndex: Readable<number>;
-
-  /**
-   * The data that can be customized by each step.
-   */
+  step: Readable<string>;
   data: Readable<Partial<StepContextData>>;
-
-  /**
-   * Skips to the next step.
-   */
-  nextStep: () => void;
-
-  /**
-   * Returns to the previous step.
-   */
-  previousStep: () => void;
-
-  /**
-   * Jump to a specific step.
-   */
-  jumpToStep: (step: string) => void;
-
-  /**
-   * Update the data provided.
-   */
-  updateData: (update: Partial<StepContextData>) => void;
+  errors: Readable<string[]>;
 }
 
-export function getStepContext(): StepContext {
-  const context = getContext<StepContext | undefined>(STEP_CONTEXT_NAME);
-  invariant(context, 'StepProvider compound components cannot be rendered outside the context');
-
-  return context;
-}
-
-interface StepProps {
+interface Props {
   initialData?: Partial<StepContextData>;
   initialStep?: string;
   stepIds: readonly [string, ...string[]];
   onFinish: () => void;
 }
 
-export function createStepContext(props: StepProps) {
-  const { stepIds, initialData = {}, initialStep = stepIds[0], onFinish } = props;
-  const step = writable(initialStep);
-  const stepIndex = derived(step, getStepIndex);
-  const data = writable(initialData);
+export class StepContext {
+  /**
+   * Dynamically provide the context when accessed.
+   */
+  static get context(): StepContext {
+    const context = getContext<StepContext | undefined>(CONTEXT_KEY);
+    invariant(context, 'StepProvider compound components cannot be rendered outside the context');
 
-  function getStepIndex($step: string): number {
-    const newIndex = stepIds.indexOf($step);
-    console.log({ newIndex });
-    return newIndex;
+    return context;
   }
 
-  function nextStep() {
-    step.update((value) => {
-      const next = getStepIndex(value) + 1;
+  /**
+   * Check if the context exists for the current component.
+   */
+  static has(): boolean {
+    return hasContext(CONTEXT_KEY);
+  }
+
+  /**
+   * Create a new context.
+   */
+  static create(props: Props): StepContext {
+    const context = new StepContext(props);
+    setContext<StepContext>(CONTEXT_KEY, context);
+
+    return context;
+  }
+
+  readonly #props: Required<Props>;
+  readonly #writables: Writables;
+  readonly #readables: Readables;
+
+  /**
+   * The current step id.
+   */
+  get step(): Readable<string> {
+    return this.#readables.step;
+  }
+
+  /**
+   * The current step index which is derived from the step id.
+   */
+  get stepIndex(): Readable<number> {
+    return this.#readables.stepIndex;
+  }
+
+  /**
+   * Track the errors.
+   */
+  get errors(): Readable<string[]> {
+    return this.#readables.errors;
+  }
+
+  /**
+   * The data that can be customized by each step.
+   */
+  get data(): Readable<StepContextData> {
+    return this.#readables.data;
+  }
+
+  private constructor(props: Props) {
+    const { stepIds, initialData = {}, initialStep = stepIds[0], onFinish } = props;
+    this.#props = { stepIds, initialData, initialStep, onFinish };
+    const step = writable(initialStep);
+    const stepIndex = derived(step, ($step) => this.#getStepIndex($step));
+    const data = writable(initialData);
+    const errors = writable<string[]>([]);
+
+    this.#writables = { step, data, errors };
+    this.#readables = {
+      stepIndex,
+      step: asReadable(step),
+      data: asReadable(data),
+      errors: asReadable(errors),
+    };
+  }
+
+  /**
+   * Increment the current step index.
+   */
+  nextStep = () => {
+    const { onFinish, stepIds } = this.#props;
+    this.#writables.step.update((value) => {
+      const current = this.#getStepIndex(value);
+      const next = current + 1;
 
       if (next > stepIds.length - 1) {
-        console.log('oops', { next, length: stepIds.length });
         onFinish();
+
         return value;
       }
 
@@ -87,12 +128,16 @@ export function createStepContext(props: StepProps) {
 
       return stepId;
     });
-  }
+  };
 
-  function previousStep() {
-    step.update((value) => {
-      const previous = getStepIndex(value) - 1;
-      console.log({ previous, stepIds });
+  /**
+   * Decrement the current step index.
+   */
+  previousStep = () => {
+    const { stepIds } = this.#props;
+
+    this.#writables.step.update((value) => {
+      const previous = this.#getStepIndex(value) - 1;
       const stepId = previous <= 0 ? stepIds[0] : stepIds[previous];
       invariant(
         stepId,
@@ -103,39 +148,55 @@ export function createStepContext(props: StepProps) {
 
       return stepId;
     });
-  }
+  };
 
-  function jumpToStep(stepId: string) {
-    step.update((value) => {
-      return stepId.includes(value) ? stepId : value;
+  /**
+   * Add an error to the error list which can be displayed on a dedicated
+   * results step.
+   */
+  addError = (error: string, ...rest: string[]) => {
+    this.#writables.errors.update((errors) => [...errors, error, ...rest]);
+  };
+
+  /**
+   * Reset everything.
+   */
+  reset = (step?: string) => {
+    const { initialData, initialStep } = this.#props;
+    const { data, errors } = this.#writables;
+
+    data.set(initialData);
+    this.jumpToStep(step ?? initialStep);
+    errors.set([]);
+  };
+
+  /**
+   * Jump to the requested step.
+   */
+  jumpToStep = (step: string) => {
+    const { stepIds } = this.#props;
+
+    this.#writables.step.update((value) => {
+      return stepIds.includes(value) ? step : value;
     });
-  }
+  };
 
-  function updateData(update: UpdateDataParam) {
-    data.update((value) => {
+  /**
+   * Update the context data.
+   */
+  updateData = (update: UpdateDataParam) => {
+    this.#writables.data.update((value) => {
       return {
         ...value,
         ...(typeof update === 'function' ? update(value) : update),
       };
     });
-  }
-
-  const stepContext: StepContext = {
-    step: asReadable(step),
-    stepIndex: asReadable(stepIndex),
-    data: asReadable(data),
-    nextStep,
-    previousStep,
-    updateData,
-    jumpToStep,
   };
 
-  setContext<StepContext>(STEP_CONTEXT_NAME, stepContext);
-  return stepContext;
-}
-
-function asReadable<Type, Store extends Readable<Type>>(store: Store): Readable<Type> {
-  return { subscribe: store.subscribe };
+  #getStepIndex($step: string): number {
+    const newIndex = this.#props.stepIds.indexOf($step);
+    return newIndex;
+  }
 }
 
 type UpdateDataParam =

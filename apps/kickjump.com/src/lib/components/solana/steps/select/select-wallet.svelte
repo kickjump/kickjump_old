@@ -15,7 +15,7 @@
   import { t } from '$utils/intl';
   import { addUrlParams } from '$utils/url';
 
-  import { getStepContext } from '../step-context';
+  import { StepContext } from '../step-context';
   import StepLayout from '../step-layout.svelte';
   import SelectWalletItem from './item.svelte';
 
@@ -57,13 +57,11 @@
 <script lang="ts">
   let availableWallets = getWalletProviders($solana.wallets, $session.userAgent);
   let walletWithMetaToInstall: Maybe<WalletWithMetadata> = undefined;
-  console.log(availableWallets);
 
   onMount(() => {
     // update the selected provider once in the browser to update the ui to know
     // whether the wallet is installed.
     availableWallets = getWalletProviders($solana.wallets);
-    console.log(availableWallets);
 
     const timeout = setTimeout(() => {
       updateData({ walletsLoadedInBrowser: true });
@@ -89,7 +87,7 @@
     };
   }
 
-  $: ({ updateData, nextStep, data } = getStepContext());
+  $: ({ updateData, nextStep, data } = StepContext.context);
   $: loading = !$data?.walletsLoadedInBrowser;
 
   $: uninstalledNumber = availableWallets.filter((wallet) => !wallet.isInstalled).length;

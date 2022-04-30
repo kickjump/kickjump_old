@@ -15,8 +15,7 @@ import {
   clusterApiUrl,
   Connection,
 } from '@solana/web3.js';
-import type { Emitter } from 'nanoevents';
-import { createNanoEvents } from 'nanoevents';
+import { type Emitter, createNanoEvents } from 'nanoevents';
 import { type Readable, type Unsubscriber, type Writable, get, writable } from 'svelte/store';
 
 import { browser } from '$app/env';
@@ -240,8 +239,6 @@ export class SvelteSolana implements Readable<SolanaStore> {
       connecting: wallet?.connecting ?? false,
     });
 
-    console.log();
-
     if (wallet) {
       this.#addWalletEventListeners(wallet);
     }
@@ -317,19 +314,15 @@ export class SvelteSolana implements Readable<SolanaStore> {
 
   #selectWallet: SolanaStore['selectWallet'] = async (newName) => {
     const { name, wallet } = this.#get();
-    console.log('select wallet', name, wallet);
 
     if (name === newName) {
-      console.log('nothing changed');
       return;
     }
 
     if (wallet) {
-      console.log('disconnecting from current wallet');
       await this.#disconnect();
     }
 
-    console.log('updating the wallet name');
     this.#updateWalletName(newName);
   };
 

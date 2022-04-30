@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getStepContext } from './step-context';
+  import { StepContext } from './step-context';
 
   export let id: string;
 
-  const { step, nextStep, previousStep } = getStepContext();
+  const { step, nextStep, previousStep } = StepContext.context;
 </script>
 
 {#if $step === id}

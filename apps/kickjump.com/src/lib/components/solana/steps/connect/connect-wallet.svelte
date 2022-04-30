@@ -8,7 +8,8 @@
   import { solana } from '$stores/solana';
   import { t } from '$utils/intl';
 
-  import { getStepContext } from '../step-context';
+  import { WALLET_RESULTS_ID } from '../results';
+  import { StepContext } from '../step-context';
 
   const FLY_IN: FlyParams = { duration: 400, easing: quintIn, y: 75 };
 
@@ -16,21 +17,24 @@
 </script>
 
 <script lang="ts">
-  $: ({ data, previousStep, nextStep, step } = getStepContext());
+  $: ({ data, previousStep, nextStep, step, jumpToStep, addError } = StepContext.context);
   $: name = $data.selectedWallet?.adapter.name;
 
   $: if (name) {
-    console.log('name found', { name });
-    $solana.selectWallet(name).then(() => {
-      return $solana.connect();
-    });
+    $solana
+      .selectWallet(name)
+      .then(() => {
+        return $solana.connect();
+      })
+      .catch((error) => {
+        addError(error instanceof Error ? error.message : 'Something went wrong... 😢');
+        jumpToStep(WALLET_RESULTS_ID);
+      });
   } else {
-    console.log('no name', { name });
     $solana.disconnect();
   }
 
   $: if (name && $solana.connected) {
-    console.log('connected!');
     nextStep();
   }
 </script>
