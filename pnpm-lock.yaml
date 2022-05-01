@@ -196,14 +196,14 @@ importers:
       mdsvex: ^0.10.5
       nanoevents: ^6.0.2
       octokit: ^1.7.1
-      precompile-intl-runtime: ^0.5.0
+      precompile-intl-runtime: ^0.4.14
       sk-auth: ^0.4.1
       solana-credentials: ^0.0.1
       superjson: ^1.9.0
       superstruct: ^0.15.4
       svelte: ^3.47.0
       svelte-check: ^2.7.0
-      svelte-intl-precompile: ^0.9.1
+      svelte-intl-precompile: 0.9.0
       svelte-preprocess: ^4.10.6
       svelte-themes: ^0.0.98
       tiny-invariant: ^1.2.0
@@ -268,14 +268,14 @@ importers:
       mdsvex: 0.10.5_svelte@3.47.0
       nanoevents: 6.0.2
       octokit: 1.7.1
-      precompile-intl-runtime: 0.5.0_svelte@3.47.0
+      precompile-intl-runtime: 0.4.15_svelte@3.47.0
       sk-auth: 0.4.1_lhvvicmuqb2n3w4uf267tuyscu
       solana-credentials: link:../../packages/solana-credentials
       superjson: 1.9.0
       superstruct: 0.15.4
       svelte: 3.47.0
       svelte-check: 2.7.0_svelte@3.47.0
-      svelte-intl-precompile: 0.9.1_svelte@3.47.0
+      svelte-intl-precompile: 0.9.0_svelte@3.47.0
       svelte-preprocess: 4.10.6_svelte@3.47.0
       svelte-themes: 0.0.98
       tiny-invariant: 1.2.0
@@ -11117,8 +11117,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /precompile-intl-runtime/0.5.0_svelte@3.47.0:
-    resolution: {integrity: sha512-HNF3KxjDrIA81lQiQ6ybbdziYaAQgrervSeifu08jMSJGGRMyVsOaIoB0wTOdN7oBteebywFhP6Q7lJGsYe4XQ==}
+  /precompile-intl-runtime/0.4.15_svelte@3.47.0:
+    resolution: {integrity: sha512-B05lHn02+68hOHZkUo35vNo0K/IRiVCT7dkWmjI9tpzAn/2zbGjllU6EwqsQXxXrf2CKj1fAD5wgUbapNO+RXQ==}
     peerDependencies:
       svelte: ^3.37.0
     dependencies:
@@ -12630,14 +12630,14 @@ packages:
     dependencies:
       svelte: 3.47.0
 
-  /svelte-intl-precompile/0.9.1_svelte@3.47.0:
-    resolution: {integrity: sha512-LcK71yg/yVs0zP7POH9/8qeK3YlnkLs7EswcWExdYKM63XVNMj5R1wrgt3t4UILcyXXhHq9gfCvHBliIw/YIDQ==}
+  /svelte-intl-precompile/0.9.0_svelte@3.47.0:
+    resolution: {integrity: sha512-MA3Lase0j/0arCoUAULrMOS3AVOJTm2F9FTszmgJFtLQoTBtfEYs8vHyZVsx+20/1vIqLTyN/NSB80ln4S42ng==}
     dependencies:
       babel-plugin-precompile-intl: 0.3.0
       js-yaml: 4.1.0
       json5: 2.2.1
       path-starts-with: 2.0.0
-      precompile-intl-runtime: 0.5.0_svelte@3.47.0
+      precompile-intl-runtime: 0.4.15_svelte@3.47.0
       strip-bom: 5.0.0
     transitivePeerDependencies:
       - supports-color

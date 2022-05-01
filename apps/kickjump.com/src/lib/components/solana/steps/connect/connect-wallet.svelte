@@ -17,25 +17,29 @@
 </script>
 
 <script lang="ts">
-  $: ({ data, previousStep, nextStep, step, jumpToStep, addError } = StepContext.context);
-  $: name = $data.selectedWallet?.adapter.name;
+  let newConnection = false;
+  $: ({ data, previousStep, nextStep, step, jumpToStep, addError, addSuccess } =
+    StepContext.context);
+  $: selectedWallet = $data.selectedWallet;
+  $: connected = $solana.connected;
 
-  $: if (name) {
+  $: if (selectedWallet && !connected) {
     $solana
-      .selectWallet(name)
+      .selectWallet(selectedWallet.adapter.name)
       .then(() => {
+        newConnection = true;
         return $solana.connect();
       })
+      .then(() => {})
       .catch((error) => {
         addError(error instanceof Error ? error.message : 'Something went wrong... 😢');
         jumpToStep(WALLET_RESULTS_ID);
       });
-  } else {
-    $solana.disconnect();
   }
 
-  $: if (name && $solana.connected) {
-    nextStep();
+  $: if (selectedWallet?.adapter.name === $solana.name && connected && newConnection) {
+    addSuccess(`${selectedWallet?.adapter.name} connected successfully!`);
+    jumpToStep(WALLET_RESULTS_ID);
   }
 </script>
 

@@ -52,14 +52,14 @@ interface MessageObject<Values extends object> extends BaseMessageObject {
   values: Values;
 }
 
-interface IdBaseMessageObject<Key extends string> extends BaseMessageObject {
-  id: Key;
-}
+// interface IdBaseMessageObject<Key extends string> extends BaseMessageObject {
+//   id: Key;
+// }
 
-interface IdMessageObject<Key extends string, Values extends object> extends BaseMessageObject {
-  id: Key;
-  values: Values;
-}
+// interface IdMessageObject<Key extends string, Values extends object> extends BaseMessageObject {
+//   id: Key;
+//   values: Values;
+// }
 
 // interface MessageFormatter {
 //   <

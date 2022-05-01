@@ -18,6 +18,8 @@
   // const FLY_OUT: FlyParams = { x: -20, duration: 200, easing: cubicOut };
   const FADE: FadeParams = { duration: 300, easing: cubicInOut };
 
+  export let hideBackButton = false;
+
   $: ({ close } = getModalContext());
   $: ({
     stepIndex,
@@ -38,7 +40,7 @@
 >
   <header class="px-6 flex flex-row gap-x-4 place-items-center mb-8">
     <div class="flex flex-shrink-0 place-items-center w-8 h-8">
-      {#if $stepIndex > 0}
+      {#if $stepIndex > 0 && !hideBackButton}
         <IconButton
           icon="back"
           size="sm"

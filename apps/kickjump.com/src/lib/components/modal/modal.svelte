@@ -49,7 +49,7 @@
 </script>
 
 <Dialog {open} {initialFocusDerived} on:close={() => onClose('event')} class={classes}>
-  {#if !disableOverlay}
+  {#if !disableOverlay && open}
     <span transition:fade={FADE}>
       <DialogOverlay class="fixed inset-0 bg-neutral-focus/40" />
     </span>

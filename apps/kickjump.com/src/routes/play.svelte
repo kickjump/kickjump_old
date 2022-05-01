@@ -32,7 +32,6 @@
     <Modal
       {open}
       onClose={() => {
-        console.log('closing!!!');
         open = false;
       }}
       initialFocus={button?.getElement()}

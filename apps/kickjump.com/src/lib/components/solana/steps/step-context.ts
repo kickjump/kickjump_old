@@ -10,6 +10,7 @@ interface Writables {
   step: Writable<string>;
   data: Writable<Partial<StepContextData>>;
   errors: Writable<string[]>;
+  successes: Writable<string[]>;
 }
 
 interface Readables {
@@ -17,6 +18,7 @@ interface Readables {
   step: Readable<string>;
   data: Readable<Partial<StepContextData>>;
   errors: Readable<string[]>;
+  successes: Readable<string[]>;
 }
 
 interface Props {
@@ -79,6 +81,10 @@ export class StepContext {
     return this.#readables.errors;
   }
 
+  get successes(): Readable<string[]> {
+    return this.#readables.successes;
+  }
+
   /**
    * The data that can be customized by each step.
    */
@@ -93,13 +99,15 @@ export class StepContext {
     const stepIndex = derived(step, ($step) => this.#getStepIndex($step));
     const data = writable(initialData);
     const errors = writable<string[]>([]);
+    const successes = writable<string[]>([]);
 
-    this.#writables = { step, data, errors };
+    this.#writables = { step, data, errors, successes };
     this.#readables = {
       stepIndex,
       step: asReadable(step),
       data: asReadable(data),
       errors: asReadable(errors),
+      successes: asReadable(successes),
     };
   }
 
@@ -114,7 +122,6 @@ export class StepContext {
 
       if (next > stepIds.length - 1) {
         onFinish();
-
         return value;
       }
 
@@ -158,16 +165,22 @@ export class StepContext {
     this.#writables.errors.update((errors) => [...errors, error, ...rest]);
   };
 
+  addSuccess = (success: string, ...rest: string[]) => {
+    this.#writables.successes.update((successes) => [...successes, success, ...rest]);
+  };
+
   /**
    * Reset everything.
+   *
+   * This is a promise to that it is resolved after the store has been reset.
    */
-  reset = (step?: string) => {
+  reset = () => {
     const { initialData, initialStep } = this.#props;
-    const { data, errors } = this.#writables;
-
+    const { successes, data, errors } = this.#writables;
     data.set(initialData);
-    this.jumpToStep(step ?? initialStep);
+    this.jumpToStep(initialStep);
     errors.set([]);
+    successes.set([]);
   };
 
   /**
@@ -197,6 +210,10 @@ export class StepContext {
     const newIndex = this.#props.stepIds.indexOf($step);
     return newIndex;
   }
+}
+
+interface ResetProps {
+  initialStep?: string;
 }
 
 type UpdateDataParam =
