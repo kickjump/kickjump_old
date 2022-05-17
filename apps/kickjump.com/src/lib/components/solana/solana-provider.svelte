@@ -1,11 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import type { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base';
   import { onMount } from 'svelte';
 
   import { createWallets, solana } from '$stores/solana';
-</script>
 
-<script lang="ts">
   /**
    * @component
    *
@@ -21,10 +19,9 @@
     wallets = createWallets($solana.connection);
 
     solana.on('walletError', (error) => console.error(error));
+    solana.initialize({ wallets, autoConnect, connection });
     return solana.removeAllEventListeners;
   });
-
-  $: wallets && solana.initialize({ wallets, autoConnect, connection });
 </script>
 
 <svelte:head>

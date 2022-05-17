@@ -25,24 +25,19 @@ const config = {
   ],
 
   kit: {
-    routes: (filepath) => !/(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external)/.test(filepath),
+    // routes: (filepath) => !/(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external)/.test(filepath),
     adapter: adapter(),
     vite: {
       plugins: [
-        // tsconfigPaths({
-        //   projects: ['tsconfig.json'],
-        //   extensions: ['.ts', '.svelte', '.tsx', '.js', '.jsx', '.mjs'],
-        // }),
         precompileIntl('locales'), // if your translations are defined in /locales/[lang].json,
       ],
       // ...
-      define: {
-        // 'process.env.BROWSER': true,
-      },
+      define: {},
+      /* 'process.env.BROWSER': true, */
 
       optimizeDeps: {
         // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
-        include: ['@kickjump/db > @kickjump/prisma'],
+        // include: ['@kickjump/prisma', '@kickjump/db > @kickjump/prisma'],
       },
 
       resolve: {

@@ -6,9 +6,18 @@
   "keywords": [],
   "license": "MIT",
   "contributors": [],
-  "type": "commonjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./dist/index.js",
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "migrations",
@@ -27,8 +36,8 @@
     "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio"
   },
   "devDependencies": {
-    "@prisma/client": "^3.13.0",
-    "prisma": "^3.13.0"
+    "@prisma/client": "^3.14.0",
+    "prisma": "^3.14.0"
   },
   "publishConfig": {
     "access": "public"

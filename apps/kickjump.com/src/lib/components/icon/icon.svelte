@@ -1,51 +1,12 @@
 <script lang="ts" context="module">
   import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import { addIcon } from '@iconify/svelte/offline';
   import type _ from '@iconify/types';
   import type { IconifyIcon } from '@iconify/types';
-  import warning from '@iconify-icons/ri/alert-line';
-  import back from '@iconify-icons/ri/arrow-left-s-line';
-  import checkboxCircle from '@iconify-icons/ri/checkbox-circle-line';
-  import close from '@iconify-icons/ri/close-line';
-  import discord from '@iconify-icons/ri/discord-fill';
-  import error from '@iconify-icons/ri/error-warning-line';
-  import github from '@iconify-icons/ri/github-fill';
-  import info from '@iconify-icons/ri/information-line';
-  import menuLine from '@iconify-icons/ri/menu-line';
-  import moonFill from '@iconify-icons/ri/moon-fill';
-  import moonLine from '@iconify-icons/ri/moon-line';
-  import sunFill from '@iconify-icons/ri/sun-fill';
-  import sunLine from '@iconify-icons/ri/sun-line';
-  import twitter from '@iconify-icons/ri/twitter-fill';
   import cx from 'clsx';
 
   import type { Maybe } from '$types';
 
-  import * as custom from './custom-icons';
-
-  const ICONS = {
-    ...custom,
-    back,
-    checkboxCircle,
-    close,
-    discord,
-    error,
-    github,
-    info,
-    menuLine,
-    moonFill,
-    moonLine,
-    sunFill,
-    sunLine,
-    twitter,
-    warning,
-  };
-
-  for (const icon of Object.entries(ICONS)) {
-    addIcon(...icon);
-  }
-
-  export type IconType = keyof typeof ICONS;
+  import type { IconType } from './icons';
 </script>
 
 <script lang="ts">

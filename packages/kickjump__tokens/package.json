@@ -30,11 +30,11 @@
   "dependencies": {
     "@project-serum/anchor": "^0.24.2",
     "@solana/spl-token": "^0.2.0",
-    "@solana/web3.js": "^1.41.3",
-    "@strata-foundation/spl-token-bonding": "^3.5.5",
-    "@strata-foundation/spl-token-collective": "^3.5.5",
-    "@strata-foundation/spl-utils": "^3.5.5",
-    "@swc/helpers": "^0.3.9",
+    "@solana/web3.js": "^1.42.0",
+    "@strata-foundation/spl-token-bonding": "^3.6.0",
+    "@strata-foundation/spl-token-collective": "^3.6.0",
+    "@strata-foundation/spl-utils": "^3.5.7",
+    "@swc/helpers": "^0.3.13",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.0"
   },

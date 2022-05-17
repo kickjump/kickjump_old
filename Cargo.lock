@@ -3790,8 +3790,8 @@ dependencies = [
 
 [[package]]
 name = "prisma-client-rust-cli"
-version = "0.4.0"
-source = "git+https://github.com/Brendonovich/prisma-client-rust?tag=0.4.0#4c6c4bf93c8eb5f3a16efca161983a9537e5e53b"
+version = "0.4.1"
+source = "git+https://github.com/Brendonovich/prisma-client-rust?tag=0.4.1#72326a946fa9fad4872eeeb9fa826f7acd5a0bed"
 dependencies = [
  "convert_case 0.5.0",
  "directories",
