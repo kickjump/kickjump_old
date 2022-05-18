@@ -1,5 +1,8 @@
 /* eslint-disable unicorn/prefer-module */
-import { type PlaywrightTestConfig, devices } from '@playwright/test';
+import {
+  type PlaywrightTestConfig,
+  // devices
+} from '@kickjump/playwright';
 
 process.env.TEST = '1';
 

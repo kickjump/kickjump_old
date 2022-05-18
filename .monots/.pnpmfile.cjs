@@ -17,6 +17,20 @@ function readPackage(pkg, context) {
     context.log('`fast-sort` is now an ES module');
   }
 
+  // if ((pkg.name = '@playwright-testing-library/test')) {
+  //   pkg.exports = {
+  //     '.': {
+  //       require: './dist/index.js',
+  //       types: './dist/sort.d.ts',
+  //     },
+  //     './fixture': {
+  //       require: './fixture.js',
+  //       types: './fixture.d.ts',
+  //     },
+  //     './package.json': './package.json',
+  //   };
+  // }
+
   return pkg;
 }
 

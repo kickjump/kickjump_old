@@ -1,0 +1,14 @@
+{
+  "exports": {
+    ".": {
+      "import": "./../dist/svelte.esm.js",
+      "types": "./../dist/svelte.d.ts"
+    },
+    "./index.js": {
+      "import": "./../dist/svelte.esm.js",
+      "types": "./../dist/svelte.d.ts"
+    }
+  },
+  "module": "../dist/svelte.esm.js",
+  "types": "../dist/svelte.d.ts"
+}
