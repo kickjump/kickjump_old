@@ -1,4 +1,4 @@
-import type { RequestEvent } from '@sveltejs/kit/types/private';
+import type { RequestEvent } from '@sveltejs/kit';
 
 import { ServerError } from '../errors.js';
 import { redirect } from '../utils.js';
@@ -81,7 +81,10 @@ export class Authenticator {
     const instance = this.#strategies.get(strategy);
 
     if (!instance) {
-      throw new ServerError('BadRequest', `The provided strategy: ${strategy} is not valid.`);
+      throw new ServerError({
+        code: 'BadRequest',
+        message: `The provided strategy: ${strategy} is not valid.`,
+      });
     }
 
     const user = await instance.authenticate({

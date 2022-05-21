@@ -2,6 +2,9 @@ import type { GetSession } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { auth } from '$server/auth';
+import { env } from '$server/env';
+import { getAbsoluteUrl } from '$server/get-absolute-url';
+import { createContext, createTRPCHandle, router } from '$server/trpc';
 
 export const handler = sequence(
   /**
@@ -21,6 +24,7 @@ export const handler = sequence(
 
     return response;
   },
+  createTRPCHandle({ router, createContext }),
 );
 
 export const getSession: GetSession = async (event) => {
@@ -30,6 +34,15 @@ export const getSession: GetSession = async (event) => {
   const preferredLanguage = acceptedLanguages[0] ?? 'en';
   const error = event.locals.error;
   const userAgent = event.request.headers.get('user-agent') ?? '';
+  const absoluteUrl = getAbsoluteUrl();
 
-  return { ...session, error, acceptedLanguages, preferredLanguage, userAgent };
+  return {
+    ...session,
+    error,
+    acceptedLanguages,
+    preferredLanguage,
+    userAgent,
+    absoluteUrl,
+    env: { PUBLIC_WEB3_AUTH_CLIENT_ID: env.PUBLIC_WEB3_AUTH_CLIENT_ID },
+  };
 };

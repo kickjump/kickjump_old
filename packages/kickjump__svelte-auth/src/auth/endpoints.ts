@@ -1,5 +1,5 @@
-import type { RequestHandler, RequestHandlerOutput } from '@sveltejs/kit';
-import type { MaybePromise, RequestEvent } from '@sveltejs/kit/types/private';
+import type { RequestEvent, RequestHandler, RequestHandlerOutput } from '@sveltejs/kit';
+import type { MaybePromise } from '@sveltejs/kit/types/private';
 import { randomBytes } from 'node:crypto';
 import { match } from 'path-to-regexp';
 
@@ -34,10 +34,10 @@ export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
       error = ServerError.as(error_);
     }
 
-    error ??= new ServerError(
-      'NotFound',
-      `The authentication endpoint: ${event.url.pathname} requested was not found`,
-    );
+    error ??= new ServerError({
+      code: 'NotFound',
+      message: `The authentication endpoint: ${event.url.pathname} requested was not found`,
+    });
     event.locals.session.flash('authError', error.toJSON());
 
     if (event.request.method === 'POST') {
@@ -73,10 +73,10 @@ const AUTH_ENDPOINTS: Record<string, EndpointHandler> = {
     const { action, strategy } = authParams;
 
     if (!(action && strategy)) {
-      throw new ServerError(
-        'BadRequest',
-        `Invalid action: '${action}' or strategy: '${strategy}' provided for ${event.url.pathname}`,
-      );
+      throw new ServerError({
+        code: 'BadRequest',
+        message: `Invalid action: '${action}' or strategy: '${strategy}' provided for ${event.url.pathname}`,
+      });
     }
 
     return auth.authenticate({ ...event, action, strategy, request: request.clone() });

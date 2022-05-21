@@ -42,6 +42,7 @@
     "@swc/helpers": "^0.3.13",
     "nanoid": "^3.3.4",
     "path-to-regexp": "6.2.1",
+    "superjson": "^1.9.1",
     "superstruct": "^0.15.4",
     "svelte-kit-cookie-session": "^2.1.4",
     "tiny-invariant": "^1.2.0",
@@ -49,7 +50,7 @@
     "type-fest": "^2.12.2"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.334",
+    "@sveltejs/kit": "1.0.0-next.336",
     "svelte": "^3.48.0"
   },
   "peerDependencies": {

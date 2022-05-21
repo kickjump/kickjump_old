@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { mdsvex } from 'mdsvex';
 import path from 'node:path';
 import precompileIntl from 'svelte-intl-precompile/sveltekit-plugin';
@@ -17,17 +17,13 @@ const config = {
 
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
-  preprocess: [
-    preprocess({
-      postcss: true,
-    }),
-    mdsvex(mdsvexConfig),
-  ],
+  preprocess: [preprocess({ postcss: true }), mdsvex(mdsvexConfig)],
 
   kit: {
     // routes: (filepath) => !/(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external)/.test(filepath),
     adapter: adapter(),
     vite: {
+      mode: process.env.VITE_MODE ? process.env.MODE : undefined,
       plugins: [
         precompileIntl('locales'), // if your translations are defined in /locales/[lang].json,
       ],

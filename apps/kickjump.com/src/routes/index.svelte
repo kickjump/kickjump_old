@@ -1,20 +1,6 @@
-<script lang="ts">
-  import SvelteSeo from 'svelte-seo';
-  import type { SvelteSeoProps } from 'svelte-seo/types/SvelteSeo';
-
+<script lang="ts" context="module">
   import { Button } from '$components';
-  const DEFAULT_SEO: SvelteSeoProps = {
-    title: 'KickJump',
-    description: 'Your toolkit for financially sustainable open source development.',
-    twitter: {
-      site: '@kickjumpco',
-      title: 'KickJump',
-      description: 'Your toolkit for financially sustainable open source development.',
-    },
-  };
 </script>
-
-<SvelteSeo {...DEFAULT_SEO} />
 
 <div class="hero hero-height">
   <div class="hero-content text-center">

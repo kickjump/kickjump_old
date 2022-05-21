@@ -24,7 +24,7 @@ export const env = {
   CF_PAGES: process.env.CF_PAGES === '1' ? true : false,
   CF_PAGES_URL: process.env.CF_PAGES_URL,
   CF_PAGES_BRANCH: process.env.CF_PAGES_BRANCH,
-  VITE_WEB3_AUTH_CLIENT_ID: import.meta.env.VITE_WEB3_AUTH_CLIENT_ID,
+  PUBLIC_WEB3_AUTH_CLIENT_ID: process.env.VITE_WEB3_AUTH_CLIENT_ID,
   WEB3_AUTH_CLIENT_SECRET: process.env.WEB3_AUTH_CLIENT_SECRET,
 };
 

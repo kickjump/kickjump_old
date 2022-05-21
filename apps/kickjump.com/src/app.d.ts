@@ -4,6 +4,17 @@
 // See https://kit.svelte.dev/docs/types#the-app-namespace
 // for information about these interfaces
 declare namespace App {
+  interface Stuff {
+    title?: string;
+    noindex?: boolean;
+    nofollow?: boolean;
+    description?: string;
+    keywords?: string;
+    canonical?: string;
+    openGraph?: import('svelte-seo/types/SvelteSeo').OpenGraph;
+    twitter?: import('svelte-seo/types/SvelteSeo').Twitter;
+  }
+
   interface Locals {
     /**
      * True for responses with 4xx and 5xx status codes.
@@ -16,6 +27,9 @@ declare namespace App {
     context: ExecutionContext;
   }
   interface Session {
+    env: {
+      PUBLIC_WEB3_AUTH_CLIENT_ID: string;
+    };
     user: {
       /**
        * The user id.
@@ -63,9 +77,12 @@ declare namespace App {
      * whether the device is mobile or desktop.
      */
     userAgent: string;
-  }
 
-  interface Stuff {}
+    /**
+     * The absolute url of the request.
+     */
+    absoluteUrl: string;
+  }
 }
 
 namespace NodeJS {

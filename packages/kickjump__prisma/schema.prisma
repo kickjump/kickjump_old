@@ -132,17 +132,37 @@ model Password {
 
 model Project {
   /// The project id.
-  id          String   @id @default(cuid())
+  id          String       @id @default(cuid())
   /// The project title.
   title       String
   /// The project description as a markdown compatible string.
   description String
   /// When the database record was first created.
-  createdAt   DateTime @default(now()) @map("created_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
   /// When the database record was last updated.
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
   /// The owner of this project.
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   /// The id of the user that owns this project.
-  userId      String   @map("user_id")
+  userId      String       @map("user_id")
+  /// The list of github repos that are associated with this project.
+  githubRepos GitHubRepo[]
+}
+
+/// Link to a GitHub project.
+model GitHubRepo {
+  /// The github repo id.
+  id    String @id @default(cuid())
+  /// The github repo owner.
+  owner String
+  /// The github repo name.
+  name  String
+
+  /// The project this repo is linked to. A repo can only be linked to one
+  /// project. This means that once a repo is added to a project it can't be
+  /// added to another one.
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
+
+  @@unique([owner, name])
 }

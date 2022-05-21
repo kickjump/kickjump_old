@@ -40,7 +40,8 @@
   },
   "monots": {
     "entrypoints": [
-      "index.ts"
+      "index.ts",
+      "seed.ts"
     ],
     "tsconfigs": {
       "src": {

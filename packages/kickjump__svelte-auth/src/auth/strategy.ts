@@ -1,4 +1,4 @@
-import { type StrategyAuthenticateProps, type StrategyRequestEvent } from './auth-types.js';
+import type { StrategyAuthenticateProps, StrategyRequestEvent } from './auth-types.js';
 
 /**
  * A function which will be called to find the user using the information the

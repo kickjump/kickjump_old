@@ -1,9 +1,9 @@
 import invariant from 'tiny-invariant';
 
 import { browser } from '$app/env';
-import { env } from '$utils/env';
+import { env } from '$server/env';
 
-import { NEXT_URL_KEY } from './constants';
+import { NEXT_URL_KEY } from '../utils/constants';
 
 /**
  * Return `true` when the site is deployed in production.
