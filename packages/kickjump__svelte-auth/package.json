@@ -44,13 +44,13 @@
     "path-to-regexp": "6.2.1",
     "superjson": "^1.9.1",
     "superstruct": "^0.16.0",
-    "svelte-kit-cookie-session": "^2.1.4",
+    "svelte-kit-cookie-session": "^3.0.6",
     "tiny-invariant": "^1.2.0",
     "ts-extras": "^0.10.2",
     "type-fest": "^2.13.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.350",
+    "@sveltejs/kit": "1.0.0-next.367",
     "svelte": "^3.48.0"
   },
   "peerDependencies": {
