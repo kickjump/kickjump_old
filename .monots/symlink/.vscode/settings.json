@@ -69,10 +69,9 @@
   // rust settings
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.checkOnSave.enable": true,
-  "rust-analyzer.cache.warmup": true,
   "rust-analyzer.lens.enable": true,
   "[rust]": {
-    "editor.defaultFormatter": "matklad.rust-analyzer"
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
 
   // editor setup
@@ -119,5 +118,6 @@
     "titleBar.inactiveBackground": "#63359499",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#633594"
+  "peacock.color": "#633594",
+  "rust-analyzer.cachePriming.enable": true
 }

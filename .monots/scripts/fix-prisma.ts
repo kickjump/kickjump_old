@@ -1,4 +1,5 @@
-import { baseDir, exec } from './helpers';
+import { baseDir } from './helpers';
+import { execa } from 'execa';
 import chalk from 'chalk-template';
 import fs from 'node:fs/promises';
 
@@ -14,7 +15,7 @@ datasource db {
 }
 
 generator client {
-  provider      = "prisma rust"
+  provider      = "pnpm generate:rust"
   output        = "../../crates/db/src/prisma.rs"
   binaryTargets = ["native"]
   previewFeatures = ["referentialIntegrity"]
@@ -47,9 +48,13 @@ async function main() {
   try {
     console.log(chalk`{grey Creating rust bindings from prisma file }`);
     await fs.writeFile(TARGET_PRISMA, updatedPrisma);
-    const { stdout, stderr } = await exec(
-      `pnpm --dir ${baseDir('packages/kickjump__prisma')} prisma generate`,
+    const subprocess = execa(
+      'pnpm',
+      ['--dir', baseDir('packages/kickjump__prisma'), 'prisma', 'generate'],
+      { stdio: 'inherit' },
     );
+    subprocess.stdout?.pipe(process.stdout);
+    const { stdout, stderr } = await subprocess;
 
     if (stdout) {
       console.log(stdout);

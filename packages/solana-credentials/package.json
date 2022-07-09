@@ -34,7 +34,7 @@
     "fix:idl": "cp ../../target/types/solana_credentials.ts src/generated.ts && eslint --fix src/generated.ts && prettier --write src/generated.ts"
   },
   "dependencies": {
-    "@swc/helpers": "^0.3.13"
+    "@swc/helpers": "^0.4.0"
   },
   "publishConfig": {
     "access": "public"

@@ -39,18 +39,18 @@
     "dist"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.3.13",
-    "nanoid": "^3.3.4",
+    "@swc/helpers": "^0.4.0",
+    "nanoid": "^4.0.0",
     "path-to-regexp": "6.2.1",
     "superjson": "^1.9.1",
-    "superstruct": "^0.15.4",
+    "superstruct": "^0.16.0",
     "svelte-kit-cookie-session": "^2.1.4",
     "tiny-invariant": "^1.2.0",
     "ts-extras": "^0.10.2",
-    "type-fest": "^2.12.2"
+    "type-fest": "^2.13.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.336",
+    "@sveltejs/kit": "1.0.0-next.350",
     "svelte": "^3.48.0"
   },
   "peerDependencies": {

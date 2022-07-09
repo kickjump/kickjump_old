@@ -2,13 +2,6 @@
   "extends": "./.monots/tsconfig.base.json",
   "include": [],
   "files": [],
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "esModuleInterop": true,
-      "target": "ESNext"
-    }
-  },
   "references": [
     {
       "path": ".monots/scripts"

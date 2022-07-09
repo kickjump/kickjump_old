@@ -1,0 +1,30 @@
+diff --git a/package.json b/package.json
+index 24d29ce427f83e761ed1ed1fe9e8797fa52bd0b3..ea8ddc6aa315c444cf54370e975bbc7aa7ed6108 100644
+--- a/package.json
++++ b/package.json
+@@ -2,14 +2,24 @@
+   "name": "fast-sort",
+   "version": "3.2.0",
+   "description": "Fast easy to use and flexible sorting with TypeScript support",
+-  "main": "dist/sort.min.js",
++  "main": "dist/sort.js",
+   "module": "dist/sort.es.js",
++  "types": "dist/sort.d.ts",
+   "author": "Stefan Novakovic <stefan.novakovich@gmail.com>",
+   "contributors": [
+     "Linus Unnebäck: https://github.com/LinusU",
+     "Luca Ban: https://github.com/mesqueeb",
+     "Tony Gutierrez: https://github.com/tony-gutierrez"
+   ],
++  "type": "module",
++  "exports": {
++    ".": {
++      "types": "./dist/sort.d.ts",
++      "import": "./dist/sort.es.js",
++      "require": "./dist/sort.js"
++    },
++    "./package.json": "./package.json"
++  },
+   "license": "MIT",
+   "homepage": "https://github.com/snovakovic/fast-sort",
+   "scripts": {

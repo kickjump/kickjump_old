@@ -2,8 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "matklad.rust-analyzer",
+    "rust-lang.rust-analyzer",
     "svelte.svelte-vscode"
-    // "nativescript.nativescript"
   ]
 }

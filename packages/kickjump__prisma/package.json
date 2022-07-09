@@ -27,17 +27,17 @@
     "connect": "pscale connect kickjump --port 3309",
     "fix": "pnpm -w scripts fix:prisma",
     "generate": "prisma generate && pnpm fix",
+    "generate:rust": "cargo run --bin prisma_cli --",
     "postbuild": "pnpm generate",
     "prisma": "prisma",
     "push": "prisma db push && pnpm fix",
     "push:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma db push && pnpm fix",
-    "rust": "cargo run --bin prisma_cli --",
     "studio": "prisma studio",
     "studio:local": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump prisma studio"
   },
   "devDependencies": {
-    "@prisma/client": "^3.14.0",
-    "prisma": "^3.14.0"
+    "@prisma/client": "^3.15.1",
+    "prisma": "^3.15.1"
   },
   "publishConfig": {
     "access": "public"

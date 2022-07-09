@@ -1,5 +1,5 @@
 import { type MessageFormatElement, parse } from '@formatjs/icu-messageformat-parser';
-import { TYPE } from '@formatjs/icu-messageformat-parser/types';
+import { TYPE } from '@formatjs/icu-messageformat-parser/types.js';
 import { readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
