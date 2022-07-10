@@ -1,3 +1,4 @@
+import { sveltekit } from '@sveltejs/kit/vite';
 import * as path from 'node:path';
 import precompileIntl from 'svelte-intl-precompile/sveltekit-plugin';
 import { defineConfig } from 'vite';
@@ -9,6 +10,7 @@ export default defineConfig({
     // vitePluginWasm(['@kickjump/scraper']),
     precompileIntl('locales'), // if your translations are defined in /locales/[lang].json,
     topLevelAwait(),
+    sveltekit(),
   ],
   // ...
   define: {},

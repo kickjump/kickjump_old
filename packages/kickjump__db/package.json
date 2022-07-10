@@ -9,23 +9,34 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs.js"
     },
     "./index.js": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs.js"
     },
     "./package.json": "./package.json",
+    "./seed": {
+      "types": "./dist/seed.d.ts",
+      "import": "./dist/seed.esm.js",
+      "require": "./dist/seed.cjs.js"
+    },
+    "./seed.js": {
+      "types": "./dist/seed.d.ts",
+      "import": "./dist/seed.esm.js",
+      "require": "./dist/seed.cjs.js"
+    },
     "./types/*": "./dist/*.d.ts"
   },
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "seed"
   ],
   "dependencies": {
     "@kickjump/prisma": "^0.0.1",
@@ -46,6 +57,8 @@
     "tsconfigs": {
       "src": {
         "compilerOptions": {
+          "types": [],
+          "noEmit": true,
           "module": "NodeNext"
         }
       }

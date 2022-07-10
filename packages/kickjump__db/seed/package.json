@@ -1,0 +1,17 @@
+{
+  "exports": {
+    ".": {
+      "import": "./../dist/seed.esm.js",
+      "require": "./../dist/seed.cjs.js",
+      "types": "./../dist/seed.d.ts"
+    },
+    "./index.js": {
+      "import": "./../dist/seed.esm.js",
+      "require": "./../dist/seed.cjs.js",
+      "types": "./../dist/seed.d.ts"
+    }
+  },
+  "main": "../dist/seed.cjs.js",
+  "module": "../dist/seed.esm.js",
+  "types": "../dist/seed.d.ts"
+}

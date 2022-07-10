@@ -13,6 +13,9 @@
       "path": "packages/kickjump__db/src"
     },
     {
+      "path": "packages/kickjump__edgedb/src"
+    },
+    {
       "path": "packages/kickjump__playwright/src"
     },
     {

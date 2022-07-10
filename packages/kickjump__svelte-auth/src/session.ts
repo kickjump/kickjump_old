@@ -4,7 +4,7 @@ import {
   type SessionOptions,
   cookieSession,
 } from 'svelte-kit-cookie-session';
-import type { PrivateSession } from 'svelte-kit-cookie-session/dist/esm/types';
+import type { PrivateSession } from 'svelte-kit-cookie-session/types';
 import invariant from 'tiny-invariant';
 import type { LiteralUnion } from 'type-fest';
 
@@ -19,10 +19,10 @@ type ServerSessionKeys = LiteralUnion<keyof App.Session, string>;
 const createCookieSession = cookieSession as (
   headersOrCookieString: Headers | string,
   userOptions: SessionOptions,
-) => {
+) => Promise<{
   session: BaseSession & PrivateSession;
   cookies: Record<string, string>;
-};
+}>;
 
 export interface ServerSession {
   /**
@@ -65,7 +65,7 @@ export interface ServerSession {
   /**
    * Delete the session value
    */
-  destroy: () => boolean;
+  destroy: () => Promise<boolean>;
 }
 
 /**
@@ -79,7 +79,7 @@ export function handleSession(
   invariant(secret, 'Must provide a valid secret key');
 
   return async function handle({ event, resolve }) {
-    const { session, cookies } = createCookieSession(event.request.headers, options);
+    const { session, cookies } = await createCookieSession(event.request.headers, options);
     event.locals.session = createSessionMethods(session);
     event.locals.cookies = cookies;
     createCsrf({ locals: event.locals, request: event.request, secret });

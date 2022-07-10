@@ -38,16 +38,16 @@ importers:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.49
       '@tailwindcss/forms': ^0.5.2
       '@tailwindcss/typography': ^0.5.2
-      '@testing-library/dom': ^8.13.0
+      '@testing-library/dom': ^8.14.1
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/user-event': ^14.2.0
       '@types/node': ^18.0.3
       '@types/testing-library__jest-dom': ^5.14.3
-      '@vitest/ui': ^0.17.1
+      '@vitest/ui': ^0.18.0
       autoprefixer: ^10.4.7
       chokidar-cli: ^3.0.0
       cpy-cli: ^4.1.0
-      daisyui: ^2.15.3
+      daisyui: ^2.19.0
       eslint: ^8.17.0
       eslint-config-monots: ^0.11.1
       eslint-plugin-import: ^2.26.0
@@ -72,7 +72,7 @@ importers:
       tsx: ^3.4.2
       typescript: ^4.7.3
       vite-tsconfig-paths: ^3.5.0
-      vitest: ^0.17.1
+      vitest: ^0.18.0
       wasm-pack: ^0.10.3
       wrangler: ^2.0.11
     dependencies:
@@ -87,16 +87,16 @@ importers:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.49_svelte@3.49.0
       '@tailwindcss/forms': 0.5.2_tailwindcss@3.1.5
       '@tailwindcss/typography': 0.5.3_tailwindcss@3.1.5
-      '@testing-library/dom': 8.14.0
+      '@testing-library/dom': 8.14.1
       '@testing-library/jest-dom': 5.16.4
-      '@testing-library/user-event': 14.2.1_ihvo3xlg2d6kwqju3os3zitn3y
+      '@testing-library/user-event': 14.2.1_tqxcvevrce5yj65bmtjesujwlq
       '@types/node': 18.0.3
       '@types/testing-library__jest-dom': 5.14.5
-      '@vitest/ui': 0.17.1
+      '@vitest/ui': 0.18.0
       autoprefixer: 10.4.7_postcss@8.4.14
       chokidar-cli: 3.0.0
       cpy-cli: 4.1.0
-      daisyui: 2.18.1_ugi4xkrfysqkt4c4y6hkyfj344
+      daisyui: 2.19.0_ugi4xkrfysqkt4c4y6hkyfj344
       eslint: 8.19.0
       eslint-config-monots: 0.11.1_ropx6mc6ci3rmezp2hj4qzlfly
       eslint-plugin-import: 2.26.0_eslint@8.19.0
@@ -121,7 +121,7 @@ importers:
       tsx: 3.7.1
       typescript: 4.7.4
       vite-tsconfig-paths: 3.5.0
-      vitest: 0.17.1_iiwak4whzdnttrxrhy2amxfu2i
+      vitest: 0.18.0_lltzz3yjgxmgdrcejvbivztqyy
       wasm-pack: 0.10.3
       wrangler: 2.0.16
 
@@ -209,16 +209,16 @@ importers:
       import-meta-resolve: ^2.0.3
       ismobilejs: ^1.1.1
       mdsvex: ^0.10.6
-      metascraper: ^5.29.8
-      metascraper-author: ^5.29.7
-      metascraper-clearbit: ^5.29.7
-      metascraper-date: ^5.29.7
-      metascraper-description: ^5.29.7
-      metascraper-image: ^5.29.7
-      metascraper-logo: ^5.29.7
-      metascraper-publisher: ^5.29.7
-      metascraper-title: ^5.29.7
-      metascraper-url: ^5.29.7
+      metascraper: ^5.29.15
+      metascraper-author: ^5.29.15
+      metascraper-clearbit: ^5.29.15
+      metascraper-date: ^5.29.15
+      metascraper-description: ^5.29.15
+      metascraper-image: ^5.29.15
+      metascraper-logo: ^5.29.15
+      metascraper-publisher: ^5.29.15
+      metascraper-title: ^5.29.15
+      metascraper-url: ^5.29.15
       nanoevents: ^7.0.1
       octokit: ^2.0.3
       precompile-intl-runtime: ^0.7.0
@@ -239,7 +239,7 @@ importers:
       tslib: ^2.4.0
       tweetnacl: ^1.0.3
       type-fest: ^2.13.1
-      vite: ^2.9.12
+      vite: ^2.9.14
       vite-plugin-top-level-await: ^1.0.0
       vite-plugin-wasm: ^1.0.0
       vite-plugin-wasm-pack: ^0.1.12
@@ -305,16 +305,16 @@ importers:
       import-meta-resolve: 2.0.3
       ismobilejs: 1.1.1
       mdsvex: 0.10.6_svelte@3.49.0
-      metascraper: 5.29.14
-      metascraper-author: 5.29.14
-      metascraper-clearbit: 5.29.14
-      metascraper-date: 5.29.14
-      metascraper-description: 5.29.14
-      metascraper-image: 5.29.14
-      metascraper-logo: 5.29.14
-      metascraper-publisher: 5.29.14
-      metascraper-title: 5.29.14
-      metascraper-url: 5.29.14
+      metascraper: 5.29.15
+      metascraper-author: 5.29.15
+      metascraper-clearbit: 5.29.15
+      metascraper-date: 5.29.15
+      metascraper-description: 5.29.15
+      metascraper-image: 5.29.15
+      metascraper-logo: 5.29.15
+      metascraper-publisher: 5.29.15
+      metascraper-title: 5.29.15
+      metascraper-url: 5.29.15
       nanoevents: 7.0.1
       octokit: 2.0.3
       precompile-intl-runtime: 0.7.0_svelte@3.49.0
@@ -362,6 +362,12 @@ importers:
       bcryptjs: 2.4.3
       tiny-invariant: 1.2.0
       type-fest: 2.16.0
+
+  packages/kickjump__edgedb:
+    specifiers:
+      edgedb: ^0.20.10
+    dependencies:
+      edgedb: 0.20.10
 
   packages/kickjump__playwright:
     specifiers:
@@ -1585,12 +1591,12 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@metascraper/helpers/5.29.14:
-    resolution: {integrity: sha512-eOz+/9dLLoLbbXad+TqTVwVugD0+5U+Q0yZzOnTYqBqQ7LrK1HOcNbjGayJhB1M9qo3juOzKrw5kCgHfTVfWMQ==}
+  /@metascraper/helpers/5.29.15:
+    resolution: {integrity: sha512-7I7X3cHlOnFP5jmbv9/LgATR23tbcp+nYBRzUfnWH6zHt5MfbHIkN+JA45MeflrCBZ+X26RHm8tMVHrYNwUxmA==}
     engines: {node: '>= 12'}
     dependencies:
       audio-extensions: 0.0.0
-      chrono-node: 2.3.8
+      chrono-node: 2.3.9
       condense-whitespace: 2.0.0
       entities: 4.3.1
       file-extension: 4.0.5
@@ -3195,6 +3201,21 @@ packages:
       dom-accessibility-api: 0.5.14
       lz-string: 1.4.4
       pretty-format: 27.5.1
+    dev: true
+
+  /@testing-library/dom/8.14.1:
+    resolution: {integrity: sha512-S+E5jTThFnTga+LrX9Oj29Uz0wyLcu0/fD6i9+BUaoJpYtcW9QZ5rJ9SPq4CkKXGhz3Vz9w8poBkngq6Xg7NLQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@babel/code-frame': 7.18.6
+      '@babel/runtime': 7.18.6
+      '@types/aria-query': 4.2.2
+      aria-query: 5.0.0
+      chalk: 4.1.2
+      dom-accessibility-api: 0.5.14
+      lz-string: 1.4.4
+      pretty-format: 27.5.1
+    dev: false
 
   /@testing-library/jest-dom/5.16.4:
     resolution: {integrity: sha512-Gy+IoFutbMQcky0k+bqqumXZ1cTGswLsFqmNLzNdSKkU9KGV2u9oXhukCbbJ9/LRPKiqwxEE8VpV/+YZlfkPUA==}
@@ -3221,13 +3242,13 @@ packages:
       svelte: 3.49.0
     dev: true
 
-  /@testing-library/user-event/14.2.1_ihvo3xlg2d6kwqju3os3zitn3y:
+  /@testing-library/user-event/14.2.1_tqxcvevrce5yj65bmtjesujwlq:
     resolution: {integrity: sha512-HOr1QiODrq+0j9lKU5i10y9TbhxMBMRMGimNx10asdmau9cb8Xb1Vyg0GvTwyIL2ziQyh2kAloOtAQFBQVuecA==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
     dependencies:
-      '@testing-library/dom': 8.14.0
+      '@testing-library/dom': 8.14.1
     dev: false
 
   /@tootallnate/once/2.0.0:
@@ -3869,8 +3890,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vitest/ui/0.17.1:
-    resolution: {integrity: sha512-B4PGDk5IZ10HT9GzR0NQ96VEphWY9dTf1yqBGNjPk2c7wQnhZJdHzv3tgFQiyFK5YR1cjtOV918QHCnptV4r5w==}
+  /@vitest/ui/0.18.0:
+    resolution: {integrity: sha512-I0qR8GeqQuLTbW5ljO7O4CKfRajxEbRMZU3+ydXgnzc3HXWO7JUIlDe5gNil4Ru7ffoan4YNZ56hpAwVgGKi1A==}
     dependencies:
       sirv: 2.0.2
     dev: false
@@ -4979,8 +5000,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  /chrono-node/2.3.8:
-    resolution: {integrity: sha512-cOCUKFHkGKJ//2VK0Vjwd8qh/tDJNraZHYb4DNB48mRUyfL7ag9lCDXgos30fPmV1pha4sP4qHLYItKNS0YpRw==}
+  /chrono-node/2.3.9:
+    resolution: {integrity: sha512-Qg6zmsGwaWzWiMKapr060sL6zgfBIkTxnyCTd7KGQ0YDTYg0VvBfqRRBuaOkGjiVGdKPM/cp4QQTLcpUhZQxXg==}
     dependencies:
       dayjs: 1.11.3
     dev: true
@@ -5550,8 +5571,8 @@ packages:
       fs-exists-sync: 0.1.0
     dev: false
 
-  /daisyui/2.18.1_ugi4xkrfysqkt4c4y6hkyfj344:
-    resolution: {integrity: sha512-MBmhUxkFefa9WvIWcOg2XYadHpZNakgFDHzfQJ75C4S3Vy0I9m9xZiiZgqhR9dQd1YnFal/E30i4FgpRSVtRSw==}
+  /daisyui/2.19.0_ugi4xkrfysqkt4c4y6hkyfj344:
+    resolution: {integrity: sha512-lLOz4cHm3xpm0AfdFojDFrhiDu4hZTdEbcVJri+KzQn1HvxmZS4STVujn8tV4RQXjchGdnIsXFqxd6F7rVZBiA==}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.1.6
@@ -5967,6 +5988,12 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
     dev: true
+
+  /edgedb/0.20.10:
+    resolution: {integrity: sha512-3Zpw9ZX0gBJ7f2VoAkt0dgXoMbIC89YRygQaRFy7hkAStE/M0MSrcoVwhq1KH2/30cGLPmf6O+/HO1bwQ76mRw==}
+    engines: {node: '>= 10.0.0'}
+    hasBin: true
+    dev: false
 
   /electron-to-chromium/1.4.185:
     resolution: {integrity: sha512-9kV/isoOGpKkBt04yYNaSWIBn3187Q5VZRtoReq8oz5NY/A4XmU6cAoqgQlDp7kKJCZMRjWZ8nsQyxfpFHvfyw==}
@@ -6744,7 +6771,7 @@ packages:
       eslint: ^6.8.0 || ^7.0.0 || ^8.0.0
     dependencies:
       '@babel/runtime': 7.18.6
-      '@testing-library/dom': 8.14.0
+      '@testing-library/dom': 8.14.1
       eslint: 8.19.0
       requireindex: 1.2.0
     dev: false
@@ -9508,11 +9535,11 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  /metascraper-author/5.29.14:
-    resolution: {integrity: sha512-exe1B8wesQIe4kEtx9UZEqWqozpb1K6CnuY1F43Yt790rfMwK8fJ1rOOgZm6Us7imOfBSrETL12Z81YV3l4suw==}
+  /metascraper-author/5.29.15:
+    resolution: {integrity: sha512-+ts7LAk+piqLTjz1mO3x0XNTSkvu1crCVx/nhKvzmkf8hVmESxI8FxfdLX8FrLGhatP0iUM3qox8CbunnJxS2g==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9521,12 +9548,12 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-clearbit/5.29.14:
-    resolution: {integrity: sha512-oFFK4ka94GKahvpqC4EsAY7fx8SpLVvHosEDGMCHiUgddu1TqoAIPzPo5vs+yWCSOzgChMJqC8duuAUAYAwaYA==}
+  /metascraper-clearbit/5.29.15:
+    resolution: {integrity: sha512-E05o9tH3umLQJQgPtcn3IByoDg3jymjaS1jCHptAO4LPWedIzyhCMAxHulFQoiFkb+HNSpjZA7T7YTPkcLgLug==}
     engines: {node: '>= 12'}
     dependencies:
       '@keyvhq/memoize': 1.6.14
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
       async-memoize-one: 1.1.1
       got: 11.8.5
       lodash: 4.17.21
@@ -9539,11 +9566,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-date/5.29.14:
-    resolution: {integrity: sha512-f3tKk6hLTEsI3bnpsDREl9Cr5h3xr2NbV3YBSCyh7qj1oiF4PtpBSGtpekNCDFBfU/8+XXSjw9qRAUAKSAq3Lw==}
+  /metascraper-date/5.29.15:
+    resolution: {integrity: sha512-BhfEoKNRjRU37JKBcnMtQPNgiZMpqMiIn0qBQeYvvmdfl8sV4vkJf24VRQqp/8VWtEsHwuAjKJ9G4FWNf4Gl8A==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9552,11 +9579,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-description/5.29.14:
-    resolution: {integrity: sha512-KoE5nXJwUcvfkq8hU+N+TZri+wFJ/L97fcN7eXH18x+ZSyEKhJocJOsKK2VSRYMV0NniDYIZXzE6cYx/NcaNIQ==}
+  /metascraper-description/5.29.15:
+    resolution: {integrity: sha512-UJ9wds13BP3g7u9xr8+YVMZJtJgHIem7U+KiE+KybtLJsNDWUr3NzkhVWJ0PlX4U+VwKBzFNxhlBTWxEY2fGGw==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9565,11 +9592,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-image/5.29.14:
-    resolution: {integrity: sha512-kjNCiz4oPIvCx/MDCVg+8NdP9AN2mZ+goxMPviVfjb7vJuVlN0nIUMGc9bHqz2B0wEh+sag+o/rpQTFKURtpnQ==}
+  /metascraper-image/5.29.15:
+    resolution: {integrity: sha512-Ng0gS8qNCHFVSQELHTgeB8W3Ygwz+LxoFscjGhil6cg8PMxB7IkZLbDn6jEY+YtiBDcEJHPJ1gzfhTInt2bJrw==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9578,11 +9605,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-logo/5.29.14:
-    resolution: {integrity: sha512-GqCKVp2skhPN0qH5RzXPfS5AoEtzzxEx9gmL+wOCWs7zGyBQiIT/5rocjTbPzwsCqeP//ENLsQDBIBEY0R5Zog==}
+  /metascraper-logo/5.29.15:
+    resolution: {integrity: sha512-z2h71seA7JQ1yIpMGjjW4w7qM8mmorN2/8q+LlX8ImBoNyydxTImnDKKOvlhAFJT9ywSbChaHWxdKif62ORDkg==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
       lodash: 4.17.21
     transitivePeerDependencies:
       - bluebird
@@ -9592,11 +9619,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-publisher/5.29.14:
-    resolution: {integrity: sha512-bhBRevNhB2j90MsLURc75V8H+WqDzz+VK6E5oYS4nm+gMIT4+NqDY3jZ59D6EQVeRN7ELvIm+ObmLtNOwEK9Ow==}
+  /metascraper-publisher/5.29.15:
+    resolution: {integrity: sha512-fxvh8RW4lJ+N539amHnucIFkQGnhEI823Jh9gwrm2aVe7uzESAoTcJDt2wTbOuxusFYKK2G8z0Wx+Z3CjocEbw==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9605,11 +9632,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-title/5.29.14:
-    resolution: {integrity: sha512-tdtGV7r+zvCxM4apqJr9/AdAN3cBDMkPPCvo5nMmKz/sQu9MvnSqOHitVLgKJyY1nyQX3yhaj64QSNEdwPrklw==}
+  /metascraper-title/5.29.15:
+    resolution: {integrity: sha512-k4XovXjH9Pmpihnq2as+jn+1ln9tYBOTW1CVMrThvjK2kCM5aKqxgZokvTx4RyUaUPu/rX3HTsigqsw20gcnzQ==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9618,11 +9645,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper-url/5.29.14:
-    resolution: {integrity: sha512-C84dPGcRNocDYRDQT1YJmYjH33qWH2ouZfPno+a76fTW/Damg40gLwQAAq1dRaZqKLrqxnxOhqSvZBss1QbOFg==}
+  /metascraper-url/5.29.15:
+    resolution: {integrity: sha512-TB+fdRR5NnvyUGfw9vJnO1m7S2d+ZccCoem1bUiMrdmC1JQTQ5RyKv0WOLCQpBHzGVdMipFMlclTQkXXC8s+XQ==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -9631,11 +9658,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /metascraper/5.29.14:
-    resolution: {integrity: sha512-8upjjt3LM4IDc/hmYhvZBLaa2O5A5hbun2RBGtZpndZDcJme+iFn5KL5e6dxDySappNz3N6hLcz5ItebWN+lGQ==}
+  /metascraper/5.29.15:
+    resolution: {integrity: sha512-CyusguXZ+J5q1Sb3zj4bHsWBpJDRMWsGvtooGuM0UxKba6xRXYIZUq0YLrodOU9C4m8YnhbBMvefxgBccomk0Q==}
     engines: {node: '>= 12'}
     dependencies:
-      '@metascraper/helpers': 5.29.14
+      '@metascraper/helpers': 5.29.15
       cheerio: 1.0.0-rc.12
       lodash: 4.17.21
       whoops: 4.1.1
@@ -13515,8 +13542,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.17.1_iiwak4whzdnttrxrhy2amxfu2i:
-    resolution: {integrity: sha512-d6NsFC6FPmZ5XdiSYfW5rwJ/b8060wqe2steNNlVbhO69HWma6CucIm5g7PXlCSkmKvrdEbUsZHPAarlH83VGw==}
+  /vitest/0.18.0_lltzz3yjgxmgdrcejvbivztqyy:
+    resolution: {integrity: sha512-ryAtlh5Gvg3+aLNuOQ8YOHxgQCCu46jx40X5MBL0K0/ejB9i5zsr8fV8LTGXbXex80UMHlzceI9F+ouGaiR+mQ==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -13540,7 +13567,7 @@ packages:
       '@types/chai': 4.3.1
       '@types/chai-subset': 1.3.3
       '@types/node': 18.0.3
-      '@vitest/ui': 0.17.1
+      '@vitest/ui': 0.18.0
       chai: 4.3.6
       debug: 4.3.4
       happy-dom: 6.0.2
