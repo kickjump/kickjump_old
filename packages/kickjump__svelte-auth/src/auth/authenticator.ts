@@ -14,19 +14,17 @@ export class Authenticator {
    */
   readonly #strategies = new Map<string, Strategy<never>>();
   readonly #options: Required<AuthenticatorOptions>;
+  /**
+   * The base url based on the configuration. The URL ends with `/` for use with
+   * `new URL('path/to', baseUrl)`;
+   */
+  readonly baseUrl: string;
 
   /**
    * The options provided at initialization.
    */
   get options(): Required<AuthenticatorOptions> {
     return this.#options;
-  }
-
-  /**
-   * The base url based on the configuration.
-   */
-  get baseUrl(): string {
-    return new URL(this.options.authPath, this.options.origin).href;
   }
 
   /**
@@ -40,6 +38,9 @@ export class Authenticator {
       redirectParam: 'redirect',
       defaultRedirect: '/',
     };
+
+    const url = new URL(this.options.authPath, this.options.origin).href;
+    this.baseUrl = url.endsWith('/') ? url : `${url}/`;
   }
 
   /**

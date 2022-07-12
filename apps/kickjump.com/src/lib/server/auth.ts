@@ -10,7 +10,7 @@ import {
 import { env } from '$server/env';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
-const GITHUB_SCOPE: GitHubScope[] = ['read:user', 'user:follow'];
+const GITHUB_SCOPE: GitHubScope[] = ['read:user', 'user:follow', 'user:email'];
 export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', true) }).use(
   new GitHubStrategy(
     { clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scope: GITHUB_SCOPE },
@@ -19,15 +19,29 @@ export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', tru
       const providerAccountId = profile.id.toString();
       const provider = 'github';
       const { UserModel } = await import('@kickjump/db');
-      let existingUser = await UserModel.getByAccount({ provider, providerAccountId });
+      let existingUser: UserModel.PopulatedUser | undefined = await UserModel.getByAccount({
+        provider,
+        providerAccountId,
+      });
 
       // Since the account already exists return the user
       if (existingUser) {
-        return { user: existingUser, provider, error: false };
+        return getAppUser(existingUser);
       }
 
-      // here you would find or create a user in your database
-      existingUser = await UserModel.getByEmail(profile._json.email);
+      const emails: UserModel.EmailCreateInput[] = profile.emails
+        .filter((email) => email.email && !email.email.endsWith('users.noreply.github.com'))
+        .map(({ email }, index) => ({ email, primary: index === 0, verified: true }))
+        .slice(0, 1);
+
+      for (const email of emails) {
+        // here you would find or create a user in your database
+        existingUser = await UserModel.getByEmail(email.email);
+
+        if (existingUser) {
+          break;
+        }
+      }
 
       const newAccount: UserModel.AccountCreateInput = {
         refreshToken: null,
@@ -38,17 +52,11 @@ export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', tru
         scope: GITHUB_SCOPE,
       };
 
-      const newEmail: UserModel.EmailCreateInput = {
-        email: profile._json.email,
-        primary: true,
-        verified: true,
-      };
-
       // the user doesn't exist; create the user and account;
       if (!existingUser) {
         existingUser = await UserModel.create(
           { name: profile._json.name, image: profile._json.avatar_url },
-          { accounts: [newAccount], emails: [newEmail] },
+          { accounts: [newAccount], emails },
         );
       }
 
@@ -63,9 +71,16 @@ export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', tru
       }
 
       // the user exists; account doesn't; create the account and attach to user
-      return { user: existingUser, provider, error: false };
+      return getAppUser(existingUser);
     },
   ),
 );
+
+function getAppUser(user: UserModel.PopulatedUser): App.User {
+  const { id, image, name, emails } = user;
+  const email = emails.at(0)?.email;
+
+  return { id, image, name, email };
+}
 
 export const { get, post } = createAuthEndpoints(authenticator);

@@ -10,7 +10,7 @@ const USER_DATA = {
 /**
  * Get the populated user from their email address.
  */
-export async function getByEmail(email: string) {
+export async function getByEmail(email: string): Promise<PopulatedUser | undefined> {
   const query = e.select(e.Email, (item) => ({
     user: USER_DATA,
     filter: e.op(item.email, '=', email),
@@ -59,6 +59,8 @@ export async function getByAccount({ provider, providerAccountId }: GetByAccount
   return value.user;
 }
 
+export type PopulatedUser = NonNullable<Awaited<ReturnType<typeof getByAccount>>>;
+
 type OmittedKeys = 'id' | 'createdAt' | 'updatedAt';
 export type EmailCreateInput = EmailType<{
   omit: OmittedKeys | 'user';
@@ -74,7 +76,10 @@ interface NestedCreateOptions {
 /**
  * Create a user with the provided data.
  */
-export async function create(user: UserCreateInput, nested: NestedCreateOptions = {}) {
+export async function create(
+  user: UserCreateInput,
+  nested: NestedCreateOptions = {},
+): Promise<PopulatedUser> {
   const newUser = await run(e.insert(e.User, { name: user.name, image: user.image }));
   const { emails = [], accounts = [] } = nested;
   const emailQuery = linkEmailsQuery(newUser.id, emails);
@@ -102,8 +107,6 @@ function linkAccountsQuery(userId: string, accounts: AccountCreateInput[]) {
       accountType: e.cast(e.str, account.accountType!),
       provider: e.cast(e.str, account.provider!),
       providerAccountId: e.cast(e.str, account.providerAccountId!),
-      createdAt: e.cast(e.datetime, account.createdAt!),
-      updatedAt: e.cast(e.datetime, account.updatedAt!),
       user: e.select(e.User, (u) => ({
         filter: e.op(u.id, '=', e.uuid(userId)),
       })),
@@ -117,8 +120,6 @@ function linkEmailsQuery(userId: string, emails: EmailCreateInput[]) {
       email: e.cast(e.str, email.email!),
       verified: email.verified ? e.datetime_current() : undefined,
       primary: e.cast(e.bool, email.primary!),
-      createdAt: e.cast(e.datetime, email.createdAt!),
-      updatedAt: e.cast(e.datetime, email.updatedAt!),
       user: e.select(e.User, (u) => ({
         filter: e.op(u.id, '=', e.uuid(userId)),
       })),

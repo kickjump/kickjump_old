@@ -4,7 +4,8 @@ import type { PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
 import type { Account, Email, User } from './generated/index.js';
 
 export { default as e } from './generated/index.js';
-export const client = createClient({});
+
+export const client = createClient();
 export function run<Runner extends { run: (cxn: Executor) => any }>(
   runner: Runner,
 ): ReturnType<Runner['run']> {

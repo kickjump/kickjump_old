@@ -193,7 +193,9 @@ export class OAuth2Strategy<
   }
 
   private getCallbackURL(baseUrl: string): string {
-    return new URL(`${CALLBACK_ACTION}/${this.name}`, baseUrl).href;
+    const { href } = new URL(`${CALLBACK_ACTION}/${this.name}`, baseUrl);
+
+    return href;
   }
 
   private getAuthorizationURL(props: GetAuthorizationUrlProps) {
