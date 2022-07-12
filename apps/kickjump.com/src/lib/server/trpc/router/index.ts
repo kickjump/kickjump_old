@@ -10,6 +10,7 @@ export const router = trpc
   .router<trpc.inferAsyncReturnType<typeof createContext>>()
   .transformer(transformer)
   .merge('meta:', metaRouter)
-  .merge('projects:', projectsRouter);
+  .merge('projects:', projectsRouter)
+  .interop();
 
 export type Router = typeof router;

@@ -20,7 +20,7 @@ export function redirect(url: string | URL, init?: number | ResponseInit): Respo
   }
 
   const headers = new Headers(responseInit.headers);
-  headers.set('Location', typeof url === 'string' ? url : url.toString());
+  headers.set('Location', typeof url === 'string' ? url : url.href);
 
   return new Response(null, { ...responseInit, headers });
 }

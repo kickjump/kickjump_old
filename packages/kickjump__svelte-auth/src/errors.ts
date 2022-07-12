@@ -2,13 +2,18 @@ import { objectEntries } from 'ts-extras';
 
 interface ServerErrorProps {
   code: ErrorCode | ErrorCodeKey;
-  message?: string;
+  message?: string | undefined;
   /**
    * Provide a response which will be returned. Typically this is a redirect.
    */
-  response?: Response;
+  response?: Response | undefined;
+  /**
+   * Combined errors.
+   */
+  errors?: unknown[];
 }
-export class ServerError extends Error {
+
+export class ServerError extends AggregateError {
   /**
    * Predicate to check if the error is a `ServerError`.
    */
@@ -29,17 +34,24 @@ export class ServerError extends Error {
         ? value.message
         : 'An unknown error occurred.';
 
-    return new ServerError({ code: 'InternalServerError', message });
+    return new ServerError({ code: 'InternalServerError', message, errors: [value] });
+  }
+
+  /**
+   * Create an authorization error.
+   */
+  static auth(message: string): ServerError {
+    return new ServerError({ code: 'Unauthorized', message });
   }
 
   code: ErrorCodeKey;
   status: number;
-  response?: Response;
+  response?: Response | undefined;
 
   constructor(props: ServerErrorProps) {
-    const { code, message, response } = props;
+    const { code, message, response, errors = [] } = props;
 
-    super(message);
+    super(errors, message);
     this.response = response;
 
     if (typeof code === 'string') {
@@ -48,11 +60,11 @@ export class ServerError extends Error {
       return;
     }
 
-    this.code = objectEntries(ErrorCode).find(([, value]) => value === code)?.[0] as ErrorCodeKey;
+    this.code = CodeToMessage[code];
     this.status = code;
   }
 
-  toJSON() {
+  toJSON(): ServerErrorJson {
     return {
       code: this.code,
       status: this.status,
@@ -70,6 +82,71 @@ export interface ServerErrorJson {
 }
 
 export const ErrorCode = {
+  /**
+   * The request has more than one possible response. The user agent or user
+   * should choose one of them. (There is no standardized way of choosing one of
+   * the responses, but HTML links to the possibilities are recommended so the
+   * user can pick.)
+   */
+  MultipleChoices: 300,
+
+  /**
+   * The URL of the requested resource has been changed permanently. The new URL
+   * is given in the response.
+   */
+  MovedPermanently: 301,
+
+  /**
+   * This response code means that the URI of requested resource has been changed
+   * temporarily. Further changes in the URI might be made in the future.
+   * Therefore, this same URI should be used by the client in future requests.
+   */
+  Found: 302,
+
+  /**
+   * The server sent this response to direct the client to get the requested
+   * resource at another URI with a GET request.
+   */
+  SeeOther: 303,
+
+  /**
+   * This is used for caching purposes. It tells the client that the response has
+   * not been modified, so the client can continue to use the same cached version
+   * of the response.
+   */
+  NotModified: 304,
+
+  /**
+   * Defined in a previous version of the HTTP specification to indicate that a
+   * requested response must be accessed by a proxy. It has been deprecated due to
+   * security concerns regarding in-band configuration of a proxy.
+   */
+  UseProxyDeprecated: 305,
+
+  /**
+   * This response code is no longer used; it is just reserved. It was used in a
+   * previous version of the HTTP/1.1 specification.
+   */
+  Unused: 306,
+
+  /**
+   * The server sends this response to direct the client to get the requested
+   * resource at another URI with same method that was used in the prior request.
+   * This has the same semantics as the 302 Found HTTP response code, with the
+   * exception that the user agent must not change the HTTP method used: if a POST
+   * was used in the first request, a POST must be used in the second request.
+   */
+  TemporaryRedirect: 307,
+
+  /**
+   * This means that the resource is now permanently located at another URI,
+   * specified by the Location: HTTP Response header. This has the same semantics
+   * as the 301 Moved Permanently HTTP response code, with the exception that the
+   * user agent must not change the HTTP method used: if a POST was used in the
+   * first request, a POST must be used in the second request.
+   */
+  PermanentRedirect: 308,
+
   /**
    * The server cannot or will not process the request due to something that is
    * perceived to be a client error (e.g., malformed request syntax, invalid
@@ -340,5 +417,16 @@ export const ErrorCode = {
   NetworkAuthenticationRequired: 511,
 } as const;
 
+export const CodeToMessage = Object.fromEntries(
+  objectEntries(ErrorCode).map((name, code) => [code, name]),
+) as unknown as ReverseMap<typeof ErrorCode>;
+
 export type ErrorCodeKey = keyof typeof ErrorCode;
 export type ErrorCode = typeof ErrorCode[ErrorCodeKey];
+type ReverseMap<Type extends Record<keyof Type, keyof any>> = {
+  [Value in Type[keyof Type]]: {
+    [Key in keyof Type]: Type[Key] extends Value ? Key : never;
+  }[keyof Type];
+};
+
+export const ErrorEnum = { ...ErrorCode, CodeToMessage };

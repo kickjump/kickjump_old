@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/method-signature-style */
 import type { Handle } from '@sveltejs/kit';
+import { parse, stringify } from 'superjson';
 import {
   type Session as CookieSession,
   type SessionOptions,
@@ -6,15 +8,31 @@ import {
 } from 'svelte-kit-cookie-session';
 import type { PrivateSession } from 'svelte-kit-cookie-session/types';
 import invariant from 'tiny-invariant';
-import type { LiteralUnion } from 'type-fest';
 
-import { createCsrf } from './csrf';
+import { createCsrf } from './csrf.js';
 
-type SessionData = Record<string, any> & { expires?: Date; __flash?: string[] };
-type BaseSession = CookieSession<SessionData> & {
-  flash: (key: string, value: unknown) => boolean;
-};
-type ServerSessionKeys = LiteralUnion<keyof App.Session, string>;
+type LiteralString = Record<never, never> & string;
+interface RawSessionData {
+  expires?: Date;
+  /**
+   * @default { __flash: [] }
+   */
+  __raw?: string;
+}
+
+type ExcludeStartsWith<Union, Match extends string> = Union extends `${Match}${infer _Ignore}`
+  ? never
+  : Union;
+
+const DEFAULT_RAW_SESSION_DATA: SessionData = { __flash: [] };
+
+interface SessionData extends Partial<App.Session> {
+  [key: LiteralString]: unknown;
+  __flash?: string[];
+}
+
+type BaseSession = CookieSession<RawSessionData>;
+type ServerSessionKeys = keyof SessionData;
 
 const createCookieSession = cookieSession as (
   headersOrCookieString: Headers | string,
@@ -27,6 +45,8 @@ const createCookieSession = cookieSession as (
 export interface ServerSession {
   /**
    * The raw data contained in this session.
+   *
+   * Use the `get` method instead since that works better with `flash()`.
    */
   readonly data: SessionData;
 
@@ -39,33 +59,43 @@ export interface ServerSession {
   /**
    * Returns the value for the given `name` in this session.
    */
-  get: (name: ServerSessionKeys) => any;
+  get: <Key extends keyof SessionData>(
+    name: ExcludeStartsWith<Key, '__'>,
+  ) => Promise<SessionData[Key]>;
 
   /**
    * Sets a value in the session for the given `name`.
    */
-  set: (name: ServerSessionKeys, value: any) => ServerSession;
+  set<Key extends keyof SessionData>(
+    name: ExcludeStartsWith<Key, '__'>,
+    value: SessionData[Key],
+  ): Promise<void>;
+  setAll(values: Partial<SessionData>): Promise<void>;
 
   /**
    * Sets a value in the session that is only valid until the next `get()`.
    * This can be useful for temporary values, like error messages.
    */
-  flash: (name: ServerSessionKeys, value: any) => ServerSession;
+  flash<Key extends keyof SessionData>(
+    name: ExcludeStartsWith<Key, '__'>,
+    value: SessionData[Key],
+  ): Promise<void>;
 
   /**
    * Removes a value from the session.
    */
-  unset: (name: ServerSessionKeys) => ServerSession;
+  unset(name: ServerSessionKeys): Promise<void>;
+  unset(names: ServerSessionKeys[]): Promise<void>;
 
   /**
    * Refresh the expiry date of the session.
    */
-  refresh: (daysUntilExpiry?: number) => ServerSession;
+  refresh(daysUntilExpiry?: number): Promise<void>;
 
   /**
-   * Delete the session value
+   * Delete the whole session
    */
-  destroy: () => Promise<boolean>;
+  destroy(): Promise<void>;
 }
 
 /**
@@ -82,7 +112,7 @@ export function handleSession(
     const { session, cookies } = await createCookieSession(event.request.headers, options);
     event.locals.session = createSessionMethods(session);
     event.locals.cookies = cookies;
-    createCsrf({ locals: event.locals, request: event.request, secret });
+    await createCsrf({ locals: event.locals, request: event.request, secret });
 
     const response = await passedHandle({ event, resolve });
 
@@ -97,67 +127,93 @@ export function handleSession(
   };
 }
 
+function parseData(raw: string | undefined): SessionData {
+  return raw ? parse(raw) : DEFAULT_RAW_SESSION_DATA;
+}
+
+function stringifyData(data: SessionData): string {
+  return stringify(data);
+}
+
 function createSessionMethods(session: BaseSession): ServerSession {
   const serverSession: ServerSession = {
     get data() {
+      const data = parseData(session.data.__raw);
       // Remove all private data from the session data which is exposed to the client.
       return Object.fromEntries(
-        Object.entries(session.data).filter(([name]) => !name.startsWith('__')),
-      );
+        Object.entries(data).filter(([name]) => !name.startsWith('__')),
+      ) as SessionData;
     },
 
     has(name) {
-      return !!session.data[name];
+      return !!serverSession.data[name];
     },
 
-    get(name) {
-      const { __flash, ...data } = session.data;
+    async get(name) {
+      const { __flash, ...data } = parseData(session.data.__raw);
       const flash = getFlash(__flash);
+      const value = data[name];
 
       if (flash.has(name)) {
-        const value = data[name];
         flash.delete(name);
-        session.data = { [name]: undefined, __flash: [...flash] };
-
-        return value;
+        await serverSession.setAll({ __flash: [...flash] });
       }
 
-      return data[name];
+      return value;
     },
 
-    set(name, value) {
-      const flash = getFlash(session.data.__flash);
-      const data: BaseSession['data'] = { [name]: value };
+    async set(name, value) {
+      await serverSession.setAll({ [name]: value });
+    },
 
-      if (flash.has(name)) {
-        flash.delete(name);
+    async setAll(data) {
+      await session.update((rawData) => {
+        const allData = parseData(rawData.__raw);
+        const flash = getFlash(allData.__flash);
+
+        for (const name of Object.keys(data)) {
+          if (flash.has(name)) {
+            flash.delete(name);
+          }
+        }
+
         data.__flash = [...flash];
+
+        rawData.__raw = stringifyData({ ...allData, ...data });
+        return rawData;
+      });
+    },
+
+    async unset(name) {
+      const names = Array.isArray(name) ? name : [name];
+      const values: Partial<SessionData> = Object.create(null);
+
+      for (const name of names) {
+        values[name] = undefined;
       }
 
-      session.data = data;
-
-      return serverSession;
+      await serverSession.setAll(values);
     },
 
-    unset(name) {
-      return serverSession.set(name, undefined);
+    async flash(name, value) {
+      await session.update((rawData) => {
+        const allData = parseData(rawData.__raw);
+        const flash = getFlash(allData.__flash);
+        flash.add(name);
+        const data = { [name]: value, __flash: [...flash] };
+
+        rawData.__raw = stringifyData({ ...allData, ...data });
+        return rawData;
+      });
     },
 
-    flash(name, value) {
-      const flash = getFlash(session.data.__flash);
-      flash.add(name);
-      session.data = { [name]: value, __flash: [...flash] };
-
-      return serverSession;
+    async refresh(daysUntilExpiry) {
+      await session.refresh(daysUntilExpiry);
     },
 
-    refresh(daysUntilExpiry) {
-      session.refresh(daysUntilExpiry);
-      return serverSession;
-    },
-
-    destroy() {
-      return session.destroy();
+    async destroy() {
+      await session.destroy();
+      await session.set({ __raw: stringifyData(DEFAULT_RAW_SESSION_DATA) });
     },
   };
 

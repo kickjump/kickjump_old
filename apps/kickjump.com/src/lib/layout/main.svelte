@@ -1,7 +1,7 @@
 <script lang="ts">
   import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
-  
-  import { Filters,Footer, Header, PageTransition } from '$components';
+
+  import { Filters, Footer, Header, PageTransition } from '$components';
 
   export let refresh: string;
 </script>

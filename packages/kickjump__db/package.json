@@ -10,39 +10,38 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js"
+      "import": "./dist/index.esm.js"
     },
     "./index.js": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js"
+      "import": "./dist/index.esm.js"
     },
     "./package.json": "./package.json",
     "./seed": {
       "types": "./dist/seed.d.ts",
-      "import": "./dist/seed.esm.js",
-      "require": "./dist/seed.cjs.js"
+      "import": "./dist/seed.esm.js"
     },
     "./seed.js": {
       "types": "./dist/seed.d.ts",
-      "import": "./dist/seed.esm.js",
-      "require": "./dist/seed.cjs.js"
+      "import": "./dist/seed.esm.js"
     },
     "./types/*": "./dist/*.d.ts"
   },
-  "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "seed"
   ],
+  "scripts": {
+    "fix": "edgeql-js --target ts --output-dir src/generated --force-overwrite",
+    "migrate": "edgedb migration create && edgedb migrate && pnpm fix",
+    "seed": "tsx dbschema/seed.ts"
+  },
   "dependencies": {
-    "@kickjump/prisma": "^0.0.1",
-    "@swc/helpers": "^0.4.0",
-    "@types/bcryptjs": "^2.4.2",
-    "bcryptjs": "^2.4.3",
+    "@faker-js/faker": "^7.3.0",
+    "@kickjump/svelte-auth": "^0.0.0",
+    "edgedb": "0.21.0-alpha.3",
     "tiny-invariant": "^1.2.0",
     "type-fest": "^2.13.1"
   },
@@ -58,10 +57,10 @@
       "src": {
         "compilerOptions": {
           "types": [],
-          "noEmit": true,
-          "module": "NodeNext"
+          "noEmit": true
         }
-      }
+      },
+      "dbschema": {}
     },
     "mode": "library",
     "externalModules": []

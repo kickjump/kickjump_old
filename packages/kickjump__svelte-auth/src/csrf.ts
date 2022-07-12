@@ -1,9 +1,9 @@
 import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
 
-import { ServerError } from './errors';
+import { ServerError } from './errors.js';
 
 const CSRF_KEY = 'csrf' as const;
-const PRIVATE_CSRF_KEY = '__csrf' as const;
+const PRIVATE_CSRF_KEY = '_csrf' as const;
 const CSRF_HEADER_KEY = 'x-csrf-token';
 
 interface CreateCsrfProps {
@@ -31,18 +31,18 @@ interface CreateCsrfProps {
 export async function createCsrf(props: CreateCsrfProps): Promise<string> {
   const { locals, secret } = props;
   const request = props.request.clone();
-  const cookieValue = locals.session.get(PRIVATE_CSRF_KEY);
+  const cookieValue = await locals.session.get(PRIVATE_CSRF_KEY);
 
   // By default set the verification to false.
   locals.csrfTokenIsVerified = false;
 
-  if (cookieValue) {
+  if (typeof cookieValue === 'string') {
     const [csrfToken, csrfTokenHash] = cookieValue.split('|');
     const expectedCsrfTokenHash = createHash('sha256')
       .update(`${csrfToken}${secret}`)
       .digest('hex');
 
-    if (csrfTokenHash === expectedCsrfTokenHash) {
+    if (csrfToken && csrfTokenHash === expectedCsrfTokenHash) {
       // The csrf token can only be verified for get requests.
       if (request.method !== 'POST') {
         return csrfToken;
@@ -67,8 +67,8 @@ export async function createCsrf(props: CreateCsrfProps): Promise<string> {
   const csrfTokenHash = createHash('sha256').update(`${csrfToken}${secret}`).digest('hex');
 
   // Add the new token to the session.
-  locals.session.set(CSRF_KEY, csrfToken);
-  locals.session.set(PRIVATE_CSRF_KEY, `${csrfToken}|${csrfTokenHash}`);
+  await locals.session.set(CSRF_KEY, csrfToken);
+  await locals.session.set(PRIVATE_CSRF_KEY, `${csrfToken}|${csrfTokenHash}`);
 
   return csrfToken;
 }
@@ -80,7 +80,7 @@ interface VerifyCsrfProps {
 /**
  * Verify if a request and session has a valid CSRF token. Throws a server error if not the case.
  */
-export async function verifyCsrf(props: VerifyCsrfProps) {
+export function verifyCsrf(props: VerifyCsrfProps) {
   if (!props.locals.csrfTokenIsVerified) {
     throw new ServerError({
       code: 'UnprocessableEntityWebDav',

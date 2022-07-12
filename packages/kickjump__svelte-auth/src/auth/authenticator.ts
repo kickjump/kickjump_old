@@ -13,11 +13,20 @@ export class Authenticator {
    * @private
    */
   readonly #strategies = new Map<string, Strategy<never>>();
-
   readonly #options: Required<AuthenticatorOptions>;
 
+  /**
+   * The options provided at initialization.
+   */
   get options(): Required<AuthenticatorOptions> {
     return this.#options;
+  }
+
+  /**
+   * The base url based on the configuration.
+   */
+  get baseUrl(): string {
+    return new URL(this.options.authPath, this.options.origin).href;
   }
 
   /**
@@ -92,12 +101,15 @@ export class Authenticator {
       action,
       request: event.request.clone(),
       options: this.#options,
+      baseUrl: this.baseUrl,
     });
 
     // Store the user in the session.
-    event.locals.session.set('user', { ...user, strategy });
+    await event.locals.session.set('user', { ...user, strategy });
 
-    return redirect(instance.getRedirectUrl({ ...event, options: this.#options }));
+    return redirect(
+      instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),
+    );
   }
 
   isAuthenticated(event: RequestEvent): boolean {
@@ -107,9 +119,11 @@ export class Authenticator {
   /**
    * Destroy the user session and return a redirect to another URL.
    */
-  logout(event: RequestEvent & { redirectTo: string | URL }): Response {
+  async logout(event: RequestEvent & { redirectTo: string | URL }): Promise<Response> {
     const { session } = event.locals;
-    session.unset('user').unset('authError');
+
+    await session.unset('user');
+    await session.unset('authError');
 
     return redirect(event.redirectTo);
   }

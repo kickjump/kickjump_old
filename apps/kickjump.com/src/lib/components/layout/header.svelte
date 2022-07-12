@@ -55,10 +55,10 @@
     </div>
 
     <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-      <span class="hidden sm:flex flex-row gap-x-1 justify-center items-center" />
       <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
         <Icon icon="menuLine" size="2em" />
       </Button>
+      <Button href="/api/auth/login/github" variant="outline" leftIcon="github">Login</Button>
     </div>
   </navbar>
 </header>

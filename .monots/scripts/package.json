@@ -6,7 +6,6 @@
     "check:pnpm": "node ./check-pnpm.js",
     "delete:changeset:property": "tsx ./delete-changeset-property.ts",
     "fix:audit": "tsx ./fix-audit.ts",
-    "fix:prisma": "tsx ./fix-prisma.ts",
     "patch:packages": "tsx ./patch-packages.ts",
     "setup:anchor": "tsx ./setup-anchor.ts",
     "symlink:root": "node ./symlink-root.js",

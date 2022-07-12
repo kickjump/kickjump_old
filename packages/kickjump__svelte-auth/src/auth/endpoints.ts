@@ -3,22 +3,19 @@ import type { MaybePromise } from '@sveltejs/kit/types/private';
 import { randomBytes } from 'node:crypto';
 import { match } from 'path-to-regexp';
 
-import { ServerError } from '../errors';
-import { json, redirect } from '../utils';
-import type { Authenticator } from './authenticator';
-import { getRedirectFromURL } from './strategy';
-
-export interface AuthEndpoints {
-  get: RequestHandler;
-  post: RequestHandler;
-}
+import { verifyCsrf } from '../csrf.js';
+import { ServerError } from '../errors.js';
+import { json, redirect } from '../utils.js';
+import type { Authenticator } from './authenticator.js';
+import { getRedirectFromURL } from './strategy.js';
 
 /**
  * Create the endpoint handlers for the authenticator.
  */
 export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
   const handler: RequestHandler = async (event) => {
-    let error: ServerError;
+    let serverError: ServerError;
+
     try {
       for (const [path, fn] of Object.entries(AUTH_ENDPOINTS)) {
         const matcher = match<Record<string, string>>(`${auth.options.authPath}${path}`);
@@ -28,20 +25,37 @@ export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
           continue;
         }
 
-        return fn({ ...event, request: event.request.clone(), auth, authParams: matched.params });
+        if (event.request.method === 'POST') {
+          verifyCsrf({ locals: event.locals });
+        }
+
+        const request = event.request.clone();
+        const authParams = matched.params;
+
+        return await fn({ ...event, request, auth, authParams });
       }
-    } catch (error_) {
-      error = ServerError.as(error_);
+    } catch (error) {
+      // This allows throwing a response in oauth callbacks.
+      if (error instanceof Response) {
+        return error;
+      }
+
+      serverError = ServerError.as(error);
+
+      if (serverError.response) {
+        return serverError.response;
+      }
     }
 
-    error ??= new ServerError({
+    serverError ??= new ServerError({
       code: 'NotFound',
       message: `The authentication endpoint: ${event.url.pathname} requested was not found`,
     });
-    event.locals.session.flash('authError', error.toJSON());
+
+    await event.locals.session.flash('authError', serverError.toJSON());
 
     if (event.request.method === 'POST') {
-      return json(error.toJSON());
+      return json(serverError.toJSON());
     }
 
     const redirectTo = getRedirectFromURL({
@@ -57,13 +71,6 @@ export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
     post: handler,
   };
 }
-
-interface EndpointProps extends RequestEvent {
-  auth: Authenticator;
-  authParams: Record<string, string>;
-}
-
-type EndpointHandler = (props: EndpointProps) => MaybePromise<RequestHandlerOutput>;
 
 const ACTION_STRATEGY_PATH = '/:action/:strategy';
 
@@ -95,7 +102,19 @@ const AUTH_ENDPOINTS: Record<string, EndpointHandler> = {
   },
   '/hash': async (props) => {
     const hash = randomBytes(32).toString('base64');
-    props.locals.session.flash('hash', hash);
+    await props.locals.session.flash('hash', hash);
     return json({ hash });
   },
 };
+
+export interface AuthEndpoints {
+  get: RequestHandler;
+  post: RequestHandler;
+}
+
+interface EndpointProps extends RequestEvent {
+  auth: Authenticator;
+  authParams: Record<string, string>;
+}
+
+type EndpointHandler = (props: EndpointProps) => MaybePromise<RequestHandlerOutput>;

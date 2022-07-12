@@ -1,17 +1,22 @@
-import type { Prisma, UserWallet } from '@kickjump/prisma';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { type AccountType, type EmailType, type UserType, client, e, run } from '../edgedb.js';
 
-import { ACCOUNT_FIELDS, NESTED_POPULATED_USER, POPULATED_USER } from '../constants.js';
-import { prisma } from '../prisma.js';
-import type { LinkAccountToUser, PopulatedAccount, PopulatedUser } from '../types.js';
+const USER_DATA = {
+  ...e.User['*'],
+  accounts: { provider: true, providerAccountId: true },
+  emails: { ...e.Email['*'] },
+} as const;
 
 /**
  * Get the populated user from their email address.
  */
-export async function getByEmail(email: string): Promise<PopulatedUser | undefined> {
-  const result = await prisma.email.findUnique({
-    where: { email },
-    include: NESTED_POPULATED_USER,
-  });
+export async function getByEmail(email: string) {
+  const query = e.select(e.Email, (item) => ({
+    user: USER_DATA,
+    filter: e.op(item.email, '=', email),
+  }));
+
+  const result = await query.run(client);
 
   if (!result) {
     return;
@@ -20,111 +25,110 @@ export async function getByEmail(email: string): Promise<PopulatedUser | undefin
   return result.user;
 }
 
-/**
- * Get the user by their wallet public key.
- */
-export async function getByWallet(publicKey: string): Promise<PopulatedUser | undefined> {
-  const result = await prisma.userWallet.findUnique({
-    where: { publicKey },
-    include: NESTED_POPULATED_USER,
-  });
-
-  if (!result) {
-    return;
-  }
-
-  return result.user;
-}
-
-/**
- * Get a user by the `provider` and `providerAccountId`
- */
-export async function getByAccount(
-  provider_providerAccountId: ByAccountProps,
-): Promise<PopulatedUser | undefined> {
-  const result = await prisma.account.findUnique({
-    where: { provider_providerAccountId },
-    include: NESTED_POPULATED_USER,
-  });
-
-  if (!result) {
-    return;
-  }
-
-  return result.user;
-}
-
-/**
- * Create a user with the provided data.
- */
-export async function create(
-  data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>,
-): Promise<PopulatedUser> {
-  return prisma.user.create({ data, include: POPULATED_USER });
-}
-
-/**
- * Get a user by their `id`
- */
-export async function get(id: string): Promise<PopulatedUser | undefined> {
-  const user = await prisma.user.findUnique({ where: { id }, include: POPULATED_USER });
-  return user ?? undefined;
-}
-
-type UpdateProps = { id: string } & Omit<
-  Prisma.XOR<Prisma.UserUpdateInput, Prisma.UserUncheckedUpdateInput>,
-  'id'
->;
-
-/**
- * Update the user.
- */
-export async function update({ id, ...data }: UpdateProps) {
-  return prisma.user.update({ where: { id: '' }, data });
-}
-
-/**
- * Delete the user by their `id`.
- */
-export async function remove(id: string) {
-  return prisma.user.delete({ where: { id } });
-}
-
-/**
- * Link the account
- */
-export async function linkAccount(data: LinkAccountToUser): Promise<PopulatedAccount> {
-  return prisma.account.create({ data, select: ACCOUNT_FIELDS });
-}
-
-interface ByAccountProps {
+interface GetByAccountProps {
   provider: string;
   providerAccountId: string;
 }
 
 /**
- * Remove the account from the user.
+ * Get a user by the `provider` and `providerAccountId`
  */
-export async function unlinkAccount(provider_providerAccountId: ByAccountProps) {
-  await prisma.account.delete({ where: { provider_providerAccountId } });
+export async function getByAccount({ provider, providerAccountId }: GetByAccountProps) {
+  const query = e.select(e.Account, (item) => ({
+    user: USER_DATA,
+    filter: e.op(
+      e.op(item.provider, '=', provider),
+      'and',
+      e.op(item.providerAccountId, '=', providerAccountId),
+    ),
+    // filter: e.op(item.providerAccountId, '=', providerAccountId),
+  }));
+
+  const result = await query.run(client);
+
+  if (!result) {
+    return;
+  }
+
+  const value = Array.isArray(result) ? result.at(0) : result;
+
+  if (!value) {
+    return;
+  }
+
+  return value.user;
 }
 
-interface LinkWalletProps {
-  userId: string;
-  publicKey: string;
+type OmittedKeys = 'id' | 'createdAt' | 'updatedAt';
+export type EmailCreateInput = EmailType<{
+  omit: OmittedKeys | 'user';
+  replace: { verified: boolean };
+}>;
+export type AccountCreateInput = AccountType<{ omit: OmittedKeys | 'user' }>;
+export type UserCreateInput = UserType<{ omit: OmittedKeys | 'accounts' | 'emails' }>;
+interface NestedCreateOptions {
+  emails?: EmailCreateInput[];
+  accounts?: AccountCreateInput[];
 }
 
 /**
- * Link the provided wallet.
+ * Create a user with the provided data.
  */
-export async function linkWallet({ userId, publicKey }: LinkWalletProps): Promise<UserWallet> {
-  return prisma.userWallet.create({ data: { userId, publicKey } });
+export async function create(user: UserCreateInput, nested: NestedCreateOptions = {}) {
+  const newUser = await run(e.insert(e.User, { name: user.name, image: user.image }));
+  const { emails = [], accounts = [] } = nested;
+  const emailQuery = linkEmailsQuery(newUser.id, emails);
+  const accountQuery = linkAccountsQuery(newUser.id, accounts);
+  await Promise.all([run(emailQuery), run(accountQuery)]);
+
+  const populatedUser =
+    (await run(
+      e.select(e.User, (user) => ({
+        ...USER_DATA,
+        filter: e.op(user.id, '=', e.uuid(newUser.id)),
+      })),
+    )) ?? undefined;
+
+  if (!populatedUser) {
+    throw new Error('The user could not created');
+  }
+
+  return populatedUser;
+}
+
+function linkAccountsQuery(userId: string, accounts: AccountCreateInput[]) {
+  return e.for(e.json_array_unpack(e.json(accounts)), (account) => {
+    return e.insert(e.Account, {
+      accountType: e.cast(e.str, account.accountType!),
+      provider: e.cast(e.str, account.provider!),
+      providerAccountId: e.cast(e.str, account.providerAccountId!),
+      createdAt: e.cast(e.datetime, account.createdAt!),
+      updatedAt: e.cast(e.datetime, account.updatedAt!),
+      user: e.select(e.User, (u) => ({
+        filter: e.op(u.id, '=', e.uuid(userId)),
+      })),
+    });
+  });
+}
+
+function linkEmailsQuery(userId: string, emails: EmailCreateInput[]) {
+  return e.for(e.json_array_unpack(e.json(emails)), (email) => {
+    return e.insert(e.Email, {
+      email: e.cast(e.str, email.email!),
+      verified: email.verified ? e.datetime_current() : undefined,
+      primary: e.cast(e.bool, email.primary!),
+      createdAt: e.cast(e.datetime, email.createdAt!),
+      updatedAt: e.cast(e.datetime, email.updatedAt!),
+      user: e.select(e.User, (u) => ({
+        filter: e.op(u.id, '=', e.uuid(userId)),
+      })),
+    });
+  });
 }
 
 /**
- * Unlink the wallet. Check that the wallet belongs to the correct user before
- * using this method.
+ * Link the provided accounts
  */
-export async function unlinkWallet(publicKey: string): Promise<UserWallet> {
-  return prisma.userWallet.delete({ where: { publicKey } });
+export async function linkAccount(userId: string, account: AccountCreateInput) {
+  return run(linkAccountsQuery(userId, [account]));
 }

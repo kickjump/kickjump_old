@@ -1,0 +1,37 @@
+{
+  "extends": "./.monots/tsconfig.base.json",
+  "include": [],
+  "files": [],
+  "references": [
+    {
+      "path": ".monots/scripts"
+    },
+    {
+      "path": "apps/kickjump.com"
+    },
+    {
+      "path": "packages/kickjump__db/dbschema"
+    },
+    {
+      "path": "packages/kickjump__db/src"
+    },
+    {
+      "path": "packages/kickjump__playwright/src"
+    },
+    {
+      "path": "packages/kickjump__svelte-auth/src"
+    },
+    {
+      "path": "packages/kickjump__tokens/src"
+    },
+    {
+      "path": "packages/kickjump/src"
+    },
+    {
+      "path": "packages/solana-credentials/src"
+    },
+    {
+      "path": "tests"
+    }
+  ]
+}

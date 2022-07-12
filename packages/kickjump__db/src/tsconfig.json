@@ -9,7 +9,6 @@
   "compilerOptions": {
     "types": [],
     "noEmit": false,
-    "module": "NodeNext",
     "declaration": true,
     "composite": true,
     "emitDeclarationOnly": true,

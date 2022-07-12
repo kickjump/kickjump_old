@@ -10,7 +10,8 @@ import { NEXT_URL_KEY } from '../utils/constants';
  */
 
 export function isProduction() {
-  return env.NODE_ENV === 'production' && env.CF_PAGES_BRANCH === 'production'; // TODO: verify that this is the right way to do this
+  // TODO(@ifiokjr) verify on fly.io
+  return env.NODE_ENV === 'production' && env.CF_PAGES_BRANCH === 'production';
 }
 /**
  * Consistently determine the API URL for the current client even when in a

@@ -1,42 +1,10 @@
 import { randomBytes } from 'node:crypto';
 
-import type { StrategyAuthenticateProps } from '../auth/auth-types';
-import type { StrategyVerifyCallback } from '../auth/strategy';
-import { Strategy } from '../auth/strategy';
-
-export interface OAuth2Profile {
-  provider: string;
-  id?: string;
-  displayName?: string;
-  name?: {
-    familyName?: string;
-    givenName?: string;
-    middleName?: string;
-  };
-  emails?: Array<{
-    value: string;
-    type?: string;
-  }>;
-  photos?: Array<{ value: string }>;
-}
-
-export interface OAuth2StrategyOptions {
-  authorizationURL: string;
-  tokenURL: string;
-  clientID: string;
-  clientSecret: string;
-  callbackURL: string;
-}
-
-export interface OAuth2StrategyVerifyParams<
-  Profile extends OAuth2Profile,
-  ExtraParams extends Record<string, unknown> = Record<string, never>,
-> {
-  accessToken: string;
-  refreshToken: string;
-  extraParams: ExtraParams;
-  profile: Profile;
-}
+import type { StrategyAuthenticateProps, StrategyRequestEvent } from '../auth/auth-types.js';
+import type { StrategyVerifyCallback } from '../auth/strategy.js';
+import { Strategy } from '../auth/strategy.js';
+import { ServerError } from '../errors.js';
+import { redirect } from '../utils.js';
 
 /**
  * The OAuth 2.0 authentication strategy authenticates requests using the OAuth
@@ -60,20 +28,20 @@ export interface OAuth2StrategyVerifyParams<
  * An AuthorizationError should be raised to indicate an authentication failure.
  *
  * Options:
- * - `authorizationURL`  URL used to obtain an authorization grant
- * - `tokenURL`          URL used to obtain an access token
- * - `clientID`          identifies client to service provider
+ * - `authorizationUrl`  URL used to obtain an authorization grant
+ * - `tokenUrl`          URL used to obtain an access token
+ * - `clientId`          identifies client to service provider
  * - `clientSecret`      secret used to establish ownership of the client identifier
- * - `callbackURL`       URL to which the service provider will redirect the user after obtaining authorization
+ * - `callbackUrl`       URL to which the service provider will redirect the user after obtaining authorization
  *
  * @example
  * authenticator.use(new OAuth2Strategy(
  *   {
- *     authorizationURL: 'https://www.example.com/oauth2/authorize',
- *     tokenURL: 'https://www.example.com/oauth2/token',
- *     clientID: '123-456-789',
+ *     authorizationUrl: 'https://www.example.com/oauth2/authorize',
+ *     tokenUrl: 'https://www.example.com/oauth2/token',
+ *     clientId: '123-456-789',
  *     clientSecret: 'shhh-its-a-secret'
- *     callbackURL: 'https://www.example.net/auth/example/callback'
+ *     callbackUrl: 'https://www.example.net/auth/example/callback'
  *   },
  *   async ({ accessToken, refreshToken, profile }) => {
  *     return await User.findOrCreate(...);
@@ -86,100 +54,91 @@ export class OAuth2Strategy<
 > extends Strategy<OAuth2StrategyVerifyParams<Profile, ExtraParams>> {
   name = 'oauth2';
 
-  protected authorizationURL: string;
-  protected tokenURL: string;
-  protected clientID: string;
+  protected authorizationUrl: string;
+  protected tokenUrl: string;
+  protected clientId: string;
   protected clientSecret: string;
-  protected callbackURL: string;
-
-  private readonly sessionStateKey = 'oauth2:state';
 
   constructor(
     options: OAuth2StrategyOptions,
     verify: StrategyVerifyCallback<OAuth2StrategyVerifyParams<Profile, ExtraParams>>,
   ) {
     super(verify);
-    this.authorizationURL = options.authorizationURL;
-    this.tokenURL = options.tokenURL;
-    this.clientID = options.clientID;
+
+    this.authorizationUrl = options.authorizationUrl;
+    this.tokenUrl = options.tokenUrl;
+    this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
-    this.callbackURL = options.callbackURL;
   }
 
   override async authenticate(event: StrategyAuthenticateProps): Promise<App.User> {
-    const url = new URL(request.url);
-    const session = await sessionStorage.getSession(request.headers.get('Cookie'));
+    const { url, locals, request, action, baseUrl } = event;
+    const { session } = locals;
+    const sessionUser = await session.get('user');
 
-    let user: User | null = session.get(options.sessionKey) ?? null;
-
-    // User is already authenticated
-    if (user) {
-      return this.success(user, request, sessionStorage, options);
+    // User has already authenticated with this strategy.
+    if (sessionUser?.strategy === this.name) {
+      return sessionUser;
     }
 
-    const callbackURL = this.getCallbackURL(url);
-
     // Redirect the user to the callback URL
-    if (url.pathname !== callbackURL.pathname) {
-      const state = this.generateState();
-      session.set(this.sessionStateKey, state);
-      throw redirect(this.getAuthorizationURL(request, state).toString(), {
-        headers: { 'Set-Cookie': await sessionStorage.commitSession(session) },
+    if (action === LOGIN_ACTION) {
+      const state = this.generateState(event);
+      await session.flash(SESSION_STATE_KEY, state);
+      const authUrl = this.getAuthorizationURL({ request, state: state.id, baseUrl });
+
+      const response = redirect(authUrl);
+      // This throws a response which is picked up and returned by the handler.
+      throw new ServerError({
+        code: 302,
+        message: `Redirecting to authorization url ${this.authorizationUrl}.`,
+        response,
       });
     }
 
-    // Validations of the callback URL params
-
-    const stateUrl = url.searchParams.get('state');
-
-    if (!stateUrl) {
-      throw json({ message: 'Missing state on URL.' }, { status: 400 });
+    if (action !== CALLBACK_ACTION) {
+      throw new ServerError({
+        code: 'NotAcceptable',
+        message: `Invalid action '${action}' provided to '${this.name}' strategy`,
+      });
     }
 
-    const stateSession = session.get(this.sessionStateKey);
+    const stateId = url.searchParams.get('state');
 
-    if (!stateSession) {
-      throw json({ message: 'Missing state on session.' }, { status: 400 });
+    if (!stateId) {
+      throw new ServerError({ code: 400, message: `Missing state param on callback url.` });
     }
 
-    if (stateSession === stateUrl) {
-      session.unset(this.sessionStateKey);
-    } else {
-      throw json({ message: "State doesn't match." }, { status: 400 });
+    const state = await session.get(SESSION_STATE_KEY);
+
+    if (!state) {
+      throw new ServerError({ code: 400, message: `Missing state in session.` });
+    }
+
+    if (state.id !== stateId) {
+      throw new ServerError({
+        code: 400,
+        message: `State in session doesn't match state in callback url`,
+      });
     }
 
     const code = url.searchParams.get('code');
 
     if (!code) {
-      throw json({ message: 'Missing code.' }, { status: 400 });
+      throw new ServerError({ code: 400, message: `Missing code in callback url` });
     }
 
     // Get the access token
 
     const params = new URLSearchParams(this.tokenParams());
     params.set('grant_type', 'authorization_code');
-    params.set('redirect_uri', callbackURL.toString());
+    params.set('redirect_uri', this.getCallbackURL(baseUrl).toString());
 
     const { accessToken, refreshToken, extraParams } = await this.fetchAccessToken(code, params);
-
-    // Get the profile
-
     const profile = await this.userProfile(accessToken, extraParams);
+    const user = await this.verify({ accessToken, refreshToken, extraParams, profile });
 
-    // Verify the user and return it, or redirect
-    try {
-      user = await this.verify({
-        accessToken,
-        refreshToken,
-        extraParams,
-        profile,
-      });
-    } catch (error) {
-      const message = (error as Error).message;
-      return await this.failure(message, request, sessionStorage, options);
-    }
-
-    return await this.success(user, request, sessionStorage, options);
+    return { ...user, strategy: this.name };
   }
 
   /**
@@ -190,12 +149,7 @@ export class OAuth2Strategy<
    * applications (and users of those applications) in the initial registration
    * process by automatically submitting required information.
    */
-  protected async userProfile(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    accessToken: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    params: ExtraParams,
-  ): Promise<Profile> {
+  protected async userProfile(_accessToken: string, _params: ExtraParams): Promise<Profile> {
     return { provider: 'oauth2' } as Profile;
   }
 
@@ -238,33 +192,26 @@ export class OAuth2Strategy<
     } as const;
   }
 
-  private getCallbackURL(url: URL) {
-    if (this.callbackURL.startsWith('http:') || this.callbackURL.startsWith('https:')) {
-      return new URL(this.callbackURL);
-    }
-
-    if (this.callbackURL.startsWith('/')) {
-      return new URL(this.callbackURL, url);
-    }
-
-    return new URL(`${url.protocol}//${this.callbackURL}`);
+  private getCallbackURL(baseUrl: string): string {
+    return new URL(`${CALLBACK_ACTION}/${this.name}`, baseUrl).href;
   }
 
-  private getAuthorizationURL(request: Request, state: string) {
+  private getAuthorizationURL(props: GetAuthorizationUrlProps) {
+    const { request, state, baseUrl } = props;
     const params = new URLSearchParams(this.authorizationParams(new URL(request.url).searchParams));
     params.set('response_type', 'code');
-    params.set('client_id', this.clientID);
-    params.set('redirect_uri', this.getCallbackURL(new URL(request.url)).toString());
+    params.set('client_id', this.clientId);
+    params.set('redirect_uri', this.getCallbackURL(baseUrl));
     params.set('state', state);
 
-    const url = new URL(this.authorizationURL);
+    const url = new URL(this.authorizationUrl);
     url.search = params.toString();
 
     return url;
   }
 
-  private generateState(redirect: string) {
-    return { id: randomBytes(8).toString('base64'), redirect };
+  private generateState(event: StrategyRequestEvent) {
+    return { id: randomBytes(8).toString('hex'), redirect: this.getRedirectUrl(event).href };
   }
 
   /**
@@ -278,7 +225,7 @@ export class OAuth2Strategy<
     refreshToken: string;
     extraParams: ExtraParams;
   }> {
-    params.set('client_id', this.clientID);
+    params.set('client_id', this.clientId);
     params.set('client_secret', this.clientSecret);
 
     if (params.get('grant_type') === 'refresh_token') {
@@ -287,7 +234,7 @@ export class OAuth2Strategy<
       params.set('code', code);
     }
 
-    const response = await fetch(this.tokenURL, {
+    const response = await fetch(this.tokenUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params,
@@ -306,10 +253,64 @@ export class OAuth2Strategy<
   }
 }
 
+export const CALLBACK_ACTION = 'callback';
+export const LOGIN_ACTION = 'login';
+const SESSION_STATE_KEY = '_oath2:state' as const;
+
+export interface OAuth2Profile {
+  provider: string;
+  id?: string | undefined;
+  displayName?: string | undefined;
+  name?: Name | string | undefined;
+  emails: Email[];
+  photos: Photo[];
+}
+
+interface Name {
+  firstName?: string | undefined;
+  lastName?: string | undefined;
+  middleName?: string | undefined;
+}
+
+export interface Email {
+  email: string;
+  /** Extra meta data on the type of the email. */
+  type?: string | undefined;
+}
+
+interface Photo {
+  url: string;
+  /** Extra meta data on the type of data. */
+  type?: string | undefined;
+}
+
+export interface OAuth2StrategyOptions {
+  authorizationUrl: string;
+  tokenUrl: string;
+  clientId: string;
+  clientSecret: string;
+}
+
+export interface OAuth2StrategyVerifyParams<
+  Profile extends OAuth2Profile,
+  ExtraParams extends Record<string, unknown> = Record<string, never>,
+> {
+  accessToken: string;
+  refreshToken: string;
+  extraParams: ExtraParams;
+  profile: Profile;
+}
+
+interface GetAuthorizationUrlProps {
+  request: Request;
+  state: string;
+  baseUrl: string;
+}
+
 declare global {
   namespace App {
     interface Session {
-      oauth2State?: { id: string; redirect: string };
+      [SESSION_STATE_KEY]?: { id: string; redirect: string };
     }
   }
 }

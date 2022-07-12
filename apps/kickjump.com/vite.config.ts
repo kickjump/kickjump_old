@@ -19,7 +19,6 @@ export default defineConfig({
   optimizeDeps: {
     // include: ['@kickjump/scraper'],
     // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
-    // include: ['@kickjump/prisma', '@kickjump/db > @kickjump/prisma'],
     // include: [
     //   'metascraper',
     //   'metascraper-author',

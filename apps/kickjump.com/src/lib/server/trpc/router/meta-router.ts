@@ -25,16 +25,19 @@ const metascraper = scraper([
   metaUrl(),
 ]);
 
-export const metaRouter = trpc.router().query('data', {
-  input: MetaSchema,
-  resolve: async ({ input }) => {
-    const response = await fetch(input.url);
-    const html = await response.text();
-    const data = await metascraper({ url: input.url, html });
+export const metaRouter = trpc
+  .router()
+  .query('data', {
+    input: MetaSchema,
+    resolve: async ({ input }) => {
+      const response = await fetch(input.url);
+      const html = await response.text();
+      const data = await metascraper({ url: input.url, html });
 
-    return data;
-  },
-});
+      return data;
+    },
+  })
+  .interop();
 
 declare module 'metascraper' {
   interface Metadata {

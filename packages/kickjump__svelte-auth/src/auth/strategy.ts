@@ -32,7 +32,16 @@ export abstract class Strategy<VerifyOptions> {
    */
   abstract name: string;
 
-  constructor(protected verify: StrategyVerifyCallback<VerifyOptions>) {}
+  /**
+   * The callback used to retrieve the user from an authentication strategy.
+   *
+   * Should throw an error if it fails.
+   */
+  protected verify: StrategyVerifyCallback<VerifyOptions>;
+
+  constructor(verify: StrategyVerifyCallback<VerifyOptions>) {
+    this.verify = verify;
+  }
 
   /**
    * The authentication flow of the strategy.

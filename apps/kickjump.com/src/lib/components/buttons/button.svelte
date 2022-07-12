@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
+  import type { IconifyIcon } from '@iconify/types';
   import cx from 'clsx';
 
-  import { type ColoredIconifyIcon, type IconType, Icon } from '$components/icon';
+  import { type IconType, Icon } from '$components/icon';
   import type { Maybe } from '$types';
 
   const BUTTON_THEME = {
@@ -75,11 +76,8 @@
   export let disableAnimation = false;
   export let loading = false;
   export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
-  export let leftIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
-  export let rightIcon: Maybe<IconType | ColoredIconifyIcon> = undefined;
-  // let _transition: Maybe<TransitionWithOptions> = undefined;
-  // let _in: Maybe<TransitionWithOptions> = undefined;
-  // let _out: Maybe<TransitionWithOptions> = undefined;
+  export let leftIcon: Maybe<IconType | IconifyIcon> = undefined;
+  export let rightIcon: Maybe<IconType | IconifyIcon> = undefined;
   let className: Maybe<string> = undefined;
 
   let element: HTMLButtonElement | HTMLAnchorElement;
@@ -108,8 +106,6 @@
     className,
   );
   $: iconClass = ICON_TEXT_SIZE[size];
-  // $: [transitionIn, transitionInConfig] = getTransitionConfig(_in ?? _transition);
-  // $: [transitionOut, transitionOutConfig] = getTransitionConfig(_out ?? _transition);
 
   export {
     // _transition as transition, _in as in, _out as out,
@@ -117,15 +113,6 @@
   };
 </script>
 
-<!-- <svelte:element
-  this={tag}
-  bind:this={element}
-  on:click={onClick}
-  class={wrapperClass}
-  {...props}
-  in:transitionIn={transitionInConfig}
-  out:transitionOut={transitionOutConfig}
-> -->
 <svelte:element this={tag} bind:this={element} on:click={onClick} class={wrapperClass} {...props}>
   {#if leftIcon}
     <Icon icon={leftIcon} class={iconClass} />

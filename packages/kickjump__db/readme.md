@@ -1,3 +1,3 @@
 # @kickjump/db
 
-> Internal database client.
+> edgedb client

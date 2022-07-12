@@ -9,24 +9,14 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
-      "import": "./dist/index.esm.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./client": {
-      "browser": "./dist/client.browser.esm.js",
-      "import": "./dist/client.esm.js",
-      "types": "./dist/client.d.ts"
-    },
-    "./client.js": {
-      "browser": "./dist/client.browser.esm.js",
-      "import": "./dist/client.esm.js",
-      "types": "./dist/client.d.ts"
+      "import": "./dist/index.esm.js"
     },
     "./index.js": {
+      "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
-      "import": "./dist/index.esm.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.esm.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/*.d.ts"
@@ -40,6 +30,7 @@
   ],
   "dependencies": {
     "@swc/helpers": "^0.4.0",
+    "is-what": "^4.1.7",
     "nanoid": "^4.0.0",
     "path-to-regexp": "6.2.1",
     "superjson": "^1.9.1",
@@ -50,7 +41,7 @@
     "type-fest": "^2.13.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.367",
+    "@sveltejs/kit": "1.0.0-next.370",
     "svelte": "^3.48.0"
   },
   "peerDependencies": {

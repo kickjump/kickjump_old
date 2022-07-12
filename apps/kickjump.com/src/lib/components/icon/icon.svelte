@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
+  import '@iconify/types';
+
   import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
-  import type _ from '@iconify/types';
   import type { IconifyIcon } from '@iconify/types';
   import cx from 'clsx';
 
@@ -10,6 +11,7 @@
 </script>
 
 <script lang="ts">
+  // TODO(@ifiokjr) icons are not rendering properly
   export let icon: IconType | IconifyIcon;
   let className: Maybe<string> = undefined;
 

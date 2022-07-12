@@ -1,7 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import type { MaybePromise } from '@sveltejs/kit/types/private';
 
-import type { ServerErrorJson } from '../errors';
+import type { ServerErrorJson } from '../errors.js';
 
 export interface SessionUser extends App.User {
   /**
@@ -102,6 +102,11 @@ export interface StrategyRequestEvent extends RequestEvent {
    * The options that were passed to the strategy.
    */
   options: Required<AuthenticateOptions>;
+
+  /**
+   * The base url based on the configuration.
+   */
+  baseUrl: string;
 }
 
 export interface StrategyAuthenticateProps extends StrategyRequestEvent {
