@@ -1,5 +1,15 @@
 <script lang="ts" context="module">
+  import { useQuery } from '@sveltestack/svelte-query';
+
+  // import { onMount } from 'svelte';
   import { Button } from '$components';
+  import { trpc } from '$lib/trpc';
+</script>
+
+<script lang="ts">
+  const metaResult = useQuery('meta', () => trpc.meta.read.query('https://google.com'));
+
+  $: console.log($metaResult.data);
 </script>
 
 <div class="hero hero-height">

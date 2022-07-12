@@ -1,16 +1,7 @@
-import * as trpc from '@trpc/server';
+import { t } from '../init.js';
+import { github } from './github-router.js';
+import { meta } from './meta-router';
 
-import { transformer } from '../transformer';
-import { metaRouter } from './meta-router';
-import { projectsRouter } from './projects-router';
-
-export const createContext = () => ({});
-
-export const router = trpc
-  .router<trpc.inferAsyncReturnType<typeof createContext>>()
-  .transformer(transformer)
-  .merge('meta:', metaRouter)
-  .merge('projects:', projectsRouter)
-  .interop();
+export const router = t.router({ meta, github });
 
 export type Router = typeof router;

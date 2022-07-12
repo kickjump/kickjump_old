@@ -1,8 +1,14 @@
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
+// eslint-disable-next-line unicorn/prefer-node-protocol
+import { Buffer } from 'buffer';
 import SuperJson from 'superjson';
 
 import * as s from '$lib/structs';
+
+if (!globalThis.Buffer) {
+  globalThis.Buffer = Buffer;
+}
 
 if (!BN.prototype.toBuffer && Buffer) {
   BN.prototype.toBuffer = function toBuffer(endian, length) {

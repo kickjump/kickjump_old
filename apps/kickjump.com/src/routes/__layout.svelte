@@ -2,6 +2,7 @@
   import '../app.css';
 
   import type { Load } from '@sveltejs/kit';
+  import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { addMessages, init } from 'svelte-intl-precompile';
   import SvelteSeo from 'svelte-seo';
 
@@ -27,9 +28,12 @@
   export let key: string;
   export let lang: string | undefined;
   const initialLocale = getLocaleFromNavigator(lang) ?? 'en';
+  const queryClient = new QueryClient();
 
   init({ fallbackLocale: 'en', initialLocale });
 </script>
 
 <SvelteSeo {...$page.stuff} />
-<MainLayout refresh={key}><slot yo="yo" /></MainLayout>
+<QueryClientProvider client={queryClient}>
+  <MainLayout refresh={key}><slot yo="yo" /></MainLayout>
+</QueryClientProvider>

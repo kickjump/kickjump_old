@@ -1,48 +1,33 @@
 import type { Handle } from '@sveltejs/kit';
-import type { AnyRouter } from '@trpc/server';
-import { type FetchHandlerOptions, fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
-type CreateTRPCHandleProps<Router extends AnyRouter> = FetchHandlerOptions<Router> & {
-  /**
-   * The URL prefix of tRPC routes.
-   * Must start with `/` and NOT end with `/`.
-   * Requests starting with this prefix will be intercepted and handled by tRPC,
-   * and will NOT be forwarded to SvelteKit.
-   * @default '/trpc' */
-  endpoint?: string;
+import { TRPC_ENDPOINT } from '$lib/trpc';
 
-  /**
-   * The tRPC router
-   * @see https://trpc.io/docs/router */
-  router: Router;
-};
+import type { Context } from './init.js';
+import { router } from './router/index.js';
 
 /**
  * A function that creates a tRPC handle.
  * @see https://kit.svelte.dev/docs/hooks
  */
-export function createTRPCHandle<Router extends AnyRouter>(
-  props: CreateTRPCHandleProps<Router>,
-): Handle {
-  const { endpoint = '/trpc', router, createContext, responseMeta, batching, onError } = props;
+export function createTRPCHandle(): Handle {
+  const endpoint = TRPC_ENDPOINT;
 
-  if (!endpoint.startsWith('/') || endpoint.endsWith('/')) {
-    throw new Error("The tRPC endpoint must start with '/' and NOT end with '/'");
-  }
+  return async function trpcHandler(props) {
+    const { event, resolve } = props;
+    console.log({ pathname: event.url.pathname });
 
-  return async function ({ event, resolve }) {
-    if (event.url.pathname.startsWith(`${endpoint}/`)) {
-      return fetchRequestHandler({
-        req: event.request,
-        router,
-        endpoint,
-        responseMeta,
-        createContext,
-        onError,
-        batching,
-      });
+    if (!event.url.pathname.startsWith(`${endpoint}/`)) {
+      return await resolve(event);
     }
 
-    return await resolve(event);
+    const { session } = event.locals;
+    const createContext = (): Context => ({ session, user: session.data.user });
+    const req = event.request;
+
+    console.log('fetching the request handler', event.url.href);
+    const response = await fetchRequestHandler({ req, endpoint, router, createContext });
+    console.log('done fetching!');
+    return response;
   };
 }
