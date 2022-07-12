@@ -1,7 +1,7 @@
 <script lang="ts">
   import themeStore, { setTheme } from 'svelte-themes';
 
-  import { page } from '$app/stores';
+  import { page, session } from '$app/stores';
   import { Button } from '$components/buttons';
   import Logo from '$components/logo/logo.svelte';
   import { matchesHref } from '$utils/core';
@@ -25,6 +25,7 @@
     { label: $t('about'), href: '/about' },
   ];
 
+  $: loggedIn = !!$session.user?.id;
   $: isDark =
     $themeStore.theme === 'dark' ||
     ($themeStore.theme === 'system' && $themeStore.resolvedTheme === 'dark');
@@ -58,7 +59,11 @@
       <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
         <Icon icon="menuLine" size="2em" />
       </Button>
-      <Button href="/api/auth/login/github" variant="outline" leftIcon="github">Login</Button>
+      {#if loggedIn}
+        <Button href="/api/auth/logout" variant="outline" leftIcon="github">Logout</Button>
+      {:else}
+        <Button href="/api/auth/login/github" variant="outline" leftIcon="github">Login</Button>
+      {/if}
     </div>
   </navbar>
 </header>
