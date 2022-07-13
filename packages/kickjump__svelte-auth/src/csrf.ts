@@ -31,7 +31,7 @@ interface CreateCsrfProps {
 export async function createCsrf(props: CreateCsrfProps): Promise<string> {
   const { locals, secret } = props;
   const request = props.request.clone();
-  const cookieValue = await locals.session.get(PRIVATE_CSRF_KEY);
+  const cookieValue = locals.session.get(PRIVATE_CSRF_KEY);
 
   // By default set the verification to false.
   locals.csrfTokenIsVerified = false;

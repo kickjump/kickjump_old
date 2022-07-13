@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/method-signature-style */
-import type { Handle } from '@sveltejs/kit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { parse, stringify } from 'superjson';
 import {
   type Session as CookieSession,
@@ -24,11 +24,13 @@ type ExcludeStartsWith<Union, Match extends string> = Union extends `${Match}${i
   ? never
   : Union;
 
-const DEFAULT_RAW_SESSION_DATA: SessionData = { __flash: [] };
+export type PublicSessionData = Pick<SessionData, ExcludeStartsWith<keyof SessionData, '__'>>;
 
-interface SessionData extends Partial<App.Session> {
+const DEFAULT_RAW_SESSION_DATA: SessionData = { __flash: [], csrf: '' } as unknown as SessionData;
+
+interface SessionData extends App.Session {
   [key: LiteralString]: unknown;
-  __flash?: string[];
+  __flash: string[];
 }
 
 type BaseSession = CookieSession<RawSessionData>;
@@ -48,7 +50,7 @@ export interface ServerSession {
    *
    * Use the `get` method instead since that works better with `flash()`.
    */
-  readonly data: SessionData;
+  readonly data: PublicSessionData;
 
   /**
    * Returns `true` if the session has a value for the given `name`, `false`
@@ -59,9 +61,7 @@ export interface ServerSession {
   /**
    * Returns the value for the given `name` in this session.
    */
-  get: <Key extends keyof SessionData>(
-    name: ExcludeStartsWith<Key, '__'>,
-  ) => Promise<SessionData[Key]>;
+  get: <Key extends keyof SessionData>(name: Key) => SessionData[Key];
 
   /**
    * Sets a value in the session for the given `name`.
@@ -100,6 +100,17 @@ export interface ServerSession {
 
 /**
  * Attach the session to the request event.
+ *
+ * This should be used in the `hooks.ts` file.
+ *
+ * ```ts
+ * import { handleSession } from '@kickjump/svelte-auth';
+ *
+ * export const handle = handleSession(
+ *   { secret: env.SESSION_SECRET },
+ *   sequence(createTRPCHandle())
+ * );
+ * ```
  */
 export function handleSession(
   options: SessionOptions,
@@ -110,8 +121,12 @@ export function handleSession(
 
   return async function handle({ event, resolve }) {
     const { session, cookies } = await createCookieSession(event.request.headers, options);
-    event.locals.session = createSessionMethods(session);
-    event.locals.cookies = cookies;
+    Object.defineProperties(event.locals, {
+      session: { writable: false, enumerable: false, value: createSessionMethods(session) },
+      cookies: { get: () => cookies },
+    });
+
+    // Ensure there is a csrf token before anything else runs.
     await createCsrf({ locals: event.locals, request: event.request, secret });
 
     const response = await passedHandle({ event, resolve });
@@ -125,6 +140,29 @@ export function handleSession(
 
     return response;
   };
+}
+/**
+ * Get the session from the scope and simultaneously remove all flash values.
+ *
+ * `flash` values are only last for one server roundtrip and are removed here.
+ *
+ * You should use this in the sveltekit `hooks.ts` files.
+ *
+ * ```ts
+ * import { getSessionData, handleSession } from '@kickjump/svelte-auth';
+ *
+ * export const getSession: GetSession = async (event) => {
+ *   return await getSessionData(event);
+ * }
+ * ```
+ */
+export async function getSessionData(event: RequestEvent): Promise<App.Session> {
+  const { session } = event.locals;
+  const data = { ...session.data };
+  const flash = session.get('__flash');
+  await session.unset(flash);
+
+  return data;
 }
 
 function parseData(raw: string | undefined): SessionData {
@@ -149,15 +187,9 @@ function createSessionMethods(session: BaseSession): ServerSession {
       return !!serverSession.data[name];
     },
 
-    async get(name) {
-      const { __flash, ...data } = parseData(session.data.__raw);
-      const flash = getFlash(__flash);
+    get(name) {
+      const data = parseData(session.data.__raw);
       const value = data[name];
-
-      if (flash.has(name)) {
-        flash.delete(name);
-        await serverSession.setAll({ __flash: [...flash] });
-      }
 
       return value;
     },
@@ -230,7 +262,7 @@ declare global {
       /**
        * The session data and methods as inspired by `@remix/server-runtime`.
        */
-      session: ServerSession;
+      readonly session: ServerSession;
       cookies: Record<string, string>;
     }
   }

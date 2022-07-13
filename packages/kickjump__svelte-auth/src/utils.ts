@@ -1,13 +1,6 @@
 import type { RequestEvent } from '@sveltejs/kit';
 
 /**
- * Get the session.
- */
-export function getSession(event: RequestEvent): App.Session {
-  return event.locals.session.data as App.Session;
-}
-
-/**
  * Return this function in your svelte api to perform a redirect on the server.
  */
 export function redirect(url: string | URL, init?: number | ResponseInit): Response {

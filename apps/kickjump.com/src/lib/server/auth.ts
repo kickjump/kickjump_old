@@ -65,9 +65,7 @@ export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', tru
       if (!account) {
         await UserModel.linkAccount(existingUser.id, newAccount);
       } else if (account.providerAccountId !== providerAccountId) {
-        throw ServerError.auth(
-          'A different GitHub account has already been linked to this account.',
-        );
+        throw ServerError.auth('A different GitHub account has already been linked to this user.');
       }
 
       // the user exists; account doesn't; create the account and attach to user

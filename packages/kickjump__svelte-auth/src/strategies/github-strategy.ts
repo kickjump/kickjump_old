@@ -83,13 +83,13 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
   }
 
   protected override async getAccessToken(response: Response): Promise<GitHubOAuth2Data> {
-    const data = await response.json();
+    const data = await response.text();
     const params = new URLSearchParams(data);
     const accessToken = params.get('access_token');
     const refreshToken = params.get('refresh_token');
     const expiresIn = params.get('expires_in');
     const refreshTokenExpiresIn = params.get('refresh_token_expires_in');
-    const scope = params.get('scope');
+    const scope = params.get('scope') ?? '';
     const tokenType = params.get('token_type');
 
     if (!accessToken) {
@@ -104,10 +104,10 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
       throw new ServerError({ code: 'Unauthorized', message: 'Missing token type.' });
     }
 
-    if (!scope || !expiresIn || !refreshTokenExpiresIn) {
+    if (!expiresIn || !refreshTokenExpiresIn) {
       throw new ServerError({
         code: 'Unauthorized',
-        message: `Missing data: scope: "${scope}", expiresIn: ${expiresIn}, refreshTokenExpiresIn: ${refreshTokenExpiresIn}`,
+        message: `Missing data: expiresIn: ${expiresIn}, refreshTokenExpiresIn: ${refreshTokenExpiresIn}`,
       });
     }
 

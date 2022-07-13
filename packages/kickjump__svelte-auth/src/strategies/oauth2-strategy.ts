@@ -74,7 +74,7 @@ export class OAuth2Strategy<
   override async authenticate(event: StrategyAuthenticateProps): Promise<App.User> {
     const { url, locals, request, action, baseUrl } = event;
     const { session } = locals;
-    const sessionUser = await session.get('user');
+    const sessionUser = session.get('user');
 
     // User has already authenticated with this strategy.
     if (sessionUser?.strategy === this.name) {
@@ -84,7 +84,7 @@ export class OAuth2Strategy<
     // Redirect the user to the callback URL
     if (action === LOGIN_ACTION) {
       const state = this.generateState(event);
-      await session.flash(SESSION_STATE_KEY, state);
+      await session.set(SESSION_STATE_KEY, state);
       const authUrl = this.getAuthorizationURL({ request, state: state.id, baseUrl });
 
       const response = redirect(authUrl);
@@ -103,26 +103,27 @@ export class OAuth2Strategy<
       });
     }
 
-    const stateId = url.searchParams.get('state');
+    const paramState = url.searchParams.get('state');
+    const code = url.searchParams.get('code');
+    const sessionState = session.get(SESSION_STATE_KEY);
 
-    if (!stateId) {
+    if (!paramState) {
       throw new ServerError({ code: 400, message: `Missing state param on callback url.` });
     }
 
-    const state = await session.get(SESSION_STATE_KEY);
-
-    if (!state) {
+    if (!sessionState) {
       throw new ServerError({ code: 400, message: `Missing state in session.` });
     }
 
-    if (state.id !== stateId) {
+    if (sessionState.id !== paramState) {
       throw new ServerError({
         code: 400,
         message: `State in session doesn't match state in callback url`,
       });
     }
 
-    const code = url.searchParams.get('code');
+    // Remove the state from the cookies
+    await session.unset(SESSION_STATE_KEY);
 
     if (!code) {
       throw new ServerError({ code: 400, message: `Missing code in callback url` });
