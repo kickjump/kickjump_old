@@ -19,7 +19,7 @@ const isAuthenticated = t.middleware((props) => {
   if (!ctx.user) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'This trpc procedure requires authentication to access',
+      message: 'This procedure requires authentication to access',
     });
   }
 

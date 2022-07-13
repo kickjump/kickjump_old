@@ -15,7 +15,6 @@ export function createTRPCHandle(): Handle {
 
   return async function trpcHandler(props) {
     const { event, resolve } = props;
-    console.log({ pathname: event.url.pathname });
 
     if (!event.url.pathname.startsWith(`${endpoint}/`)) {
       return await resolve(event);
@@ -25,9 +24,7 @@ export function createTRPCHandle(): Handle {
     const createContext = (): Context => ({ session, user: session.data.user });
     const req = event.request;
 
-    console.log('fetching the request handler', event.url.href);
     const response = await fetchRequestHandler({ req, endpoint, router, createContext });
-    console.log('done fetching!');
     return response;
   };
 }

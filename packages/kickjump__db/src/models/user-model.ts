@@ -1,11 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { type AccountType, type EmailType, type UserType, client, e, run } from '../edgedb.js';
+import { type AccountType, type EmailType, type UserType, e, run } from '../edgedb.js';
 
 const USER_DATA = {
   ...e.User['*'],
   accounts: { provider: true, providerAccountId: true },
   emails: { ...e.Email['*'] },
 } as const;
+
+export async function getAccountsByUserId(id: string, provider: string) {
+  const query = e.select(e.User, (user) => ({
+    accounts: e.select(e.Account, (account) => ({
+      ...e.Account['*'],
+      filter: e.op(account.provider, '=', e.str(provider)),
+    })),
+    filter: e.op(user.id, '=', e.uuid(id)),
+  }));
+
+  const result = await run(query);
+
+  return result?.accounts ?? [];
+}
 
 /**
  * Get the populated user from their email address.
@@ -16,7 +30,7 @@ export async function getByEmail(email: string): Promise<PopulatedUser | undefin
     filter: e.op(item.email, '=', email),
   }));
 
-  const result = await query.run(client);
+  const result = await run(query);
 
   if (!result) {
     return;
@@ -44,7 +58,7 @@ export async function getByAccount({ provider, providerAccountId }: GetByAccount
     // filter: e.op(item.providerAccountId, '=', providerAccountId),
   }));
 
-  const result = await query.run(client);
+  const result = await run(query);
 
   if (!result) {
     return;
@@ -107,6 +121,9 @@ function linkAccountsQuery(userId: string, accounts: AccountCreateInput[]) {
       accountType: e.cast(e.str, account.accountType!),
       provider: e.cast(e.str, account.provider!),
       providerAccountId: e.cast(e.str, account.providerAccountId!),
+      accessToken: account.accessToken ? e.cast(e.str, account.accessToken) : undefined,
+      refreshToken: account.refreshToken ? e.cast(e.str, account.refreshToken) : undefined,
+      scope: account.scope ? e.cast(e.array(e.str), account.scope) : undefined,
       user: e.select(e.User, (u) => ({
         filter: e.op(u.id, '=', e.uuid(userId)),
       })),

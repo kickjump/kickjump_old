@@ -32,7 +32,6 @@ const metascraper = scraper([
 export const meta = t.router({
   read: t.procedure.input(s.string()).query(async (props) => {
     const { input: url } = props;
-    console.log('reading the meta data!!!');
     const response = await fetch(url);
     const html = await response.text();
     const data = await metascraper({ url: url, html });
