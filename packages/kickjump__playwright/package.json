@@ -36,10 +36,9 @@
   ],
   "dependencies": {
     "@playwright-testing-library/test": "^4.2.1",
-    "@playwright/test": "^1.22.2",
-    "@swc/helpers": "^0.4.0",
+    "@playwright/test": "^1.23.2",
     "delay": "^5.0.0",
-    "playwright-core": "^1.22.2",
+    "playwright-core": "^1.23.2",
     "playwright-testing-library": "^4.2.1"
   },
   "publishConfig": {
