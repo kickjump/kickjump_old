@@ -45,8 +45,15 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     const { action, locals } = event;
 
     if (action === GITHUB_INSTALL_ACTION) {
+      if (!this.appName) {
+        throw new ServerError({
+          code: 400,
+          message: 'Please provide an `appName` when using installations.',
+        });
+      }
+
       const state = this.generateState(event);
-      const installationUrl = this.getInstallationUrl(state.id);
+      const installationUrl = getInstallationUrl({ stateId: state.id, appName: this.appName });
       const response = redirect(installationUrl);
 
       await locals.session.set(SESSION_STATE_KEY, state);
@@ -60,13 +67,6 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     }
 
     return super.handleCustomAction(event);
-  }
-
-  private getInstallationUrl(stateId: string): URL {
-    const url = new URL(`https://github.com/apps/${this.appName}/new`);
-    url.searchParams.set('state', stateId);
-
-    return url;
   }
 
   protected async userEmails(accessToken: string): Promise<Email[]> {
@@ -156,6 +156,19 @@ const USER_INFO_URL = 'https://api.github.com/user';
 const USER_EMAILS_URL = 'https://api.github.com/user/emails';
 const USER_EMAIL_SCOPE = 'user:email';
 export const GITHUB_INSTALL_ACTION = 'install';
+
+interface GetInstallationUrlProps {
+  stateId: string;
+  appName: string;
+}
+
+function getInstallationUrl(props: GetInstallationUrlProps): URL {
+  const { stateId, appName } = props;
+  const url = new URL(`https://github.com/apps/${appName}/new`);
+  url.searchParams.set('state', stateId);
+
+  return url;
+}
 
 export interface GitHubExtraParams {
   tokenType: string;
