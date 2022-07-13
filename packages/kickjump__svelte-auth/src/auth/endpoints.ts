@@ -1,5 +1,4 @@
-import type { RequestEvent, RequestHandler, RequestHandlerOutput } from '@sveltejs/kit';
-import type { MaybePromise } from '@sveltejs/kit/types/private';
+import type { Handle, RequestEvent, RequestHandler } from '@sveltejs/kit';
 import { randomBytes } from 'node:crypto';
 import { match } from 'path-to-regexp';
 
@@ -10,15 +9,23 @@ import type { Authenticator } from './authenticator.js';
 import { getRedirectFromURL } from './strategy.js';
 
 /**
- * Create the endpoint handlers for the authenticator.
+ * Create the authentication handle This is attached to the `authenticator` object.
+ *
+ * @internal
  */
-export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
-  const handler: RequestHandler = async (event) => {
+export function createAuthHandle(auth: Authenticator): Handle {
+  return async function authHandle(props) {
+    const { event, resolve } = props;
+
+    if (!event.url.pathname.startsWith(`${auth.options.basePath}/`)) {
+      return await resolve(event);
+    }
+
     let serverError: ServerError;
 
     try {
       for (const [path, fn] of Object.entries(AUTH_ENDPOINTS)) {
-        const matcher = match<Record<string, string>>(`${auth.options.authPath}${path}`);
+        const matcher = match<Record<string, string>>(`${auth.options.basePath}${path}`);
         const matched = matcher(event.url.pathname);
 
         if (!matched) {
@@ -66,10 +73,6 @@ export function createAuthEndpoints(auth: Authenticator): AuthEndpoints {
 
     return redirect(redirectTo);
   };
-  return {
-    get: handler,
-    post: handler,
-  };
 }
 
 const ACTION_STRATEGY_PATH = '/:action/:strategy';
@@ -95,10 +98,9 @@ const AUTH_ENDPOINTS: Record<string, EndpointHandler> = {
       redirectParam: auth.options.redirectParam,
       url: props.url,
     });
+    const response = await auth.logout({ ...event, request: request.clone(), redirectTo });
 
-    const response = auth.logout({ ...event, request: request.clone(), redirectTo });
-
-    return request.method === 'GET' ? response : { body: { logout: true } };
+    return request.method === 'GET' ? response : json({ logout: true });
   },
   '/hash': async (props) => {
     const hash = randomBytes(32).toString('base64');
@@ -117,4 +119,4 @@ interface EndpointProps extends RequestEvent {
   authParams: Record<string, string>;
 }
 
-type EndpointHandler = (props: EndpointProps) => MaybePromise<RequestHandlerOutput>;
+type EndpointHandler = (props: EndpointProps) => Promise<Response>;

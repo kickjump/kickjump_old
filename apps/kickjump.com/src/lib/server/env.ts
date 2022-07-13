@@ -14,6 +14,7 @@ class EnvironmentError extends Error {
 export const env = {
   GITHUB_CLIENT_ID: browser ? '' : process.env.GITHUB_CLIENT_ID ?? ERROR_STRING,
   GITHUB_CLIENT_SECRET: browser ? '' : process.env.GITHUB_CLIENT_SECRET ?? ERROR_STRING,
+  GITHUB_APP_NAME: browser ? '' : process.env.GITHUB_APP_NAME ?? ERROR_STRING,
   GITHUB_APP_ID: browser ? '' : process.env.GITHUB_APP_ID ?? ERROR_STRING,
   GITHUB_APP_PRIVATE_KEY: browser ? '' : process.env.GITHUB_APP_PRIVATE_KEY ?? ERROR_STRING,
   SESSION_SECRET: browser ? '' : process.env.SESSION_SECRET ?? ERROR_STRING,

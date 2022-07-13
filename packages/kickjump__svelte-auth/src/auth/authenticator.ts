@@ -1,8 +1,9 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
 
 import { ServerError } from '../errors.js';
 import { redirect } from '../utils.js';
 import type { AuthenticateProps, AuthenticatorOptions } from './auth-types.js';
+import { createAuthHandle } from './endpoints.js';
 import type { AnyStrategy, Strategy } from './strategy.js';
 
 export type AuthenticateCallback<User> = (user: User) => Promise<Response>;
@@ -21,6 +22,13 @@ export class Authenticator {
   readonly baseUrl: string;
 
   /**
+   * Get the authentication handle which can be applied to the `hooks.ts` file.
+   */
+  get handle(): Handle {
+    return createAuthHandle(this);
+  }
+
+  /**
    * The options provided at initialization.
    */
   get options(): Required<AuthenticatorOptions> {
@@ -32,14 +40,14 @@ export class Authenticator {
    */
   constructor(options: AuthenticatorOptions) {
     this.#options = {
-      authPath: options.authPath ?? '/api/auth',
+      basePath: options.basePath ?? '/auth',
       origin: options.origin,
       redirect: ({ url }) => url,
       redirectParam: 'redirect',
       defaultRedirect: '/',
     };
 
-    const url = new URL(this.options.authPath, this.options.origin).href;
+    const url = new URL(this.options.basePath, this.options.origin).href;
     this.baseUrl = url.endsWith('/') ? url : `${url}/`;
   }
 
@@ -125,8 +133,7 @@ export class Authenticator {
   async logout(event: RequestEvent & { redirectTo: string | URL }): Promise<Response> {
     const { session } = event.locals;
 
-    await session.unset('user');
-    await session.unset('authError');
+    await Promise.all([session.unset('user'), session.unset('authError')]);
 
     return redirect(event.redirectTo);
   }

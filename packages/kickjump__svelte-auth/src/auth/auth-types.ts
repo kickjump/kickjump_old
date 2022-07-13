@@ -79,11 +79,11 @@ export interface AuthenticatorOptions extends AuthenticateOptions {
   origin: string;
 
   /**
-   * The path to the authentication route.
+   * The path to the base authentication route.
    *
-   * @default `/api/auth`
+   * @default `/auth`
    */
-  authPath?: string;
+  basePath?: string;
 }
 
 export interface AuthenticateProps extends RequestEvent {

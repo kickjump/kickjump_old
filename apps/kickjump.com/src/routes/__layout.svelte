@@ -8,10 +8,10 @@
 
   import { page } from '$app/stores';
   import MainLayout from '$layout/main.svelte';
+  import { DEFAULT_SEO } from '$lib/constants';
   import en from '$locales/en.js';
   import enGb from '$locales/en-gb.js';
   import es from '$locales/es.js';
-  import { DEFAULT_SEO } from '$utils/constants';
   import { getLocaleFromNavigator } from '$utils/intl';
 
   addMessages('en', en);

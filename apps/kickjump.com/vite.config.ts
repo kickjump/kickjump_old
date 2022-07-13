@@ -7,32 +7,11 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 export default defineConfig({
   mode: process.env.VITE_MODE ? process.env.MODE : undefined,
   plugins: [
-    // vitePluginWasm(['@kickjump/scraper']),
     precompileIntl('locales'), // if your translations are defined in /locales/[lang].json,
     topLevelAwait(),
     sveltekit(),
   ],
-  // ...
   define: {},
-  /* 'process.env.BROWSER': true, */
-
-  optimizeDeps: {
-    // include: ['@kickjump/scraper'],
-    // include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
-    // include: [
-    //   'metascraper',
-    //   'metascraper-author',
-    //   'metascraper-clearbit',
-    //   'metascraper-date',
-    //   'metascraper-description',
-    //   'metascraper-image',
-    //   'metascraper-logo',
-    //   'metascraper-publisher',
-    //   'metascraper-title',
-    //   'metascraper-url',
-    // ],
-  },
-
   resolve: {
     alias: {
       $components: path.resolve('./src/lib/components'),

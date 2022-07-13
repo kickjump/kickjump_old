@@ -1,8 +1,8 @@
 import { redirect } from '@kickjump/svelte-auth';
 import type { RequestHandler } from '@sveltejs/kit';
 
+import { REDIRECTS } from '$lib/constants';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
-import { REDIRECTS } from '$utils/constants';
 
 export const get: RequestHandler = (event) => {
   const { pathname } = event.url;

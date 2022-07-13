@@ -93,6 +93,7 @@
     "metascraper-title": "^5.29.15",
     "metascraper-url": "^5.29.15",
     "nanoevents": "^7.0.1",
+    "ngrok": "^4.3.1",
     "octokit": "^2.0.3",
     "precompile-intl-runtime": "^0.7.0",
     "sk-auth": "^0.4.1",

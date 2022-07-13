@@ -4,6 +4,7 @@
   import { page, session } from '$app/stores';
   import { Button } from '$components/buttons';
   import Logo from '$components/logo/logo.svelte';
+  import { auth } from '$lib/auth';
   import { matchesHref } from '$utils/core';
   import { t } from '$utils/intl';
 
@@ -25,6 +26,10 @@
     { label: $t('about'), href: '/about' },
   ];
 
+  $: githubAuth = auth.strategyUrl('github', 'login', {
+    redirect: $page.params.redirect ?? $page.url.href,
+  }).pathname;
+  $: logoutUrl = auth.logoutUrl().pathname;
   $: loggedIn = !!$session.user?.id;
   $: isDark =
     $themeStore.theme === 'dark' ||
@@ -60,9 +65,9 @@
         <Icon icon="menuLine" size="2em" />
       </Button>
       {#if loggedIn}
-        <Button href="/api/auth/logout" variant="outline" leftIcon="github">Logout</Button>
+        <Button href={logoutUrl} variant="outline">Logout</Button>
       {:else}
-        <Button href="/api/auth/login/github" variant="outline" leftIcon="github">Login</Button>
+        <Button href={githubAuth} variant="outline" leftIcon="github">Login</Button>
       {/if}
     </div>
   </navbar>

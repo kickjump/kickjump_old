@@ -6,7 +6,7 @@
   export let onFinish: () => void;
 
   const context = StepContext.create({ initialData, stepIds, initialStep, onFinish });
-  $: ({ step, stepIndex } = context);
+  $: ({ step: _step, stepIndex: _stepIndex } = context);
 </script>
 
 <slot {context} />

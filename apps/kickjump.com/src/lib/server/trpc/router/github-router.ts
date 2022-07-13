@@ -1,9 +1,9 @@
-import type * as _ from '@octokit/types';
-import { randomBytes } from 'node:crypto'
 import { e, UserModel } from '@kickjump/db';
 import { App } from '@octokit/app';
 import { createAppAuth, createOAuthUserAuth } from '@octokit/auth-app';
+import type * as _ from '@octokit/types';
 import { TRPCError } from '@trpc/server';
+import { randomBytes } from 'node:crypto';
 import { Octokit } from 'octokit';
 import * as s from 'superstruct';
 

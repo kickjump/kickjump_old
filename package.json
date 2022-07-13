@@ -159,7 +159,8 @@
       "async@<2.6.4": ">=2.6.4"
     },
     "patchedDependencies": {
-      "fast-sort@3.2.0": ".monots/patches/fast-sort@3.2.0.patch"
+      "fast-sort@3.2.0": ".monots/patches/fast-sort@3.2.0.patch",
+      "@sveltejs/kit@1.0.0-next.370": ".monots/patches/@sveltejs__kit@1.0.0-next.370.patch"
     }
   }
 }

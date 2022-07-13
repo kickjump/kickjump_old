@@ -42,7 +42,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
   }
 
   protected override async handleCustomAction(event: StrategyAuthenticateProps): Promise<never> {
-    const { action, locals } = event;
+    const { action, url, session } = event;
 
     if (action === GITHUB_INSTALL_ACTION) {
       if (!this.appName) {
@@ -56,7 +56,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
       const installationUrl = getInstallationUrl({ stateId: state.id, appName: this.appName });
       const response = redirect(installationUrl);
 
-      await locals.session.set(SESSION_STATE_KEY, state);
+      await session.set(SESSION_STATE_KEY, state);
 
       // This throws a response which is picked up and returned by the handler.
       throw new ServerError({
@@ -64,6 +64,12 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
         message: `Redirecting to app installation url ${installationUrl.href}.`,
         response,
       });
+    }
+
+    if (action === GITHUB_SETUP_ACTION) {
+      const state = await this.verifyState(url, session);
+
+      throw redirect(state.redirect);
     }
 
     return super.handleCustomAction(event);
@@ -156,6 +162,7 @@ const USER_INFO_URL = 'https://api.github.com/user';
 const USER_EMAILS_URL = 'https://api.github.com/user/emails';
 const USER_EMAIL_SCOPE = 'user:email';
 export const GITHUB_INSTALL_ACTION = 'install';
+export const GITHUB_SETUP_ACTION = 'setup';
 
 interface GetInstallationUrlProps {
   stateId: string;
@@ -279,4 +286,12 @@ export interface GitHubProfile extends OAuth2Profile {
       collaborators: number;
     };
   };
+}
+
+declare global {
+  namespace kj {
+    interface ClientAuthenticatorUrls {
+      github: ['login', 'install'];
+    }
+  }
 }

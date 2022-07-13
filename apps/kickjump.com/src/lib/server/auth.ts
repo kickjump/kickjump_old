@@ -2,28 +2,28 @@ import type { UserModel } from '@kickjump/db';
 import {
   type GitHubScope,
   Authenticator,
-  createAuthEndpoints,
-  GITHUB_INSTALL_ACTION,
   GitHubStrategy,
-  redirect,
   ServerError,
 } from '@kickjump/svelte-auth';
 
+import { BASE_AUTH } from '$lib/constants.js';
 import { env } from '$server/env';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
 const GITHUB_SCOPE: GitHubScope[] = ['read:user', 'user:follow', 'user:email'];
-export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', true) }).use(
+export const authenticator = new Authenticator({
+  origin: getAbsoluteUrl('/', true),
+  basePath: BASE_AUTH,
+}).use(
   new GitHubStrategy(
-    { clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scope: GITHUB_SCOPE },
+    {
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+      scope: GITHUB_SCOPE,
+      appName: env.GITHUB_APP_NAME,
+    },
     async (props) => {
-      const { profile, accessToken, state } = props;
-
-      if (state.action === GITHUB_INSTALL_ACTION) {
-        // For installations redirect to the provided target in the original
-        // url.
-        throw redirect(state.redirect);
-      }
+      const { profile, accessToken } = props;
 
       const providerAccountId = profile.id.toString();
       const provider = 'github';
@@ -89,5 +89,3 @@ function getAppUser(user: UserModel.PopulatedUser): App.User {
 
   return { id, image, name, email };
 }
-
-export const { get, post } = createAuthEndpoints(authenticator);

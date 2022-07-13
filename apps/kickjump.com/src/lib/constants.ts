@@ -1,22 +1,9 @@
 import type { SvelteSeoProps } from 'svelte-seo/types/SvelteSeo';
 
 /**
- * The session key that holds where to redirect to. This is checked during
- * authentication to determine which page to go to on success.
- *
- * This can be stored in the session or in the url.
+ * The entrypoint for all authentication endpoints.
  */
-export const NEXT_URL_KEY = '_next';
-
-/**
- * The name the session is stored in.
- */
-export const SESSION_NAME = '_session';
-
-/**
- * The key used to store numbers used only one.
- */
-export const SOLANA_HASH_KEY = 'solana-hash';
+export const BASE_AUTH = '/auth';
 
 interface Redirects {
   [from: string]: { to: string; status?: number };

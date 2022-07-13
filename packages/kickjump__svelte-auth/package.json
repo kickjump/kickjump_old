@@ -13,6 +13,16 @@
       "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js"
     },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "browser": "./dist/client.browser.esm.js",
+      "import": "./dist/client.esm.js"
+    },
+    "./client.js": {
+      "types": "./dist/client.d.ts",
+      "browser": "./dist/client.browser.esm.js",
+      "import": "./dist/client.esm.js"
+    },
     "./index.js": {
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
@@ -41,7 +51,7 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "1.0.0-next.370",
-    "svelte": "^3.48.0"
+    "svelte": "^3.49.0"
   },
   "peerDependencies": {
     "@sveltejs/kit": "next",

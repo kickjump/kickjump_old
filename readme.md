@@ -64,13 +64,13 @@ This initializes the project and all requirements. The first time this runs it m
 
 The package manager used is `pnpm` which will be available after running the bootstrap command.
 
-To experiment with the GitHub API you will need to create your own development GitHub application.
+To experiment with the GitHub API you will need to create your own GitHub application. More information to follow.
 
-Set the url of the app to `dev1.kickjump.co.uk` and run the following command to tunnel localhost through the server.
+In order to test the webhooks, etc, your best bet is to set up `cloudflared` which is a super fast and free tunnelling tool. The url and domain name that you should be used in your development github application.
 
-```bash
-ssh -R dev1.kickjump.co.uk:80:localhost:3000 plan@localhost.run
-```
+Here is the [guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/).
+
+The setup is quite tricky but it should work eventually and is very fast and free.
 
 ## License
 

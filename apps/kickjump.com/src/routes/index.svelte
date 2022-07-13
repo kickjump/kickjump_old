@@ -19,7 +19,7 @@
       <h1 class="pb-14 gradient-text">
         <strong>Unlock</strong> financial freedom with open source
       </h1>
-      <Button onClick={() => {}} theme="primary" variant="outline" size="lg" class="border-4"
+      <Button href="/projects" theme="primary" variant="outline" size="lg" class="border-4"
         >Get Started</Button
       >
     </div>

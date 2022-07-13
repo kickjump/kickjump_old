@@ -2,13 +2,16 @@ import { getSessionData, handleSession } from '@kickjump/svelte-auth';
 import type { GetSession } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-// import { sequence } from '@sveltejs/kit/hooks';
+import { authenticator } from '$server/auth';
 import { env } from '$server/env';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 import { createTRPCHandle } from '$server/trpc';
 // import { createContext, createTRPCHandle, router } from '$server/trpc';
 
-export const handle = handleSession({ secret: env.SESSION_SECRET }, sequence(createTRPCHandle()));
+export const handle = handleSession(
+  { secret: env.SESSION_SECRET },
+  sequence(authenticator.handle, createTRPCHandle()),
+);
 
 export const getSession: GetSession = async (event) => {
   const session = await getSessionData(event);

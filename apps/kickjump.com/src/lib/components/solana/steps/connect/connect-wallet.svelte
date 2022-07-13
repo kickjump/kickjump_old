@@ -18,8 +18,7 @@
 
 <script lang="ts">
   let newConnection = false;
-  $: ({ data, previousStep, nextStep, step, jumpToStep, addError, addSuccess } =
-    StepContext.context);
+  $: ({ data, previousStep, step, jumpToStep, addError, addSuccess } = StepContext.context);
   $: selectedWallet = $data.selectedWallet;
   $: connected = $solana.connected;
 

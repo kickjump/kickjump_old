@@ -1,6 +1,5 @@
 export * from './auth/auth-types.js';
 export * from './auth/authenticator.js';
-export * from './auth/endpoints.js';
 export * from './auth/strategy.js';
 export { verifyCsrf } from './csrf.js';
 export * from './errors.js';

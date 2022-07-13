@@ -4,6 +4,7 @@ import type { StrategyAuthenticateProps } from '../auth/auth-types.js';
 import type { StrategyVerifyCallback } from '../auth/strategy.js';
 import { Strategy } from '../auth/strategy.js';
 import { ServerError } from '../errors.js';
+import type { ServerSession } from '../session.js';
 import { redirect } from '../utils.js';
 
 /**
@@ -101,8 +102,29 @@ export class OAuth2Strategy<
       await this.handleCustomAction(event);
     }
 
+    const code = this.verifyCode(url);
+    const state = await this.verifyState(url, session);
+    const params = new URLSearchParams(this.tokenParams());
+
+    params.set('grant_type', 'authorization_code');
+    params.set('redirect_uri', this.getCallbackURL(baseUrl));
+
+    const data = await this.fetchAccessToken(code, params);
+    const profile = await this.userProfile(data);
+    const user = await this.verify({ ...data, profile, state });
+
+    return { ...user, strategy: this.name };
+  }
+
+  /**
+   * Verify that the state provided is identical to the state id stored in the
+   * session. This mitigates CSRF attacks by using a unique and non-guessable
+   * value associated with each authentication request.
+   *
+   * See more here: https://auth0.com/docs/secure/attack-protection/state-parameters
+   */
+  protected async verifyState(url: URL, session: ServerSession) {
     const paramState = url.searchParams.get('state');
-    const code = url.searchParams.get('code');
     const state = session.get(SESSION_STATE_KEY);
 
     if (!paramState) {
@@ -120,24 +142,19 @@ export class OAuth2Strategy<
       });
     }
 
-    // Remove the state from the cookies
     await session.unset(SESSION_STATE_KEY);
+
+    return state;
+  }
+
+  private verifyCode(url: URL) {
+    const code = url.searchParams.get('code');
 
     if (!code) {
       throw new ServerError({ code: 400, message: `Missing code in callback url` });
     }
 
-    // Get the access token
-
-    const params = new URLSearchParams(this.tokenParams());
-    params.set('grant_type', 'authorization_code');
-    params.set('redirect_uri', this.getCallbackURL(baseUrl));
-
-    const data = await this.fetchAccessToken(code, params);
-    const profile = await this.userProfile(data);
-    const user = await this.verify({ ...data, profile, state });
-
-    return { ...user, strategy: this.name };
+    return code;
   }
 
   /**

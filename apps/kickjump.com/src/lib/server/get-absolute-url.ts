@@ -1,9 +1,6 @@
 import invariant from 'tiny-invariant';
 
-import { browser } from '$app/env';
 import { env } from '$server/env';
-
-import { NEXT_URL_KEY } from '../utils/constants';
 
 /**
  * Return `true` when the site is deployed in production.
@@ -52,17 +49,4 @@ export function getAbsoluteUrl(path?: string, forceProtocol = false): string {
   }
 
   return `https://kickjump.com${path}`;
-}
-
-/**
- * Add the desired `nextUrl` to the query string of the provided url.
- */
-export function addNextUrlToQuery(to: string, next: string) {
-  const url = browser ? new URL(to, window.location.href) : new URL(getAbsoluteUrl(to));
-
-  if (next) {
-    url.searchParams.set(NEXT_URL_KEY, encodeURIComponent(next));
-  }
-
-  return `${url.pathname}${url.search}`;
 }
