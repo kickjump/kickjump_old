@@ -1,8 +1,7 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = new URL('.', import.meta.url).pathname;
 const config = defineConfig({
   extensions: ['.svelte.md', '.md', '.svx'],
   smartypants: { dashes: 'oldschool' },

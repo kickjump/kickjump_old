@@ -9,9 +9,17 @@ export type Context = {
   session: ServerSession;
 };
 
-export const t = initTRPC<{ ctx: Context }>()({
-  transformer,
-});
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type Meta = {
+  description?: string;
+};
+
+interface Params {
+  ctx: Context;
+  meta: Meta;
+}
+
+export const t = initTRPC<Params>()({ transformer });
 
 const isAuthenticated = t.middleware((props) => {
   const { next, ctx } = props;

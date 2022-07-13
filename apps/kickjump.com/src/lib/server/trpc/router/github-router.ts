@@ -1,14 +1,26 @@
-import '@octokit/types';
-
+import type * as _ from '@octokit/types';
+import { randomBytes } from 'node:crypto'
 import { e, UserModel } from '@kickjump/db';
 import { App } from '@octokit/app';
 import { createAppAuth, createOAuthUserAuth } from '@octokit/auth-app';
 import { TRPCError } from '@trpc/server';
 import { Octokit } from 'octokit';
-
-import { env } from '$server/env';
+import * as s from 'superstruct';
 
 import { authenticated, t } from '../init.js';
+
+const token = authenticated.use(async (props) => {
+  const { next, ctx } = props;
+
+  const accounts = await UserModel.getAccountsByUserId(ctx.user.id, 'github');
+  const account = accounts.at(0);
+
+  if (!account?.accessToken) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Missing github account accessToken' });
+  }
+
+  return next({ ctx: { ...ctx, account } });
+});
 
 export const github = t.router({
   play: authenticated.query(async ({ ctx }) => {
@@ -37,3 +49,13 @@ export const github = t.router({
     return repos;
   }),
 });
+
+export const INSTALLATION_STATE_KEY = '_gh:installation:state';
+
+declare global {
+  namespace App {
+    interface Session {
+      [STATE_KEY]?: { id: string; redirect: string };
+    }
+  }
+}

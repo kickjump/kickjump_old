@@ -46,4 +46,13 @@ SuperJson.registerCustom<Uint8Array, number[]>(
   'uint8Array',
 );
 
+SuperJson.registerCustom<URL, string>(
+  {
+    isApplicable: (value): value is URL => s.url().is(value),
+    serialize: (value) => value.href,
+    deserialize: (value) => new URL(value),
+  },
+  'url',
+);
+
 export { default as transformer } from 'superjson';

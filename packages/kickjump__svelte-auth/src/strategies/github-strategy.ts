@@ -1,7 +1,9 @@
+import type { StrategyAuthenticateProps } from '../auth/auth-types.js';
 import type { StrategyVerifyCallback } from '../auth/strategy.js';
 import { ServerError } from '../errors.js';
+import { redirect } from '../utils.js';
 import type { Email, OAuth2Data, OAuth2StrategyVerifyParams } from './oauth2-strategy.js';
-import { type OAuth2Profile, OAuth2Strategy } from './oauth2-strategy.js';
+import { type OAuth2Profile, OAuth2Strategy, SESSION_STATE_KEY } from './oauth2-strategy.js';
 
 export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraParams> {
   override name = 'github';
@@ -9,14 +11,13 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
   private readonly scope: GitHubScope[];
   private readonly allowSignup: boolean;
   private readonly userAgent: string;
-  private readonly userInfoURL = 'https://api.github.com/user';
-  private readonly userEmailsURL = 'https://api.github.com/user/emails';
+  private readonly appName: string | undefined;
 
   constructor(
     options: GitHubStrategyOptions,
     verify: StrategyVerifyCallback<GitHubStrategyVerifyParams>,
   ) {
-    const { clientId, clientSecret, scope, allowSignup, userAgent } = options;
+    const { clientId, clientSecret, scope, allowSignup, userAgent, appName } = options;
     super(
       {
         clientId,
@@ -30,6 +31,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     this.scope = scope ?? [USER_EMAIL_SCOPE];
     this.allowSignup = allowSignup ?? true;
     this.userAgent = userAgent ?? 'Remix Auth';
+    this.appName = appName;
   }
 
   protected override authorizationParams() {
@@ -39,8 +41,36 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     });
   }
 
+  protected override async handleCustomAction(event: StrategyAuthenticateProps): Promise<never> {
+    const { action, locals } = event;
+
+    if (action === GITHUB_INSTALL_ACTION) {
+      const state = this.generateState(event);
+      const installationUrl = this.getInstallationUrl(state.id);
+      const response = redirect(installationUrl);
+
+      await locals.session.set(SESSION_STATE_KEY, state);
+
+      // This throws a response which is picked up and returned by the handler.
+      throw new ServerError({
+        code: 302,
+        message: `Redirecting to app installation url ${installationUrl.href}.`,
+        response,
+      });
+    }
+
+    return super.handleCustomAction(event);
+  }
+
+  private getInstallationUrl(stateId: string): URL {
+    const url = new URL(`https://github.com/apps/${this.appName}/new`);
+    url.searchParams.set('state', stateId);
+
+    return url;
+  }
+
   protected async userEmails(accessToken: string): Promise<Email[]> {
-    const response = await fetch(this.userEmailsURL, {
+    const response = await fetch(USER_EMAILS_URL, {
       headers: {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `token ${accessToken}`,
@@ -54,7 +84,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
   }
 
   protected override async userProfile(tokens: GitHubOAuth2Data): Promise<GitHubProfile> {
-    const response = await fetch(this.userInfoURL, {
+    const response = await fetch(USER_INFO_URL, {
       headers: {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `token ${tokens.accessToken}`,
@@ -122,7 +152,10 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
   }
 }
 
+const USER_INFO_URL = 'https://api.github.com/user';
+const USER_EMAILS_URL = 'https://api.github.com/user/emails';
 const USER_EMAIL_SCOPE = 'user:email';
+export const GITHUB_INSTALL_ACTION = 'install';
 
 export interface GitHubExtraParams {
   tokenType: string;
@@ -138,9 +171,13 @@ export interface GitHubStrategyVerifyParams
 export interface GitHubStrategyOptions {
   clientId: string;
   clientSecret: string;
-  scope?: GitHubScope[];
-  allowSignup?: boolean;
-  userAgent?: string;
+  /**
+   * The app name. Provide this to support installations.
+   */
+  appName?: string | undefined;
+  scope?: GitHubScope[] | undefined;
+  allowSignup?: boolean | undefined;
+  userAgent?: string | undefined;
 }
 export type GitHubScope =
   | 'repo'

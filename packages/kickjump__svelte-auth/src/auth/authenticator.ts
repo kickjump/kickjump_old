@@ -87,7 +87,7 @@ export class Authenticator {
    * };
    */
   async authenticate(props: AuthenticateProps): Promise<Response> {
-    const { action, strategy, ...event } = props;
+    const { action, strategy, locals, ...event } = props;
     const instance = this.#strategies.get(strategy);
 
     if (!instance) {
@@ -99,14 +99,16 @@ export class Authenticator {
 
     const user = await instance.authenticate({
       ...event,
+      locals,
       action,
       request: event.request.clone(),
       options: this.#options,
       baseUrl: this.baseUrl,
+      session: locals.session,
     });
 
     // Store the user in the session.
-    await event.locals.session.set('user', { ...user, strategy });
+    await locals.session.set('user', { ...user, strategy });
 
     return redirect(
       instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),

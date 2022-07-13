@@ -13,4 +13,8 @@ export function publicKey(): s.Struct<PublicKey, null> {
   return s.define<PublicKey>('publicKey', (value) => value instanceof PublicKey);
 }
 
+export function url(): s.Struct<URL, null> {
+  return s.define<URL>('url', (value) => value instanceof URL);
+}
+
 export * from 'superstruct';

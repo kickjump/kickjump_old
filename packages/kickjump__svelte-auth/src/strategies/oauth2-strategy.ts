@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 
-import type { StrategyAuthenticateProps, StrategyRequestEvent } from '../auth/auth-types.js';
+import type { StrategyAuthenticateProps } from '../auth/auth-types.js';
 import type { StrategyVerifyCallback } from '../auth/strategy.js';
 import { Strategy } from '../auth/strategy.js';
 import { ServerError } from '../errors.js';
@@ -84,38 +84,36 @@ export class OAuth2Strategy<
     // Redirect the user to the callback URL
     if (action === LOGIN_ACTION) {
       const state = this.generateState(event);
-      await session.set(SESSION_STATE_KEY, state);
       const authUrl = this.getAuthorizationURL({ request, state: state.id, baseUrl });
-
       const response = redirect(authUrl);
+
+      await session.set(SESSION_STATE_KEY, state);
+
       // This throws a response which is picked up and returned by the handler.
       throw new ServerError({
         code: 302,
-        message: `Redirecting to authorization url ${this.authorizationUrl}.`,
+        message: `Redirecting to authorization url ${authUrl.href}.`,
         response,
       });
     }
 
     if (action !== CALLBACK_ACTION) {
-      throw new ServerError({
-        code: 'NotAcceptable',
-        message: `Invalid action '${action}' provided to '${this.name}' strategy`,
-      });
+      await this.handleCustomAction(event);
     }
 
     const paramState = url.searchParams.get('state');
     const code = url.searchParams.get('code');
-    const sessionState = session.get(SESSION_STATE_KEY);
+    const state = session.get(SESSION_STATE_KEY);
 
     if (!paramState) {
       throw new ServerError({ code: 400, message: `Missing state param on callback url.` });
     }
 
-    if (!sessionState) {
+    if (!state) {
       throw new ServerError({ code: 400, message: `Missing state in session.` });
     }
 
-    if (sessionState.id !== paramState) {
+    if (state.id !== paramState) {
       throw new ServerError({
         code: 400,
         message: `State in session doesn't match state in callback url`,
@@ -133,13 +131,26 @@ export class OAuth2Strategy<
 
     const params = new URLSearchParams(this.tokenParams());
     params.set('grant_type', 'authorization_code');
-    params.set('redirect_uri', this.getCallbackURL(baseUrl).toString());
+    params.set('redirect_uri', this.getCallbackURL(baseUrl));
 
     const data = await this.fetchAccessToken(code, params);
     const profile = await this.userProfile(data);
-    const user = await this.verify({ ...data, profile });
+    const user = await this.verify({ ...data, profile, state });
 
     return { ...user, strategy: this.name };
+  }
+
+  /**
+   * Override this method to handle custom actions. The method should always
+   * throw an error.
+   *
+   * Throwing a response will use the response provided.
+   */
+  protected async handleCustomAction(event: StrategyAuthenticateProps): Promise<never> {
+    throw new ServerError({
+      code: 'NotAcceptable',
+      message: `Invalid action '${event.action}' provided to '${this.name}' strategy`,
+    });
   }
 
   /**
@@ -197,20 +208,32 @@ export class OAuth2Strategy<
 
   private getAuthorizationURL(props: GetAuthorizationUrlProps) {
     const { request, state, baseUrl } = props;
-    const params = new URLSearchParams(this.authorizationParams(new URL(request.url).searchParams));
-    params.set('response_type', 'code');
-    params.set('client_id', this.clientId);
-    params.set('redirect_uri', this.getCallbackURL(baseUrl));
-    params.set('state', state);
-
     const url = new URL(this.authorizationUrl);
-    url.search = params.toString();
+
+    url.search = this.authorizationParams(new URL(request.url).searchParams).toString();
+    url.searchParams.set('response_type', 'code');
+    url.searchParams.set('client_id', this.clientId);
+    url.searchParams.set('redirect_uri', this.getCallbackURL(baseUrl));
+    url.searchParams.set('state', state);
 
     return url;
   }
 
-  private generateState(event: StrategyRequestEvent) {
-    return { id: randomBytes(8).toString('hex'), redirect: this.getRedirectUrl(event).href };
+  /**
+   * Generate the oauth state.
+   *
+   * Used to track the action that led to the callback being called.
+   *
+   * This is also used to verify that the installation is valid.
+   */
+  protected generateState(
+    event: Pick<StrategyAuthenticateProps, 'action' | 'url' | 'options' | 'baseUrl'>,
+  ): OAuth2State {
+    const { action, options, url, baseUrl } = event;
+    const id = randomBytes(8).toString('hex');
+    const redirect = this.getRedirectUrl({ options, url, baseUrl }).href;
+
+    return { id, redirect, action };
   }
 
   /**
@@ -248,9 +271,16 @@ export class OAuth2Strategy<
   }
 }
 
+interface OAuth2State {
+  [key: string]: unknown;
+  id: string;
+  redirect: string;
+  action: string;
+}
+
 export const CALLBACK_ACTION = 'callback';
 export const LOGIN_ACTION = 'login';
-const SESSION_STATE_KEY = '_oath2:state' as const;
+export const SESSION_STATE_KEY = 'oauth2:state' as const;
 
 export type OAuth2Data<Extra extends object> = {
   accessToken: string;
@@ -297,6 +327,10 @@ export type OAuth2StrategyVerifyParams<
   accessToken: string;
   refreshToken: string;
   profile: Profile;
+  /**
+   * The state used to trigger the callback.
+   */
+  state: OAuth2State;
 } & ExtraParams;
 
 interface GetAuthorizationUrlProps {
@@ -308,7 +342,7 @@ interface GetAuthorizationUrlProps {
 declare global {
   namespace App {
     interface Session {
-      [SESSION_STATE_KEY]?: { id: string; redirect: string };
+      [SESSION_STATE_KEY]?: OAuth2State;
     }
   }
 }

@@ -2,16 +2,6 @@ import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
 
 import { ServerError } from './errors.js';
 
-const CSRF_KEY = 'csrf' as const;
-const PRIVATE_CSRF_KEY = '_csrf' as const;
-const CSRF_HEADER_KEY = 'x-csrf-token';
-
-interface CreateCsrfProps {
-  secret: BinaryLike;
-  locals: App.Locals;
-  request: Request;
-}
-
 /**
  * Borrowed from https://github.com/nextauthjs/next-auth/blob/fd755bc29e6dea318429bec819eebcaecbdf7529/packages/next-auth/src/core/lib/csrf-token.ts#L25-L54
  *
@@ -87,6 +77,16 @@ export function verifyCsrf(props: VerifyCsrfProps) {
       message: 'The CSRF has not been verified.',
     });
   }
+}
+
+const CSRF_KEY = 'csrf' as const;
+const PRIVATE_CSRF_KEY = '_csrf' as const;
+const CSRF_HEADER_KEY = 'x-csrf-token';
+
+interface CreateCsrfProps {
+  secret: BinaryLike;
+  locals: App.Locals;
+  request: Request;
 }
 
 declare global {

@@ -3,7 +3,9 @@ import {
   type GitHubScope,
   Authenticator,
   createAuthEndpoints,
+  GITHUB_INSTALL_ACTION,
   GitHubStrategy,
+  redirect,
   ServerError,
 } from '@kickjump/svelte-auth';
 
@@ -15,7 +17,14 @@ export const authenticator = new Authenticator({ origin: getAbsoluteUrl('/', tru
   new GitHubStrategy(
     { clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scope: GITHUB_SCOPE },
     async (props) => {
-      const { profile, accessToken } = props;
+      const { profile, accessToken, state } = props;
+
+      if (state.action === GITHUB_INSTALL_ACTION) {
+        // For installations redirect to the provided target in the original
+        // url.
+        throw redirect(state.redirect);
+      }
+
       const providerAccountId = profile.id.toString();
       const provider = 'github';
       const { UserModel } = await import('@kickjump/db');

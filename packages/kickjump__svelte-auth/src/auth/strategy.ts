@@ -57,7 +57,7 @@ export abstract class Strategy<VerifyOptions> {
   /**
    * Can be overridden for each custom strategy.
    */
-  getRedirectUrl(event: StrategyRequestEvent): URL {
+  getRedirectUrl(event: GetRedirectUrlProps): URL {
     const { options, url } = event;
 
     return getRedirectFromURL({
@@ -67,6 +67,8 @@ export abstract class Strategy<VerifyOptions> {
     });
   }
 }
+
+type GetRedirectUrlProps = Pick<StrategyRequestEvent, 'options' | 'url' | 'baseUrl'>;
 
 interface GetRedirectFromUrl {
   url: URL | string;
