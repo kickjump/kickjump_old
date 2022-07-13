@@ -50,7 +50,7 @@ import { redirect } from '../utils.js';
  */
 export class OAuth2Strategy<
   Profile extends OAuth2Profile,
-  ExtraParams extends Record<string, unknown> = Record<string, never>,
+  ExtraParams extends object = object,
 > extends Strategy<OAuth2StrategyVerifyParams<Profile, ExtraParams>> {
   name = 'oauth2';
 
@@ -134,9 +134,9 @@ export class OAuth2Strategy<
     params.set('grant_type', 'authorization_code');
     params.set('redirect_uri', this.getCallbackURL(baseUrl).toString());
 
-    const { accessToken, refreshToken, extraParams } = await this.fetchAccessToken(code, params);
-    const profile = await this.userProfile(accessToken, extraParams);
-    const user = await this.verify({ accessToken, refreshToken, extraParams, profile });
+    const data = await this.fetchAccessToken(code, params);
+    const profile = await this.userProfile(data);
+    const user = await this.verify({ ...data, profile });
 
     return { ...user, strategy: this.name };
   }
@@ -149,7 +149,7 @@ export class OAuth2Strategy<
    * applications (and users of those applications) in the initial registration
    * process by automatically submitting required information.
    */
-  protected async userProfile(_accessToken: string, _params: ExtraParams): Promise<Profile> {
+  protected async userProfile(_data: OAuth2Data<ExtraParams>): Promise<Profile> {
     return { provider: 'oauth2' } as Profile;
   }
 
@@ -179,17 +179,13 @@ export class OAuth2Strategy<
     return new URLSearchParams();
   }
 
-  protected async getAccessToken(response: Response): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    extraParams: ExtraParams;
-  }> {
-    const { access_token, refresh_token, ...extraParams } = await response.json();
-    return {
-      accessToken: access_token as string,
-      refreshToken: refresh_token as string,
-      extraParams,
-    } as const;
+  protected async getAccessToken(response: Response): Promise<OAuth2Data<ExtraParams>> {
+    const {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      ...extraParams
+    } = await response.json();
+    return { accessToken, refreshToken, ...extraParams };
   }
 
   private getCallbackURL(baseUrl: string): string {
@@ -222,11 +218,7 @@ export class OAuth2Strategy<
   private async fetchAccessToken(
     code: string,
     params: URLSearchParams,
-  ): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    extraParams: ExtraParams;
-  }> {
+  ): Promise<OAuth2Data<ExtraParams>> {
     params.set('client_id', this.clientId);
     params.set('client_secret', this.clientSecret);
 
@@ -259,6 +251,10 @@ export const CALLBACK_ACTION = 'callback';
 export const LOGIN_ACTION = 'login';
 const SESSION_STATE_KEY = '_oath2:state' as const;
 
+export type OAuth2Data<Extra extends object> = {
+  accessToken: string;
+  refreshToken: string;
+} & Extra;
 export interface OAuth2Profile {
   provider: string;
   id?: string | undefined;
@@ -293,15 +289,14 @@ export interface OAuth2StrategyOptions {
   clientSecret: string;
 }
 
-export interface OAuth2StrategyVerifyParams<
+export type OAuth2StrategyVerifyParams<
   Profile extends OAuth2Profile,
-  ExtraParams extends Record<string, unknown> = Record<string, never>,
-> {
+  ExtraParams extends object = object,
+> = {
   accessToken: string;
   refreshToken: string;
-  extraParams: ExtraParams;
   profile: Profile;
-}
+} & ExtraParams;
 
 interface GetAuthorizationUrlProps {
   request: Request;

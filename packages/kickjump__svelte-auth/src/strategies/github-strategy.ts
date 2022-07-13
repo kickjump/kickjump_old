@@ -1,6 +1,6 @@
 import type { StrategyVerifyCallback } from '../auth/strategy.js';
 import { ServerError } from '../errors.js';
-import type { Email, OAuth2StrategyVerifyParams } from './oauth2-strategy.js';
+import type { Email, OAuth2Data, OAuth2StrategyVerifyParams } from './oauth2-strategy.js';
 import { type OAuth2Profile, OAuth2Strategy } from './oauth2-strategy.js';
 
 export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraParams> {
@@ -16,7 +16,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     options: GitHubStrategyOptions,
     verify: StrategyVerifyCallback<GitHubStrategyVerifyParams>,
   ) {
-    const { clientId, clientSecret, callbackUrl, scope, allowSignup, userAgent } = options;
+    const { clientId, clientSecret, scope, allowSignup, userAgent } = options;
     super(
       {
         clientId,
@@ -53,11 +53,11 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     return emails;
   }
 
-  protected override async userProfile(accessToken: string): Promise<GitHubProfile> {
+  protected override async userProfile(tokens: GitHubOAuth2Data): Promise<GitHubProfile> {
     const response = await fetch(this.userInfoURL, {
       headers: {
         Accept: 'application/vnd.github.v3+json',
-        Authorization: `token ${accessToken}`,
+        Authorization: `token ${tokens.accessToken}`,
         'User-Agent': this.userAgent,
       },
     });
@@ -65,7 +65,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     let emails: GitHubProfile['emails'] = [{ email: data.email }];
 
     if (this.scope.includes(USER_EMAIL_SCOPE)) {
-      emails = await this.userEmails(accessToken);
+      emails = await this.userEmails(tokens.accessToken);
     }
 
     const photos = [{ url: data.avatar_url }];
@@ -82,33 +82,56 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
     return profile;
   }
 
-  protected override async getAccessToken(response: Response): Promise<{
-    accessToken: string;
-    refreshToken: string;
-    extraParams: GitHubExtraParams;
-  }> {
-    const data = await response.text();
-    const accessToken = new URLSearchParams(data).get('access_token');
+  protected override async getAccessToken(response: Response): Promise<GitHubOAuth2Data> {
+    const data = await response.json();
+    const params = new URLSearchParams(data);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    const expiresIn = params.get('expires_in');
+    const refreshTokenExpiresIn = params.get('refresh_token_expires_in');
+    const scope = params.get('scope');
+    const tokenType = params.get('token_type');
 
     if (!accessToken) {
       throw new ServerError({ code: 'Unauthorized', message: 'Missing access token.' });
     }
 
-    const tokenType = new URLSearchParams(data).get('token_type');
+    if (!refreshToken) {
+      throw new ServerError({ code: 'Unauthorized', message: 'Missing refresh token.' });
+    }
 
     if (!tokenType) {
       throw new ServerError({ code: 'Unauthorized', message: 'Missing token type.' });
     }
 
-    return { accessToken, refreshToken: '', extraParams: { tokenType } };
+    if (!scope || !expiresIn || !refreshTokenExpiresIn) {
+      throw new ServerError({
+        code: 'Unauthorized',
+        message: `Missing data: scope: "${scope}", expiresIn: ${expiresIn}, refreshTokenExpiresIn: ${refreshTokenExpiresIn}`,
+      });
+    }
+
+    return {
+      accessToken,
+      refreshToken,
+      tokenType,
+      scope,
+      expiresIn: +expiresIn,
+      refreshTokenExpiresIn: +refreshTokenExpiresIn,
+    };
   }
 }
 
 const USER_EMAIL_SCOPE = 'user:email';
 
-export interface GitHubExtraParams extends Record<string, string | number> {
+export interface GitHubExtraParams {
   tokenType: string;
+  expiresIn: number | undefined;
+  refreshTokenExpiresIn: number | undefined;
+  scope: string | undefined;
 }
+
+type GitHubOAuth2Data = OAuth2Data<GitHubExtraParams>;
 
 export interface GitHubStrategyVerifyParams
   extends OAuth2StrategyVerifyParams<GitHubProfile, GitHubExtraParams> {}
