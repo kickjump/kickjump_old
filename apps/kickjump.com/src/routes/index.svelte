@@ -1,15 +1,16 @@
 <script lang="ts" context="module">
-  import { useQuery } from '@sveltestack/svelte-query';
+  // import { useQuery } from '@sveltestack/svelte-query';
 
-  // import { onMount } from 'svelte';
   import { Button } from '$components';
-  import { trpc } from '$lib/trpc';
+  // import { trpc } from '$lib/trpc';
 </script>
 
 <script lang="ts">
-  const metaResult = useQuery('meta', () => trpc.meta.read.query('https://google.com'));
+  // const metaResult = useQuery('meta', () => trpc.meta.read.query('https://google.com'));
+  // const githubResult = useQuery('github', () => trpc.github.play.query());
 
-  $: console.log($metaResult.data);
+  // $: console.log($metaResult.data);
+  // $: console.log($githubResult.data);
 </script>
 
 <div class="hero hero-height">
@@ -18,10 +19,6 @@
       <h1 class="pb-14 gradient-text">
         <strong>Unlock</strong> financial freedom with open source
       </h1>
-      <!-- <p class="py-6"
-        >Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.</p
-      > -->
       <Button onClick={() => {}} theme="primary" variant="outline" size="lg" class="border-4"
         >Get Started</Button
       >

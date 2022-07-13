@@ -13,12 +13,6 @@
   const flyIn: FlyParams = { x: -50, duration: 250, delay: 300 };
   const flyOut: FlyParams = { x: -50, duration: 250 };
 
-  // onMount(() => {
-  //   console.log({ matches: window.matchMedia(`(prefers-reduced-motion: reduce)`) });
-  //   reducedMotion = window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
-  //   console.log({ refresh, reducedMotion });
-  // });
-
   $: classes = clsx('max-w-full overflow-x-hidden', className);
 </script>
 
