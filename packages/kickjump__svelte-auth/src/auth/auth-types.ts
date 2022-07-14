@@ -124,7 +124,12 @@ export interface StrategyAuthenticateProps extends StrategyRequestEvent {
 
 declare global {
   namespace App {
-    interface User {}
+    interface User {
+      /**
+       * The user id.
+       */
+      id: string;
+    }
     interface Session {
       /**
        * An authentication error occurred. This could be a failure to

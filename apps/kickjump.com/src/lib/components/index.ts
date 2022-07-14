@@ -1,5 +1,4 @@
-export * from '../trpc/index.js';
-export { default as Alert } from './alert.svelte';
+export * from './alert/index.js';
 export * from './buttons/index.js';
 export { default as Card } from './card.svelte';
 export { default as Filters } from './filters.svelte';
@@ -9,3 +8,4 @@ export * from './logo/index.js';
 export * from './modal/index.js';
 export * from './project/index.js';
 export * from './transitions/index.js';
+export { default as TRPCProvider } from './trpc-provider.svelte';

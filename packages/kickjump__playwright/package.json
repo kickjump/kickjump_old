@@ -41,6 +41,17 @@
     "playwright-core": "^1.23.3",
     "playwright-testing-library": "^4.2.1"
   },
+  "devDependencies": {
+    "@types/node": "^18.0.4"
+  },
+  "peerDependencies": {
+    "@types/node": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -49,7 +60,15 @@
       "index.ts",
       "svelte.ts"
     ],
-    "tsconfigs": {},
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
+      }
+    },
     "mode": "library",
     "externalModules": []
   }

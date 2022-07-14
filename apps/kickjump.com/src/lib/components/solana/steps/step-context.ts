@@ -212,10 +212,6 @@ export class StepContext {
   }
 }
 
-interface ResetProps {
-  initialStep?: string;
-}
-
 type UpdateDataParam =
   | Partial<StepContextData>
   | ((data: Partial<StepContextData>) => Partial<StepContextData>);

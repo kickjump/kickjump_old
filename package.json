@@ -6,15 +6,10 @@
   "contributors": [],
   "type": "module",
   "scripts": {
-    "bootstrap": "corepack enable && pnpm i && run-p setup:rust setup:anchor setup:playwright dev:wasm",
+    "bootstrap": "corepack enable && pnpm i && run-p setup:rust setup:anchor setup:playwright",
     "build": "run-p build:packages typecheck",
     "build:kickjump.com": "pnpm --dir apps/kickjump.com build",
     "build:packages": "pnpm monots build && pnpm run --recursive --filter ./packages postbuild",
-    "build:wasm": "run-s build:wasm:clean build:wasm:esm build:wasm:node build:wasm:copy",
-    "build:wasm:clean": "rm -rf packages/kickjump__scraper/dist crates/scraper_wasm/pkg",
-    "build:wasm:copy": "cpy --flat crates/scraper_wasm/pkg/esm/*.{wasm,d.ts,js} packages/kickjump__scraper/dist/esm && cpy --flat crates/scraper_wasm/pkg/node/*.{wasm,d.ts,js} packages/kickjump__scraper/dist/node && rm -rf crates/scraper_wasm/pkg",
-    "build:wasm:esm": "wasm-pack build --target web --out-name index --out-dir pkg/esm --release crates/scraper_wasm",
-    "build:wasm:node": "wasm-pack build --target nodejs --out-name index --out-dir pkg/node --release crates/scraper_wasm",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test test:kickjump.com test:db build:kickjump.com build:packages",
     "clean": "git clean -xfd -e '*.env' -e '.vscode' -e 'Anchor.toml' -e rust-toolchain.toml -e rustfmt.toml",
@@ -23,16 +18,13 @@
     "dependencies": "run-p update:\\*",
     "dev": "pnpm monots prepare",
     "dev:kickjump.com": "pnpm --dir apps/kickjump.com dev",
-    "dev:wasm": "run-s build:wasm:clean dev:wasm:esm dev:wasm:node build:wasm:copy",
-    "dev:wasm:esm": "wasm-pack build --target web --out-name index --out-dir pkg/esm --dev crates/scraper_wasm",
-    "dev:wasm:node": "wasm-pack build --target nodejs --out-name index --out-dir pkg/node --dev crates/scraper_wasm",
-    "fix": "run-s -c fix:repo fix:build fix:es fix:prettier",
+    "fix": "run-s -c fix:audit:packages fix:audit:crates fix:repo fix:build fix:es fix:recursive fix:rustfmt fix:prettier",
     "fix:audit:crates": "cargo audit fix",
     "fix:audit:packages": "pnpm scripts fix:audit",
     "fix:build": "pnpm monots fix",
     "fix:es": "pnpm lint:es --fix",
-    "fix:idl": "pnpm run --recursive fix:idl",
     "fix:prettier": "pnpm run:prettier --write",
+    "fix:recursive": "pnpm run --recursive fix",
     "fix:repo": "manypkg fix",
     "fix:rustfmt": "cargo +nightly fmt",
     "preinstall": "pnpm scripts symlink:root && pnpm scripts check:pnpm",
@@ -41,7 +33,7 @@
     "lint:audit:crates": "cargo audit",
     "lint:audit:packages": "pnpm audit",
     "lint:build": "pnpm monots check",
-    "lint:es": "eslint --ext=.tsx,.ts,.js,.svelte .",
+    "lint:es": "ESLINT_FULL_CHECK=1 eslint --ext=.tsx,.ts,.js,.svelte .",
     "lint:packages": "pnpm run -r check",
     "lint:prettier": "pnpm run:prettier --check",
     "lint:repo": "manypkg check",
@@ -125,7 +117,7 @@
     "wasm-pack": "^0.10.3",
     "wrangler": "^2.0.19"
   },
-  "packageManager": "pnpm@7.5.0",
+  "packageManager": "pnpm@7.5.2",
   "engines": {
     "node": ">=16.9",
     "pnpm": ">=6"
@@ -147,20 +139,21 @@
       "wasm-pack"
     ],
     "overrides": {
-      "idb-keyval": ">=6.1.0",
-      "@solana/web3.js": ">=1.41.0",
-      "@project-serum/anchor": ">=0.24.2",
+      "@solana/web3.js@<1.48.0": "^1.48.0",
+      "@project-serum/anchor@<0.25.0": "^0.25.0",
       "cross-fetch": ">=3.1.5",
       "node-forge@<1.3.0": ">=1.3.0",
       "glob-parent@<5.1.2": ">=5.1.2",
       "node-fetch@<2.6.7": ">=2.6.7",
       "node-forge@<1.0.0": ">=1.0.0",
       "trim-newlines@<3.0.1": ">=3.0.1",
-      "async@<2.6.4": ">=2.6.4"
+      "async@<2.6.4": ">=2.6.4",
+      "got@<11.8.5": "^11.8.5"
     },
     "patchedDependencies": {
       "fast-sort@3.2.0": ".monots/patches/fast-sort@3.2.0.patch",
-      "@sveltejs/kit@1.0.0-next.372": ".monots/patches/@sveltejs__kit@1.0.0-next.372.patch"
+      "@sveltejs/kit@1.0.0-next.372": ".monots/patches/@sveltejs__kit@1.0.0-next.372.patch",
+      "eslint-config-monots@0.11.1": ".monots/patches/eslint-config-monots@0.11.1.patch"
     }
   }
 }

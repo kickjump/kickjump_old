@@ -4,12 +4,13 @@
   import { type IconType, Icon } from '$components/icon';
   import type { Maybe } from '$types';
 
-  import Button, {
+  import Button from './button.svelte';
+  import {
     type ButtonSize,
     type ButtonTheme,
     type ButtonVariant,
     ICON_TEXT_SIZE,
-  } from './button.svelte';
+  } from './button-types.js';
 
   export let icon: IconType;
   export let theme: ButtonTheme = 'default';
@@ -26,10 +27,10 @@
   export let loading = false;
   export let onClick: Maybe<svelte.JSX.MouseEventHandler<HTMLButtonElement>> = undefined;
   let className: Maybe<string> = undefined;
-  let element: HTMLButtonElement | HTMLAnchorElement;
+  let _element: HTMLButtonElement | HTMLAnchorElement;
 
   export function getElement() {
-    return element;
+    return _element;
   }
 
   $: classes = clsx(ICON_TEXT_SIZE[size], className);
@@ -52,7 +53,7 @@
   {loading}
   {onClick}
   shape="square"
-  let:element
+  let:element={_element}
 >
   <Icon {icon} />
 </Button>

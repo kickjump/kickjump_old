@@ -39,7 +39,7 @@ export async function createCsrf(props: CreateCsrfProps): Promise<string> {
       }
 
       const formData = await request.formData();
-      const json = await request.json();
+      const json = (await request.json()) as Record<string, unknown>;
       const currentTokenValue =
         json[CSRF_KEY] || formData.get(CSRF_KEY) || request.headers.get(CSRF_HEADER_KEY);
 

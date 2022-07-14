@@ -9,7 +9,7 @@
     "prettier --write --ignore-path .eslintignore"
   ],
   "{packages,apps,tests}/**/*.{ts,tsx,js,svelte}": [
-    "eslint --fix",
+    "ESLINT_FULL_CHECK=1 eslint --fix",
     "prettier --ignore-path .eslintignore --write"
   ],
   "{programs,crates}/**/*.rs": [

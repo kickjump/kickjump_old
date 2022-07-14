@@ -66,15 +66,6 @@ export class ClientAuthenticator {
   }
 }
 
-// interface StrategyUrlProps<Strategy extends keyof kj.ClientAuthenticatorUrls> {
-//   strategy: Strategy;
-//   action: ValueOf<kj.ClientAuthenticatorUrls[Strategy]>;
-//   params?: {
-//     [param: string]: string | undefined;
-//     redirect?: string | undefined;
-//   };
-// }
-
 type LiteralString = Record<never, never> & string;
 
 declare global {

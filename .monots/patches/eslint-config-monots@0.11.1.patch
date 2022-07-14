@@ -1,0 +1,24 @@
+diff --git a/dist/full-off.cjs.js b/dist/full-off.cjs.js
+index 55c29cf70603ad8feb9b7ea880a15b49c001b705..141b91c57c0c85dd03e8d6a1b21ab1d226c98006 100644
+--- a/dist/full-off.cjs.js
++++ b/dist/full-off.cjs.js
+@@ -1,13 +1,14 @@
+ 'use strict';
+ 
+-const fullConfig = require("./full.js");
++const fullConfig = require('./full.cjs.js');
+ var _rules;
+ /**
+  * This config can be used to turn slow rules off.
+  */ const config = {
+-    rules: Object.fromEntries(Object.keys((_rules = fullConfig.rules) !== null && _rules !== void 0 ? _rules : {}).map((current)=>[
+-            current,
+-            "off"
+-        ]))
++  rules: Object.fromEntries(
++    Object.keys(
++      (_rules = fullConfig.rules) !== null && _rules !== void 0 ? _rules : {},
++    ).map((current) => [current, 'off']),
++  ),
+ };
+ module.exports = config;

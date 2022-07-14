@@ -9,6 +9,7 @@
   "compilerOptions": {
     "types": [],
     "noEmit": false,
+    "allowJs": true,
     "declaration": true,
     "composite": true,
     "emitDeclarationOnly": true,

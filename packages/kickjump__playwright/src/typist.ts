@@ -84,17 +84,17 @@ export interface TypistOptions {
    *
    * @default undefined - no delay.
    */
-  delay?: number;
+  delay?: number | undefined;
 
   /**
    * Set to true to skip auto closing the event modifiers.
    */
-  skipAutoClose?: boolean;
+  skipAutoClose?: boolean | undefined;
 
   /**
    * Extra actions to add.
    */
-  actions?: Record<string, TypistAction>;
+  actions?: Record<string, TypistAction> | undefined;
 }
 
 const defaultModifierActions: Record<string, TypistAction> = {

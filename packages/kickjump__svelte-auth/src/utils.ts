@@ -1,5 +1,3 @@
-import type { RequestEvent } from '@sveltejs/kit';
-
 /**
  * Return this function in your svelte api to perform a redirect on the server.
  */

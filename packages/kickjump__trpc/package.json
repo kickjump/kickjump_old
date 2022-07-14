@@ -1,0 +1,83 @@
+{
+  "name": "@kickjump/trpc",
+  "version": "0.0.0",
+  "description": "trpc bindings for kickjump",
+  "keywords": [],
+  "license": "MIT",
+  "contributors": [],
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.browser.esm.js",
+      "import": "./dist/index.esm.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "browser": "./dist/client.browser.esm.js",
+      "import": "./dist/client.esm.js"
+    },
+    "./client.js": {
+      "types": "./dist/client.d.ts",
+      "browser": "./dist/client.browser.esm.js",
+      "import": "./dist/client.esm.js"
+    },
+    "./index.js": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.browser.esm.js",
+      "import": "./dist/index.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/*.d.ts"
+  },
+  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.browser.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "client",
+    "dist"
+  ],
+  "dependencies": {
+    "@kickjump/db": "^0.0.1",
+    "@kickjump/svelte-auth": "^0.0.0",
+    "@octokit/app": "^13.0.5",
+    "@octokit/auth-app": "^4.0.4",
+    "@octokit/types": "^6.39.0",
+    "@solana/web3.js": "^1.48.0",
+    "@sveltejs/kit": "1.0.0-next.372",
+    "@sveltestack/svelte-query": "^1.6.0",
+    "@trpc/client": "10.0.0-alpha.38",
+    "@trpc/server": "10.0.0-alpha.38",
+    "@types/bn.js": "^5.1.0",
+    "@types/node": "^18.0.4",
+    "bn.js": "^5.2.1",
+    "buffer": "^6.0.3",
+    "metascraper": "^5.29.15",
+    "metascraper-author": "^5.29.15",
+    "metascraper-clearbit": "^5.29.15",
+    "metascraper-date": "^5.29.15",
+    "metascraper-description": "^5.29.15",
+    "metascraper-image": "^5.29.15",
+    "metascraper-logo": "^5.29.15",
+    "metascraper-publisher": "^5.29.15",
+    "metascraper-title": "^5.29.15",
+    "metascraper-url": "^5.29.15",
+    "octokit": "^2.0.3",
+    "superjson": "^1.9.1",
+    "superstruct": "^0.16.0",
+    "tiny-invariant": "^1.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "entrypoints": [
+      "index.ts",
+      "client/index.ts"
+    ],
+    "tsconfigs": {},
+    "mode": "library",
+    "externalModules": []
+  }
+}

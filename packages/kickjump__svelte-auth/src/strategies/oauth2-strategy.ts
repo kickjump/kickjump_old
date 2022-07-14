@@ -111,9 +111,7 @@ export class OAuth2Strategy<
 
     const data = await this.fetchAccessToken(code, params);
     const profile = await this.userProfile(data);
-    const user = await this.verify({ ...data, profile, state });
-
-    return { ...user, strategy: this.name };
+    return await this.verify({ ...data, profile, state });
   }
 
   /**
@@ -213,7 +211,7 @@ export class OAuth2Strategy<
       access_token: accessToken,
       refresh_token: refreshToken,
       ...extraParams
-    } = await response.json();
+    } = (await response.json()) as any;
     return { accessToken, refreshToken, ...extraParams };
   }
 

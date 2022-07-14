@@ -1,6 +1,6 @@
 [workspace]
-members = ["programs/*", "crates/*"]
-default-members = ["crates/*"]
+members = ["programs/*"]
+# default-members = ["crates/*"]
 
 [profile.release]
 overflow-checks = true

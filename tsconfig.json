@@ -25,6 +25,9 @@
       "path": "packages/kickjump__tokens/src"
     },
     {
+      "path": "packages/kickjump__trpc/src"
+    },
+    {
       "path": "packages/kickjump/src"
     },
     {

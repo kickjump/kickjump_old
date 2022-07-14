@@ -119,5 +119,7 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#633594",
-  "rust-analyzer.cachePriming.enable": true
+  "rust-analyzer.cachePriming.enable": true,
+  "svelte.enable-ts-plugin": true,
+  "svelte.ask-to-enable-ts-plugin": true
 }

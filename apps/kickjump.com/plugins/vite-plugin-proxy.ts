@@ -30,6 +30,7 @@ export async function updateGitHubApp(config: Config, env: Record<string, string
   } = env;
 
   const app = new App({ appId, privateKey });
+  // app.octokit.rest.orgs.repo
 }
 
 /**

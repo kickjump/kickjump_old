@@ -1,14 +1,15 @@
 <script context="module" lang="ts">
   import '../app.css';
 
+  import { client } from '@kickjump/trpc/client';
   import type { Load } from '@sveltejs/kit';
   import { addMessages, init } from 'svelte-intl-precompile';
   import SvelteSeo from 'svelte-seo';
 
   import { page } from '$app/stores';
+  import { TRPCProvider } from '$components';
   import MainLayout from '$layout/main.svelte';
   import { DEFAULT_SEO } from '$lib/constants';
-  import { client, TRPCProvider } from '$lib/trpc';
   import en from '$locales/en.js';
   import enGb from '$locales/en-gb.js';
   import es from '$locales/es.js';

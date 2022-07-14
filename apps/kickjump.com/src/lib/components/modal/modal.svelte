@@ -1,17 +1,12 @@
 <script lang="ts" context="module">
-  import {
-    Dialog,
-    DialogDescription,
-    DialogOverlay,
-    DialogTitle,
-  } from '@rgossiaux/svelte-headlessui';
+  import { Dialog, DialogOverlay } from '@rgossiaux/svelte-headlessui';
   import clsx, { type ClassValue } from 'clsx';
   import { cubicIn, cubicInOut, cubicOut } from 'svelte/easing';
   import { type FadeParams, type ScaleParams, fade, scale } from 'svelte/transition';
 
-  import IconButton from '$components/buttons/icon-button.svelte';
   import type { Maybe } from '$types';
 
+  import IconButton from '../buttons/icon-button.svelte';
   import { type ModalCloseHandler, setModalContext } from './modal-context';
 
   const SCALE_IN: ScaleParams = { start: 0.2, opacity: 0, duration: 300, easing: cubicIn };
@@ -19,8 +14,6 @@
   const FADE: FadeParams = { duration: 300, easing: cubicInOut };
 
   const SECTION_CLASS = 'bg-base-100 sketchy-1 relative w-full shadow-lg max-w-lg p-0';
-
-  export { DialogDescription as ModalDescription, DialogTitle as ModalTitle };
 </script>
 
 <script lang="ts">
@@ -48,7 +41,7 @@
   );
 </script>
 
-<Dialog {open} {initialFocusDerived} on:close={() => onClose('event')} class={classes}>
+<Dialog {open} initialFocus={initialFocusDerived} on:close={() => onClose('event')} class={classes}>
   {#if !disableOverlay && open}
     <span transition:fade={FADE}>
       <DialogOverlay class="fixed inset-0 bg-neutral-focus/40" />

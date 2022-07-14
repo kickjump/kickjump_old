@@ -4,7 +4,7 @@ import RandomNumberGenerator from 'tiny-rng';
 import type { Maybe } from '$types';
 import { range } from '$utils/helpers';
 
-import type { ButtonVariant } from '../button/constants';
+import type { ButtonVariant } from '../buttons/index.js';
 
 export interface SketchOptions {
   /**

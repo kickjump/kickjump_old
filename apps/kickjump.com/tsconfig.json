@@ -21,6 +21,8 @@
       "$components/*": ["src/lib/components/*"],
       "$stores": ["src/lib/stores"],
       "$stores/*": ["src/lib/stores/*"],
+      "$modules": ["src/lib/modules"],
+      "$modules/*": ["src/lib/modules/*"],
       "$layout": ["src/lib/layout"],
       "$layout/*": ["src/lib/layout/*"],
       "$server": ["src/lib/server"],

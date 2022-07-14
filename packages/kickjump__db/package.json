@@ -34,7 +34,7 @@
     "seed"
   ],
   "scripts": {
-    "fix": "edgeql-js --target ts --output-dir src/generated --force-overwrite",
+    "fix": "edgeql-js --target esm --output-dir src/generated --force-overwrite",
     "migrate": "edgedb migration create && edgedb migrate && pnpm fix",
     "seed": "tsx dbschema/seed.ts"
   },
@@ -57,7 +57,8 @@
       "src": {
         "compilerOptions": {
           "types": [],
-          "noEmit": true
+          "allowJs": true,
+          "noEmit": false
         }
       },
       "dbschema": {}

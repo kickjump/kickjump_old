@@ -1,6 +1,5 @@
-import type { WalletContextState } from '@solana/wallet-adapter-react';
-
-import { stringToUint8Array } from './core';
+import type { SolanaStore } from '$stores/solana';
+import { stringToUint8Array } from '$utils/core';
 
 /**
  * Get the wallet message on both the server and client.
@@ -25,7 +24,7 @@ export const WalletMessage = {
 export type WalletMessageType = keyof typeof WalletMessage;
 
 interface GetWalletSignature {
-  wallet: WalletContextState;
+  wallet: SolanaStore;
   hash: string;
   type: WalletMessageType;
 }

@@ -1,9 +1,9 @@
 declare module '$locales' {
   /** Registers all locales found in `localesRoot`. */
-  export const registerAll: () => void
+  export const registerAll: () => void;
 
   /** A list of all locales that will be registered by {@link registerAll()}. */
-  export const availableLocales: string[]
+  export const availableLocales: string[];
 }
 
 declare module '$locales/en-gb.js' {
@@ -15,10 +15,10 @@ declare module '$locales/en-gb.js' {
 
 declare module '$locales' {
   /** Registers all locales found in `localesRoot`. */
-  export const registerAll: () => void
+  export const registerAll: () => void;
 
   /** A list of all locales that will be registered by {@link registerAll()}. */
-  export const availableLocales: string[]
+  export const availableLocales: string[];
 }
 
 declare module '$locales/en.js' {
@@ -30,10 +30,10 @@ declare module '$locales/en.js' {
 
 declare module '$locales' {
   /** Registers all locales found in `localesRoot`. */
-  export const registerAll: () => void
+  export const registerAll: () => void;
 
   /** A list of all locales that will be registered by {@link registerAll()}. */
-  export const availableLocales: string[]
+  export const availableLocales: string[];
 }
 
 declare module '$locales/es.js' {
@@ -58,7 +58,10 @@ declare namespace App {
     'walletStep.selectWallet.hide': { count: number };
     'walletStep.selectWallet.item.uninstalled': never;
     'walletStep.installWallet.redirect': never;
-    'walletStep.installWallet.instructions': { name: import('type-fest').Primitive; mode: import('type-fest').LiteralUnion<'browser' | 'mobile', string> };
+    'walletStep.installWallet.instructions': {
+      name: import('type-fest').Primitive;
+      mode: import('type-fest').LiteralUnion<'browser' | 'mobile', string>;
+    };
     'walletStep.installWallet.warning': { url: import('type-fest').Primitive };
     'walletStep.installWallet.finished': never;
     'walletStep.installWallet.refresh': never;
