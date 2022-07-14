@@ -109,8 +109,8 @@
       "src": false,
       "": {
         "compilerOptions": {
-          "noEmit": false,
-          "declaration": true,
+          "noEmit": true,
+          "declaration": false,
           "lib": [
             "DOM",
             "DOM.Iterable",

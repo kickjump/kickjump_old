@@ -7,8 +7,8 @@
   ],
   "extends": "../../.monots/tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": false,
-    "declaration": true,
+    "noEmit": true,
+    "declaration": false,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "preserveValueImports": true,
     "isolatedModules": true,
