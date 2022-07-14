@@ -11,7 +11,6 @@ export default defineConfig({
     topLevelAwait(),
     sveltekit(),
   ],
-  define: {},
   resolve: {
     alias: {
       $components: path.resolve('./src/lib/components'),
@@ -24,4 +23,5 @@ export default defineConfig({
       $lib: path.resolve('./src/lib'),
     },
   },
+  server: { port: 3000 },
 });

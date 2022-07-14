@@ -1,4 +1,3 @@
-import { type PersistentStore, indexedDBStorage, persist } from '@macfja/svelte-persistent-store';
 import {
   type BaseMessageSignerWalletAdapter,
   type SendTransactionOptions,
@@ -19,6 +18,7 @@ import { type Emitter, createNanoEvents } from 'nanoevents';
 import { type Readable, type Unsubscriber, type Writable, get, writable } from 'svelte/store';
 
 import { browser } from '$app/env';
+import { type PersistentStore, indexedDBStorage, persist } from '$stores/persist/persistent-store';
 
 import { isWalletError, WalletInvalidNameError, WalletNotSelectedError } from './solana-errors';
 

@@ -60,6 +60,10 @@
     @apply sketchy-4;
   }
 
+  .card {
+    @apply sketchy-1;
+  }
+
   .btn {
     position: relative;
     @apply sketchy-5;

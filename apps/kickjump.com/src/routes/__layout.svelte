@@ -2,13 +2,13 @@
   import '../app.css';
 
   import type { Load } from '@sveltejs/kit';
-  import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { addMessages, init } from 'svelte-intl-precompile';
   import SvelteSeo from 'svelte-seo';
 
   import { page } from '$app/stores';
   import MainLayout from '$layout/main.svelte';
   import { DEFAULT_SEO } from '$lib/constants';
+  import { client, TRPCProvider } from '$lib/trpc';
   import en from '$locales/en.js';
   import enGb from '$locales/en-gb.js';
   import es from '$locales/es.js';
@@ -28,12 +28,11 @@
   export let key: string;
   export let lang: string | undefined;
   const initialLocale = getLocaleFromNavigator(lang) ?? 'en';
-  const queryClient = new QueryClient();
 
   init({ fallbackLocale: 'en', initialLocale });
 </script>
 
 <SvelteSeo {...$page.stuff} />
-<QueryClientProvider client={queryClient}>
-  <MainLayout refresh={key}><slot yo="yo" /></MainLayout>
-</QueryClientProvider>
+<TRPCProvider {client}>
+  <MainLayout refresh={key}><slot /></MainLayout>
+</TRPCProvider>

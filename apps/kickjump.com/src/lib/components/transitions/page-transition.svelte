@@ -13,7 +13,7 @@
   const flyIn: FlyParams = { x: -50, duration: 250, delay: 300 };
   const flyOut: FlyParams = { x: -50, duration: 250 };
 
-  $: classes = clsx('max-w-full overflow-x-hidden', className);
+  $: classes = clsx('max-w-full overflow-x-hidden grid', className);
 </script>
 
 {#if reducedMotion}

@@ -6,11 +6,9 @@
 </script>
 
 <script lang="ts">
-  // const metaResult = useQuery('meta', () => trpc.meta.read.query('https://google.com'));
-  // const githubResult = useQuery('github', () => trpc.github.play.query());
+  // const metaResult = trpc.meta.read.query('https://google.com');
 
   // $: console.log($metaResult.data);
-  // $: console.log($githubResult.data);
 </script>
 
 <div class="hero hero-height">

@@ -107,10 +107,7 @@
   );
   $: iconClass = ICON_TEXT_SIZE[size];
 
-  export {
-    // _transition as transition, _in as in, _out as out,
-    className as class,
-  };
+  export { className as class };
 </script>
 
 <svelte:element this={tag} bind:this={element} on:click={onClick} class={wrapperClass} {...props}>

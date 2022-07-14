@@ -19,7 +19,7 @@
     "@faker-js/faker": "^7.3.0",
     "@kickjump/db": "^0.0.1",
     "@kickjump/playwright": "^0.0.0",
-    "@playwright/test": "^1.23.2",
+    "@playwright/test": "^1.23.3",
     "@project-serum/anchor": "0.25.0",
     "@types/exit": "^0.1.31",
     "@types/signal-exit": "^3.0.1",
