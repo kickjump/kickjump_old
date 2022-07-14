@@ -13,8 +13,6 @@
     "changeset": "changeset",
     "checks": "run-s lint typecheck test test:kickjump.com test:db build:kickjump.com build:packages",
     "clean": "git clean -xfd -e '*.env' -e '.vscode' -e 'Anchor.toml' -e rust-toolchain.toml -e rustfmt.toml",
-    "compose:down": "docker compose down",
-    "compose:up": "docker compose up",
     "dependencies": "run-p update:\\*",
     "dev": "pnpm monots prepare",
     "dev:kickjump.com": "pnpm --dir apps/kickjump.com dev",

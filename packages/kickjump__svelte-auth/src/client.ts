@@ -9,13 +9,17 @@ interface ClientAuthenticatorProps {
 }
 
 export class ClientAuthenticator {
+  #url?: URL;
+
   readonly basePath: string;
   readonly page: Readable<Page>;
 
-  #origin?: string;
-
   get origin(): string {
-    return (this.#origin ??= get(this.page).url.origin);
+    return this.url.origin;
+  }
+
+  get url(): URL {
+    return (this.#url ??= get(this.page).url);
   }
 
   /**
@@ -51,6 +55,7 @@ export class ClientAuthenticator {
     } = {},
   ) {
     const url = this.#getUrl(`${action}/${strategy}`);
+    params = { redirect: `${this.url.pathname}${this.url.search}`, ...params };
 
     for (const [param, value] of Object.entries(params)) {
       if (value) {
