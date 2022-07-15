@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import type { Router } from '../router';
-import { transformer } from './transformer.js';
+
 import { createSvelteQueryTRPC, createSvelteQueryTRPCProxy, TRPCContext } from './trpc-context.js';
 
 const svelteClient = createSvelteQueryTRPC<Router>();
@@ -11,8 +11,7 @@ const svelteClient = createSvelteQueryTRPC<Router>();
 export const TRPC_ENDPOINT = '/trpc';
 export const trpc = createSvelteQueryTRPCProxy(svelteClient);
 export const { createClient } = svelteClient;
-export const client = createClient({ url: TRPC_ENDPOINT, transformer });
-
+export { transformer } from './transformer.js';
 export function context() {
   return TRPCContext.context<Router>();
 }

@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import '../app.css';
 
-  import { client } from '@kickjump/trpc/client';
+  import { createClient, transformer, TRPC_ENDPOINT } from '@kickjump/trpc/client';
   import type { Load } from '@sveltejs/kit';
   import SvelteSeo from 'svelte-seo';
 
@@ -10,17 +10,21 @@
   import MainLayout from '$layout/main.svelte';
   import { DEFAULT_SEO } from '$lib/constants';
 
-  export const load: Load = ({ url, session }) => ({
-    props: { key: url.href, lang: session.preferredLanguage },
+  export const load: Load = ({ url }) => ({
+    props: { key: url.href },
     stuff: { ...DEFAULT_SEO },
   });
 </script>
 
 <script lang="ts">
   export let key: string;
+  const client = createClient({ url: TRPC_ENDPOINT, transformer });
+  $: stuff = { ...DEFAULT_SEO, ...$page.stuff };
 </script>
 
-<SvelteSeo {...$page.stuff} />
+{#key stuff}
+  <SvelteSeo {...stuff} />
+{/key}
 <TRPCProvider {client}>
   <MainLayout refresh={key}><slot /></MainLayout>
 </TRPCProvider>

@@ -9,17 +9,17 @@ interface ClientAuthenticatorProps {
 }
 
 export class ClientAuthenticator {
-  #url?: URL;
+  #url?: URI;
 
   readonly basePath: string;
   readonly page: Readable<Page>;
 
-  get origin(): string {
+  get #origin(): string {
     return this.url.origin;
   }
 
-  get url(): URL {
-    return (this.#url ??= get(this.page).url);
+  get url(): URI {
+    return (this.#url ??= URI.of(get(this.page).url));
   }
 
   /**
@@ -35,8 +35,14 @@ export class ClientAuthenticator {
   /**
    * Will automatically redirect to the home route when method is `GET`.
    */
-  async logout(method: 'GET' | 'POST' = 'GET') {
-    return await fetch(this.#getUrl('logout'), { method });
+  async logout(csrf: string) {
+    const headers = new Headers();
+    headers.set(CSRF_HEADER_KEY, csrf);
+
+    const response = await fetch(this.#getUrl('logout'), { method: 'POST', headers });
+    const json: { redirectTo: string | undefined } = await response.json();
+
+    return json.redirectTo;
   }
 
   logoutUrl() {
@@ -54,22 +60,38 @@ export class ClientAuthenticator {
       redirect?: string | undefined;
     } = {},
   ) {
-    const url = this.#getUrl(`${action}/${strategy}`);
+    const uri = this.#getUrl(`${action}/${strategy}`);
     params = { redirect: `${this.url.pathname}${this.url.search}`, ...params };
 
     for (const [param, value] of Object.entries(params)) {
       if (value) {
-        url.searchParams.set(param, value);
+        uri.searchParams.set(param, value);
       }
     }
 
-    return url;
+    return uri;
   }
 
   #getUrl(endpoint: string) {
-    return new URL(`${this.basePath}/${endpoint}`, this.origin);
+    return new URI(`${this.basePath}/${endpoint}`, this.#origin);
   }
 }
+
+export class URI extends URL {
+  static of(url: URL | string, base?: URL | string | undefined): URI {
+    return new this(url, base);
+  }
+
+  get searchPath(): string {
+    return `${this.pathname}${this.search}`;
+  }
+
+  clone(): URI {
+    return URI.of(this);
+  }
+}
+
+export const CSRF_HEADER_KEY = 'x-csrf-token';
 
 type LiteralString = Record<never, never> & string;
 

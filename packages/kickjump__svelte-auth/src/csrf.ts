@@ -1,4 +1,5 @@
 import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
+import { CSRF_HEADER_KEY } from './client.js';
 
 import { ServerError } from './errors.js';
 
@@ -38,10 +39,18 @@ export async function createCsrf(props: CreateCsrfProps): Promise<string> {
         return csrfToken;
       }
 
-      const formData = await request.formData();
-      const json = (await request.json()) as Record<string, unknown>;
+      const contentType = request.headers.get('content-type');
+      let formData: FormData | undefined;
+      let json: Record<string, unknown> | undefined;
+
+      if (contentType?.startsWith('application/x-www-form-urlencoded')) {
+        formData = await request.clone().formData?.();
+      } else if (contentType?.startsWith('application/json')) {
+        json = await request.json();
+      }
+
       const currentTokenValue =
-        json[CSRF_KEY] || formData.get(CSRF_KEY) || request.headers.get(CSRF_HEADER_KEY);
+        json?.[CSRF_KEY] || formData?.get(CSRF_KEY) || request.headers.get(CSRF_HEADER_KEY);
 
       // If hash matches then we trust the CSRF token value
       // If this is a POST request and the CSRF Token in the POST request matches
@@ -81,7 +90,7 @@ export function verifyCsrf(props: VerifyCsrfProps) {
 
 const CSRF_KEY = 'csrf' as const;
 const PRIVATE_CSRF_KEY = '_csrf' as const;
-const CSRF_HEADER_KEY = 'x-csrf-token';
+
 
 interface CreateCsrfProps {
   secret: BinaryLike;

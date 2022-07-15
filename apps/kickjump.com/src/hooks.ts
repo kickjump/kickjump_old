@@ -20,6 +20,7 @@ export const getSession: GetSession = async (event) => {
   const error = event.locals.error;
   const userAgent = event.request.headers.get('user-agent') ?? '';
   const absoluteUrl = getAbsoluteUrl();
+  console.log(session)
 
   return {
     ...session,
@@ -28,6 +29,5 @@ export const getSession: GetSession = async (event) => {
     preferredLanguage,
     userAgent,
     absoluteUrl,
-    env: { PUBLIC_WEB3_AUTH_CLIENT_ID: env.PUBLIC_WEB3_AUTH_CLIENT_ID },
   };
 };

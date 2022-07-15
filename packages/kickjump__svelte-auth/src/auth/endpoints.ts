@@ -8,6 +8,8 @@ import { json, redirect } from '../utils.js';
 import type { Authenticator } from './authenticator.js';
 import { getRedirectFromURL } from './strategy.js';
 
+const ALLOWED_METHODS = new Set(['GET', 'POST']);
+
 /**
  * Create the authentication handle This is attached to the `authenticator` object.
  *
@@ -23,34 +25,36 @@ export function createAuthHandle(auth: Authenticator): Handle {
 
     let serverError: ServerError;
 
-    try {
-      for (const [path, fn] of Object.entries(AUTH_ENDPOINTS)) {
-        const matcher = match<Record<string, string>>(`${auth.options.basePath}${path}`);
-        const matched = matcher(event.url.pathname);
+    if (ALLOWED_METHODS.has(event.request.method)) {
+      try {
+        for (const [path, fn] of Object.entries(AUTH_ENDPOINTS)) {
+          const matcher = match<Record<string, string>>(`${auth.options.basePath}${path}`);
+          const matched = matcher(event.url.pathname);
 
-        if (!matched) {
-          continue;
+          if (!matched) {
+            continue;
+          }
+
+          if (event.request.method === 'POST') {
+            verifyCsrf({ locals: event.locals });
+          }
+
+          const request = event.request.clone();
+          const authParams = matched.params;
+
+          return await fn({ ...event, request, auth, authParams });
+        }
+      } catch (error) {
+        // This allows throwing a response in oauth callbacks.
+        if (error instanceof Response) {
+          return error;
         }
 
-        if (event.request.method === 'POST') {
-          verifyCsrf({ locals: event.locals });
+        serverError = ServerError.as(error);
+
+        if (serverError.response) {
+          return serverError.response;
         }
-
-        const request = event.request.clone();
-        const authParams = matched.params;
-
-        return await fn({ ...event, request, auth, authParams });
-      }
-    } catch (error) {
-      // This allows throwing a response in oauth callbacks.
-      if (error instanceof Response) {
-        return error;
-      }
-
-      serverError = ServerError.as(error);
-
-      if (serverError.response) {
-        return serverError.response;
       }
     }
 
@@ -98,9 +102,14 @@ const AUTH_ENDPOINTS: Record<string, EndpointHandler> = {
       redirectParam: auth.options.redirectParam,
       url: props.url,
     });
-    const response = await auth.logout({ ...event, request: request.clone(), redirectTo });
 
-    return request.method === 'GET' ? response : json({ logout: true });
+    if (request.method !== 'POST') {
+      return redirect(redirectTo);
+    }
+
+    await auth.logout({ ...event, request: request.clone(), redirectTo });
+
+    return json({ success: true, redirectTo });
   },
   '/hash': async (props) => {
     const hash = randomBytes(32).toString('base64');

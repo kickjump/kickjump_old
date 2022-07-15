@@ -32,7 +32,8 @@ export class StepContext {
   /**
    * Dynamically provide the context when accessed.
    */
-  static get context(): StepContext {
+  static context(): StepContext {
+    console.log('getting step context')
     const context = getContext<StepContext | undefined>(CONTEXT_KEY);
     invariant(context, 'StepProvider compound components cannot be rendered outside the context');
 

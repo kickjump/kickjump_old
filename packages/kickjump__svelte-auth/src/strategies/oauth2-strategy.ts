@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 
 import type { StrategyAuthenticateProps } from '../auth/auth-types.js';
-import type { StrategyVerifyCallback } from '../auth/strategy.js';
+import type { AuthenticateReturn, StrategyVerifyCallback } from '../auth/strategy.js';
 import { Strategy } from '../auth/strategy.js';
 import { ServerError } from '../errors.js';
 import type { ServerSession } from '../session.js';
@@ -72,15 +72,9 @@ export class OAuth2Strategy<
     this.clientSecret = options.clientSecret;
   }
 
-  override async authenticate(event: StrategyAuthenticateProps): Promise<App.User> {
+  override async authenticate(event: StrategyAuthenticateProps): Promise<AuthenticateReturn> {
     const { url, locals, request, action, baseUrl } = event;
     const { session } = locals;
-    const sessionUser = session.get('user');
-
-    // User has already authenticated with this strategy.
-    if (sessionUser?.strategy === this.name) {
-      return sessionUser;
-    }
 
     // Redirect the user to the callback URL
     if (action === LOGIN_ACTION) {
@@ -111,7 +105,9 @@ export class OAuth2Strategy<
 
     const data = await this.fetchAccessToken(code, params);
     const profile = await this.userProfile(data);
-    return await this.verify({ ...data, profile, state });
+    const user = await this.verify({ ...data, profile, state });
+
+    return { user, redirect: state.redirect }
   }
 
   /**
@@ -247,6 +243,8 @@ export class OAuth2Strategy<
     const { action, options, url, baseUrl } = event;
     const id = randomBytes(8).toString('hex');
     const redirect = this.getRedirectUrl({ options, url, baseUrl }).href;
+
+    console.log({ redirect, url: url.href })
 
     return { id, redirect, action };
   }

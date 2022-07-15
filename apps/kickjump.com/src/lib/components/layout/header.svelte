@@ -1,6 +1,7 @@
 <script lang="ts">
   import themeStore, { setTheme } from 'svelte-themes';
 
+  import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
   import { Button } from '$components/buttons';
   import Logo from '$components/logo/logo.svelte';
@@ -20,15 +21,22 @@
     open = !open;
   }
 
+  async function logout() {
+    const redirect = await auth.logout(csrf);
+    await goto(redirect ?? '/', { replaceState: true });
+    console.log('logged out!');
+    console.log({ loggedIn, redirect });
+  }
+
   const items = [
     { label: 'Projects', href: '/projects' },
     { label: 'About', href: '/about' },
   ];
 
+  $: ({ csrf, user } = $session);
   $: githubAuth = auth.strategyUrl('github', 'login', {
     redirect: $page.params.redirect ?? $page.url.href,
   }).searchPath;
-  $: logoutUrl = auth.logoutUrl().pathname;
   $: loggedIn = !!$session.user?.id;
   $: isDark =
     $themeStore.theme === 'dark' ||
@@ -42,6 +50,8 @@
       setTheme($themeStore.resolvedTheme);
     }
   }
+
+  $: console.log({ user, csrf });
 </script>
 
 <header
@@ -58,16 +68,17 @@
       {/each}
       <IconToggle checked={isDark} on:change={toggleTheme} swap="moonFill" initial="sunFill" />
     </div>
-
-    <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-      <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
-        <Icon icon="menuLine" size="2em" />
-      </Button>
-      {#if loggedIn}
-        <Button href={logoutUrl} variant="outline">Logout</Button>
-      {:else}
-        <Button href={githubAuth} variant="outline" leftIcon="github">Login</Button>
-      {/if}
-    </div>
+    {#key user}
+      <div class="pl-8 justify-self-end flex flex-row gap-x-1">
+        <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
+          <Icon icon="menuLine" size="2em" />
+        </Button>
+        {#if loggedIn}
+          <Button onClick={() => logout()} variant="outline">Logout</Button>
+        {:else}
+          <Button href={githubAuth} variant="outline" leftIcon="github">Login</Button>
+        {/if}
+      </div>
+    {/key}
   </navbar>
 </header>

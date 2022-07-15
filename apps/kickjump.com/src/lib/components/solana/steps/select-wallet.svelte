@@ -56,7 +56,7 @@
     };
   }
 
-  $: ({ updateData, nextStep, data } = StepContext.context);
+  $: ({ updateData, nextStep, data } = StepContext.context());
   $: loading = !$data?.walletsLoadedInBrowser;
 
   $: uninstalledNumber = availableWallets.filter((wallet) => !wallet.isInstalled).length;

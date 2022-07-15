@@ -12,8 +12,9 @@
   export let align = 'text-left';
 
   export { className as class };
+  $: variantClass = variant === 'primary' ? 'bg-primary' : 'bg-secondary';
   $: theme = (variant === 'primary' ? 'default' : 'accent') as ButtonTheme;
-  $: classes = clsx(`card text-primary-content`, `bg-${variant}`, className);
+  $: classes = clsx(`card text-primary-content`, variantClass, className);
 </script>
 
 <div class={classes}>

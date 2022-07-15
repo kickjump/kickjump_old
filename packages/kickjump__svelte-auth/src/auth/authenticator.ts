@@ -1,7 +1,7 @@
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 
 import { ServerError } from '../errors.js';
-import { redirect } from '../utils.js';
+import { redirect as redirectResponse } from '../utils.js';
 import type { AuthenticateProps, AuthenticatorOptions } from './auth-types.js';
 import { createAuthHandle } from './endpoints.js';
 import type { AnyStrategy, Strategy } from './strategy.js';
@@ -105,7 +105,7 @@ export class Authenticator {
       });
     }
 
-    const user = await instance.authenticate({
+    const {user, redirect} = await instance.authenticate({
       ...event,
       locals,
       action,
@@ -118,8 +118,8 @@ export class Authenticator {
     // Store the user in the session.
     await locals.session.set('user', { ...user, strategy });
 
-    return redirect(
-      instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),
+    return redirectResponse(
+      redirect ?? instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),
     );
   }
 
@@ -130,11 +130,9 @@ export class Authenticator {
   /**
    * Destroy the user session and return a redirect to another URL.
    */
-  async logout(event: RequestEvent & { redirectTo: string | URL }): Promise<Response> {
+  async logout(event: RequestEvent & { redirectTo: string | URL }): Promise<void> {
     const { session } = event.locals;
 
     await Promise.all([session.unset('user'), session.unset('authError')]);
-
-    return redirect(event.redirectTo);
   }
 }

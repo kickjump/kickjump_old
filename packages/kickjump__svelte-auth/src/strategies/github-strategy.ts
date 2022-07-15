@@ -43,6 +43,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
 
   protected override async handleCustomAction(event: StrategyAuthenticateProps): Promise<never> {
     const { action, url, session } = event;
+    console.log({action});
 
     if (action === GITHUB_INSTALL_ACTION) {
       if (!this.appName) {
@@ -56,8 +57,10 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
       const installationUrl = getInstallationUrl({ stateId: state.id, appName: this.appName });
       const response = redirect(installationUrl);
 
+
       await session.set(SESSION_STATE_KEY, state);
 
+      console.log({ ...state, installationUrl });
       // This throws a response which is picked up and returned by the handler.
       throw new ServerError({
         code: 302,

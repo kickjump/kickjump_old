@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  $: ({ errors, successes, reset, nextStep } = StepContext.context);
+  $: ({ errors, successes, reset, nextStep } = StepContext.context());
   $: error = $errors.at(0);
 </script>
 

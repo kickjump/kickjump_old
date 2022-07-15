@@ -25,7 +25,7 @@
     stepIndex,
     previousStep,
     // step
-  } = StepContext.context);
+  } = StepContext.context());
 </script>
 
 <!-- {#key step} -->

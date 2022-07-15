@@ -52,7 +52,7 @@ export abstract class Strategy<VerifyOptions> {
    * At the end of the flow, it will return a Response to be used by the
    * application.
    */
-  abstract authenticate(event: StrategyAuthenticateProps): Promise<App.User>;
+  abstract authenticate(event: StrategyAuthenticateProps): Promise<AuthenticateReturn>;
 
   /**
    * Can be overridden for each custom strategy.
@@ -76,9 +76,15 @@ interface GetRedirectFromUrl {
   defaultRedirect: string;
 }
 
+export interface AuthenticateReturn {
+  user: App.User;
+  redirect?: string | undefined
+}
+
 export function getRedirectFromURL(options: GetRedirectFromUrl): URL {
   const url = typeof options.url === 'string' ? new URL(options.url) : options.url;
   const redirect = url.searchParams.get(options.redirectParam);
+  console.log({redirect, href: url.href, ...options})
 
   if (!redirect) {
     return new URL(options.defaultRedirect, url.origin);
