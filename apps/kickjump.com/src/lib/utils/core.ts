@@ -1,6 +1,8 @@
 import type { Transaction } from '@solana/web3.js';
 import type { Page } from '@sveltejs/kit';
 
+import { browser } from '$app/env';
+
 /**
  * Removes all undefined values from an object. Neither Firestore nor the RealtimeDB allow `undefined` as a value.
  *
@@ -52,4 +54,37 @@ export function decodeBase64(value: string) {
 
 export function matchesHref(page: Page, href: string) {
   return !['/', ''].includes(page.url.pathname) && page.url.pathname.startsWith(href);
+}
+
+/**
+ * @see https://lingohub.com/academy/best-practices/rtl-language-list
+ */
+const RTL_CODES = [
+  'ar', //	Arabic
+  'arc', //	Aramaic
+  'dv', //	Divehi
+  'fa', //	Persian
+  'ha', //	Hausa
+  'he', //	Hebrew
+  'khw', //	Khowar
+  'ks', //	Kashmiri
+  'ku', //	Kurdish
+  'ps', //	Pashto
+  'ur', //	Urdu
+  'yi', //	Yiddish
+];
+
+/**
+ * Get the direction for the provided county code.
+ */
+export function getDirFromCountryCode(countryCode: string) {
+  return RTL_CODES.some((code) => countryCode.startsWith(code)) ? 'rtl' : 'ltr';
+}
+
+export function getLocaleFromNavigator(ssrDefault?: string) {
+  if (!browser) {
+    return ssrDefault || null;
+  }
+
+  return window.navigator.language || window.navigator.languages[0];
 }

@@ -12,7 +12,6 @@
   import { showUninstalledWallets } from '$stores/persistent-data';
   import { type WalletWithMetadata, cleanUrl, getWalletProviders, solana } from '$stores/solana';
   import type { Maybe } from '$types';
-  import { t } from '$utils/intl';
   import { addUrlParams } from '$utils/url';
 
   import { SELECT_WALLET_ID } from './constants.js';
@@ -64,9 +63,7 @@
   $: displayedWallets = availableWallets.filter((wallet) =>
     $showUninstalledWallets ? true : wallet.isInstalled,
   );
-  $: footerText = $showUninstalledWallets
-    ? $t('walletStep.selectWallet.hide', { values: { count: uninstalledNumber } })
-    : $t('walletStep.selectWallet.show', { values: { count: uninstalledNumber } });
+  $: footerText = $showUninstalledWallets ? 'Hide uninstalled' : 'Show uninstalled';
   $: refreshUrl = walletWithMetaToInstall
     ? addUrlParams({ params: { stepId: SELECT_WALLET_ID, steps: '1' }, href: location.href })
     : undefined;
@@ -80,7 +77,7 @@
 </script>
 
 <StepLayout>
-  <ModalTitle as="h3" slot="heading">{$t('walletStep.selectWallet.title')}</ModalTitle>
+  <ModalTitle as="h3" slot="heading">Select Wallet</ModalTitle>
   <svelte:fragment slot="content">
     {#if loading}
       <div class={contentClasses} transition:fade={FADE_OUT}>
@@ -99,16 +96,13 @@
           <Icon icon={walletWithMetaToInstall.icon} size="3rem" />
           <h3 class="flex-1 ">{walletWithMetaToInstall.adapter.name}</h3>
         </div>
-        <h4 class="pb-4">{$t('walletStep.installWallet.redirect')}</h4>
+        <h4 class="pb-4">You will be redirected</h4>
         <p class="pb-2 text-sm">
-          {$t('walletStep.installWallet.instructions', {
-            values: { mode: 'browser', name: walletWithMetaToInstall.adapter.name },
-          })}
+          In order to use {walletWithMetaToInstall.adapter.name}, you must first install the browser
+          extension.
         </p>
         <p class="text-sm">
-          {$t('walletStep.installWallet.warning', {
-            values: { url: cleanedUrl },
-          })}
+          Make sure you only install the wallet from the official {cleanedUrl} website.
         </p>
       </div>
     {:else}
@@ -131,19 +125,19 @@
       >
         <div class="flex gap-x-7 justify-end items-end">
           <Button size="sm" theme="error" onClick={() => (walletWithMetaToInstall = undefined)}>
-            {$t('walletStep.installWallet.cancel')}
+            Cancel
           </Button>
           <Button
             size="sm"
             onClick={() => window.open(walletWithMetaToInstall?.adapter.url, '_blank', 'noopener')}
           >
-            {$t('walletStep.installWallet.install')}
+            Install
           </Button>
         </div>
         <span class="text-xs text-center">
-          {$t('walletStep.installWallet.finished')}
+          Finished installing?
           <a class="bold underline underline-offset-1" href={refreshUrl} target="_self">
-            {$t('walletStep.installWallet.refresh')}
+            Refresh
           </a>
         </span>
       </div>

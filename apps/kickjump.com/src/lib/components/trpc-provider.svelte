@@ -7,9 +7,9 @@
   export let client: TRPCClient<AnyRouter>;
   export let ssrState: SSRState | undefined = undefined;
 
-  $: TRPCContext.create({ client, queryClient, ssrState });
+  const trpc = TRPCContext.create({ client, queryClient, ssrState });
 </script>
 
 <QueryClientProvider client={queryClient}>
-  <slot />
+  <slot {trpc} />
 </QueryClientProvider>

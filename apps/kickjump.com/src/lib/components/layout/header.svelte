@@ -6,7 +6,6 @@
   import Logo from '$components/logo/logo.svelte';
   import { auth } from '$lib/auth';
   import { matchesHref } from '$utils/core';
-  import { t } from '$utils/intl';
 
   import Icon from '../icon/icon.svelte';
   import { IconToggle } from '../toggles';
@@ -22,13 +21,13 @@
   }
 
   const items = [
-    { label: $t('projects'), href: '/projects' },
-    { label: $t('about'), href: '/about' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'About', href: '/about' },
   ];
 
   $: githubAuth = auth.strategyUrl('github', 'login', {
     redirect: $page.params.redirect ?? $page.url.href,
-  }).pathname;
+  }).searchPath;
   $: logoutUrl = auth.logoutUrl().pathname;
   $: loggedIn = !!$session.user?.id;
   $: isDark =

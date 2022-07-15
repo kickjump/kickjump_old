@@ -1,16 +1,13 @@
 <script lang="ts">
   import Icon from '$components/icon/icon.svelte';
   import { type WalletWithMetadata, cleanUrl } from '$stores/solana';
-  import { t } from '$utils/intl';
 
   export let wallet: WalletWithMetadata;
   export let onSelect: () => void;
   export let onInstall: () => void;
 
   $: cleanedUrl = cleanUrl(wallet.adapter.url);
-  $: installationMessage = !wallet.isInstalled
-    ? ` (${$t('walletStep.selectWallet.item.uninstalled')})`
-    : '';
+  $: installationMessage = !wallet.isInstalled ? ` (not installed)` : '';
 </script>
 
 <div>

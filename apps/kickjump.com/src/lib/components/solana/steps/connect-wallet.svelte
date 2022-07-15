@@ -6,7 +6,6 @@
   import { ModalTitle } from '$components/modal';
   import StepLayout from '$components/solana/steps/step-layout.svelte';
   import { solana } from '$stores/solana';
-  import { t } from '$utils/intl';
 
   import { WALLET_RESULTS_ID } from './constants.js';
   import { StepContext } from './step-context.js';
@@ -45,13 +44,9 @@
     <svelte:fragment slot="content">
       {#key $step}
         <div class="row-[1/1] col-[1/1] grid place-items-center" in:fly={FLY_IN}>
-          <ModalTitle as="h3" class="text-center">
-            {$t('walletStep.connectWallet.connecting')}
-          </ModalTitle>
-          <p
-            >{$t('walletStep.connectWallet.unlock', {
-              values: { name: $data.selectedWallet?.adapter.name },
-            })}
+          <ModalTitle as="h3" class="text-center">Connecting...</ModalTitle>
+          <p>
+            Please unlock your {$data.selectedWallet?.adapter.name} wallet.
           </p>
           <div class="h-8" />
           <div>
@@ -59,12 +54,12 @@
           </div>
           <div class="h-8" />
           <p class="text-center text-xs">
-            {$t('walletStep.connectWallet.trouble')}{' '}
+            Having trouble?{' '}
             <button
               class="inline bold underline underline-offset-1"
               on:click={() => previousStep()}
             >
-              {$t('walletStep.connectWallet.back')}
+              Go back
             </button>
           </p>
         </div>
