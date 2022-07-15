@@ -59,6 +59,7 @@ export const authenticator = new Authenticator({
         accountType: 'oauth',
         accessToken,
         scope: GITHUB_SCOPE,
+        login: profile._json.login,
       };
 
       // the user doesn't exist; create the user and account;

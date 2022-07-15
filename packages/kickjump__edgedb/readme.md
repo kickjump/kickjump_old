@@ -1,0 +1,3 @@
+# @kickjump/db
+
+> edgedb client

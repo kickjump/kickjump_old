@@ -34,16 +34,26 @@
     "seed"
   ],
   "scripts": {
-    "fix": "edgeql-js --target esm --output-dir src/generated --force-overwrite",
-    "migrate": "edgedb migration create && edgedb migrate && pnpm fix",
-    "seed": "tsx dbschema/seed.ts"
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.3.0",
+    "@kickjump/edgedb": "^0.0.0",
     "@kickjump/svelte-auth": "^0.0.0",
-    "edgedb": "0.21.0-alpha.3",
+    "edgedb": "0.21.0-beta.0",
     "tiny-invariant": "^1.2.0",
     "type-fest": "^2.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.4"
+  },
+  "peerDependencies": {
+    "@types/node": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
@@ -56,12 +66,14 @@
     "tsconfigs": {
       "src": {
         "compilerOptions": {
-          "types": [],
+          "types": [
+            "node"
+          ],
           "allowJs": true,
           "noEmit": false
         }
       },
-      "dbschema": {}
+      "scripts": {}
     },
     "mode": "library",
     "externalModules": []

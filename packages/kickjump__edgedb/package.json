@@ -1,0 +1,47 @@
+{
+  "name": "@kickjump/edgedb",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The automated edgedb bindings",
+  "keywords": [],
+  "license": "MIT",
+  "contributors": [],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./index.js": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/*.d.ts"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "seed"
+  ],
+  "scripts": {
+    "build": "pnpm run dev",
+    "dev": "edgeql-js --target esm --output-dir dist --force-overwrite",
+    "migrate": "edgedb migration create && edgedb migrate && pnpm dev",
+    "prepare": "pnpm run dev"
+  },
+  "dependencies": {
+    "edgedb": "0.21.0-beta.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "tsconfig": {
+      "src": false
+    },
+    "mode": "app"
+  }
+}

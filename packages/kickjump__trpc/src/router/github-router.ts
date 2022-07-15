@@ -1,52 +1,47 @@
-// import { e, UserModel } from '@kickjump/db';
-// import { App } from '@octokit/app';
-// import { createAppAuth, createOAuthUserAuth } from '@octokit/auth-app';
 import type * as _ from '@octokit/types';
-// import { TRPCError } from '@trpc/server';
-// import { randomBytes } from 'node:crypto';
 import { Octokit } from 'octokit';
 
-import { t, withGitHubAccount } from '../init.js';
+import { s } from '../client/index.js';
+import { t } from '../init.js';
+import { withGitHubAccount } from '../middleware.js';
+import { parseLinkHeader } from '../parse-link-header.js';
 
 export const github = t.router({
-  // play: authenticated.query(async ({ ctx }) => {
-  //   console.log('inside github router!!');
-  //   const accounts = await UserModel.getAccountsByUserId(ctx.user.id, 'github');
-  //   const account = accounts.at(0);
+  repos: withGitHubAccount
+    .input(
+      s.object({
+        perPage: s.optional(s.number()),
+        cursor: s.optional(s.number()),
+      }),
+    )
+    .query(async (props) => {
+      const { ctx, input } = props;
+      const { perPage = 100, cursor = 0 } = input;
+      const octokit = new Octokit({ auth: ctx.account.accessToken });
+      // const {
+      //   GITHUB_APP_ID: appId,
+      //   GITHUB_APP_PRIVATE_KEY: privateKey,
+      //   GITHUB_CLIENT_ID: clientId,
+      //   GITHUB_CLIENT_SECRET: clientSecret,
+      // } = env;
+      // const app = new App({ appId, privateKey, oauth: { clientId, clientSecret } });
+      // (await app.getInstallationOctokit(1)).rest.users.
 
-  //   if (!account?.accessToken) {
-  //     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Missing github account accessToken' });
-  //   }
+      // const { data: repos, headers } = await octokit.rest.repos.listForAuthenticatedUser({
+      //   per_page: perPage,
+      //   page: cursor,
+      //   visibility: 'public',
+      // });
 
-  //   const { accessToken } = account;
-  //   console.log('access token here', accessToken);
-  //   const octokit = new Octokit({
-  //     auth: accessToken,
-  //   });
+      const {
+        data: { total_count: count, installations },
+        headers,
+      } = await octokit.rest.apps.listInstallationsForAuthenticatedUser({
+        per_page: perPage,
+        page: cursor,
+      });
+      const parsed = parseLinkHeader(headers.link);
 
-  //   console.log('created octokit');
-  //   // octokit.rest.apps.updateWebhookConfigForApp;
-  //   const repos = await octokit.rest.repos.listForAuthenticatedUser({});
-  //   // await octokit.auth();
-  //   // const values = await octokit.rest.repos.listForAuthenticatedUser();
-  //   console.log(repos);
-
-  //   return repos;
-  // }),
-  installableRepos: withGitHubAccount.query(async ({ ctx }) => {
-    const octokit = new Octokit({ auth: ctx.account.accessToken });
-    const repos = await octokit.rest.repos.listForAuthenticatedUser({});
-
-    return repos;
-  }),
+      return { count, installations, ...parsed };
+    }),
 });
-
-export const INSTALLATION_STATE_KEY = '_gh:installation:state';
-
-declare global {
-  namespace App {
-    interface Session {
-      [INSTALLATION_STATE_KEY]?: { id: string; redirect: string };
-    }
-  }
-}

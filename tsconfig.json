@@ -10,10 +10,13 @@
       "path": "apps/kickjump.com"
     },
     {
-      "path": "packages/kickjump__db/dbschema"
+      "path": "packages/kickjump__db/scripts"
     },
     {
       "path": "packages/kickjump__db/src"
+    },
+    {
+      "path": "packages/kickjump__edgedb/src"
     },
     {
       "path": "packages/kickjump__playwright/src"

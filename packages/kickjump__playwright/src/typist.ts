@@ -82,7 +82,7 @@ export interface TypistOptions {
   /**
    * Set a delay in `ms` when typing.
    *
-   * @default undefined - no delay.
+   * @default 0 - no delay.
    */
   delay?: number | undefined;
 
@@ -107,46 +107,53 @@ const defaultModifierActions: Record<string, TypistAction> = {
   ...createCloseableAction('cmd', 'Meta'),
 
   // General modifiers.
-  '{selectall}': ({ delay, page }: TypistOptions) => selectAll({ delay, page }),
-  '{capslock}': ({ delay, page }: TypistOptions) => page.keyboard.press('CapsLock', { delay }),
-  '{arrowleft}': ({ delay, page }: TypistOptions) => page.keyboard.press('ArrowLeft', { delay }),
-  '{arrowright}': ({ delay, page }: TypistOptions) => page.keyboard.press('ArrowRight', { delay }),
-  '{arrowdown}': ({ delay, page }: TypistOptions) => page.keyboard.press('ArrowDown', { delay }),
-  '{arrowup}': ({ delay, page }: TypistOptions) => page.keyboard.press('ArrowUp', { delay }),
-  '{pagedown}': ({ delay, page }: TypistOptions) => page.keyboard.press('PageDown', { delay }),
-  '{pageup}': ({ delay, page }: TypistOptions) => page.keyboard.press('PageUp', { delay }),
+  '{selectall}': ({ delay = 0, page }: TypistOptions) => selectAll({ delay, page }),
+  '{capslock}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('CapsLock', { delay }),
+  '{arrowleft}': ({ delay = 0, page }: TypistOptions) =>
+    page.keyboard.press('ArrowLeft', { delay }),
+  '{arrowright}': ({ delay = 0, page }: TypistOptions) =>
+    page.keyboard.press('ArrowRight', { delay }),
+  '{arrowdown}': ({ delay = 0, page }: TypistOptions) =>
+    page.keyboard.press('ArrowDown', { delay }),
+  '{arrowup}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('ArrowUp', { delay }),
+  '{pagedown}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('PageDown', { delay }),
+  '{pageup}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('PageUp', { delay }),
   ...createAliasedActions(),
-  '{enter}': ({ delay, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
-  '\n': ({ delay, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
-  '\r': ({ delay, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
-  '{tab}': ({ delay, page }: TypistOptions) => page.keyboard.press('Tab', { delay }),
-  '{esc}': ({ delay, page }: TypistOptions) => page.keyboard.press('Escape', { delay }),
-  '{del}': ({ delay, page }: TypistOptions) => page.keyboard.press('Delete', { delay }),
-  '{backspace}': ({ delay, page }: TypistOptions) => page.keyboard.press('Backspace', { delay }),
-  '{space}': ({ delay, page }: TypistOptions) => page.keyboard.press('Space', { delay }),
-  ' ': ({ delay, page }: TypistOptions) => page.keyboard.press('Space', { delay }),
-  '{f1}': ({ delay, page }: TypistOptions) => page.keyboard.press('F1', { delay }),
-  '{f2}': ({ delay, page }: TypistOptions) => page.keyboard.press('F2', { delay }),
-  '{f3}': ({ delay, page }: TypistOptions) => page.keyboard.press('F3', { delay }),
-  '{f4}': ({ delay, page }: TypistOptions) => page.keyboard.press('F4', { delay }),
-  '{f5}': ({ delay, page }: TypistOptions) => page.keyboard.press('F5', { delay }),
-  '{f6}': ({ delay, page }: TypistOptions) => page.keyboard.press('F6', { delay }),
-  '{f7}': ({ delay, page }: TypistOptions) => page.keyboard.press('F7', { delay }),
-  '{f8}': ({ delay, page }: TypistOptions) => page.keyboard.press('F8', { delay }),
-  '{f9}': ({ delay, page }: TypistOptions) => page.keyboard.press('F9', { delay }),
-  '{f10}': ({ delay, page }: TypistOptions) => page.keyboard.press('F10', { delay }),
-  '{f11}': ({ delay, page }: TypistOptions) => page.keyboard.press('F11', { delay }),
-  '{f12}': ({ delay, page }: TypistOptions) => page.keyboard.press('F12', { delay }),
+  '{enter}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
+  '\n': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
+  '\r': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Enter', { delay }),
+  '{tab}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Tab', { delay }),
+  '{esc}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Escape', { delay }),
+  '{del}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Delete', { delay }),
+  '{backspace}': ({ delay = 0, page }: TypistOptions) =>
+    page.keyboard.press('Backspace', { delay }),
+  '{space}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Space', { delay }),
+  ' ': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('Space', { delay }),
+  '{f1}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F1', { delay }),
+  '{f2}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F2', { delay }),
+  '{f3}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F3', { delay }),
+  '{f4}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F4', { delay }),
+  '{f5}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F5', { delay }),
+  '{f6}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F6', { delay }),
+  '{f7}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F7', { delay }),
+  '{f8}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F8', { delay }),
+  '{f9}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F9', { delay }),
+  '{f10}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F10', { delay }),
+  '{f11}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F11', { delay }),
+  '{f12}': ({ delay = 0, page }: TypistOptions) => page.keyboard.press('F12', { delay }),
 };
 
 function createAliasedActions() {
-  const homeAction: TypistAction = ({ delay, page }) =>
+  const homeAction: TypistAction = ({ delay = 0, page }) =>
     isApple() ? Promise.resolve() : page.keyboard.press('Home', { delay });
-  homeAction.alias = isApple() ? '{cmd}{arrowleft}{/cmd}' : undefined;
 
-  const endAction: TypistAction = ({ delay, page }) =>
+  const endAction: TypistAction = ({ delay = 0, page }) =>
     isApple() ? Promise.resolve() : page.keyboard.press('End', { delay });
-  endAction.alias = isApple() ? '{cmd}{arrowright}{/cmd}' : undefined;
+
+  if (isApple()) {
+    endAction.alias = '{cmd}{arrowright}{/cmd}';
+    homeAction.alias = '{cmd}{arrowleft}{/cmd}';
+  }
 
   return {
     '{home}': homeAction,
@@ -234,7 +241,7 @@ function getAction(text: string, options: TypistOptions): GetActionReturn {
   const character = text[0] ?? '';
 
   return {
-    action: ({ delay, page }) => page.keyboard.type(character, { delay }),
+    action: ({ delay = 0, page }) => page.keyboard.type(character, { delay }),
     text: text.slice(1),
   };
 }

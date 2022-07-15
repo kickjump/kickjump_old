@@ -10,11 +10,6 @@ import mdsvexConfig from './mdsvex.config.js';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   extensions: ['.svelte', ...mdsvexConfig.extensions],
-
-  experimental: {
-    // prebundleSvelteLibraries: true,
-  },
-
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: [preprocess({ postcss: true }), mdsvex(mdsvexConfig)],

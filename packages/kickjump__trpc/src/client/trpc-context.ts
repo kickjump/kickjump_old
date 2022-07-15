@@ -1,3 +1,4 @@
+import type { UseInfiniteQueryOptions, UseInfiniteQueryResult } from '@sveltestack/svelte-query';
 import {
   type FetchInfiniteQueryOptions,
   type FetchQueryOptions,
@@ -12,6 +13,7 @@ import {
   type UseMutationResult,
   type UseQueryOptions,
   type UseQueryResult,
+  useInfiniteQuery,
   useMutation,
   useQuery,
 } from '@sveltestack/svelte-query';
@@ -253,14 +255,6 @@ function getClientArgs(pathAndInput: [string, ...unknown[]], options: any) {
 
 export type ProcedureRecord = Record<string, Procedure<any>>;
 
-// type inferInfiniteQueryNames<Type extends ProcedureRecord> = {
-//   [Path in keyof Type]: inferProcedureInput<Type[Path]> extends {
-//     cursor?: any;
-//   }
-//     ? Path
-//     : never;
-// }[keyof Type];
-
 type inferProcedures<Type extends ProcedureRecord> = {
   [Path in keyof Type]: {
     input: inferProcedureInput<Type[Path]>;
@@ -274,7 +268,7 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
   type Queries = Router['_def']['queries'];
   // type TSubscriptions = Router['_def']['subscriptions'];
   type Error = TRPCClientErrorLike<Router>;
-  // type TInfiniteQueryNames = inferInfiniteQueryNames<Queries>;
+  type InfiniteQueryNames = inferInfiniteQueryNames<Queries>;
   type TQueryValues = inferProcedures<Router['_def']['queries']>;
   type TMutationValues = inferProcedures<Router['_def']['mutations']>;
 
@@ -356,52 +350,42 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
     }, options) as any;
   }
 
-  // function subscription<
-  //   Path extends keyof TSubscriptions & string,
-  //   Output extends inferSubscriptionOutput<Router, Path>,
-  // >(
-  //   pathAndInput: Readable<[
-  //     path: Path,
-  //     ...args: inferHandlerInput<TSubscriptions[Path]>,
-  //   ]>,
-  //   options: Readable<{
-  //     enabled?: boolean;
-  //     error?: (err: Error) => void;
-  //     next: (data: Output) => void;
-  //   }>,
-  // ) {
+  function infinite<Path extends InfiniteQueryNames & string>(
+    pathAndInput: [path: Path, input: Omit<TQueryValues[Path]['input'], 'cursor'>],
+    opts?: UseTRPCInfiniteQueryOptions<
+      Path,
+      Omit<TQueryValues[Path]['input'], 'cursor'>,
+      TQueryValues[Path]['output'],
+      Error
+    >,
+  ): UseInfiniteQueryResult<TQueryValues[Path]['output'], Error> {
+    const [path, input] = pathAndInput;
+    const { client, ssrState, prefetchInfiniteQuery, queryClient } = context();
 
-  //   const { client } = context();
-  //   derived([pathAndInput, options], ([$path, $options]) => {
-  //     const [path, input] = $path;
-  //     let isStopped = false;
-  //     const subscription = client.subscription<
-  //       Router['_def']['subscriptions'],
-  //       Path,
-  //       Output,
-  //       inferProcedureInput<Router['_def']['subscriptions'][Path]>
-  //     >(path, (input ?? undefined) as any, {
-  //       error: (err) => {
-  //         if (!isStopped) {
-  //           $options.error?.(err);
-  //         }
-  //       },
-  //       next: (res) => {
-  //         if (res.type === 'data' && !isStopped) {
-  //           $options.next(res.data);
-  //         }
-  //       },
-  //     });
-  //     return () => {
-  //       isStopped = true;
-  //       subscription.unsubscribe();
-  //     };
+    if (
+      typeof window === 'undefined' &&
+      ssrState === 'prepass' &&
+      opts?.ssr !== false &&
+      opts?.enabled !== false &&
+      // eslint-disable-next-line unicorn/prefer-array-some, unicorn/no-array-callback-reference
+      !queryClient.getQueryCache().find(pathAndInput)
+    ) {
+      void prefetchInfiniteQuery(pathAndInput as any, opts as any);
+    }
 
-  //   })
+    const actualOptions = queryOptionsIfNeeded(pathAndInput, opts);
 
-  // }
+    return useInfiniteQuery(
+      pathAndInput as any,
+      ({ pageParam }) => {
+        const actualInput = { ...(input as any), cursor: pageParam };
+        return (client.query as any)(...getClientArgs([path, actualInput], actualOptions));
+      },
+      actualOptions,
+    ) as any;
+  }
 
-  return { createClient, context, query, mutation };
+  return { createClient, context, query, mutation, infinite };
 }
 
 /**
@@ -414,6 +398,17 @@ class GnClass<Router extends AnyRouter> {
   }
 }
 
+export interface UseTRPCInfiniteQueryOptions<Path, Input, Output, Error>
+  extends UseInfiniteQueryOptions<Output, Error, Output, Output, [Path, Input]>,
+    TRPCUseQueryBaseOptions {}
+
+type inferInfiniteQueryNames<Type extends ProcedureRecord> = {
+  [Path in keyof Type]: inferProcedureInput<Type[Path]> extends {
+    cursor?: any;
+  }
+    ? Path
+    : never;
+}[keyof Type];
 type returnTypeInferer<T> = T extends (a: Record<string, string>) => infer U ? U : never;
 type HackyInferrer<Router extends AnyRouter> = GnClass<Router>['createSvelteQueryTRPC'];
 type CreateSvelteQueryTRPC<Router extends AnyRouter> = returnTypeInferer<HackyInferrer<Router>>;
@@ -484,6 +479,25 @@ type DecorateProcedure<Procedure extends AnyProcedure, Path extends string> = Om
           Context
         >
       >
+    : never;
+
+  infinite: Procedure extends { _query: true }
+    ? inferProcedureInput<Procedure> extends {
+        cursor?: any;
+      }
+      ? // eslint-disable-next-line @typescript-eslint/naming-convention
+        <_QueryFnData = inferProcedureOutput<Procedure>, Data = inferProcedureOutput<Procedure>>(
+          ...args: [
+            Omit<inferProcedureInput<Procedure>, 'cursor'>,
+            void | UseTRPCInfiniteQueryOptions<
+              Path,
+              inferProcedureInput<Procedure>,
+              Data,
+              inferProcedureClientError<Procedure>
+            >,
+          ]
+        ) => Readable<UseInfiniteQueryResult<Data, inferProcedureClientError<Procedure>>>
+      : never
     : never;
 }>;
 

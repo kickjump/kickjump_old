@@ -7,17 +7,8 @@
   ],
   "extends": "../../../.monots/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node"],
-    "noEmit": false,
-    "allowJs": true,
-    "declaration": true,
-    "composite": true,
-    "emitDeclarationOnly": true,
-    "outDir": "../dist"
+    "types": [],
+    "noEmit": true
   },
-  "references": [
-    {
-      "path": "../../kickjump__svelte-auth/src"
-    }
-  ]
+  "references": []
 }

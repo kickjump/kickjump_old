@@ -1,15 +1,17 @@
+import type { Account, Email, User } from '@kickjump/edgedb';
 import { type Executor, createClient } from 'edgedb';
+import type _ from 'edgedb/dist/client.js';
 import type { PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
 
-import type { Account, Email, User } from './generated/index.js';
-
-export { default as e } from './generated/index.js';
 export const client = createClient();
+
 export function run<Runner extends { run: (cxn: Executor) => any }>(
   runner: Runner,
 ): ReturnType<Runner['run']> {
   return runner.run(client);
 }
+
+export { default as e } from '@kickjump/edgedb';
 
 /**
 Matches any primitive, `Date`, or `RegExp` value.

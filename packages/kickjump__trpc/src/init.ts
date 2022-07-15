@@ -1,6 +1,5 @@
-import { UserModel } from '@kickjump/db';
 import type { ServerSession } from '@kickjump/svelte-auth';
-import { initTRPC, TRPCError } from '@trpc/server';
+import { initTRPC } from '@trpc/server';
 
 import { s } from './client/index.js';
 import { transformer } from './client/transformer.js';
@@ -33,39 +32,3 @@ interface Params {
 }
 
 export const t = initTRPC<Params>()({ transformer });
-
-const isAuthenticated = t.middleware((props) => {
-  const { next, ctx } = props;
-
-  if (!ctx.user) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'This procedure requires authentication to access',
-    });
-  }
-
-  return next({ ctx: { ...ctx, user: ctx.user } });
-});
-
-// Reusable:
-export const authenticated = t.procedure.use(isAuthenticated);
-
-export const withGitHubAccount = t.procedure.use(async (props) => {
-  const { next, ctx } = props;
-
-  if (!ctx.user) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'This procedure requires authentication to access',
-    });
-  }
-
-  const accounts = await UserModel.getAccountsByUserId(ctx.user.id, 'github');
-  const account = accounts.at(0);
-
-  if (!account?.accessToken) {
-    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Missing github account accessToken' });
-  }
-
-  return next({ ctx: { ...ctx, account } });
-});

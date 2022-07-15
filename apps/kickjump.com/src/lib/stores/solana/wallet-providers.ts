@@ -151,7 +151,7 @@ export function getWalletProviders(
     const isInstalled = adapter.readyState === WalletReadyState.Installed;
     // const mobileLevel =
 
-    walletsWithMetadata.push({ adapter, icon, isInstalled, mobileLevel: undefined });
+    walletsWithMetadata.push({ adapter, icon, isInstalled });
   }
 
   inPlaceSort(walletsWithMetadata).by([
