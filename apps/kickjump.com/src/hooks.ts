@@ -20,7 +20,6 @@ export const getSession: GetSession = async (event) => {
   const error = event.locals.error;
   const userAgent = event.request.headers.get('user-agent') ?? '';
   const absoluteUrl = getAbsoluteUrl();
-  console.log(session)
 
   return {
     ...session,

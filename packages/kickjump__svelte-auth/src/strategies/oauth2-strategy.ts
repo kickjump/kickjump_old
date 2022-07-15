@@ -244,8 +244,6 @@ export class OAuth2Strategy<
     const id = randomBytes(8).toString('hex');
     const redirect = this.getRedirectUrl({ options, url, baseUrl }).href;
 
-    console.log({ redirect, url: url.href })
-
     return { id, redirect, action };
   }
 

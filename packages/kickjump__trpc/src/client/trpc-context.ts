@@ -47,7 +47,6 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
    * Dynamically provide the context when accessed.
    */
   static context<Router extends AnyRouter>(): TRPCContext<Router> {
-    console.log('getting trpc context')
     const context = getContext<TRPCContext<Router> | undefined>(CONTEXT_KEY);
     invariant(context, 'StepProvider compound components cannot be rendered outside the context');
 

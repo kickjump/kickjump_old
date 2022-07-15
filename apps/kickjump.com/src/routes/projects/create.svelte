@@ -3,7 +3,6 @@
   import { auth } from '$lib/auth';
   import SelectRepositories from '$modules/create-project/select-repositories.svelte';
   const href = auth.strategyUrl('github', 'install').searchPath;
-  console.log({ href });
 </script>
 
 <!-- <VirtualList /> -->

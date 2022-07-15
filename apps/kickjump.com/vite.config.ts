@@ -6,6 +6,7 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 export default defineConfig({
   mode: process.env.VITE_MODE ? process.env.MODE : undefined,
   plugins: [topLevelAwait(), sveltekit()],
+  legacy: { buildSsrCjsExternalHeuristics: true },
   resolve: {
     alias: {
       $components: path.resolve('./src/lib/components'),

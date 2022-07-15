@@ -41,7 +41,7 @@
   "dependencies": {
     "@octokit/app": "^13.0.5",
     "@octokit/auth-app": "^4.0.4",
-    "@octokit/types": "^6.39.0",
+    "@octokit/types": "^6.40.0",
     "@solana/web3.js": "^1.48.0",
     "@trpc/client": "10.0.0-alpha.38",
     "@trpc/server": "10.0.0-alpha.38",
@@ -71,16 +71,16 @@
   "devDependencies": {
     "@kickjump/db": "^0.0.1",
     "@kickjump/svelte-auth": "^0.0.0",
-    "svelte": "^3.49.0",
-    "@sveltejs/kit": "1.0.0-next.375",
-    "@sveltestack/svelte-query": "^1.6.0"
+    "@sveltejs/kit": "1.0.0-next.377",
+    "@sveltestack/svelte-query": "^1.6.0",
+    "svelte": "^3.49.0"
   },
   "peerDependencies": {
     "@kickjump/db": "*",
     "@kickjump/svelte-auth": "*",
-    "svelte": "^3.49.0",
     "@sveltejs/kit": "*",
-    "@sveltestack/svelte-query": "^1.6.0"
+    "@sveltestack/svelte-query": "^1.6.0",
+    "svelte": "^3.49.0"
   },
   "publishConfig": {
     "access": "public"

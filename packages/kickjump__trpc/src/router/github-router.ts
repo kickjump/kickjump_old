@@ -16,7 +16,7 @@ export const github = t.router({
     )
     .query(async (props) => {
       const { ctx, input } = props;
-      const { perPage = 100, cursor = 0 } = input;
+      const { perPage = 100, cursor } = input;
       const octokit = new Octokit({ auth: ctx.account.accessToken });
       // const {
       //   GITHUB_APP_ID: appId,
@@ -38,7 +38,7 @@ export const github = t.router({
         headers,
       } = await octokit.rest.apps.listInstallationsForAuthenticatedUser({
         per_page: perPage,
-        page: cursor,
+        page: cursor as number,
       });
       const parsed = parseLinkHeader(headers.link);
 

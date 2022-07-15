@@ -84,7 +84,6 @@ export interface AuthenticateReturn {
 export function getRedirectFromURL(options: GetRedirectFromUrl): URL {
   const url = typeof options.url === 'string' ? new URL(options.url) : options.url;
   const redirect = url.searchParams.get(options.redirectParam);
-  console.log({redirect, href: url.href, ...options})
 
   if (!redirect) {
     return new URL(options.defaultRedirect, url.origin);

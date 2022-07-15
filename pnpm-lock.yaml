@@ -20,9 +20,9 @@ patchedDependencies:
   fast-sort@3.2.0:
     hash: s6yx6scqn34nfbsenjwclzyzam
     path: .monots/patches/fast-sort@3.2.0.patch
-  '@sveltejs/kit@1.0.0-next.372':
+  '@sveltejs/kit@1.0.0-next.377':
     hash: fuggoyr3x5ahnd3au6iuqthxdm
-    path: .monots/patches/@sveltejs__kit@1.0.0-next.372.patch
+    path: .monots/patches/@sveltejs__kit@1.0.0-next.377.patch
   eslint-config-monots@0.11.1:
     hash: ynpbll2sln6c5uxbt5t7ki3m2y
     path: .monots/patches/eslint-config-monots@0.11.1.patch
@@ -176,8 +176,8 @@ importers:
       '@octokit/app': ^13.0.5
       '@octokit/auth-app': ^4.0.4
       '@octokit/core': ^4.0.4
-      '@octokit/openapi-types': ^12.9.1
-      '@octokit/types': ^6.39.0
+      '@octokit/openapi-types': ^12.10.0
+      '@octokit/types': ^6.40.0
       '@octokit/webhooks': ^10.0.8
       '@playwright/experimental-ct-svelte': ^1.23.3
       '@project-serum/anchor': 0.25.0
@@ -196,8 +196,8 @@ importers:
       '@solana/wallet-adapter-tokenpocket': ^0.4.7
       '@solana/wallet-adapter-torus': ^0.11.14
       '@solana/web3.js': ^1.48.0
-      '@sveltejs/adapter-auto': 1.0.0-next.59
-      '@sveltejs/kit': 1.0.0-next.372
+      '@sveltejs/adapter-auto': 1.0.0-next.60
+      '@sveltejs/kit': 1.0.0-next.377
       '@sveltestack/svelte-query': ^1.6.0
       '@testing-library/svelte': ^3.1.3
       '@trpc/client': 10.0.0-alpha.38
@@ -233,7 +233,7 @@ importers:
       ts-extras: ^0.10.2
       tweetnacl: ^1.0.3
       type-fest: ^2.16.0
-      vite: ^2.9.14
+      vite: ^3.0.0
       vite-plugin-top-level-await: ^1.1.0
       zod: ^3.17.3
     devDependencies:
@@ -256,8 +256,8 @@ importers:
       '@octokit/app': 13.0.5
       '@octokit/auth-app': 4.0.4
       '@octokit/core': 4.0.4
-      '@octokit/openapi-types': 12.9.1
-      '@octokit/types': 6.39.0
+      '@octokit/openapi-types': 12.10.0
+      '@octokit/types': 6.40.0
       '@octokit/webhooks': 10.0.8
       '@playwright/experimental-ct-svelte': 1.23.3_svelte@3.49.0
       '@project-serum/anchor': 0.25.0
@@ -276,8 +276,8 @@ importers:
       '@solana/wallet-adapter-tokenpocket': 0.4.7_@solana+web3.js@1.48.0
       '@solana/wallet-adapter-torus': 0.11.14_@solana+web3.js@1.48.0
       '@solana/web3.js': 1.48.0
-      '@sveltejs/adapter-auto': 1.0.0-next.59
-      '@sveltejs/kit': 1.0.0-next.372_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@2.9.14
+      '@sveltejs/adapter-auto': 1.0.0-next.60
+      '@sveltejs/kit': 1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@3.0.0
       '@sveltestack/svelte-query': 1.6.0_broadcast-channel@4.13.0
       '@testing-library/svelte': 3.1.3_svelte@3.49.0
       '@trpc/client': 10.0.0-alpha.38_g54didzcqig66fkzjcj6kpgxpe
@@ -299,7 +299,7 @@ importers:
       mdsvex: 0.10.6_svelte@3.49.0
       nanoevents: 7.0.1
       octokit: 2.0.3
-      sk-auth: 0.4.1_l6e7nbnfnxy3qaaos5dwjfmhda
+      sk-auth: 0.4.1_unl763skuspkrbuewvlicjpk7e
       solana-credentials: link:../../packages/solana-credentials
       svelte: 3.49.0
       svelte-check: 2.8.0_svelte@3.49.0
@@ -313,8 +313,8 @@ importers:
       ts-extras: 0.10.2
       tweetnacl: 1.0.3
       type-fest: 2.16.0
-      vite: 2.9.14
-      vite-plugin-top-level-await: 1.1.0_vite@2.9.14
+      vite: 3.0.0
+      vite-plugin-top-level-await: 1.1.0_vite@3.0.0
       zod: 3.17.3
 
   packages/kickjump:
@@ -364,7 +364,7 @@ importers:
 
   packages/kickjump__svelte-auth:
     specifiers:
-      '@sveltejs/kit': 1.0.0-next.375
+      '@sveltejs/kit': 1.0.0-next.377
       is-what: ^4.1.7
       nanoid: ^4.0.0
       path-to-regexp: 6.2.1
@@ -384,7 +384,7 @@ importers:
       ts-extras: 0.10.2
       type-fest: 2.16.0
     devDependencies:
-      '@sveltejs/kit': 1.0.0-next.375_svelte@3.49.0
+      '@sveltejs/kit': 1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0
       svelte: 3.49.0
 
   packages/kickjump__tokens:
@@ -413,9 +413,9 @@ importers:
       '@kickjump/svelte-auth': ^0.0.0
       '@octokit/app': ^13.0.5
       '@octokit/auth-app': ^4.0.4
-      '@octokit/types': ^6.39.0
+      '@octokit/types': ^6.40.0
       '@solana/web3.js': ^1.48.0
-      '@sveltejs/kit': 1.0.0-next.375
+      '@sveltejs/kit': 1.0.0-next.377
       '@sveltestack/svelte-query': ^1.6.0
       '@trpc/client': 10.0.0-alpha.38
       '@trpc/server': 10.0.0-alpha.38
@@ -445,7 +445,7 @@ importers:
     dependencies:
       '@octokit/app': 13.0.5
       '@octokit/auth-app': 4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       '@solana/web3.js': 1.48.0
       '@trpc/client': 10.0.0-alpha.38_g54didzcqig66fkzjcj6kpgxpe
       '@trpc/server': 10.0.0-alpha.38
@@ -474,7 +474,7 @@ importers:
     devDependencies:
       '@kickjump/db': link:../kickjump__db
       '@kickjump/svelte-auth': link:../kickjump__svelte-auth
-      '@sveltejs/kit': 1.0.0-next.375_svelte@3.49.0
+      '@sveltejs/kit': 1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0
       '@sveltestack/svelte-query': 1.6.0
       svelte: 3.49.0
 
@@ -1518,7 +1518,7 @@ packages:
       kleur: 4.1.5
       selfsigned: 2.0.1
       undici: 5.5.1
-      ws: 8.8.0
+      ws: 8.8.1
       youch: 2.2.2
     transitivePeerDependencies:
       - bufferutil
@@ -1602,7 +1602,7 @@ packages:
       '@miniflare/core': 2.6.0
       '@miniflare/shared': 2.6.0
       undici: 5.5.1
-      ws: 8.8.0
+      ws: 8.8.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -1793,7 +1793,7 @@ packages:
       '@octokit/core': 4.0.4
       '@octokit/oauth-app': 4.0.6
       '@octokit/plugin-paginate-rest': 3.0.0_@octokit+core@4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       '@octokit/webhooks': 10.0.8
     transitivePeerDependencies:
       - encoding
@@ -1806,7 +1806,7 @@ packages:
       '@octokit/auth-oauth-user': 2.0.2
       '@octokit/request': 6.2.0
       '@octokit/request-error': 3.0.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       '@types/lru-cache': 5.1.1
       deprecation: 2.3.1
       lru-cache: 6.0.0
@@ -1822,7 +1822,7 @@ packages:
       '@octokit/auth-oauth-device': 4.0.0
       '@octokit/auth-oauth-user': 2.0.2
       '@octokit/request': 5.6.3
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       '@types/btoa-lite': 1.0.0
       btoa-lite: 1.0.0
       universal-user-agent: 6.0.0
@@ -1835,7 +1835,7 @@ packages:
     dependencies:
       '@octokit/oauth-methods': 2.0.2
       '@octokit/request': 6.2.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
@@ -1847,7 +1847,7 @@ packages:
       '@octokit/auth-oauth-device': 4.0.0
       '@octokit/oauth-methods': 2.0.2
       '@octokit/request': 6.2.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       btoa-lite: 1.0.0
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -1857,14 +1857,14 @@ packages:
     resolution: {integrity: sha512-MDNFUBcJIptB9At7HiV7VCvU3NcL4GnfCQaP8C5lrxWrRPMJBnemYtehaKSOlaM7AYxeRyj9etenu8LVpSpVaQ==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
 
   /@octokit/auth-unauthenticated/3.0.1:
     resolution: {integrity: sha512-Bzz19kSdK6dw6dd1CwZLsu5kfADPUAUz2PTlmVpMzAi5cWewsClDa7oQGVIa6uHSvlfowpRsUIJ8yNqYtntGCw==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/request-error': 3.0.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
 
   /@octokit/core/4.0.4:
     resolution: {integrity: sha512-sUpR/hc4Gc7K34o60bWC7WUH6Q7T6ftZ2dUmepSyJr9PRF76/qqkWjE2SOEzCqLA5W83SaISymwKtxks+96hPQ==}
@@ -1874,7 +1874,7 @@ packages:
       '@octokit/graphql': 5.0.0
       '@octokit/request': 6.2.0
       '@octokit/request-error': 3.0.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       before-after-hook: 2.2.2
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -1883,7 +1883,7 @@ packages:
   /@octokit/endpoint/6.0.12:
     resolution: {integrity: sha512-lF3puPwkQWGfkMClXb4k/eUT/nZKQfxinRWJrdZaJO85Dqwo/G0yOC434Jr2ojwafWJMYqFGFa5ms4jJUgujdA==}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
 
@@ -1891,7 +1891,7 @@ packages:
     resolution: {integrity: sha512-Kz/mIkOTjs9rV50hf/JK9pIDl4aGwAtT8pry6Rpy+hVXkAPhXanNQRxMoq6AeRgDCZR6t/A1zKniY2V1YhrzlQ==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
 
@@ -1900,7 +1900,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/request': 6.2.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
@@ -1934,13 +1934,13 @@ packages:
       '@octokit/oauth-authorization-url': 5.0.0
       '@octokit/request': 6.2.0
       '@octokit/request-error': 3.0.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       btoa-lite: 1.0.0
     transitivePeerDependencies:
       - encoding
 
-  /@octokit/openapi-types/12.9.1:
-    resolution: {integrity: sha512-nmLbJmjKDF4Ryy+P6xP6h0UwodTFNUzCm6IzBeZd1ITJ37fDra32TdtS/0vAzSCOac/KliJIjQI8Fiz2I414WA==}
+  /@octokit/openapi-types/12.10.0:
+    resolution: {integrity: sha512-xsgA7LKuQ/2QReMZQXNlBP68ferPlqw66Jmx5/J399Cn5EgIDaHXou6Rgn1GkpDNjkPji67fTlC2rz6ABaVFKw==}
 
   /@octokit/plugin-paginate-rest/3.0.0_@octokit+core@4.0.4:
     resolution: {integrity: sha512-fvw0Q5IXnn60D32sKeLIxgXCEZ7BTSAjJd8cFAE6QU5qUp0xo7LjFUjjX1J5D7HgN355CN4EXE4+Q1/96JaNUA==}
@@ -1949,38 +1949,38 @@ packages:
       '@octokit/core': '>=4'
     dependencies:
       '@octokit/core': 4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
 
-  /@octokit/plugin-rest-endpoint-methods/6.0.2_@octokit+core@4.0.4:
-    resolution: {integrity: sha512-jOnUCl7eCA/PE+nbdw88v+yn5sUh8rXXk3pGojQGL0WFrwz0SHHNsjJ+KghBNCklecgShLhn1y5UNySePjqWhg==}
+  /@octokit/plugin-rest-endpoint-methods/6.1.0_@octokit+core@4.0.4:
+    resolution: {integrity: sha512-gP/yHUY0k/uKkEqXF6tZGRhCFqZNjQ0qdh9/gVo74AJ2pc3cr1rjnW/KRw1uXUKB/H9Y0rRBCBxsLXJmQjPv3A==}
     engines: {node: '>= 14'}
     peerDependencies:
       '@octokit/core': '>=3'
     dependencies:
       '@octokit/core': 4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       deprecation: 2.3.1
 
   /@octokit/plugin-retry/3.0.9:
     resolution: {integrity: sha512-r+fArdP5+TG6l1Rv/C9hVoty6tldw6cE2pRHNGmFPdyfrc696R6JjrQ3d7HdVqGwuzfyrcaLAKD7K8TX8aehUQ==}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       bottleneck: 2.19.5
 
-  /@octokit/plugin-throttling/4.0.1_@octokit+core@4.0.4:
-    resolution: {integrity: sha512-CWAM7+3XkkmzwAd4FrI4+ogOd5oAmMJER8/6AYDTb4ErGuvSdSSGeI5jFw6quNj7qNV7TvSWLTnNgRjSdBEE2A==}
+  /@octokit/plugin-throttling/4.1.0_@octokit+core@4.0.4:
+    resolution: {integrity: sha512-HZAf9aeH552jpMELlSTRhYMHGRlUe5gqm8jWB1mz+w8+O/WBlBmn55WpQyDmaDnb3YyfV4fmbjz5+dEACKznuQ==}
     engines: {node: '>= 14'}
     peerDependencies:
       '@octokit/core': ^4.0.0
     dependencies:
       '@octokit/core': 4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       bottleneck: 2.19.5
 
   /@octokit/request-error/2.1.0:
     resolution: {integrity: sha512-1VIvgXxs9WHSjicsRwq8PlR2LR2x6DwsJAaFgzdi0JfJoGSO8mYI/cHJQ+9FbN21aa+DrgNLnwObmyeSC8Rmpg==}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       deprecation: 2.3.1
       once: 1.4.0
 
@@ -1988,7 +1988,7 @@ packages:
     resolution: {integrity: sha512-WBtpzm9lR8z4IHIMtOqr6XwfkGvMOOILNLxsWvDwtzm/n7f5AWuqJTXQXdDtOvPfTDrH4TPhEvW2qMlR4JFA2w==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       deprecation: 2.3.1
       once: 1.4.0
 
@@ -1997,7 +1997,7 @@ packages:
     dependencies:
       '@octokit/endpoint': 6.0.12
       '@octokit/request-error': 2.1.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       is-plain-object: 5.0.0
       node-fetch: 2.6.7
       universal-user-agent: 6.0.0
@@ -2010,17 +2010,17 @@ packages:
     dependencies:
       '@octokit/endpoint': 7.0.0
       '@octokit/request-error': 3.0.0
-      '@octokit/types': 6.39.0
+      '@octokit/types': 6.40.0
       is-plain-object: 5.0.0
       node-fetch: 2.6.7
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
 
-  /@octokit/types/6.39.0:
-    resolution: {integrity: sha512-Mq4N9sOAYCitTsBtDdRVrBE80lIrMBhL9Jbrw0d+j96BAzlq4V+GLHFJbHokEsVvO/9tQupQdoFdgVYhD2C8UQ==}
+  /@octokit/types/6.40.0:
+    resolution: {integrity: sha512-MFZOU5r8SwgJWDMhrLUSvyJPtVsqA6VnbVI3TNbsmw+Jnvrktzvq2fYES/6RiJA/5Ykdwq4mJmtlYUfW7CGjmw==}
     dependencies:
-      '@octokit/openapi-types': 12.9.1
+      '@octokit/openapi-types': 12.10.0
 
   /@octokit/webhooks-methods/3.0.0:
     resolution: {integrity: sha512-FAIyAchH9JUKXugKMC17ERAXM/56vVJekwXOON46pmUDYfU7uXB4cFY8yc8nYr5ABqVI7KjRKfFt3mZF7OcyUA==}
@@ -2655,27 +2655,27 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@sveltejs/adapter-auto/1.0.0-next.59:
-    resolution: {integrity: sha512-52X2eOjApECUhxYJugO5sXnBuDT26OKkgmib7fvUO4H8gLB2CpCe8yN+WP7D22XJRO3ItJreEDyYlq7K0o7Opw==}
+  /@sveltejs/adapter-auto/1.0.0-next.60:
+    resolution: {integrity: sha512-qi9O1syDSAJBIsjlWSgdxS8zAxW5XWhm3AYIhVqFhVXV+3HGW1vR/BzmGr1Vtz/iiCN8kEXh/RozFgk5Ldi5uw==}
     dependencies:
-      '@sveltejs/adapter-cloudflare': 1.0.0-next.28
-      '@sveltejs/adapter-netlify': 1.0.0-next.68
-      '@sveltejs/adapter-vercel': 1.0.0-next.61
+      '@sveltejs/adapter-cloudflare': 1.0.0-next.29
+      '@sveltejs/adapter-netlify': 1.0.0-next.69
+      '@sveltejs/adapter-vercel': 1.0.0-next.62
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: true
 
-  /@sveltejs/adapter-cloudflare/1.0.0-next.28:
-    resolution: {integrity: sha512-2vkHZ5s8yo0URjo1ZTShHuoa3QmCfkeGOk8apZkneOPVAjiG3R3+h4C0lGu29lIO4beT6uzYXcq/3ox0LtS91g==}
+  /@sveltejs/adapter-cloudflare/1.0.0-next.29:
+    resolution: {integrity: sha512-bm95d2pDEExy1cSPqvWxvftHEJz57krLlW3DdGtxbXWLr8M+WZbCEe1AqsnGycaFXUsn0GZ77IWNrHqcGxwvRg==}
     dependencies:
       '@cloudflare/workers-types': 3.14.1
       esbuild: 0.14.49
       worktop: 0.8.0-next.14
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.68:
-    resolution: {integrity: sha512-j/kofUuWcVImZpl0S64g4/axnnQO0iAQIPy2JIDWyrwb+xSpLc8d266g2fW+1K3zwVuzcLLaMSE4ajtV1scyZA==}
+  /@sveltejs/adapter-netlify/1.0.0-next.69:
+    resolution: {integrity: sha512-nIMtadrsnVemVDIuuqHSDxX/7xRypk+X2ewHY+JR/ONV853lUJ1r9AaXF9+XXPIqxGMKStsWm5GzgGNmM8ID2g==}
     dependencies:
       '@iarna/toml': 2.2.5
       esbuild: 0.14.49
@@ -2683,8 +2683,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.61:
-    resolution: {integrity: sha512-eqL1JovBPtM1h6MFoFHup2MSyR38jUPpZvU2qIozAZJ4MThiOwT6Jyd89znJ3vaSSpRXaQ+GEBs+XDSTpQKJBA==}
+  /@sveltejs/adapter-vercel/1.0.0-next.62:
+    resolution: {integrity: sha512-4wzKUG5BJBg3llnxOEPBx9d4Alit4uHO+VDcePoFA/lWzF0OElPYuDKUGe1wZIfD+s2P+YcbWVqrjxEDdseMmA==}
     dependencies:
       '@vercel/nft': 0.20.1
       esbuild: 0.14.49
@@ -2693,27 +2693,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.372_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@2.9.14:
-    resolution: {integrity: sha512-pcnDfV8YQwj7d/SCaKWT7yPBrmgkPH9Dc4UIeX8yTLXDu8IPzI5kukEOy4xf6LjyJsuSGPy1Ch91ULugtVIdAQ==}
-    engines: {node: '>=16.9'}
-    hasBin: true
-    peerDependencies:
-      svelte: ^3.44.0
-      vite: ^2.9.10
-    dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.49_svelte@3.49.0+vite@2.9.14
-      chokidar: 3.5.3
-      sade: 1.8.1
-      svelte: 3.49.0
-      vite: 2.9.14
-    transitivePeerDependencies:
-      - diff-match-patch
-      - supports-color
-    dev: true
-    patched: true
-
-  /@sveltejs/kit/1.0.0-next.375_svelte@3.49.0:
-    resolution: {integrity: sha512-9+gKm97TW/xIz6DfWOqdsIwGY4yckUkmMFlsJmEGkjcTy60Q6ZCfrQhMULzL/fILLydF0wZcD/fWE/urAbp2nw==}
+  /@sveltejs/kit/1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0:
+    resolution: {integrity: sha512-DH2v2yUBUuDZ7vzjPXUd/yt1AMR3BIkZN0ubLAvS2C+q5Wbvk7ZvAJhfPZ3OYc3ZpQXe4ZGEcptOjvEYvd1lLA==}
     engines: {node: '>=16.9'}
     hasBin: true
     peerDependencies:
@@ -2728,29 +2709,26 @@ packages:
       - diff-match-patch
       - supports-color
     dev: true
+    patched: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.49_svelte@3.49.0+vite@2.9.14:
-    resolution: {integrity: sha512-AKh0Ka8EDgidnxWUs8Hh2iZLZovkETkefO99XxZ4sW4WGJ7VFeBx5kH/NIIGlaNHLcrIvK3CK0HkZwC3Cici0A==}
-    engines: {node: ^14.13.1 || >= 16}
+  /@sveltejs/kit/1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@3.0.0:
+    resolution: {integrity: sha512-DH2v2yUBUuDZ7vzjPXUd/yt1AMR3BIkZN0ubLAvS2C+q5Wbvk7ZvAJhfPZ3OYc3ZpQXe4ZGEcptOjvEYvd1lLA==}
+    engines: {node: '>=16.9'}
+    hasBin: true
     peerDependencies:
-      diff-match-patch: ^1.0.5
       svelte: ^3.44.0
-      vite: ^2.9.0
-    peerDependenciesMeta:
-      diff-match-patch:
-        optional: true
+      vite: ^3.0.0
     dependencies:
-      '@rollup/pluginutils': 4.2.1
-      debug: 4.3.4
-      deepmerge: 4.2.2
-      kleur: 4.1.5
-      magic-string: 0.26.2
+      '@sveltejs/vite-plugin-svelte': 1.0.1_svelte@3.49.0+vite@3.0.0
+      chokidar: 3.5.3
+      sade: 1.8.1
       svelte: 3.49.0
-      svelte-hmr: 0.14.12_svelte@3.49.0
-      vite: 2.9.14
+      vite: 3.0.0
     transitivePeerDependencies:
+      - diff-match-patch
       - supports-color
     dev: true
+    patched: true
 
   /@sveltejs/vite-plugin-svelte/1.0.1_svelte@3.49.0:
     resolution: {integrity: sha512-PorCgUounn0VXcpeJu+hOweZODKmGuLHsLomwqSj+p26IwjjGffmYQfVHtiTWq+NqaUuuHWWG7vPge6UFw4Aeg==}
@@ -2792,6 +2770,29 @@ packages:
       svelte: 3.49.0
       svelte-hmr: 0.14.12_svelte@3.49.0
       vite: 2.9.14
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@sveltejs/vite-plugin-svelte/1.0.1_svelte@3.49.0+vite@3.0.0:
+    resolution: {integrity: sha512-PorCgUounn0VXcpeJu+hOweZODKmGuLHsLomwqSj+p26IwjjGffmYQfVHtiTWq+NqaUuuHWWG7vPge6UFw4Aeg==}
+    engines: {node: ^14.18.0 || >= 16}
+    peerDependencies:
+      diff-match-patch: ^1.0.5
+      svelte: ^3.44.0
+      vite: ^3.0.0
+    peerDependenciesMeta:
+      diff-match-patch:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      debug: 4.3.4
+      deepmerge: 4.2.2
+      kleur: 4.1.5
+      magic-string: 0.26.2
+      svelte: 3.49.0
+      svelte-hmr: 0.14.12_svelte@3.49.0
+      vite: 3.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4075,14 +4076,14 @@ packages:
     resolution: {integrity: sha512-9GNFMRrEMG5y3Jvv+V4azWvc+qNWdWLTjDdhf/zgMlz8haaaLWv0xeAIWxz9PuWUBawsVxy0zZotjCdR3Xq+2w==}
     hasBin: true
     dependencies:
-      aws-sdk: 2.1175.0
+      aws-sdk: 2.1176.0
       commander: 3.0.2
       js-yaml: 3.14.1
       watchpack: 2.4.0
     optional: true
 
-  /aws-sdk/2.1175.0:
-    resolution: {integrity: sha512-iv4SL2yn9DJzuqbzSbBNi3iI6Mehrqo2CUbsLEsEnIuiTf0uBR1Hp4061whgQOj2RxOuEPe4yKEsGWURkc8X6A==}
+  /aws-sdk/2.1176.0:
+    resolution: {integrity: sha512-jinSKjACYHIkkz0UlFwQXwz8HAHZIeJg5wOnZoMTKU3/WM6Vh26hZJJ6XkwDAfBmyWp3V9qFdQoSAiO8SeXKjw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       buffer: 4.9.2
@@ -8456,12 +8457,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /isomorphic-ws/4.0.1_ws@7.5.8:
+  /isomorphic-ws/4.0.1_ws@7.5.9:
     resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 7.5.8
+      ws: 7.5.9
 
   /isostring/0.0.1:
     resolution: {integrity: sha1-3bYI77/InNqG25yxa+CQp4gTTH8=}
@@ -8481,12 +8482,12 @@ packages:
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
-      isomorphic-ws: 4.0.1_ws@7.5.8
+      isomorphic-ws: 4.0.1_ws@7.5.9
       json-stringify-safe: 5.0.1
       JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
-      ws: 7.5.8
+      ws: 7.5.9
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -8616,7 +8617,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.8.0
+      ws: 8.8.1
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -9030,7 +9031,7 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
     dependencies:
-      chalk: 4.1.1
+      chalk: 4.1.2
       is-unicode-supported: 0.1.0
     dev: false
 
@@ -10073,10 +10074,10 @@ packages:
       '@octokit/core': 4.0.4
       '@octokit/oauth-app': 4.0.6
       '@octokit/plugin-paginate-rest': 3.0.0_@octokit+core@4.0.4
-      '@octokit/plugin-rest-endpoint-methods': 6.0.2_@octokit+core@4.0.4
+      '@octokit/plugin-rest-endpoint-methods': 6.1.0_@octokit+core@4.0.4
       '@octokit/plugin-retry': 3.0.9
-      '@octokit/plugin-throttling': 4.0.1_@octokit+core@4.0.4
-      '@octokit/types': 6.39.0
+      '@octokit/plugin-throttling': 4.1.0_@octokit+core@4.0.4
+      '@octokit/types': 6.40.0
     transitivePeerDependencies:
       - encoding
 
@@ -10131,7 +10132,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.1
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       is-interactive: 1.0.0
@@ -11654,7 +11655,7 @@ packages:
       '@babel/runtime': 7.18.6
       eventemitter3: 4.0.7
       uuid: 8.3.2
-      ws: 8.8.0_22kvxa7zeyivx4jp72v2w3pkvy
+      ws: 8.8.1_22kvxa7zeyivx4jp72v2w3pkvy
     optionalDependencies:
       bufferutil: 4.0.6
       utf-8-validate: 5.0.9
@@ -11902,13 +11903,13 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
-  /sk-auth/0.4.1_l6e7nbnfnxy3qaaos5dwjfmhda:
+  /sk-auth/0.4.1_unl763skuspkrbuewvlicjpk7e:
     resolution: {integrity: sha512-P1WYM/j2c9+v7es+8CUPbugMjyTIu6ht8SfXeSkK3y74D45V2NYZDeQpAOQwVDih83xPhPWlzAjv4LBmr0a9HA==}
     peerDependencies:
       '@sveltejs/kit': next
       build-esm: ^4.2.2
     dependencies:
-      '@sveltejs/kit': 1.0.0-next.372_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@2.9.14
+      '@sveltejs/kit': 1.0.0-next.377_fuggoyr3x5ahnd3au6iuqthxdm_svelte@3.49.0+vite@3.0.0
       cookie: 0.4.2
       jsonwebtoken: 8.5.1
     dev: true
@@ -13204,13 +13205,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /vite-plugin-top-level-await/1.1.0_vite@2.9.14:
+  /vite-plugin-top-level-await/1.1.0_vite@3.0.0:
     resolution: {integrity: sha512-tsbIqX76hfuGDgZqt/8DgCqXtWqeZv0T5LowR0M5BGWDsNlNItquDXaG2VMNhFjlcGTJl8owZMXeWwUUGl8kwQ==}
     peerDependencies:
       vite: '>=2.8'
     dependencies:
       '@swc/core': 1.2.215
-      vite: 2.9.14
+      vite: 3.0.0
     dev: true
 
   /vite-tsconfig-paths/3.5.0:
@@ -13275,7 +13276,6 @@ packages:
       rollup: 2.77.0
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /vitest/0.18.0_abpyugv5t6avmcwrecpodpl6t4:
     resolution: {integrity: sha512-ryAtlh5Gvg3+aLNuOQ8YOHxgQCCu46jx40X5MBL0K0/ejB9i5zsr8fV8LTGXbXex80UMHlzceI9F+ouGaiR+mQ==}
@@ -13618,8 +13618,8 @@ packages:
       write-file-atomic: 3.0.3
     dev: false
 
-  /ws/7.5.8:
-    resolution: {integrity: sha512-ri1Id1WinAX5Jqn9HejiGb8crfRio0Qgu8+MtL36rlTA6RLsMdWt1Az/19A2Qij6uSHUMphEFaTKa4WG+UNHNw==}
+  /ws/7.5.9:
+    resolution: {integrity: sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -13643,8 +13643,8 @@ packages:
         optional: true
     dev: true
 
-  /ws/8.8.0:
-    resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
+  /ws/8.8.1:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -13656,8 +13656,8 @@ packages:
         optional: true
     dev: false
 
-  /ws/8.8.0_22kvxa7zeyivx4jp72v2w3pkvy:
-    resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
+  /ws/8.8.1_22kvxa7zeyivx4jp72v2w3pkvy:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1

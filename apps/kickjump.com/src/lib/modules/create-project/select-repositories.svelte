@@ -7,18 +7,16 @@
 </script>
 
 <script lang="ts">
-  const query = trpc.github.repos.infinite(
+  const query = trpc.github.repos.query(
     { perPage: 20 },
     { getNextPageParam: (lastPage) => lastPage.next?.page },
   );
 
   export let loadingSkeletonCount = 10;
-
-  $: console.log($query.data);
 </script>
 
 <!-- <VirtualList /> -->
-<div class="overflow-x-auto w-full max-h-96">
+<div class="overflow-x-auto w-full max-h-96 max-h-96">
   <table class="table w-full">
     <!-- head -->
     <thead>

@@ -40,7 +40,6 @@ export async function post(event: RequestEvent): Promise<Response> {
     // do something
   }
 
-  console.log(received.name, json);
 
   // Return as valid.
   return new Response(null, { status: 202 })

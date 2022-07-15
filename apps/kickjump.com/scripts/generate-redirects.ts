@@ -1,7 +1,7 @@
 import { lstat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import { REDIRECTS } from '../src/lib/utils/constants';
+import { REDIRECTS } from '../src/lib/constants.js';
 
 const __dirname = new URL('..', import.meta.url).pathname;
 

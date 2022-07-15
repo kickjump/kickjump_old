@@ -24,8 +24,6 @@
   async function logout() {
     const redirect = await auth.logout(csrf);
     await goto(redirect ?? '/', { replaceState: true });
-    console.log('logged out!');
-    console.log({ loggedIn, redirect });
   }
 
   const items = [
@@ -50,8 +48,6 @@
       setTheme($themeStore.resolvedTheme);
     }
   }
-
-  $: console.log({ user, csrf });
 </script>
 
 <header

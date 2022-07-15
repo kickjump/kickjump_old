@@ -71,7 +71,7 @@ export type StatefulPromise<Value = void, ErrorType = unknown> =
  *   return stateful;
  * }
  *
- * console.log(await delay(100).promise);
+ * log(await delay(100).promise);
  * //=> '🦄'
  * ```
  */

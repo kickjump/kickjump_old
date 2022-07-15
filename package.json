@@ -149,7 +149,7 @@
     },
     "patchedDependencies": {
       "fast-sort@3.2.0": ".monots/patches/fast-sort@3.2.0.patch",
-      "@sveltejs/kit@1.0.0-next.372": ".monots/patches/@sveltejs__kit@1.0.0-next.372.patch",
+      "@sveltejs/kit@1.0.0-next.377": ".monots/patches/@sveltejs__kit@1.0.0-next.377.patch",
       "eslint-config-monots@0.11.1": ".monots/patches/eslint-config-monots@0.11.1.patch"
     }
   }
