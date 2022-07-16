@@ -1,6 +1,6 @@
 import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
-import { CSRF_HEADER_KEY } from './client.js';
 
+import { CSRF_HEADER_KEY } from './client.js';
 import { ServerError } from './errors.js';
 
 /**
@@ -90,7 +90,6 @@ export function verifyCsrf(props: VerifyCsrfProps) {
 
 const CSRF_KEY = 'csrf' as const;
 const PRIVATE_CSRF_KEY = '_csrf' as const;
-
 
 interface CreateCsrfProps {
   secret: BinaryLike;

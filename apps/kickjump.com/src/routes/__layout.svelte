@@ -5,7 +5,7 @@
   import type { Load } from '@sveltejs/kit';
   import SvelteSeo from 'svelte-seo';
 
-  import { page } from '$app/stores';
+  import { page, session } from '$app/stores';
   import { TRPCProvider } from '$components';
   import MainLayout from '$layout/main.svelte';
   import { DEFAULT_SEO } from '$lib/constants';
@@ -18,7 +18,7 @@
 
 <script lang="ts">
   export let key: string;
-  const client = createClient({ url: TRPC_ENDPOINT, transformer });
+  const client = createClient({ url: TRPC_ENDPOINT, transformer, csrf: $session.csrf });
   $: stuff = { ...DEFAULT_SEO, ...$page.stuff };
 </script>
 

@@ -1,4 +1,4 @@
-import type { UserModel } from '@kickjump/db';
+import { type UserModel, AccountProvider } from '@kickjump/db';
 import {
   type GitHubScope,
   Authenticator,
@@ -12,7 +12,7 @@ import { getAbsoluteUrl } from '$server/get-absolute-url';
 
 const GITHUB_SCOPE: GitHubScope[] = ['read:user', 'user:follow', 'user:email'];
 export const authenticator = new Authenticator({
-  origin: getAbsoluteUrl('/', true),
+  origin: getAbsoluteUrl({ forceProtocol: true }),
   basePath: BASE_AUTH,
 }).use(
   new GitHubStrategy(
@@ -26,7 +26,7 @@ export const authenticator = new Authenticator({
       const { profile, accessToken } = props;
 
       const providerAccountId = profile.id.toString();
-      const provider = 'github';
+      const provider = AccountProvider.github;
       const { UserModel } = await import('@kickjump/db');
       let existingUser: UserModel.PopulatedUser | undefined = await UserModel.getByAccount({
         provider,

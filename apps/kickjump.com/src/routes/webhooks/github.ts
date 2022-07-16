@@ -1,8 +1,9 @@
-import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
-import { env } from '$server/env';
-import { App } from 'octokit';
-import { emitterEventNames } from '@octokit/webhooks';
 import { s } from '@kickjump/trpc/client';
+import { emitterEventNames } from '@octokit/webhooks';
+import type { RequestEvent } from '@sveltejs/kit';
+import { App } from 'octokit';
+
+import { env } from '$server/env';
 
 const WebhookSchema = s.type({
   id: s.string(),
@@ -11,10 +12,12 @@ const WebhookSchema = s.type({
   payload: s.string(),
 });
 
-export async function post(event: RequestEvent): Promise<Response> {
+export async function POST(event: RequestEvent): Promise<Response> {
   const { request } = event;
   const {
-    GITHUB_APP_ID: appId, GITHUB_APP_PRIVATE_KEY: privateKey, GITHUB_WEBHOOK_SECRET: secret,
+    GITHUB_APP_ID: appId,
+    GITHUB_APP_PRIVATE_KEY: privateKey,
+    GITHUB_WEBHOOK_SECRET: secret,
   } = env;
   const app = new App({ appId, privateKey, webhooks: { secret } });
   const received = s.create(
@@ -24,7 +27,7 @@ export async function post(event: RequestEvent): Promise<Response> {
       signature: request.headers.get('x-hub-signature-256'),
       payload: await request.text(),
     },
-    WebhookSchema
+    WebhookSchema,
   );
 
   // check that whether the webhook is valid.
@@ -40,7 +43,8 @@ export async function post(event: RequestEvent): Promise<Response> {
     // do something
   }
 
+  console.log(json);
 
   // Return as valid.
-  return new Response(null, { status: 202 })
+  return new Response(null, { status: 202 });
 }

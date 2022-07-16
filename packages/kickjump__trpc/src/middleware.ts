@@ -1,6 +1,11 @@
 import { UserModel } from '@kickjump/db';
+import type _core from '@octokit/core';
+import type _paginateRest from '@octokit/plugin-paginate-rest';
+import type _pluginRestEndpointMethods from '@octokit/plugin-rest-endpoint-methods';
+import type _requestError from '@octokit/request-error';
 import type { ProcedureBuilder } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
+import { Octokit } from 'octokit';
 
 import { t } from './init';
 
@@ -33,5 +38,7 @@ export const withGitHubAccount = authenticated.use(async (props) => {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Missing github account accessToken' });
   }
 
-  return next({ ctx: { ...ctx, account } });
+  const octokit = new Octokit({ auth: account.accessToken });
+
+  return next({ ctx: { ...ctx, account, octokit } });
 });

@@ -105,7 +105,7 @@ export class Authenticator {
       });
     }
 
-    const {user, redirect} = await instance.authenticate({
+    const { user, redirect } = await instance.authenticate({
       ...event,
       locals,
       action,
@@ -119,7 +119,8 @@ export class Authenticator {
     await locals.session.set('user', { ...user, strategy });
 
     return redirectResponse(
-      redirect ?? instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),
+      redirect ??
+        instance.getRedirectUrl({ ...event, options: this.#options, baseUrl: this.baseUrl }),
     );
   }
 

@@ -1,11 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import * as path from 'node:path';
-import { defineConfig } from 'vite';
-import topLevelAwait from 'vite-plugin-top-level-await';
+import { defineConfig, Plugin } from 'vite';
 
 export default defineConfig({
   mode: process.env.VITE_MODE ? process.env.MODE : undefined,
-  plugins: [topLevelAwait(), sveltekit()],
+  plugins: [sveltekit()],
+  // ssr: { noExternal: ['@kickjump/**'] },
   legacy: { buildSsrCjsExternalHeuristics: true },
   resolve: {
     alias: {
@@ -21,3 +21,22 @@ export default defineConfig({
   },
   server: { port: 3000 },
 });
+
+// function patchSsrNoExternal(): Plugin {
+//   return {
+//     name: 'vite-plugin-patch-ssr-noexternal',
+//     enforce: 'post',
+//     config(config) {
+//       if (!config.ssr?.noExternal) return;
+//       const external = Array.isArray(config.ssr.noExternal)
+//         ? config.ssr.noExternal
+//         : config.ssr.noExternal === true
+//         ? [/.*/]
+//         : [config.ssr.noExternal];
+
+//       config.ssr.noExternal = external.map((x) =>
+//         typeof x !== 'string' || x.includes('*') || x.endsWith('/**') ? x : `${x}${!x.endsWith('/') ? '/' : ''}**`
+//       );
+//     }
+//   }
+// }

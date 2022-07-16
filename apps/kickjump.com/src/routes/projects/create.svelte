@@ -1,12 +1,8 @@
 <script lang="ts">
-  import { Button } from '$components';
-  import { auth } from '$lib/auth';
-  import SelectRepositories from '$modules/create-project/select-repositories.svelte';
-  const href = auth.strategyUrl('github', 'install').searchPath;
+  import { SelectRepositories } from '$modules/create-project';
+  import { ViewUserRepos } from '$modules/github';
 </script>
 
 <!-- <VirtualList /> -->
-<SelectRepositories />
-<div>
-  <Button {href}>Add Installation</Button>
-</div>
+<!-- <SelectRepositories /> -->
+<ViewUserRepos />

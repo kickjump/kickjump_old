@@ -1,4 +1,12 @@
-import type { Account, Email, User } from '@kickjump/edgedb';
+import {
+  type Account,
+  type CreatedAt,
+  type Email,
+  type Project,
+  type Proposal,
+  type UpdatedAt,
+  type User,
+} from '@kickjump/edgedb';
 import { type Executor, createClient } from 'edgedb';
 import type _ from 'edgedb/dist/client.js';
 import type { PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
@@ -11,7 +19,15 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
   return runner.run(client);
 }
 
-export { default as e } from '@kickjump/edgedb';
+export {
+  AccountProvider,
+  default as e,
+  ProjectPermission,
+  ProjectStatus,
+  ProposalPermission,
+  ProposalStatus,
+  Visibility,
+} from '@kickjump/edgedb';
 
 /**
 Matches any primitive, `Date`, or `RegExp` value.
@@ -89,6 +105,22 @@ export type AccountType<Options extends AvailableOptions = object> = Custom<
 >;
 export type EmailType<Options extends AvailableOptions = object> = Custom<
   DeepOmit<Email, '__type__'>,
+  Options
+>;
+export type UpdatedAtType<Options extends AvailableOptions = object> = Custom<
+  DeepOmit<UpdatedAt, '__type__'>,
+  Options
+>;
+export type CreatedAtType<Options extends AvailableOptions = object> = Custom<
+  DeepOmit<CreatedAt, '__type__'>,
+  Options
+>;
+export type ProjectType<Options extends AvailableOptions = object> = Custom<
+  DeepOmit<Project, '__type__'>,
+  Options
+>;
+export type ProposalType<Options extends AvailableOptions = object> = Custom<
+  DeepOmit<Proposal, '__type__'>,
   Options
 >;
 

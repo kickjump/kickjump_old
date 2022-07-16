@@ -56,7 +56,6 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
       const installationUrl = getInstallationUrl({ stateId: state.id, appName: this.appName });
       const response = redirect(installationUrl);
 
-
       await session.set(SESSION_STATE_KEY, state);
 
       // This throws a response which is picked up and returned by the handler.
@@ -172,7 +171,7 @@ interface GetInstallationUrlProps {
 
 function getInstallationUrl(props: GetInstallationUrlProps): URL {
   const { stateId, appName } = props;
-  const url = new URL(`https://github.com/apps/${appName}/new`);
+  const url = new URL(`https://github.com/apps/${appName}/installations/new`);
   url.searchParams.set('state', stateId);
 
   return url;

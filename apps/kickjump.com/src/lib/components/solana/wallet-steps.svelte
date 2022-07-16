@@ -5,19 +5,20 @@
   import { type ModalCloseMethod, Modal } from '$components/modal';
   import { addUrlParams, getUrlParam } from '$utils/url';
 
-  import { CONNECT_WALLET_ID, ConnectWallet } from './steps/connect';
-  import { WALLET_RESULTS_ID, WalletResults } from './steps/results';
-  import { SELECT_WALLET_ID, SelectWallet } from './steps/select';
+  import ConnectWallet from './steps/connect-wallet.svelte';
+  import { CONNECT_WALLET_ID, SELECT_WALLET_ID, WALLET_RESULTS_ID } from './steps/constants.js';
+  import SelectWallet from './steps/select-wallet.svelte';
   import Step from './steps/step.svelte';
   import type { StepContext } from './steps/step-context';
   import StepProvider from './steps/step-provider.svelte';
+  import WalletResults from './steps/wallet-results.svelte';
 
   const stepIds = [SELECT_WALLET_ID, CONNECT_WALLET_ID, WALLET_RESULTS_ID] as const;
   let open: boolean = getUrlParam($page.url, 'steps') === '1';
   const initialStep = getUrlParam($page.url, 'stepId') || stepIds[0];
 
   // Need a way to differentiate depending on how the modal was closed.
-  function createOnClose(context: StepContext) {
+  function createOnClose(_context: StepContext) {
     return async (method?: ModalCloseMethod) => {
       if (!open) {
         return;

@@ -1,3 +1,4 @@
+import { CSRF_HEADER_KEY } from '@kickjump/svelte-auth/client';
 import type { UseInfiniteQueryOptions, UseInfiniteQueryResult } from '@sveltestack/svelte-query';
 import {
   type FetchInfiniteQueryOptions,
@@ -36,6 +37,7 @@ import type {
   ProcedureRouterRecord,
 } from '@trpc/server';
 import { createProxy } from '@trpc/server/shared';
+import { isPromise } from 'is-what';
 import { getContext, hasContext, setContext } from 'svelte';
 import type { Readable } from 'svelte/store';
 import invariant from 'tiny-invariant';
@@ -272,8 +274,23 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
   type TQueryValues = inferProcedures<Router['_def']['queries']>;
   type TMutationValues = inferProcedures<Router['_def']['mutations']>;
 
-  function createClient(options: CreateTRPCClientOptions<Router>) {
-    return createTRPCClient<Router>(options);
+  function createClient(options: CreateTRPCClientOptions<Router> & { csrf: string }) {
+    const { csrf, ...rest } = options;
+    return createTRPCClient<Router>({
+      ...rest,
+      headers: () => {
+        const headers = { [CSRF_HEADER_KEY]: csrf };
+        const value =
+          typeof options.headers === 'function'
+            ? options.headers()
+            : typeof options.headers === 'object'
+            ? options.headers
+            : {};
+        return isPromise(value)
+          ? value.then((val) => ({ ...val, ...headers }))
+          : { ...value, ...headers };
+      },
+    });
   }
 
   function context() {
@@ -350,7 +367,7 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
     }, options) as any;
   }
 
-  function infinite<Path extends InfiniteQueryNames & string>(
+  function infiniteQuery<Path extends InfiniteQueryNames & string>(
     pathAndInput: [path: Path, input: Omit<TQueryValues[Path]['input'], 'cursor'>],
     opts?: UseTRPCInfiniteQueryOptions<
       Path,
@@ -378,14 +395,14 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
     return useInfiniteQuery(
       pathAndInput as any,
       ({ pageParam }) => {
-        const actualInput = { ...(input as any), cursor: pageParam };
+        const actualInput = { ...input, cursor: pageParam };
         return (client.query as any)(...getClientArgs([path, actualInput], actualOptions));
       },
       actualOptions,
     ) as any;
   }
 
-  return { createClient, context, query, mutation, infinite };
+  return { createClient, context, query, mutation, infiniteQuery };
 }
 
 /**
@@ -481,7 +498,7 @@ type DecorateProcedure<Procedure extends AnyProcedure, Path extends string> = Om
       >
     : never;
 
-  infinite: Procedure extends { _query: true }
+  infiniteQuery: Procedure extends { _query: true }
     ? inferProcedureInput<Procedure> extends {
         cursor?: any;
       }

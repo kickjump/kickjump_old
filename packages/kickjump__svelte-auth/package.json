@@ -41,7 +41,7 @@
   "dependencies": {
     "is-what": "^4.1.7",
     "nanoid": "^4.0.0",
-    "path-to-regexp": "6.2.1",
+    "path-to-regexp": "^6.2.1",
     "superjson": "^1.9.1",
     "svelte-kit-cookie-session": "^3.0.6",
     "tiny-invariant": "^1.2.0",

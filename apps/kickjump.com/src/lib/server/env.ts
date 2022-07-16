@@ -3,6 +3,10 @@ import 'dotenv/config';
 import { s } from '@kickjump/trpc/client';
 
 const EnvSchema = s.type({
+  NODE_ENV: s.optional(s.string()),
+  VERCEL: s.optional(s.string()),
+  VERCEL_URL: s.optional(s.string()),
+  VERCEL_ENV: s.optional(s.string()),
   WEBSITE_URL: s.optional(s.string()),
   SESSION_SECRET: s.string(),
   SOLANA_RPC_SECRET: s.string(),

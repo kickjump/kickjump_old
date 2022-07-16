@@ -2,21 +2,24 @@
   import { trpc } from '@kickjump/trpc/client';
   import JSONTree from 'svelte-json-tree';
 
-  import { Button } from '$components';
-  import { auth } from '$lib/auth';
-
   // import { Skeleton } from '$components/loaders';
 
   // import VirtualList from 'svelte-tiny-virtual-list';
 </script>
 
 <script lang="ts">
-  const query = trpc.github.userInstallations.query();
+  const query = trpc.github.repos.infiniteQuery(
+    { perPage: 100 },
+    {
+      getNextPageParam: (page) => page.nextCursor,
+      getPreviousPageParam: (page) => page.prevCursor,
+    },
+  );
 
-  const href = auth.strategyUrl('github', 'install').searchPath;
+  $: console.log($query.data);
 </script>
 
-{#if $query.isLoading}
+<!-- {#if $query.isLoading}
   <p>Loading installations...</p>
 {:else if $query.isError}
   <p>Something went wrong 😢</p>
@@ -24,9 +27,9 @@
   <p>No installations found</p>
 {:else if $query.data?.installations}
   <ul>
-    {#each $query.data.installations as value}
+    {#each $query.data.pages as value}
       <div><JSONTree {value} /></div>
     {/each}
   </ul>
 {/if}
-<div><Button {href}>Install</Button></div>
+<div><Button {href}>Install</Button></div> -->

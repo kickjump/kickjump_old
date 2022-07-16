@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { faker } from '@faker-js/faker';
 
-import { type AccountType, type EmailType, type UserType, client, e } from './edgedb.js';
+import {
+  type AccountType,
+  type EmailType,
+  type UserType,
+  AccountProvider,
+  client,
+  e,
+} from './edgedb.js';
 
 type Account = AccountType<{ optional: 'id' | 'user'; omit: 'user' }>;
 type Email = EmailType<{ optional: 'id' | 'user'; omit: 'user' }>;
-type User = UserType<{ optional: 'id'; omit: 'emails' | 'accounts' }>;
+type User = UserType<{ optional: 'id'; omit: 'emails' | 'accounts' | 'projectsCreated' }>;
 
 function createAccount(): Account {
   return {
     accountType: 'oauth2',
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
-    provider: 'github',
+    provider: AccountProvider.github,
     providerAccountId: faker.datatype.uuid(),
     scope: [],
   };
@@ -49,10 +56,10 @@ export async function seed() {
 
     const promise = e
       .insert(e.User, {
-        image: data.image,
         name: data.name,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
+        image: data.image,
       })
       .run(client)
       .then((user) => {
@@ -69,7 +76,7 @@ export async function seed() {
       .for(e.json_array_unpack(e.json(accounts)), (account) => {
         return e.insert(e.Account, {
           accountType: e.cast(e.str, account.accountType!),
-          provider: e.cast(e.str, account.provider!),
+          provider: e.cast(e.AccountProvider, account.provider!),
           providerAccountId: e.cast(e.str, account.providerAccountId!),
           createdAt: e.cast(e.datetime, account.createdAt!),
           updatedAt: e.cast(e.datetime, account.updatedAt!),

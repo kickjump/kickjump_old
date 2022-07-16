@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import type { AccountProvider } from '../edgedb.js';
 import { type AccountType, type EmailType, type UserType, e, run } from '../edgedb.js';
 
 const USER_DATA = {
@@ -11,7 +12,7 @@ export async function getAccountsByUserId(id: string, provider: string) {
   const query = e.select(e.User, (user) => ({
     accounts: e.select(e.Account, (account) => ({
       ...e.Account['*'],
-      filter: e.op(account.provider, '=', e.str(provider)),
+      filter: e.op(account.provider, '=', e.cast(e.AccountProvider, provider)),
     })),
     filter: e.op(user.id, '=', e.uuid(id)),
   }));
@@ -40,7 +41,7 @@ export async function getByEmail(email: string): Promise<PopulatedUser | undefin
 }
 
 interface GetByAccountProps {
-  provider: string;
+  provider: AccountProvider;
   providerAccountId: string;
 }
 
@@ -51,7 +52,7 @@ export async function getByAccount({ provider, providerAccountId }: GetByAccount
   const query = e.select(e.Account, (item) => ({
     user: USER_DATA,
     filter: e.op(
-      e.op(item.provider, '=', provider),
+      e.op(item.provider, '=', e.cast(e.AccountProvider, provider)),
       'and',
       e.op(item.providerAccountId, '=', providerAccountId),
     ),
@@ -81,7 +82,9 @@ export type EmailCreateInput = EmailType<{
   replace: { verified: boolean };
 }>;
 export type AccountCreateInput = AccountType<{ omit: OmittedKeys | 'user' }>;
-export type UserCreateInput = UserType<{ omit: OmittedKeys | 'accounts' | 'emails' }>;
+export type UserCreateInput = UserType<{
+  omit: OmittedKeys | 'accounts' | 'emails' | 'projectsCreated';
+}>;
 interface NestedCreateOptions {
   emails?: EmailCreateInput[];
   accounts?: AccountCreateInput[];
@@ -119,7 +122,7 @@ function linkAccountsQuery(userId: string, accounts: AccountCreateInput[]) {
   return e.for(e.json_array_unpack(e.json(accounts)), (account) => {
     return e.insert(e.Account, {
       accountType: e.cast(e.str, account.accountType!),
-      provider: e.cast(e.str, account.provider!),
+      provider: e.cast(e.AccountProvider, account.provider!),
       providerAccountId: e.cast(e.str, account.providerAccountId!),
       accessToken: account.accessToken ? e.cast(e.str, account.accessToken) : undefined,
       refreshToken: account.refreshToken ? e.cast(e.str, account.refreshToken) : undefined,

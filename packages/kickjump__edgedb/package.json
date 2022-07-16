@@ -33,7 +33,7 @@
     "prepare": "pnpm run dev"
   },
   "dependencies": {
-    "edgedb": "0.21.0-beta.0"
+    "edgedb": "0.21.0-alpha.3"
   },
   "publishConfig": {
     "access": "public"

@@ -2,8 +2,8 @@
   import { Button } from '$components/buttons';
   import { ModalTitle } from '$components/modal';
 
-  import { StepContext } from '../step-context';
-  import StepLayout from '../step-layout.svelte';
+  import { StepContext } from './step-context';
+  import StepLayout from './step-layout.svelte';
 </script>
 
 <script lang="ts">

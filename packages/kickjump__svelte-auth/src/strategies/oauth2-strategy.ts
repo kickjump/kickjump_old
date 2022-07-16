@@ -107,7 +107,7 @@ export class OAuth2Strategy<
     const profile = await this.userProfile(data);
     const user = await this.verify({ ...data, profile, state });
 
-    return { user, redirect: state.redirect }
+    return { user, redirect: state.redirect };
   }
 
   /**

@@ -74,8 +74,8 @@ export type Link = {
 } & Record<string, string>;
 
 export interface Links {
+  [rel: string]: Link | undefined;
   next?: Link | undefined;
   prev?: Link | undefined;
   last?: Link | undefined;
-  [rel: string]: Link | undefined;
 }

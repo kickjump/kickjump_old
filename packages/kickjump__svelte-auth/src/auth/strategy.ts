@@ -78,7 +78,7 @@ interface GetRedirectFromUrl {
 
 export interface AuthenticateReturn {
   user: App.User;
-  redirect?: string | undefined
+  redirect?: string | undefined;
 }
 
 export function getRedirectFromURL(options: GetRedirectFromUrl): URL {
