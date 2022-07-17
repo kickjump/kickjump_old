@@ -1,16 +1,19 @@
 <script lang="ts" context="module">
-  import '@iconify/types';
-
-  import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import Icon, { type IconProps, addIcon } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import type _ from '@iconify/types';
   import type { IconifyIcon } from '@iconify/types';
+  import bellFill from '@iconify-icons/bi/bell-fill';
   import cx from 'clsx';
 
   import type { Maybe } from '$types';
 
-  import type { IconType } from './icons';
+  import { type IconType, loadIcons } from './icons.js';
+
+  loadIcons();
 </script>
 
 <script lang="ts">
+  addIcon('bell', bellFill);
   // TODO(@ifiokjr) icons are not rendering properly
   export let icon: IconType | IconifyIcon;
   let className: Maybe<string> = undefined;
@@ -34,11 +37,10 @@
 
   $: heightValue = height || size;
   $: widthValue = width || size;
-  $: classes = cx(
-    // 'sketch-icon',
-    className,
-  );
+  $: classes = cx('sketch-icon', className);
 </script>
+
+<!-- <Icon icon="bell" inline={true} /> -->
 
 <Icon
   class={classes}

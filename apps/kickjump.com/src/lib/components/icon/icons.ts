@@ -35,8 +35,10 @@ const ICONS = {
   warning,
 };
 
-for (const icon of Object.entries(ICONS)) {
-  addIcon(...icon);
+export function loadIcons() {
+  for (const [name, data] of Object.entries(ICONS)) {
+    addIcon(name, data);
+  }
 }
 
 export type IconType = keyof typeof ICONS;
