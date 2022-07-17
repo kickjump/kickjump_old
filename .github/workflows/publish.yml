@@ -25,6 +25,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: install edgedb
+        uses: edgedb/setup-edgedb@v1
+
       - name: setup pnpm caching
         uses: actions/cache@v2
         with:
