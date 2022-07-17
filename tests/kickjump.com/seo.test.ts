@@ -1,6 +1,14 @@
 import { expect, test } from '@kickjump/playwright';
 
-test('the site displays the correct meta', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.title()).resolves.toBe('KickJump');
+const titles = {
+  '/': 'KickJump',
+  '/about': 'About | KickJump',
+  '/project': 'Projects | KickJump',
+};
+
+test('the site displays the correct metadata', async ({ page }) => {
+  for (const [path, title] of Object.entries(titles)) {
+    await page.goto(path);
+    await expect(page.title()).resolves.toBe(title);
+  }
 });

@@ -11,15 +11,23 @@ const USER_FIELDS = {
 /**
  * Create a user with the provided data.
  */
-export async function create(user: UserCreateInput, nested: NestedCreateOptions = {}) {
-  const { emails = [], accounts = [] } = nested;
-  const query = e.insert(e.User, { name: user.name, image: user.image });
-  const { id } = await run(query);
-  const emailQuery = linkEmailsQuery(id, emails);
-  const accountQuery = linkAccountsQuery(id, accounts);
-  await Promise.all([run(emailQuery), run(accountQuery)]);
+export async function create(props: UserCreateInput) {
+  const user = e.insert(e.User, { name: props.name, image: props.image });
+  const emails = (props.emails ?? []).map((email) =>
+    e.insert(e.Email, {
+      email: email.email,
+      user,
+      primary: email.primary,
+      verified: email.verified ? e.datetime_current() : undefined,
+    }),
+  );
+  const accounts = (props.accounts ?? []).map((account) =>
+    e.insert(e.Account, { ...account, user }),
+  );
 
-  const populatedUserQuery = e.select(query, () => USER_FIELDS);
+  const set = e.set(user, ...emails, ...accounts);
+  await run(set);
+  const populatedUserQuery = e.select(user, () => USER_FIELDS);
   const populatedUser = await run(populatedUserQuery);
 
   if (!populatedUser) {
@@ -36,11 +44,24 @@ export async function create(user: UserCreateInput, nested: NestedCreateOptions 
  * system user.
  */
 export async function remove(id: string): Promise<void> {
+  await removeAll([id]);
+}
+
+export async function removeAll(ids: string[]): Promise<void> {
   const query = e.delete(e.User, (user) => ({
-    filter: e.op(user.id, '=', e.uuid(id)),
+    filter: e.op(user.id, 'in', e.set(...ids.map((id) => e.uuid(id)))),
   }));
 
   await run(query);
+}
+
+export async function findById(id: string) {
+  const query = e.select(e.User, (user) => ({
+    ...USER_FIELDS,
+    filter: e.op(user.id, '=', e.uuid(id)),
+  }));
+
+  return run(query);
 }
 
 export async function findAccountsByUserId(id: string, provider: AccountProvider) {
@@ -139,12 +160,55 @@ function linkEmailsQuery(user: UserId, emails: EmailCreateInput[]) {
 /**
  * Link the provided accounts
  */
-export async function linkAccount(userId: string, account: AccountCreateInput) {
-  return run(linkAccountsQuery(userId, [account]));
+export async function linkAccounts(userId: string, accounts: AccountCreateInput[]) {
+  const query = e.select(linkAccountsQuery(userId, accounts), () => ({
+    ...e.Account['*'],
+    user: true,
+  }));
+
+  return run(query);
+}
+
+export async function linkEmails(userId: string, emails: EmailCreateInput[]) {
+  const query = e.select(linkEmailsQuery(userId, emails), () => ({
+    ...e.Email['*'],
+    user: true,
+  }));
+
+  // const user = e.select(e.User, user => ({filter: e.op(user.id, '=', e.uuid(userId))}))
+  // const set = e.set(...emails.map(email => e.insert(e.Email, ({
+  //   email: email.email,
+  //   primary: email.primary,
+  //   user,
+  //   verified: email.verified ? e.datetime_current() : undefined,
+  // }))));
+
+  // const query = e.select(set, () => ({
+  //   ...e.Email['*'],
+  //   user: true,
+  // }));
+
+  return run(query);
+  // await run(linkEmailsQuery(userId, emails))
+  // '<user[is Email]': e.set(...emails.map(email => e.insert(e.Email, ({
+  //   email: email.email,
+  //   primary: email.primary,
+  //   user: query,
+  //   verified: email.verified ? e.datetime_current() : undefined,
+  // })))),
+  // '<user[is Account]': e.set(...accounts.map(account => e.insert(e.Account, ({
+  //   accountType: account.accountType,
+  //   provider: account.provider,
+  //   providerAccountId: account.providerAccountId,
+  //   accessToken: account.accessToken,
+  //   scope: account.scope,
+  //   refreshToken: account.refreshToken,
+  //   user: query,
+  // })))),
 }
 
 interface GetByAccountProps {
-  provider: AccountProvider;
+  provider: keyof typeof AccountProvider;
   providerAccountId: string;
 }
 export type PopulatedUser = Awaited<ReturnType<typeof create>>;
@@ -153,10 +217,13 @@ export type EmailCreateInput = EmailType<{
   replace: { verified: boolean };
   simplify: true;
 }>;
-export type AccountCreateInput = AccountType<{ omit: OmittedKeys; simplify: true }>;
-export type UserCreateInput = UserType<{ omit: OmittedKeys; simplify: true }>;
-
-interface NestedCreateOptions {
-  emails?: EmailCreateInput[];
-  accounts?: AccountCreateInput[];
-}
+export type AccountCreateInput = AccountType<{
+  omit: OmittedKeys;
+  simplify: true;
+  replace: { provider: keyof typeof AccountProvider };
+}>;
+export type UserCreateInput = UserType<{
+  omit: OmittedKeys;
+  simplify: true;
+  replace: { emails?: EmailCreateInput[]; accounts?: AccountCreateInput[] };
+}>;

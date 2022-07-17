@@ -40,7 +40,7 @@
     "@faker-js/faker": "^7.3.0",
     "@kickjump/edgedb": "^0.0.0",
     "@kickjump/svelte-auth": "^0.0.0",
-    "edgedb": "0.21.0-alpha.3",
+    "edgedb": "0.21.0-beta.0",
     "tiny-invariant": "^1.2.0",
     "type-fest": "^2.16.0"
   },

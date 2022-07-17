@@ -1,18 +1,11 @@
-import { setup } from 'jest-process-manager';
+import { instanceExists, setupDatabase, TEST_EDGEDB_INSTANCE } from './db-setup.js';
 
-async function globalSetup() {
-  // Use an external endpoint.
-  if (process.env.WEBSITE_URL) {
+export default async function globalSetup() {
+  process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;
+
+  if (await instanceExists(TEST_EDGEDB_INSTANCE)) {
     return;
   }
 
-  await setup({
-    command: process.env.TEST_BUILD === '1' ? 'pnpm start' : 'pnpm dev',
-    launchTimeout: 60_000,
-    port: 3030,
-    usedPortAction: 'kill',
-    debug: !!process.env.DEBUG,
-  });
+  await setupDatabase(TEST_EDGEDB_INSTANCE);
 }
-
-export default globalSetup;

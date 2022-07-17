@@ -49,6 +49,7 @@
     "start:kickjump.com": "pnpm --dir apps/kickjump.com start",
     "test": "run-p -c test:kickjump.com test:packages test:db",
     "test:db": "pnpm --dir tests test:db",
+    "test:db:watch": "pnpm --dir tests test:db:watch",
     "test:kickjump.com": "pnpm --dir tests test:kickjump.com",
     "test:kickjump.com:watch": "E2E_QUICK=1 chokidar \"tests/kickjump.com/**/*.ts\" \"packages/kickjump__playwright/src/**/*.ts\" \"apps/kickjump.com/src/**/*.{ts,svelte}\" -c \"pnpm test:kickjump.com\" --ignore \"node_modules/**\" --initial --silent",
     "test:packages": "vitest run",

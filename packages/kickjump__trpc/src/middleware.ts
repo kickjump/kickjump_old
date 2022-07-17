@@ -1,4 +1,4 @@
-import { UserModel } from '@kickjump/db';
+import { AccountProvider, UserModel } from '@kickjump/db';
 import type _app from '@octokit/app';
 import type _core from '@octokit/core';
 import type _oauthApp from '@octokit/oauth-app';
@@ -33,7 +33,7 @@ export const authenticated = t.procedure.use((props) => {
 export const withGitHubAccount = authenticated.use(async (props) => {
   const { next, ctx } = props;
 
-  const accounts = await UserModel.findAccountsByUserId(ctx.user.id, 'github');
+  const accounts = await UserModel.findAccountsByUserId(ctx.user.id, AccountProvider.github);
   const account = accounts.at(0);
 
   if (!account?.accessToken) {

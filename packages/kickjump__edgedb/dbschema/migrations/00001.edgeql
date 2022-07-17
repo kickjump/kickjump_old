@@ -1,4 +1,4 @@
-CREATE MIGRATION m1qk3lbyczd27bibwejrweyrbfvdxybbyz6fj6a54mcqbbasddzcfq
+CREATE MIGRATION m1leigo2c4rwx2m5f3m4dr6ensyiwy6dguj5o4dpvzkmcnd3elsazq
     ONTO initial
 {
   CREATE SCALAR TYPE default::Permission EXTENDING enum<owner, member, none, updateDescription, updateMembers>;
@@ -13,12 +13,12 @@ CREATE MIGRATION m1qk3lbyczd27bibwejrweyrbfvdxybbyz6fj6a54mcqbbasddzcfq
           SET default := (std::datetime_current());
       };
   };
-  CREATE SCALAR TYPE default::Privacy EXTENDING enum<private, owners, members, public>;
   CREATE SCALAR TYPE default::Status EXTENDING enum<draft, pending, approved>;
+  CREATE SCALAR TYPE default::Visibility EXTENDING enum<creator, owners, members, custom, all>;
   CREATE TYPE default::Project EXTENDING default::UpdatedAt, default::CreatedAt {
       CREATE REQUIRED PROPERTY description -> std::str;
-      CREATE REQUIRED PROPERTY privacy -> default::Privacy {
-          SET default := (default::Privacy.private);
+      CREATE REQUIRED PROPERTY privacy -> default::Visibility {
+          SET default := (default::Visibility.creator);
       };
       CREATE REQUIRED PROPERTY slug -> std::str {
           CREATE CONSTRAINT std::exclusive;
@@ -52,8 +52,8 @@ CREATE MIGRATION m1qk3lbyczd27bibwejrweyrbfvdxybbyz6fj6a54mcqbbasddzcfq
       CREATE REQUIRED LINK creator -> default::User {
           ON TARGET DELETE RESTRICT;
       };
-      CREATE REQUIRED PROPERTY privacy -> default::Privacy {
-          SET default := (default::Privacy.private);
+      CREATE REQUIRED PROPERTY privacy -> default::Visibility {
+          SET default := (default::Visibility.creator);
       };
       CREATE REQUIRED PROPERTY status -> default::Status {
           SET default := (default::Status.draft);

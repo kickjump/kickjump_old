@@ -16,8 +16,8 @@ module default {
     required property status -> Status {
       default := Status.draft;
     }
-    required property privacy -> Privacy {
-      default := Privacy.private;
+    required property privacy -> Visibility {
+      default := Visibility.creator;
     }
   }
 
@@ -39,8 +39,8 @@ module default {
       default := Status.draft;
     }
 
-    required property privacy -> Privacy {
-      default := Privacy.private;
+    required property privacy -> Visibility {
+      default := Visibility.creator;
     }
   }
 
@@ -115,8 +115,10 @@ module default {
     updateMembers
   >;
 
-  # `private` only visible to the creator
-  # `members` visible to members and the creator
-  # `public` visible to everyone
-  scalar type Privacy extending enum<private, owners, members, public>;
+  # `creator` only visible to the creator
+  # `owners` visible to owners
+  # `members` visible to all members and the creator
+  # `custom` visible to a custom selection
+  # `all` visible to everyone
+  scalar type Visibility extending enum<creator, owners, members, custom, all>;
 }

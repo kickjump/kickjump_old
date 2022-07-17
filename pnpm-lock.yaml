@@ -335,14 +335,14 @@ importers:
       '@kickjump/edgedb': ^0.0.0
       '@kickjump/svelte-auth': ^0.0.0
       '@types/node': ^18.0.5
-      edgedb: 0.21.0-alpha.3
+      edgedb: 0.21.0-beta.0
       tiny-invariant: ^1.2.0
       type-fest: ^2.16.0
     dependencies:
       '@faker-js/faker': 7.3.0
       '@kickjump/edgedb': link:../kickjump__edgedb
       '@kickjump/svelte-auth': link:../kickjump__svelte-auth
-      edgedb: 0.21.0-alpha.3
+      edgedb: 0.21.0-beta.0
       tiny-invariant: 1.2.0
       type-fest: 2.16.0
     devDependencies:
@@ -350,9 +350,9 @@ importers:
 
   packages/kickjump__edgedb:
     specifiers:
-      edgedb: 0.21.0-alpha.3
+      edgedb: 0.21.0-beta.0
     dependencies:
-      edgedb: 0.21.0-alpha.3
+      edgedb: 0.21.0-beta.0
 
   packages/kickjump__playwright:
     specifiers:
@@ -5669,8 +5669,8 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /edgedb/0.21.0-alpha.3:
-    resolution: {integrity: sha512-nbDt/NusTzPsaf/j6Lz41WO5E6ElmDG0DSpFcF8NgW+GlgVtPoaU07mM7F1QlMk0+1cj6CNUBh/bLQ2usivWkg==}
+  /edgedb/0.21.0-beta.0:
+    resolution: {integrity: sha512-KS7ei8xMxSm1FBU67A23fUkhcb+P4dfD73ELtDJ3vZZa0tCqEG95JXGXFAIJiOfPXR75cw7N7orkjcXnLNVQ7Q==}
     engines: {node: '>= 10.0.0'}
     hasBin: true
     dev: false

@@ -9,13 +9,7 @@ import type {
 } from '@kickjump/edgedb';
 import { type Executor, createClient } from 'edgedb';
 import type _ from 'edgedb/dist/client.js';
-import type {
-  ConditionalKeys,
-  PartialDeep,
-  Primitive,
-  SetOptional,
-  Simplify,
-} from 'type-fest';
+import type { ConditionalKeys, PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
 
 export const client = createClient();
 
@@ -25,7 +19,7 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
   return runner.run(client);
 }
 
-export { AccountProvider, default as e, Permission, Privacy, Status } from '@kickjump/edgedb';
+export { AccountProvider, default as e, Permission, Status, Visibility } from '@kickjump/edgedb';
 
 /**
  * Matches any primitive, `Date`, or `RegExp` value.
@@ -147,6 +141,8 @@ interface AvailableOptions {
 /** */
 type Custom<Type, Options extends AvailableOptions> = Options extends { deepPartial: true }
   ? Custom<PartialDeep<Type>, Omit<Options, 'deepPartial'>>
+  : Options extends { simplify: true }
+  ? Custom<ConditionalOmit<Type, ArrayUnion<{ id: string }>>, Omit<Options, 'simplify'>>
   : Options extends { deepOmit: infer Keys extends string }
   ? Custom<DeepOmit<Type, Keys>, Omit<Options, 'deepOmit'>>
   : Options extends { deepOptional: infer Keys extends string }
@@ -159,8 +155,6 @@ type Custom<Type, Options extends AvailableOptions> = Options extends { deepPart
   ? Custom<Omit<Type, Keys>, Omit<Options, 'omit'>>
   : Options extends { conditionalOmit: infer Shape extends object }
   ? Custom<ConditionalOmit<Type, ArrayUnion<Shape>>, Omit<Options, 'conditionalOmit'>>
-  : Options extends { simplify: true }
-  ? Custom<ConditionalOmit<Type, ArrayUnion<{ id: string }>>, Omit<Options, 'simplify'>>
   : Options extends { replace: infer Replacement extends object }
   ? Custom<Replace<Type, Replacement>, Omit<Options, 'replace'>>
   : Simplify<Type>;

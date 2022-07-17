@@ -2,10 +2,7 @@
  * Reserved usernames taken from https://github.com/shouldbee/reserved-usernames/blob/master/reserved-usernames.json
  */
 export const RESERVED_USERNAMES = new Set([
-  ...'0'
-    .repeat(10)
-    .split('')
-    .map((_, index) => `${index}`),
+  ...[...'0'.repeat(10)].map((_, index) => `${index}`),
   'about',
   'access',
   'account',

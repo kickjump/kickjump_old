@@ -1,4 +1,4 @@
-import { type UserModel, AccountProvider } from '@kickjump/db';
+import type { UserModel } from '@kickjump/db';
 import {
   type GitHubScope,
   Authenticator,
@@ -26,7 +26,7 @@ export const authenticator = new Authenticator({
       const { profile, accessToken } = props;
 
       const providerAccountId = profile.id.toString();
-      const provider = AccountProvider.github;
+      const provider = 'github';
       const { UserModel } = await import('@kickjump/db');
       let existingUser: UserModel.PopulatedUser | undefined = await UserModel.findByAccount({
         provider,
@@ -52,28 +52,32 @@ export const authenticator = new Authenticator({
         }
       }
 
-      const newAccount: UserModel.AccountCreateInput = {
-        refreshToken: null,
-        provider,
-        providerAccountId,
-        accountType: 'oauth',
-        accessToken,
-        scope: GITHUB_SCOPE,
-        login: profile._json.login,
-      };
+      const accounts: UserModel.AccountCreateInput[] = [
+        {
+          refreshToken: null,
+          provider,
+          providerAccountId,
+          accountType: 'oauth',
+          accessToken,
+          scope: GITHUB_SCOPE,
+          login: profile._json.login,
+        },
+      ];
 
       // the user doesn't exist; create the user and account;
       if (!existingUser) {
-        existingUser = await UserModel.create(
-          { name: profile._json.name, image: profile._json.avatar_url },
-          { accounts: [newAccount], emails },
-        );
+        existingUser = await UserModel.create({
+          name: profile._json.name,
+          image: profile._json.avatar_url,
+          accounts,
+          emails,
+        });
       }
 
       const account = existingUser.accounts.find((account) => account.provider === provider);
 
       if (!account) {
-        await UserModel.linkAccount(existingUser.id, newAccount);
+        await UserModel.linkAccounts(existingUser.id, accounts);
       } else if (account.providerAccountId !== providerAccountId) {
         throw ServerError.auth('A different GitHub account has already been linked to this user.');
       }

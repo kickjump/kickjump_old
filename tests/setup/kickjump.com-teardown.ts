@@ -1,12 +1,8 @@
-import { teardown } from 'jest-process-manager';
+// import { teardownDatabase, TEST_EDGEDB_INSTANCE } from './db-setup.js'
 
-async function globalTeardown() {
-  // Use an external endpoint.
-  if (process.env.WEBSITE_URL) {
-    return;
-  }
-
-  await teardown();
+/**
+ * Do nothing for now.
+ */
+export default async function teardownSetup() {
+  // await teardownDatabase(TEST_EDGEDB_INSTANCE);
 }
-
-export default globalTeardown;
