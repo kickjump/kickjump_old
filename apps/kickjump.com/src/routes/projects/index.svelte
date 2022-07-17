@@ -6,21 +6,6 @@
   export const load: Load = () => ({ stuff: { title: 'Projects | KickJump' } });
 </script>
 
-<section class="grid sm:grid-cols-2 gap-8 h-min">
-  <GettingStartedCard
-    variant="primary"
-    title="I am an open source creator 🎉"
-    message="Raise funds for your next great open source project!"
-    href="/projects/create"
-    button="Create!"
-  />
-  <GettingStartedCard
-    variant="secondary"
-    title="I am an open source supporter 💖"
-    message="Become a valued supporter of the next great open source projects!"
-    href="/projects/explore"
-    button="Explore!"
-    align="text-right"
-    class="sketchy-3"
-  />
+<section class="grid sm:grid-cols-2 gap-8 h-min" aria-label="Projects List">
+  <h3>No projects found</h3>
 </section>

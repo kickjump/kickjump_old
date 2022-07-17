@@ -1,7 +1,6 @@
 <script lang="ts">
   import themeStore, { setTheme } from 'svelte-themes';
 
-  import { goto } from '$app/navigation';
   import { page, session } from '$app/stores';
   import { Button } from '$components/buttons';
   import Logo from '$components/logo/logo.svelte';
@@ -22,6 +21,7 @@
   }
 
   async function logout() {
+    const { goto } = await import('$app/navigation');
     const redirect = await auth.logout(csrf);
     await goto(redirect ?? '/', { replaceState: true });
   }
@@ -62,7 +62,7 @@
       {#each items as { href, label } (href)}
         <Button {href} variant="ghost" active={matchesHref($page, href)}>{label}</Button>
       {/each}
-      <IconToggle checked={isDark} on:change={toggleTheme} swap="moonFill" initial="sunFill" />
+      <IconToggle checked={isDark} on:change={toggleTheme} swap="moonFill" initial="sunFill" label="Dark Mode Toggle Button" />
     </div>
     {#key user}
       <div class="pl-8 justify-self-end flex flex-row gap-x-1">

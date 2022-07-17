@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '$components/buttons/button.svelte';
   import { type ModalCloseMethod, Modal } from '$components/modal';
@@ -38,7 +37,7 @@
           params: { stepId: undefined, steps: undefined },
           href: location.href,
         });
-
+        const { goto } = await import('$app/navigation');
         await goto(url, {});
       }
 

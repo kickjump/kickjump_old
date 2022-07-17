@@ -1,7 +1,12 @@
 ---
 layout: page
-title: About | KickJump
 ---
+
+<script context="module">
+  export const load = () => {
+    return { stuff: { title: 'About | KickJump' }}
+  };
+</script>
 
 <script>
   import { Button } from '$components';
