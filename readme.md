@@ -50,11 +50,12 @@ The problem is that almost none of the value created is passed onto the teams be
 You will need the following installed on your machine:
 
 - [node](https://nodejs.org/en/) - the recommended way of installing is with [fnm](https://github.com/Schniz/fnm)
-- [rust](https://www.rust-lang.org/tools/install)
+- [rust](https://www.rust-lang.org/tools/install)- which manages the solana programs.
+- [edgedb](https://www.edgedb.com/docs/guides/installation) - which is used to manage the data layer for KickJump.
 
-I recommend using [`fnm`](https://github.com/Schniz/fnm) for node and [rustup](https://github.com/rust-lang/rustup) for rust. Once setup they will automatically derive the recommended version of rust and node without impacting your global installations.
+We recommend using [`fnm`](https://github.com/Schniz/fnm) for managing your node installations and [rustup](https://github.com/rust-lang/rustup) for manging rust version. Once setup they will automatically derive the recommended version of rust and node to use in this project without impacting your global installation.
 
-To get started:
+Once the above tools have been setup, run this command:
 
 ```bash
 npm run bootstrap
@@ -62,7 +63,7 @@ npm run bootstrap
 
 This initializes the project and all requirements. The first time this runs it might take a few minutes installing `anchor` and building the rust dependencies.
 
-The package manager used is `pnpm` which will be available after running the bootstrap command.
+The package manager used is `pnpm` via [corepack](https://github.com/nodejs/corepack) which will be available after running the bootstrap command.
 
 To experiment with the GitHub API you will need to create your own GitHub application. More information to follow.
 

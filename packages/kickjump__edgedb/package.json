@@ -28,8 +28,13 @@
   ],
   "scripts": {
     "build": "pnpm run dev",
+    "db:create": "edgedb instance create",
+    "db:init": "edgedb project init --non-interactive || edgedb project init --server-instance kickjump__edgedb --non-interactive",
+    "db:remove": "edgedb instance destroy --force --instance",
     "dev": "edgeql-js --target esm --output-dir dist --force-overwrite",
-    "migrate": "edgedb migration create && edgedb migrate && pnpm dev",
+    "migrate": "run-s migrate:create migrate:run dev",
+    "migrate:create": "edgedb migration create",
+    "migrate:run": "edgedb migrate",
     "prepare": "pnpm run dev"
   },
   "dependencies": {

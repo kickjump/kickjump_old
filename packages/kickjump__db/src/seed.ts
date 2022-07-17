@@ -10,9 +10,9 @@ import {
   e,
 } from './edgedb.js';
 
-type Account = AccountType<{ optional: 'id' | 'user'; omit: 'user' }>;
-type Email = EmailType<{ optional: 'id' | 'user'; omit: 'user' }>;
-type User = UserType<{ optional: 'id'; omit: 'emails' | 'accounts' | 'projectsCreated' }>;
+type Account = AccountType<{ omit: 'id'; simplify: true }>;
+type Email = EmailType<{ omit: 'id'; simplify: true }>;
+type User = UserType<{ omit: 'id'; simplify: true }>;
 
 function createAccount(): Account {
   return {
@@ -29,7 +29,6 @@ function createEmail(): Email {
   return {
     createdAt: faker.date.past(),
     email: faker.internet.email(),
-    id: faker.datatype.uuid(),
     verified: faker.date.recent(),
     primary: true,
     updatedAt: faker.date.recent(),

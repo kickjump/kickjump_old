@@ -1,15 +1,21 @@
-import {
-  type Account,
-  type CreatedAt,
-  type Email,
-  type Project,
-  type Proposal,
-  type UpdatedAt,
-  type User,
+import type {
+  Account,
+  CreatedAt,
+  Email,
+  Project,
+  Proposal,
+  UpdatedAt,
+  User,
 } from '@kickjump/edgedb';
 import { type Executor, createClient } from 'edgedb';
 import type _ from 'edgedb/dist/client.js';
-import type { PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
+import type {
+  ConditionalKeys,
+  PartialDeep,
+  Primitive,
+  SetOptional,
+  Simplify,
+} from 'type-fest';
 
 export const client = createClient();
 
@@ -19,19 +25,11 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
   return runner.run(client);
 }
 
-export {
-  AccountProvider,
-  default as e,
-  ProjectPermission,
-  ProjectStatus,
-  ProposalPermission,
-  ProposalStatus,
-  Visibility,
-} from '@kickjump/edgedb';
+export { AccountProvider, default as e, Permission, Privacy, Status } from '@kickjump/edgedb';
 
 /**
-Matches any primitive, `Date`, or `RegExp` value.
-*/
+ * Matches any primitive, `Date`, or `RegExp` value.
+ */
 type BuiltIns = Primitive | Date | RegExp;
 
 type DeepOmit<Type, Omitted extends string> = Type extends BuiltIns
@@ -123,6 +121,7 @@ export type ProposalType<Options extends AvailableOptions = object> = Custom<
   DeepOmit<Proposal, '__type__'>,
   Options
 >;
+export type OmittedKeys = 'id' | 'createdAt' | 'updatedAt';
 
 interface AvailableOptions {
   /** Deep omit keys */
@@ -137,6 +136,10 @@ interface AvailableOptions {
   optional?: string | undefined;
   /** Omit top level keys */
   omit?: string | undefined;
+  /** Conditionally omit properties which extend the provided */
+  conditionalOmit?: object | undefined;
+  /** Remove all flattened object types */
+  simplify?: boolean | undefined;
   /** Replace the matching keys */
   replace?: object | undefined;
 }
@@ -154,8 +157,14 @@ type Custom<Type, Options extends AvailableOptions> = Options extends { deepPart
   ? Custom<SetOptional<Type, Keys extends keyof Type ? Keys : never>, Omit<Options, 'optional'>>
   : Options extends { omit: infer Keys extends string }
   ? Custom<Omit<Type, Keys>, Omit<Options, 'omit'>>
+  : Options extends { conditionalOmit: infer Shape extends object }
+  ? Custom<ConditionalOmit<Type, ArrayUnion<Shape>>, Omit<Options, 'conditionalOmit'>>
+  : Options extends { simplify: true }
+  ? Custom<ConditionalOmit<Type, ArrayUnion<{ id: string }>>, Omit<Options, 'simplify'>>
   : Options extends { replace: infer Replacement extends object }
   ? Custom<Replace<Type, Replacement>, Omit<Options, 'replace'>>
   : Simplify<Type>;
 
 type Replace<Type, Replacement extends object> = Omit<Type, keyof Replacement> & Replacement;
+type ConditionalOmit<Base, Condition> = Omit<Base, ConditionalKeys<Base, Condition>>;
+export type ArrayUnion<Type> = Type[] | Type;

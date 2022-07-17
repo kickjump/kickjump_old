@@ -1,0 +1,13 @@
+diff --git a/dist/chunk-vite-node-externalize.6956d2d9.mjs b/dist/chunk-vite-node-externalize.6956d2d9.mjs
+index 02e16746c2254dc1dd51696637048ad7e4799fbb..70cae456294a9e9df7c9663894b4a8bee1213888 100644
+--- a/dist/chunk-vite-node-externalize.6956d2d9.mjs
++++ b/dist/chunk-vite-node-externalize.6956d2d9.mjs
+@@ -10394,7 +10394,7 @@ Please, resolve all the errors to make sure your tests are not affected.`));
+ }
+ 
+ const WATCHER_DEBOUNCE = 100;
+-const CLOSE_TIMEOUT = 1e3;
++const CLOSE_TIMEOUT = 2e4;
+ class Vitest {
+   constructor() {
+     this.config = void 0;

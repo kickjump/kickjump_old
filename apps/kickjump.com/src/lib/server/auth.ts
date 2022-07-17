@@ -28,7 +28,7 @@ export const authenticator = new Authenticator({
       const providerAccountId = profile.id.toString();
       const provider = AccountProvider.github;
       const { UserModel } = await import('@kickjump/db');
-      let existingUser: UserModel.PopulatedUser | undefined = await UserModel.getByAccount({
+      let existingUser: UserModel.PopulatedUser | undefined = await UserModel.findByAccount({
         provider,
         providerAccountId,
       });
@@ -45,7 +45,7 @@ export const authenticator = new Authenticator({
 
       for (const email of emails) {
         // here you would find or create a user in your database
-        existingUser = await UserModel.getByEmail(email.email);
+        existingUser = await UserModel.findByEmail(email.email);
 
         if (existingUser) {
           break;

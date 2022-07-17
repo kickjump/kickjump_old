@@ -1,23 +1,33 @@
 module default {
   type Project extending UpdatedAt, CreatedAt {
     required property title -> str;
+    required property slug -> str {
+      constraint exclusive;
+    }
+    required link creator -> User {
+      on target delete restrict;
+    }
     required property description -> str;
     multi link proposals := .<project[is Proposal];
     multi link members -> User {
-      property permissions -> array<ProjectPermission>;
+      property permissions -> array<Permission>;
       index on (__subject__@permissions);
+    }
+    required property status -> Status {
+      default := Status.draft;
+    }
+    required property privacy -> Privacy {
+      default := Privacy.private;
     }
   }
 
   type Proposal extending UpdatedAt, CreatedAt {
-    # TODO(@ifiokjr) how to handle deletes of the user (or maybe users can never
-    # be deleted).
     required link creator -> User {
       on target delete restrict;
     }
 
     multi link members -> User {
-      property permissions -> array<ProposalPermission>;
+      property permissions -> array<Permission>;
       index on (__subject__@permissions);
     }
 
@@ -25,8 +35,12 @@ module default {
       on target delete restrict;
     }
 
-    required property status -> ProposalStatus {
-      default := ProjectStatus.draft;
+    required property status -> Status {
+      default := Status.draft;
+    }
+
+    required property privacy -> Privacy {
+      default := Privacy.private;
     }
   }
 
@@ -54,7 +68,10 @@ module default {
     property image -> str;
     multi link emails := .<user[is Email];
     multi link accounts := .<user[is Account];
-    multi link projectsCreated := .<user[is Account];
+    multi link createdProjects := .<creator[is Project];
+    multi link createdProposals := .<creator[is Proposal];
+    multi link maintainedProjects := .<members[is Project];
+    multi link contributedProposals := .<members[is Proposal];
   }
 
   type Email extending UpdatedAt, CreatedAt {
@@ -89,16 +106,8 @@ module default {
   }
 
   scalar type AccountProvider extending enum<github, google>;
-  scalar type ProposalStatus extending enum<draft, pending, approved>;
-  scalar type ProjectStatus extending enum<draft, awaitingVerification, completed>;
-  scalar type ProjectPermission extending enum<
-    owner,
-    member,
-    none,
-    updateDescription,
-    updateMembers
-  >;
-  scalar type ProposalPermission extending enum<
+  scalar type Status extending enum<draft, pending, approved>;
+  scalar type Permission extending enum<
     owner,
     member,
     none,
@@ -109,5 +118,5 @@ module default {
   # `private` only visible to the creator
   # `members` visible to members and the creator
   # `public` visible to everyone
-  scalar type Visibility extending enum<private, members, public>;
+  scalar type Privacy extending enum<private, owners, members, public>;
 }
