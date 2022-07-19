@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import '../app.css';
 
-  import { createClient, transformer, TRPC_ENDPOINT } from '@kickjump/trpc/client';
+  import { createClient } from '@kickjump/trpc/client';
   import type { Load } from '@sveltejs/kit';
   import SvelteSeo from 'svelte-seo';
 

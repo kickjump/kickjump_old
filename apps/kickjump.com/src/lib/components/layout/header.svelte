@@ -24,7 +24,7 @@
     console.log('logging out');
     const redirect = await auth.logout(csrf);
     console.log({ redirect });
-  
+
     if (redirect) {window.location.href = redirect;}
   }
 
@@ -50,6 +50,7 @@
       setTheme($themeStore.resolvedTheme);
     }
   }
+  $: toggleLabel = isDark ? 'Light Mode Toggle' : 'Dark Mode Toggle'
 </script>
 
 <header
@@ -69,7 +70,7 @@
         on:change={toggleTheme}
         swap="moonFill"
         initial="sunFill"
-        label="Dark Mode Toggle Button"
+        label={toggleLabel}
       />
     </div>
     {#key user}

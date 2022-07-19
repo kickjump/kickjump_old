@@ -13,7 +13,7 @@
     "test:anchor:watch": "vitest --config ./anchor.config.ts",
     "test:db": "vitest run --config ./db.config.ts",
     "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest --config ./db.config.ts",
-    "test:kickjump.com": "playwright test"
+    "test:kickjump.com": "playwright test --workers=1"
   },
   "dependencies": {
     "@faker-js/faker": "^7.3.0",

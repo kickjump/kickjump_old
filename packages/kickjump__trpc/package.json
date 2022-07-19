@@ -47,6 +47,7 @@
     "@octokit/plugin-rest-endpoint-methods": "^6.1.1",
     "@octokit/request-error": "^3.0.0",
     "@octokit/types": "^6.40.0",
+    "@octokit/webhooks": "^10.0.8",
     "@trpc/client": "10.0.0-alpha.38",
     "@trpc/server": "10.0.0-alpha.38",
     "@types/parse-link-header": "^2.0.0",

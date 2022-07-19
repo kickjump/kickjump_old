@@ -513,6 +513,7 @@ importers:
       '@octokit/plugin-rest-endpoint-methods': ^6.1.1
       '@octokit/request-error': ^3.0.0
       '@octokit/types': ^6.40.0
+      '@octokit/webhooks': ^10.0.8
       '@sveltejs/kit': 1.0.0-next.379
       '@sveltestack/svelte-query': ^1.6.0
       '@trpc/client': 10.0.0-alpha.38
@@ -544,6 +545,7 @@ importers:
       '@octokit/plugin-rest-endpoint-methods': 6.1.1_@octokit+core@4.0.4
       '@octokit/request-error': 3.0.0
       '@octokit/types': 6.40.0
+      '@octokit/webhooks': 10.0.8
       '@trpc/client': 10.0.0-alpha.38_g54didzcqig66fkzjcj6kpgxpe
       '@trpc/server': 10.0.0-alpha.38
       '@types/parse-link-header': 2.0.0

@@ -1,5 +1,5 @@
 import type * as _ from '@kickjump/svelte-auth';
-import {} from '@kickjump/validation';
+import { s } from '@kickjump/validation';
 import type { Handle } from '@sveltejs/kit';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 

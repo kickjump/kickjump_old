@@ -8,9 +8,16 @@ import { authenticator } from '$server/auth';
 import { env } from '$server/env';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
+// const enabled = env.VITE_ENDPOINT_MOCKING_ENABLED === 'true';
+const enabled = false;
+
 export const handle = handleSession(
   { secret: env.SESSION_SECRET },
-  sequence(createMockHandle(), authenticator.createAuthHandle(), createTRPCHandle()),
+  sequence(
+    createMockHandle({ enabled }),
+    authenticator.createAuthHandle(),
+    createTRPCHandle(),
+  ),
 );
 
 export const getSession: GetSession = async (event) => {
