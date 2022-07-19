@@ -1,8 +1,5 @@
-// import { teardownDatabase, TEST_EDGEDB_INSTANCE } from './db-setup.js'
+import { teardown } from 'jest-process-manager';
 
-/**
- * Do nothing for now.
- */
-export default async function teardownSetup() {
-  // await teardownDatabase(TEST_EDGEDB_INSTANCE);
+export default async function globalTeardown() {
+  await teardown();
 }

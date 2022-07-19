@@ -5,10 +5,10 @@ import type _oauthApp from '@octokit/oauth-app';
 import type _paginateRest from '@octokit/plugin-paginate-rest';
 import type _pluginRestEndpointMethods from '@octokit/plugin-rest-endpoint-methods';
 import type _requestError from '@octokit/request-error';
+import type _webhooks from '@octokit/webhooks';
 import type { ProcedureBuilder } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
 import { App, Octokit } from 'octokit';
-import type _webhooks from '@octokit/webhooks';
 
 import { t } from './init';
 

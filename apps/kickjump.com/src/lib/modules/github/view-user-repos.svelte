@@ -15,8 +15,6 @@
       getPreviousPageParam: (page) => page.prevCursor,
     },
   );
-
-  $: console.log($query.data);
 </script>
 
 <!-- {#if $query.isLoading}

@@ -314,6 +314,9 @@ interface Name {
 
 export interface Email {
   email: string;
+  verified?: boolean | undefined;
+  primary?: boolean | undefined;
+  visibility?: string | undefined;
   /** Extra meta data on the type of the email. */
   type?: string | undefined;
 }

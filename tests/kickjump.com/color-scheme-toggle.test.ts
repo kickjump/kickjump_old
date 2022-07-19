@@ -6,10 +6,9 @@ test.describe('light mode', () => {
 
   test('can toggle between light and dark mode', async ({ page, queries }) => {
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
     await retry(
-      async (count) => {
-        console.log({ count });
+      async () => {
         const $toggler = await queries.getByLabelText('Dark Mode Toggle');
         await $toggler.click();
         const darkHtml = await page.locator('html[data-theme=dark]');
@@ -31,11 +30,10 @@ test.describe('dark mode', () => {
 
   test('can toggle between dark and light mode', async ({ page, queries }) => {
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     await retry(
-      async (count) => {
-        console.log({count})
+      async () => {
         const $toggler = await queries.getByLabelText('Light Mode Toggle');
         await $toggler.click();
         const darkHtml = await page.locator('html[data-theme=light]');

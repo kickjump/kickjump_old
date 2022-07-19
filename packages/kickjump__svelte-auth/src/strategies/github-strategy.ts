@@ -30,7 +30,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
 
     this.scope = scope ?? [USER_EMAIL_SCOPE];
     this.allowSignup = allowSignup ?? true;
-    this.userAgent = userAgent ?? 'Remix Auth';
+    this.userAgent = userAgent ?? 'KickJump SvelteKit Auth';
     this.appName = appName;
   }
 
@@ -84,9 +84,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
       },
     });
 
-    const data: GitHubEmailsResponse = await response.json();
-    const emails: Email[] = data.map(({ email }) => ({ email }));
-    return emails;
+    return await response.json();
   }
 
   protected override async userProfile(tokens: GitHubOAuth2Data): Promise<GitHubProfile> {
@@ -102,6 +100,7 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
 
     if (this.scope.includes(USER_EMAIL_SCOPE)) {
       emails = await this.userEmails(tokens.accessToken);
+      console.log(emails);
     }
 
     const photos = [{ url: data.avatar_url }];

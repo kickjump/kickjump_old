@@ -31,6 +31,8 @@ export const github = t.router({
       const parsedLinks = parseLinkHeader(headers.link);
       const { repositories, total_count: count, repository_selection: selection } = data;
 
+      const a = await octokit.rest.users.getAuthenticated();
+      a.data.avatar_url;
       return {
         repositories,
         count,

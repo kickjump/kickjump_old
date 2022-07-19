@@ -11,8 +11,6 @@ export function githubApi() {
   });
 }
 
-console.log('github mocks loaded!');
-
 export function githubWebsite() {
   const GITHUB = 'https://github.com';
   const github = agent.get(GITHUB);

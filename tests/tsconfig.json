@@ -6,9 +6,10 @@
     "Then run the command to automatically update everything: `monots fix`"
   ],
   "extends": "../.monots/tsconfig.base.json",
-  "include": ["anchor", "db", "setup"],
   "compilerOptions": {
     "noEmit": true,
-    "declaration": false
-  }
+    "declaration": false,
+    "exactOptionalPropertyTypes": true
+  },
+  "include": ["anchor", "db", "setup"]
 }

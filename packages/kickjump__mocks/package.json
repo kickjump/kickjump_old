@@ -28,6 +28,8 @@
     "dist"
   ],
   "dependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "@octokit/openapi-types": "^12.10.1",
     "undici": "^5.8.0"
   },
   "devDependencies": {

@@ -1,21 +1,28 @@
 module default {
   type Project extending UpdatedAt, CreatedAt {
     required property title -> str;
+
     required property slug -> str {
       constraint exclusive;
     }
+
     required link creator -> User {
       on target delete restrict;
     }
+
     required property description -> str;
+
     multi link proposals := .<project[is Proposal];
+
     multi link members -> User {
       property permissions -> array<Permission>;
       index on (__subject__@permissions);
     }
+
     required property status -> Status {
       default := Status.draft;
     }
+
     required property privacy -> Visibility {
       default := Visibility.creator;
     }

@@ -39,7 +39,8 @@
     "@playwright/test": "^1.23.4",
     "delay": "^5.0.0",
     "playwright-core": "^1.23.4",
-    "playwright-testing-library": "^4.2.1"
+    "playwright-testing-library": "^4.2.1",
+    "undici": "^5.8.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.6"

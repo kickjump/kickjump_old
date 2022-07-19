@@ -63,6 +63,8 @@ export function createAuthHandle(auth: Authenticator): Handle {
       message: `The authentication endpoint: ${event.url.pathname} requested was not found`,
     });
 
+    throw serverError;
+
     await event.locals.session.flash('authError', serverError.toJSON());
 
     if (event.request.method === 'POST') {

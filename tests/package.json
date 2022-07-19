@@ -18,6 +18,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.3.0",
     "@kickjump/db": "^0.0.1",
+    "@kickjump/mocks": "^0.0.0",
     "@kickjump/playwright": "^0.0.0",
     "@playwright/test": "^1.23.4",
     "@project-serum/anchor": "0.25.0",
@@ -38,6 +39,9 @@
     "tsconfigs": {
       "src": false,
       "": {
+        "compilerOptions": {
+          "exactOptionalPropertyTypes": true
+        },
         "include": [
           "anchor",
           "db",

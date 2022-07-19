@@ -21,11 +21,11 @@
   }
 
   async function logout() {
-    console.log('logging out');
     const redirect = await auth.logout(csrf);
-    console.log({ redirect });
 
-    if (redirect) {window.location.href = redirect;}
+    if (redirect) {
+      window.location.href = redirect;
+    }
   }
 
   const items = [
@@ -34,6 +34,7 @@
   ];
 
   $: ({ csrf, user } = $session);
+  $: console.log({$session});
   $: githubAuth = auth.strategyUrl('github', 'login', {
     redirect: $page.params.redirect ?? $page.url.href,
   }).searchPath;

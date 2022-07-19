@@ -431,9 +431,13 @@ importers:
 
   packages/kickjump__mocks:
     specifiers:
+      '@faker-js/faker': ^7.3.0
+      '@octokit/openapi-types': ^12.10.1
       '@sveltejs/kit': 1.0.0-next.379
       undici: ^5.8.0
     dependencies:
+      '@faker-js/faker': 7.3.0
+      '@octokit/openapi-types': 12.10.1
       undici: 5.8.0
     devDependencies:
       '@sveltejs/kit': 1.0.0-next.379
@@ -446,12 +450,14 @@ importers:
       delay: ^5.0.0
       playwright-core: ^1.23.4
       playwright-testing-library: ^4.2.1
+      undici: ^5.8.0
     dependencies:
       '@playwright-testing-library/test': 4.2.1_@playwright+test@1.23.4
       '@playwright/test': 1.23.4
       delay: 5.0.0
       playwright-core: 1.23.4
       playwright-testing-library: 4.2.1_@playwright+test@1.23.4
+      undici: 5.8.0
     devDependencies:
       '@types/node': 18.0.6
 
@@ -596,6 +602,7 @@ importers:
     specifiers:
       '@faker-js/faker': ^7.3.0
       '@kickjump/db': ^0.0.1
+      '@kickjump/mocks': ^0.0.0
       '@kickjump/playwright': ^0.0.0
       '@playwright/test': ^1.23.4
       '@project-serum/anchor': 0.25.0
@@ -614,6 +621,7 @@ importers:
     dependencies:
       '@faker-js/faker': 7.3.0
       '@kickjump/db': link:../packages/kickjump__db
+      '@kickjump/mocks': link:../packages/kickjump__mocks
       '@kickjump/playwright': link:../packages/kickjump__playwright
       '@playwright/test': 1.23.4
       '@project-serum/anchor': 0.25.0
