@@ -64,7 +64,7 @@ export async function findById(id: string) {
   return run(query);
 }
 
-export async function findAccountsByUserId(id: string, provider: AccountProvider) {
+export async function findAccountsByUserId(id: string, provider: keyof typeof AccountProvider) {
   const query = e.select(e.Account, (account) => ({
     ...e.Account['*'],
     filter: e.op(

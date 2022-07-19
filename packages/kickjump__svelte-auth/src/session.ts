@@ -131,12 +131,10 @@ export function handleSession(
 
     const response = await passedHandle({ event, resolve });
 
-    if (!session['set-cookie']) {
-      return response;
+    if (session['set-cookie']) {
+      const sessionCookie = session['set-cookie'];
+      response.headers.append('set-cookie', sessionCookie);
     }
-
-    const sessionCookie = session['set-cookie'];
-    response.headers.append('set-cookie', sessionCookie);
 
     return response;
   };

@@ -272,13 +272,13 @@ export class OAuth2Strategy<
     if (!response.ok) {
       try {
         const body = await response.text();
-        throw new Response(body, { status: 401 });
+        throw new ServerError({ code: 401, message: body });
       } catch (error) {
-        throw new Response((error as Error).message, { status: 401 });
+        throw ServerError.as(error, 401);
       }
     }
 
-    return await this.getAccessToken(response.clone() as unknown as Response);
+    return await this.getAccessToken(response.clone());
   }
 }
 

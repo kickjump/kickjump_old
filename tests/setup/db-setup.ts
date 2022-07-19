@@ -36,7 +36,10 @@ export default async function globalSetup() {
   }
 
   return async () => {
-    // maybe remove the data
+    const { e, run } = await import('@kickjump/db');
+
+    // Delete everything!
+    await run(e.delete(e.Object));
   };
 }
 

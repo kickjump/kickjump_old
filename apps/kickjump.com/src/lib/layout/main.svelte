@@ -1,8 +1,8 @@
 <script lang="ts">
   import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 
+  export let animateTransition: boolean;
   import { Filters, Footer, Header, PageTransition } from '$components';
-
   export let refresh: string;
 </script>
 
@@ -19,7 +19,7 @@
 
 <div class="grid min-h-full grid-rows-layout">
   <Header />
-  <PageTransition {refresh}>
+  <PageTransition {refresh} {animateTransition}>
     <slot />
   </PageTransition>
   <Footer />

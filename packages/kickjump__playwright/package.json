@@ -42,7 +42,7 @@
     "playwright-testing-library": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "^18.0.5"
+    "@types/node": "^18.0.6"
   },
   "peerDependencies": {
     "@types/node": "*"

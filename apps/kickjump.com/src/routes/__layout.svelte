@@ -18,13 +18,14 @@
 
 <script lang="ts">
   export let key: string;
-  const client = createClient({ url: TRPC_ENDPOINT, transformer, csrf: $session.csrf });
-  $: stuff = { ...DEFAULT_SEO, ...$page.stuff };
+
+  const client = createClient($session.csrf);
+  $: ({ animateTransition = false, ...seo } = { ...DEFAULT_SEO, ...$page.stuff });
 </script>
 
-{#key stuff}
-  <SvelteSeo {...stuff} />
+{#key seo}
+  <SvelteSeo {...seo} />
 {/key}
 <TRPCProvider {client}>
-  <MainLayout refresh={key}><slot /></MainLayout>
+  <MainLayout {animateTransition} refresh={key}><slot /></MainLayout>
 </TRPCProvider>

@@ -1,10 +1,9 @@
 import { ProjectModel } from '@kickjump/db';
 import type { RequestEvent, RequestHandlerOutput } from '@sveltejs/kit';
 
-import type { RequestHandler } from './__types/[...slug].js';
+const NOT_FOUND = { status: 404 } as const;
 
-export const GET: RequestHandler = async (event: RequestEvent): Promise<RequestHandlerOutput> => {
-  const NOT_FOUND = { status: 404 } as const;
+export async function GET(event: RequestEvent): Promise<RequestHandlerOutput> {
   const { slug } = event.params;
 
   if (!slug) {
@@ -23,4 +22,4 @@ export const GET: RequestHandler = async (event: RequestEvent): Promise<RequestH
     status: 200,
     body: { project },
   };
-};
+}

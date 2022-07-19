@@ -1,8 +1,6 @@
 import type { ServerSession } from '@kickjump/svelte-auth';
+import { s, transformer } from '@kickjump/validation';
 import { initTRPC } from '@trpc/server';
-
-import { s } from './client/index.js';
-import { transformer } from './client/transformer.js';
 
 export const Env = s.type({
   GITHUB_CLIENT_ID: s.string(),

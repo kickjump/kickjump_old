@@ -1,9 +1,12 @@
 <script lang="ts" context="module">
-  import { Button , PageWrapper } from '$components';
+  import { Button, PageWrapper } from '$components';
   import { GettingStartedCard } from '$modules/create-project';
-</script>
 
-<script lang="ts">
+  export const load = () => {
+    return {
+      stuff: { animateTransition: true },
+    };
+  };
 </script>
 
 <div class="hero hero-height">

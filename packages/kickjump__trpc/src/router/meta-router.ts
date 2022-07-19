@@ -9,7 +9,7 @@ import metaPublisher from 'metascraper-publisher';
 import metaTitle from 'metascraper-title';
 import metaUrl from 'metascraper-url';
 
-import { s } from '../client';
+import { s } from '@kickjump/validation';
 import { t } from '../init.js';
 
 const metascraper = scraper([

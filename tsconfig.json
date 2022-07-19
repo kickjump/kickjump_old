@@ -16,6 +16,9 @@
       "path": "packages/kickjump__db/src"
     },
     {
+      "path": "packages/kickjump__mocks/src"
+    },
+    {
       "path": "packages/kickjump__playwright/src"
     },
     {
@@ -26,6 +29,9 @@
     },
     {
       "path": "packages/kickjump__trpc/src"
+    },
+    {
+      "path": "packages/kickjump__validation/src"
     },
     {
       "path": "packages/kickjump/src"

@@ -5,7 +5,7 @@ import { defineConfig, Plugin } from 'vite';
 export default defineConfig({
   mode: process.env.VITE_MODE ? process.env.MODE : undefined,
   plugins: [sveltekit()],
-  // ssr: { noExternal: ['@kickjump/**'] },
+  ssr: { noExternal: ['@kickjump/**'] },
   legacy: { buildSsrCjsExternalHeuristics: true },
   resolve: {
     alias: {
@@ -19,6 +19,7 @@ export default defineConfig({
       $lib: path.resolve('./src/lib'),
     },
   },
+  // optimizeDeps: { include: ['@kickjump/trpc > @kickjump/validation'] },
   server: { port: 3000 },
 });
 

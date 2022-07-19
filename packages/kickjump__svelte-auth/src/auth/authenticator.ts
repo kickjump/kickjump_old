@@ -24,7 +24,7 @@ export class Authenticator {
   /**
    * Get the authentication handle which can be applied to the `hooks.ts` file.
    */
-  get handle(): Handle {
+  createAuthHandle(): Handle {
     return createAuthHandle(this);
   }
 

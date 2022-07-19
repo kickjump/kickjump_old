@@ -19,7 +19,13 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
   return runner.run(client);
 }
 
-export { AccountProvider, default as e, Permission, Status, Visibility } from '@kickjump/edgedb';
+export {
+  type AccountProvider,
+  type Permission,
+  type Status,
+  type Visibility,
+  default as e,
+} from '@kickjump/edgedb';
 
 /**
  * Matches any primitive, `Date`, or `RegExp` value.

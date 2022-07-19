@@ -21,9 +21,11 @@
   }
 
   async function logout() {
-    const { goto } = await import('$app/navigation');
+    console.log('logging out');
     const redirect = await auth.logout(csrf);
-    await goto(redirect ?? '/', { replaceState: true });
+    console.log({ redirect });
+  
+    if (redirect) {window.location.href = redirect;}
   }
 
   const items = [
@@ -62,7 +64,13 @@
       {#each items as { href, label } (href)}
         <Button {href} variant="ghost" active={matchesHref($page, href)}>{label}</Button>
       {/each}
-      <IconToggle checked={isDark} on:change={toggleTheme} swap="moonFill" initial="sunFill" label="Dark Mode Toggle Button" />
+      <IconToggle
+        checked={isDark}
+        on:change={toggleTheme}
+        swap="moonFill"
+        initial="sunFill"
+        label="Dark Mode Toggle Button"
+      />
     </div>
     {#key user}
       <div class="pl-8 justify-self-end flex flex-row gap-x-1">

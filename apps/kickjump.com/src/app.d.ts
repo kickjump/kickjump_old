@@ -13,6 +13,10 @@ declare namespace App {
     canonical?: string;
     openGraph?: import('svelte-seo/types/SvelteSeo').OpenGraph;
     twitter?: import('svelte-seo/types/SvelteSeo').Twitter;
+    /**
+     * @default true
+     */
+    animateTransition?: boolean;
   }
 
   interface Locals {

@@ -1,8 +1,9 @@
 import 'dotenv/config';
 
-import { s } from '@kickjump/trpc/client';
+import { s } from '@kickjump/validation';
 
 const EnvSchema = s.type({
+  VITE_ENDPOINT_MOCKING_ENABLED: s.optional(s.string()),
   NODE_ENV: s.optional(s.string()),
   VERCEL: s.optional(s.string()),
   VERCEL_URL: s.optional(s.string()),

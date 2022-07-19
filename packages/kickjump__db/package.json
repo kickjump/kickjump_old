@@ -45,7 +45,7 @@
     "type-fest": "^2.16.0"
   },
   "devDependencies": {
-    "@types/node": "^18.0.5"
+    "@types/node": "^18.0.6"
   },
   "peerDependencies": {
     "@types/node": "*"

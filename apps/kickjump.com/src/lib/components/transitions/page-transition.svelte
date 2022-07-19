@@ -5,7 +5,7 @@
 
   import type { Maybe } from '$types';
   export let refresh: string;
-  const reducedMotion = false;
+  export let animateTransition: boolean;
   let className: Maybe<string> = undefined;
 
   export { className as class };
@@ -16,7 +16,7 @@
   $: classes = clsx('max-w-full overflow-x-hidden grid', className);
 </script>
 
-{#if reducedMotion}
+{#if animateTransition}
   <main class={classes}><slot /></main>
 {:else}
   {#key refresh}

@@ -2,7 +2,6 @@
   import Icon, { type IconProps, addIcon } from '@iconify/svelte/dist/OfflineIcon.svelte';
   import type _ from '@iconify/types';
   import type { IconifyIcon } from '@iconify/types';
-  import bellFill from '@iconify-icons/bi/bell-fill';
   import cx from 'clsx';
 
   import type { Maybe } from '$types';
@@ -13,8 +12,6 @@
 </script>
 
 <script lang="ts">
-  addIcon('bell', bellFill);
-  // TODO(@ifiokjr) icons are not rendering properly
   export let icon: IconType | IconifyIcon;
   let className: Maybe<string> = undefined;
 
@@ -39,8 +36,6 @@
   $: widthValue = width || size;
   $: classes = cx('sketch-icon', className);
 </script>
-
-<!-- <Icon icon="bell" inline={true} /> -->
 
 <Icon
   class={classes}

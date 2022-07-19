@@ -1,3 +1,4 @@
+import { createMockHandle } from '@kickjump/mocks';
 import { getSessionData, handleSession } from '@kickjump/svelte-auth';
 import { createTRPCHandle } from '@kickjump/trpc';
 import type { GetSession } from '@sveltejs/kit';
@@ -9,7 +10,7 @@ import { getAbsoluteUrl } from '$server/get-absolute-url';
 
 export const handle = handleSession(
   { secret: env.SESSION_SECRET },
-  sequence(authenticator.handle, createTRPCHandle()),
+  sequence(createMockHandle(), authenticator.createAuthHandle(), createTRPCHandle()),
 );
 
 export const getSession: GetSession = async (event) => {
@@ -20,6 +21,7 @@ export const getSession: GetSession = async (event) => {
   const error = event.locals.error;
   const userAgent = event.request.headers.get('user-agent') ?? '';
   const absoluteUrl = getAbsoluteUrl();
+  console.log(session);
 
   return {
     ...session,

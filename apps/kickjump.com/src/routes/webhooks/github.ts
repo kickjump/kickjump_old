@@ -1,4 +1,4 @@
-import { s } from '@kickjump/trpc/client';
+import { s } from '@kickjump/validation';
 import { emitterEventNames } from '@octokit/webhooks';
 import type { RequestEvent } from '@sveltejs/kit';
 import { App } from 'octokit';

@@ -24,17 +24,17 @@ export class ServerError extends AggregateError {
   /**
    * Takes an error and converts it to an unknown ServerError.
    */
-  static as(value: unknown): ServerError {
-    if (ServerError.is(value)) {
-      return value;
+  static as(error: unknown, code?: ErrorCode | ErrorCodeKey): ServerError {
+    if (ServerError.is(error)) {
+      return error;
     }
 
     const message =
-      typeof value === 'object' && value instanceof Error
-        ? value.message
+      typeof error === 'object' && error instanceof Error
+        ? error.message
         : 'An unknown error occurred.';
 
-    return new ServerError({ code: 'InternalServerError', message, errors: [value] });
+    return new ServerError({ code: code ?? 'InternalServerError', message, errors: [error] });
   }
 
   /**

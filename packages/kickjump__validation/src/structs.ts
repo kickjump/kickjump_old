@@ -17,4 +17,10 @@ export function url(): s.Struct<URL, null> {
   return s.define<URL>('url', (value) => value instanceof URL);
 }
 
+export function slug(): s.Struct<string, null> {
+  return s.refine(s.size(s.string(), 3, 25), 'username', (value) =>
+    /^(?=.{8,30}$)(?![._])(?!.*[._]{2})[\w.]+(?<![._])$/.test(value),
+  );
+}
+
 export * from 'superstruct';
