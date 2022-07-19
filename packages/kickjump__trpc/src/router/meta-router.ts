@@ -1,3 +1,4 @@
+import { s } from '@kickjump/validation';
 import scraper from 'metascraper';
 import metaAuthor from 'metascraper-author';
 import metaClearbit from 'metascraper-clearbit';
@@ -9,7 +10,6 @@ import metaPublisher from 'metascraper-publisher';
 import metaTitle from 'metascraper-title';
 import metaUrl from 'metascraper-url';
 
-import { s } from '@kickjump/validation';
 import { t } from '../init.js';
 
 const metascraper = scraper([

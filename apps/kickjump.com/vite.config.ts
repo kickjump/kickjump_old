@@ -1,6 +1,9 @@
+import './src/app.d.ts';
+
 import { sveltekit } from '@sveltejs/kit/vite';
 import * as path from 'node:path';
-import { defineConfig, Plugin } from 'vite';
+import type { Plugin } from 'vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   mode: process.env.VITE_MODE ? process.env.MODE : undefined,
@@ -19,9 +22,12 @@ export default defineConfig({
       $lib: path.resolve('./src/lib'),
     },
   },
-  // optimizeDeps: { include: ['@kickjump/trpc > @kickjump/validation'] },
   server: { port: 3000 },
 });
+
+const plugin: Plugin = {
+  name: 'vite-plugin-pnpm-resolve',
+};
 
 // function patchSsrNoExternal(): Plugin {
 //   return {

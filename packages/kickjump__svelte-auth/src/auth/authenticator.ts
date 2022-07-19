@@ -22,13 +22,6 @@ export class Authenticator {
   readonly baseUrl: string;
 
   /**
-   * Get the authentication handle which can be applied to the `hooks.ts` file.
-   */
-  createAuthHandle(): Handle {
-    return createAuthHandle(this);
-  }
-
-  /**
    * The options provided at initialization.
    */
   get options(): Required<AuthenticatorOptions> {
@@ -135,5 +128,12 @@ export class Authenticator {
     const { session } = event.locals;
 
     await Promise.all([session.unset('user'), session.unset('authError')]);
+  }
+
+  /**
+   * Get the authentication handle which can be applied to the `hooks.ts` file.
+   */
+  createAuthHandle(): Handle {
+    return createAuthHandle(this);
   }
 }

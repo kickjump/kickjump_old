@@ -13,7 +13,7 @@ const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: [preprocess({ postcss: true }), mdsvex(mdsvexConfig)],
-
+  compilerOptions: {},
   kit: {
     // routes: (filepath) => !/(?:^_|\/_)|(?:^\.|\/\.)(?!well-known|external)/.test(filepath),
     adapter: adapter(),

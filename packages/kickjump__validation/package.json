@@ -28,6 +28,10 @@
     "dist"
   ],
   "dependencies": {
+    "@solana/web3.js": "^1.48.0",
+    "@types/bn.js": "^5.1.0",
+    "bn.js": "^5.2.1",
+    "buffer": "^6.0.3",
     "superjson": "^1.9.1",
     "superstruct": "^0.16.0"
   },

@@ -1,6 +1,6 @@
+import { s } from '@kickjump/validation';
 import type * as _ from '@octokit/types';
 
-import { s } from '@kickjump/validation';
 import { t } from '../init.js';
 import { withGitHubAccount } from '../middleware.js';
 import { parseLinkHeader } from '../parse-link-header.js';

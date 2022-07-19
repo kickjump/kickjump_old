@@ -1,10 +1,9 @@
 <script lang="ts" context="module">
-  import type { CreateProjectStep } from './project-steps.js';
+  import Icon from '../../components/icon/icon.svelte';
+  import type { CreateProjectStep } from './project-steps.js'
 </script>
 
 <script lang="ts">
-  import Icon from '../../components/icon/icon.svelte';
-
   export let heading = 'Tell us what’s your situation ✨';
   export let previous: CreateProjectStep | undefined = { href: '#', title: 'Previous Step' };
   export let next: CreateProjectStep | undefined = { href: '#', title: 'Next Step' };
