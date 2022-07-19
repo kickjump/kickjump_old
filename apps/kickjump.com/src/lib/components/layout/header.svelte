@@ -34,7 +34,7 @@
   ];
 
   $: ({ csrf, user } = $session);
-  $: console.log({$session});
+  // $: console.log($session);
   $: githubAuth = auth.strategyUrl('github', 'login', {
     redirect: $page.params.redirect ?? $page.url.href,
   }).searchPath;
@@ -51,7 +51,7 @@
       setTheme($themeStore.resolvedTheme);
     }
   }
-  $: toggleLabel = isDark ? 'Light Mode Toggle' : 'Dark Mode Toggle'
+  $: toggleLabel = isDark ? 'Light Mode Toggle' : 'Dark Mode Toggle';
 </script>
 
 <header

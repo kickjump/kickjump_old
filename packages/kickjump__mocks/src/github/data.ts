@@ -4,25 +4,26 @@ import type * as GitHubApi from '@octokit/openapi-types';
 // set the seed
 faker.seed(1001);
 
-const USERNAMES = ['octocat', 'tolu', 'ahmed'] as const;
-export type Username = typeof USERNAMES[number];
+export const GITHUB_USERNAMES = ['octocat', 'tolu', 'ahmed'] as const;
+export type GitHubUsername = typeof GITHUB_USERNAMES[number];
 export interface GitHubUserData {
   user: GitHubApi.components['schemas']['private-user'];
-  auth: { accessToken: string; refreshToken: string; code: string };
+  auth: { accessToken: string; refreshToken: string; code: string; providerAccountId: string };
   repos: Array<GitHubApi.components['schemas']['full-repository']>;
 }
 
-function createGitHubUserData(): Record<Username, GitHubUserData> {
-  const data: Record<Username, GitHubUserData> = Object.create(null);
+function createGitHubUserData(): Record<GitHubUsername, GitHubUserData> {
+  const data: Record<GitHubUsername, GitHubUserData> = Object.create(null);
 
-  for (const username of USERNAMES) {
+  for (const username of GITHUB_USERNAMES) {
     const instance: GitHubUserData = Object.create(null);
 
     instance.user = createUser(username);
     instance.auth = {
-      accessToken: faker.datatype.hexadecimal(12).slice(2),
-      refreshToken: faker.datatype.hexadecimal(18).slice(2),
-      code: faker.datatype.hexadecimal(8).slice(2),
+      accessToken: faker.datatype.hexadecimal(16).slice(2),
+      refreshToken: faker.datatype.hexadecimal(20).slice(2),
+      code: faker.datatype.hexadecimal(12).slice(2),
+      providerAccountId: faker.datatype.hexadecimal(20).slice(2),
     };
 
     data[username] = instance;
@@ -31,7 +32,7 @@ function createGitHubUserData(): Record<Username, GitHubUserData> {
   return data;
 }
 
-function createUser(login: Username): GitHubUserData['user'] {
+function createUser(login: GitHubUsername): GitHubUserData['user'] {
   const id = faker.datatype.number();
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();

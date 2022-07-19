@@ -100,7 +100,6 @@ export class GitHubStrategy extends OAuth2Strategy<GitHubProfile, GitHubExtraPar
 
     if (this.scope.includes(USER_EMAIL_SCOPE)) {
       emails = await this.userEmails(tokens.accessToken);
-      console.log(emails);
     }
 
     const photos = [{ url: data.avatar_url }];

@@ -1,7 +1,19 @@
 import { GitHubData } from '@kickjump/mocks';
 import { type Page, test } from '@kickjump/playwright';
 
-test.only('can login with github', async ({ page, queries, baseURL }) => {
+import { STORAGE_STATE } from '../setup/utils.js';
+
+test.describe('saved state in page', () => {
+  test.use({ storageState: STORAGE_STATE });
+
+  test('should recognise logged in state', async ({ page, queries }) => {
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await queries.getByText('Logout');
+  });
+});
+
+test('can login with github', async ({ page, queries, baseURL }) => {
   await page.goto('/');
   await page.waitForLoadState('networkidle');
   const loginButton = await queries.getByText('Login');

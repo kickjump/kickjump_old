@@ -67,7 +67,7 @@ export async function createCsrf(props: CreateCsrfProps): Promise<string> {
 
   // Add the new token to the session.
   await locals.session.set(CSRF_KEY, csrfToken);
-  await locals.session.set(PRIVATE_CSRF_KEY, `${csrfToken}|${csrfTokenHash}`);
+  await locals.session.set(PRIVATE_CSRF_KEY as string, `${csrfToken}|${csrfTokenHash}`);
 
   return csrfToken;
 }
@@ -89,7 +89,7 @@ export function verifyCsrf(props: VerifyCsrfProps) {
 }
 
 const CSRF_KEY = 'csrf' as const;
-const PRIVATE_CSRF_KEY = '_csrf' as const;
+const PRIVATE_CSRF_KEY = '__csrf' as const;
 
 interface CreateCsrfProps {
   secret: BinaryLike;

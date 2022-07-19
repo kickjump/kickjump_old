@@ -44,7 +44,7 @@ importers:
       '@tailwindcss/forms': ^0.5.2
       '@tailwindcss/typography': ^0.5.4
       '@testing-library/dom': ^8.16.0
-      '@testing-library/user-event': ^14.2.6
+      '@testing-library/user-event': ^14.3.0
       '@types/node': ^18.0.6
       '@types/testing-library__jest-dom': ^5.14.5
       '@vitest/ui': ^0.18.1
@@ -96,7 +96,7 @@ importers:
       '@tailwindcss/forms': 0.5.2_tailwindcss@3.1.6
       '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.6
       '@testing-library/dom': 8.16.0
-      '@testing-library/user-event': 14.2.6_gwcpuyfvwbszhlmedmugzivgzu
+      '@testing-library/user-event': 14.3.0_gwcpuyfvwbszhlmedmugzivgzu
       '@types/node': 18.0.6
       '@types/testing-library__jest-dom': 5.14.5
       '@vitest/ui': 0.18.1
@@ -187,7 +187,7 @@ importers:
       '@octokit/oauth-app': ^4.0.6
       '@octokit/openapi-types': ^12.10.1
       '@octokit/plugin-paginate-rest': ^3.0.0
-      '@octokit/plugin-rest-endpoint-methods': ^6.1.1
+      '@octokit/plugin-rest-endpoint-methods': ^6.1.2
       '@octokit/request-error': ^3.0.0
       '@octokit/types': ^6.40.0
       '@octokit/webhooks': ^10.0.8
@@ -212,8 +212,8 @@ importers:
       '@strata-foundation/spl-token-bonding': ^3.9.2
       '@strata-foundation/spl-token-collective': ^3.9.2
       '@strata-foundation/spl-utils': ^3.9.0
-      '@sveltejs/adapter-auto': 1.0.0-next.62
-      '@sveltejs/kit': 1.0.0-next.379
+      '@sveltejs/adapter-auto': 1.0.0-next.63
+      '@sveltejs/kit': 1.0.0-next.380
       '@sveltestack/svelte-query': ^1.6.0
       '@testing-library/svelte': ^3.1.3
       '@trpc/client': 10.0.0-alpha.38
@@ -284,7 +284,7 @@ importers:
       '@kickjump/edgedb': link:../../packages/kickjump__edgedb
       '@octokit/oauth-app': 4.0.6
       '@octokit/plugin-paginate-rest': 3.0.0_@octokit+core@4.0.4
-      '@octokit/plugin-rest-endpoint-methods': 6.1.1_@octokit+core@4.0.4
+      '@octokit/plugin-rest-endpoint-methods': 6.1.2_@octokit+core@4.0.4
       '@octokit/request-error': 3.0.0
       '@solana/spl-token': 0.2.0
       '@strata-foundation/spl-token-bonding': 3.9.2
@@ -355,8 +355,8 @@ importers:
       '@solana/wallet-adapter-tokenpocket': 0.4.7_@solana+web3.js@1.48.0
       '@solana/wallet-adapter-torus': 0.11.14_@solana+web3.js@1.48.0
       '@solana/web3.js': 1.48.0
-      '@sveltejs/adapter-auto': 1.0.0-next.62
-      '@sveltejs/kit': 1.0.0-next.379_svelte@3.49.0+vite@3.0.2
+      '@sveltejs/adapter-auto': 1.0.0-next.63
+      '@sveltejs/kit': 1.0.0-next.380_svelte@3.49.0+vite@3.0.2
       '@sveltestack/svelte-query': 1.6.0_broadcast-channel@4.14.0
       '@testing-library/svelte': 3.1.3_svelte@3.49.0
       '@trpc/client': 10.0.0-alpha.38_g54didzcqig66fkzjcj6kpgxpe
@@ -380,7 +380,7 @@ importers:
       msw: 0.44.2
       nanoevents: 7.0.1
       octokit: 2.0.4
-      sk-auth: 0.4.1_o2hu26wxdktufucuf4m4t4a7ty
+      sk-auth: 0.4.1_zrizplw7wvq73yhjk6hndx25pq
       solana-credentials: link:../../packages/solana-credentials
       svelte: 3.49.0
       svelte-check: 2.8.0_svelte@3.49.0
@@ -432,15 +432,19 @@ importers:
   packages/kickjump__mocks:
     specifiers:
       '@faker-js/faker': ^7.3.0
+      '@kickjump/db': ^0.0.1
+      '@kickjump/svelte-auth': ^0.0.0
       '@octokit/openapi-types': ^12.10.1
-      '@sveltejs/kit': 1.0.0-next.379
+      '@sveltejs/kit': 1.0.0-next.380
       undici: ^5.8.0
     dependencies:
       '@faker-js/faker': 7.3.0
+      '@kickjump/db': link:../kickjump__db
+      '@kickjump/svelte-auth': link:../kickjump__svelte-auth
       '@octokit/openapi-types': 12.10.1
       undici: 5.8.0
     devDependencies:
-      '@sveltejs/kit': 1.0.0-next.379
+      '@sveltejs/kit': 1.0.0-next.380
 
   packages/kickjump__playwright:
     specifiers:
@@ -463,7 +467,7 @@ importers:
 
   packages/kickjump__svelte-auth:
     specifiers:
-      '@sveltejs/kit': 1.0.0-next.379
+      '@sveltejs/kit': 1.0.0-next.380
       is-what: ^4.1.7
       nanoid: ^4.0.0
       path-to-regexp: ^6.2.1
@@ -483,7 +487,7 @@ importers:
       ts-extras: 0.10.2
       type-fest: 2.16.0
     devDependencies:
-      '@sveltejs/kit': 1.0.0-next.379_svelte@3.49.0
+      '@sveltejs/kit': 1.0.0-next.380_svelte@3.49.0
       svelte: 3.49.0
 
   packages/kickjump__tokens:
@@ -516,11 +520,11 @@ importers:
       '@octokit/core': ^4.0.4
       '@octokit/oauth-app': ^4.0.6
       '@octokit/plugin-paginate-rest': ^3.0.0
-      '@octokit/plugin-rest-endpoint-methods': ^6.1.1
+      '@octokit/plugin-rest-endpoint-methods': ^6.1.2
       '@octokit/request-error': ^3.0.0
       '@octokit/types': ^6.40.0
       '@octokit/webhooks': ^10.0.8
-      '@sveltejs/kit': 1.0.0-next.379
+      '@sveltejs/kit': 1.0.0-next.380
       '@sveltestack/svelte-query': ^1.6.0
       '@trpc/client': 10.0.0-alpha.38
       '@trpc/server': 10.0.0-alpha.38
@@ -548,7 +552,7 @@ importers:
       '@octokit/core': 4.0.4
       '@octokit/oauth-app': 4.0.6
       '@octokit/plugin-paginate-rest': 3.0.0_@octokit+core@4.0.4
-      '@octokit/plugin-rest-endpoint-methods': 6.1.1_@octokit+core@4.0.4
+      '@octokit/plugin-rest-endpoint-methods': 6.1.2_@octokit+core@4.0.4
       '@octokit/request-error': 3.0.0
       '@octokit/types': 6.40.0
       '@octokit/webhooks': 10.0.8
@@ -574,7 +578,7 @@ importers:
       '@kickjump/db': link:../kickjump__db
       '@kickjump/svelte-auth': link:../kickjump__svelte-auth
       '@kickjump/validation': link:../kickjump__validation
-      '@sveltejs/kit': 1.0.0-next.379_svelte@3.49.0
+      '@sveltejs/kit': 1.0.0-next.380_svelte@3.49.0
       '@sveltestack/svelte-query': 1.6.0
       '@types/node': 18.0.6
       svelte: 3.49.0
@@ -2074,8 +2078,8 @@ packages:
       '@octokit/core': 4.0.4
       '@octokit/types': 6.40.0
 
-  /@octokit/plugin-rest-endpoint-methods/6.1.1_@octokit+core@4.0.4:
-    resolution: {integrity: sha512-u0+4nEVCPL5dsXibKR9qNJU2T0NBnVhmvlPxNjPzt7wp2QfFAbI+dyxIltSP7NOm6KWkXyYG9YLsUKi8D6uohw==}
+  /@octokit/plugin-rest-endpoint-methods/6.1.2_@octokit+core@4.0.4:
+    resolution: {integrity: sha512-sAfSKtLHNq0UQ2iFuI41I6m5SK6bnKFRJ5kUjDRVbmQXiRVi4aQiIcgG4cM7bt+bhSiWL4HwnTxDkWFlKeKClA==}
     engines: {node: '>= 14'}
     peerDependencies:
       '@octokit/core': '>=3'
@@ -2777,27 +2781,27 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@sveltejs/adapter-auto/1.0.0-next.62:
-    resolution: {integrity: sha512-+yZZ3SzjBQEXXuIs12DfqgRmV9CQSCcEnYvaQ4R2LFyAxUOiGUJt2DtRJIELF+2dwHVxnvrR2CssqaNJ7J9bAA==}
+  /@sveltejs/adapter-auto/1.0.0-next.63:
+    resolution: {integrity: sha512-9KguXwROEJMyyoKrsizAilVSmtfWxEDn2Hbxk44SP8Kj5cgN7tFCxzbL2kmmqyV1CO1tOh5iNC2oWbyTfikXmw==}
     dependencies:
-      '@sveltejs/adapter-cloudflare': 1.0.0-next.29
-      '@sveltejs/adapter-netlify': 1.0.0-next.69
-      '@sveltejs/adapter-vercel': 1.0.0-next.64
+      '@sveltejs/adapter-cloudflare': 1.0.0-next.30
+      '@sveltejs/adapter-netlify': 1.0.0-next.70
+      '@sveltejs/adapter-vercel': 1.0.0-next.65
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: true
 
-  /@sveltejs/adapter-cloudflare/1.0.0-next.29:
-    resolution: {integrity: sha512-bm95d2pDEExy1cSPqvWxvftHEJz57krLlW3DdGtxbXWLr8M+WZbCEe1AqsnGycaFXUsn0GZ77IWNrHqcGxwvRg==}
+  /@sveltejs/adapter-cloudflare/1.0.0-next.30:
+    resolution: {integrity: sha512-jIclgb58n3Uoo8TTudXSa7wmLP7Rn/ESLQS+zOUe0xsti5DG/eDhELTnSvkoSa2lJY21ym5rej/GSERRyeuBVw==}
     dependencies:
       '@cloudflare/workers-types': 3.14.1
       esbuild: 0.14.49
       worktop: 0.8.0-next.14
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.69:
-    resolution: {integrity: sha512-nIMtadrsnVemVDIuuqHSDxX/7xRypk+X2ewHY+JR/ONV853lUJ1r9AaXF9+XXPIqxGMKStsWm5GzgGNmM8ID2g==}
+  /@sveltejs/adapter-netlify/1.0.0-next.70:
+    resolution: {integrity: sha512-lIXY6KIgIFBz4+mdvilx9Ny8oFV7T2iVTKLirJayoI/SqPWGAcxklvWvjGfS4QT8rS9pWKDaKRUQM4M/gl8LlA==}
     dependencies:
       '@iarna/toml': 2.2.5
       esbuild: 0.14.49
@@ -2805,8 +2809,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.64:
-    resolution: {integrity: sha512-UpDQAm3upsKsA6fca3+lOntHaX77EnL0OBYewOycdicJqlnoLq/DDr44xNeSjtW95Y8CVqALMxkPS6oMPipAYQ==}
+  /@sveltejs/adapter-vercel/1.0.0-next.65:
+    resolution: {integrity: sha512-RV3HL7Ic7pGgIoBSHPwN1pBX96Km1X683oHImPHAKX9h/WOvJZ3bY5+IWNRcR8tx9rPB5gfMRg+msvPSBr3RVw==}
     dependencies:
       '@vercel/nft': 0.20.1
       esbuild: 0.14.49
@@ -2815,8 +2819,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.379:
-    resolution: {integrity: sha512-mhy0GW4KUJ3tq6mDMF0fs/B6Nh2oJM6ZAA2fwilTOdqzhKD3f2WJLH9RXx1Z5/8eodFeQsURTPRn5a0r3QAZew==}
+  /@sveltejs/kit/1.0.0-next.380:
+    resolution: {integrity: sha512-pB/Q0mDFznCRs2vc+y9uAbIKqVzYCZkNld0A4AaCzpnrov3NTsSvzhRg40ClBa5Zf7/TJ+87F9In5yJpVGwJtg==}
     engines: {node: '>=16.9'}
     hasBin: true
     peerDependencies:
@@ -2831,8 +2835,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.379_svelte@3.49.0:
-    resolution: {integrity: sha512-mhy0GW4KUJ3tq6mDMF0fs/B6Nh2oJM6ZAA2fwilTOdqzhKD3f2WJLH9RXx1Z5/8eodFeQsURTPRn5a0r3QAZew==}
+  /@sveltejs/kit/1.0.0-next.380_svelte@3.49.0:
+    resolution: {integrity: sha512-pB/Q0mDFznCRs2vc+y9uAbIKqVzYCZkNld0A4AaCzpnrov3NTsSvzhRg40ClBa5Zf7/TJ+87F9In5yJpVGwJtg==}
     engines: {node: '>=16.9'}
     hasBin: true
     peerDependencies:
@@ -2848,8 +2852,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.379_svelte@3.49.0+vite@3.0.2:
-    resolution: {integrity: sha512-mhy0GW4KUJ3tq6mDMF0fs/B6Nh2oJM6ZAA2fwilTOdqzhKD3f2WJLH9RXx1Z5/8eodFeQsURTPRn5a0r3QAZew==}
+  /@sveltejs/kit/1.0.0-next.380_svelte@3.49.0+vite@3.0.2:
+    resolution: {integrity: sha512-pB/Q0mDFznCRs2vc+y9uAbIKqVzYCZkNld0A4AaCzpnrov3NTsSvzhRg40ClBa5Zf7/TJ+87F9In5yJpVGwJtg==}
     engines: {node: '>=16.9'}
     hasBin: true
     peerDependencies:
@@ -3038,8 +3042,8 @@ packages:
       svelte: 3.49.0
     dev: true
 
-  /@testing-library/user-event/14.2.6_gwcpuyfvwbszhlmedmugzivgzu:
-    resolution: {integrity: sha512-l/4W4x3Lm24wkWNkPasXqvEzG+a6n2X872XCUjhyfbNqcoOapaWyCxC5Fz+E4r7JPu8gysQKSSCrK0OO2x+D+A==}
+  /@testing-library/user-event/14.3.0_gwcpuyfvwbszhlmedmugzivgzu:
+    resolution: {integrity: sha512-P02xtBBa8yMaLhK8CzJCIns8rqwnF6FxhR9zs810flHOBXUYCFjLd8Io1rQrAkQRWEmW2PGdZIEdMxf/KLsqFA==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
@@ -10077,7 +10081,7 @@ packages:
       '@octokit/core': 4.0.4
       '@octokit/oauth-app': 4.0.6
       '@octokit/plugin-paginate-rest': 3.0.0_@octokit+core@4.0.4
-      '@octokit/plugin-rest-endpoint-methods': 6.1.1_@octokit+core@4.0.4
+      '@octokit/plugin-rest-endpoint-methods': 6.1.2_@octokit+core@4.0.4
       '@octokit/plugin-retry': 3.0.9
       '@octokit/plugin-throttling': 4.1.0_@octokit+core@4.0.4
       '@octokit/types': 6.40.0
@@ -11899,13 +11903,13 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
-  /sk-auth/0.4.1_o2hu26wxdktufucuf4m4t4a7ty:
+  /sk-auth/0.4.1_zrizplw7wvq73yhjk6hndx25pq:
     resolution: {integrity: sha512-P1WYM/j2c9+v7es+8CUPbugMjyTIu6ht8SfXeSkK3y74D45V2NYZDeQpAOQwVDih83xPhPWlzAjv4LBmr0a9HA==}
     peerDependencies:
       '@sveltejs/kit': next
       build-esm: ^4.2.2
     dependencies:
-      '@sveltejs/kit': 1.0.0-next.379_svelte@3.49.0+vite@3.0.2
+      '@sveltejs/kit': 1.0.0-next.380_svelte@3.49.0+vite@3.0.2
       cookie: 0.4.2
       jsonwebtoken: 8.5.1
     dev: true

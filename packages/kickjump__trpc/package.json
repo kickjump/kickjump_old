@@ -44,7 +44,7 @@
     "@octokit/core": "^4.0.4",
     "@octokit/oauth-app": "^4.0.6",
     "@octokit/plugin-paginate-rest": "^3.0.0",
-    "@octokit/plugin-rest-endpoint-methods": "^6.1.1",
+    "@octokit/plugin-rest-endpoint-methods": "^6.1.2",
     "@octokit/request-error": "^3.0.0",
     "@octokit/types": "^6.40.0",
     "@octokit/webhooks": "^10.0.8",
@@ -71,7 +71,7 @@
     "@kickjump/db": "^0.0.1",
     "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/validation": "^0.0.0",
-    "@sveltejs/kit": "1.0.0-next.379",
+    "@sveltejs/kit": "1.0.0-next.380",
     "@sveltestack/svelte-query": "^1.6.0",
     "@types/node": "^18.0.6",
     "svelte": "^3.49.0"

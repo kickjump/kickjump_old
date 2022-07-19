@@ -29,11 +29,13 @@
   ],
   "dependencies": {
     "@faker-js/faker": "^7.3.0",
+    "@kickjump/db": "^0.0.1",
+    "@kickjump/svelte-auth": "^0.0.0",
     "@octokit/openapi-types": "^12.10.1",
     "undici": "^5.8.0"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.379"
+    "@sveltejs/kit": "1.0.0-next.380"
   },
   "peerDependencies": {
     "@sveltejs/kit": "*"

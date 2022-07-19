@@ -169,6 +169,36 @@ export async function linkAccounts(userId: string, accounts: AccountCreateInput[
   return run(query);
 }
 
+/**
+ * Link the provided accounts
+ */
+export async function replaceAccount(
+  userId: string,
+  previousId: string,
+  account: AccountCreateInput,
+) {
+  const deleteQuery = e.delete(e.Account, (account) => ({
+    filter: e.op(account.id, '=', e.uuid(previousId)),
+  }));
+
+  await run(deleteQuery);
+
+  const insertQuery = e.select(
+    e.insert(e.Account, {
+      ...account,
+      user: e.select(e.User, (u) => ({
+        filter: e.op(u.id, '=', e.uuid(userId)),
+      })),
+    }),
+    () => ({
+      ...e.Account['*'],
+      user: true,
+    }),
+  );
+
+  return await run(insertQuery);
+}
+
 export async function linkEmails(userId: string, emails: EmailCreateInput[]) {
   const query = e.select(linkEmailsQuery(userId, emails), () => ({
     ...e.Email['*'],

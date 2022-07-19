@@ -1,10 +1,6 @@
 import type { UserModel } from '@kickjump/db';
-import {
-  type GitHubScope,
-  Authenticator,
-  GitHubStrategy,
-  ServerError,
-} from '@kickjump/svelte-auth';
+import type { AccountCreateInput } from '@kickjump/db/src/models/user-model.js';
+import { type GitHubScope, Authenticator, GitHubStrategy } from '@kickjump/svelte-auth';
 
 import { BASE_AUTH } from '$lib/constants.js';
 import { env } from '$server/env';
@@ -52,17 +48,16 @@ export const authenticator = new Authenticator({
         }
       }
 
-      const accounts: UserModel.AccountCreateInput[] = [
-        {
-          refreshToken: null,
-          provider,
-          providerAccountId,
-          accountType: 'oauth',
-          accessToken,
-          scope: GITHUB_SCOPE,
-          login: profile._json.login,
-        },
-      ];
+      const acc: AccountCreateInput = {
+        refreshToken: null,
+        provider,
+        providerAccountId,
+        accountType: 'oauth',
+        accessToken,
+        scope: GITHUB_SCOPE,
+        login: profile._json.login,
+      };
+      const accounts: UserModel.AccountCreateInput[] = [acc];
 
       // the user doesn't exist; create the user and account;
       if (!existingUser) {
@@ -79,7 +74,9 @@ export const authenticator = new Authenticator({
       if (!account) {
         await UserModel.linkAccounts(existingUser.id, accounts);
       } else if (account.providerAccountId !== providerAccountId) {
-        throw ServerError.auth('A different GitHub account has already been linked to this user.');
+        // TODO(@ifiokjr) check that this doesn't happen
+        await UserModel.replaceAccount(existingUser.id, account.id, acc);
+        // throw ServerError.auth('A different GitHub account has already been linked to this user.');
       }
 
       // the user exists; account doesn't; create the account and attach to user
@@ -87,6 +84,11 @@ export const authenticator = new Authenticator({
     },
   ),
 );
+
+if (env.VITE_ENDPOINT_MOCKING_ENABLED === 'true') {
+  const { mockStrategy } = await import('@kickjump/mocks');
+  authenticator.use(mockStrategy);
+}
 
 function getAppUser(user: UserModel.PopulatedUser): App.User {
   const { id, image, name, emails } = user;
