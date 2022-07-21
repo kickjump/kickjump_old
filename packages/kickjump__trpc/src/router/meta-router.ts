@@ -1,4 +1,3 @@
-import { s } from '@kickjump/validation';
 import scraper from 'metascraper';
 import metaAuthor from 'metascraper-author';
 import metaClearbit from 'metascraper-clearbit';
@@ -9,6 +8,7 @@ import metaLogo from 'metascraper-logo';
 import metaPublisher from 'metascraper-publisher';
 import metaTitle from 'metascraper-title';
 import metaUrl from 'metascraper-url';
+import * as z from 'zod';
 
 import { t } from '../init.js';
 
@@ -28,7 +28,7 @@ const metascraper = scraper([
  * The meta procedure.
  */
 export const meta = t.router({
-  read: t.procedure.input(s.string()).query(async (props) => {
+  read: t.procedure.input(z.string().url()).query(async (props) => {
     const { input: url } = props;
     const response = await fetch(url);
     const html = await response.text();

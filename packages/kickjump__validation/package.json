@@ -1,5 +1,5 @@
 {
-  "name": "@kickjump/validation",
+  "name": "@kickjump/types",
   "version": "0.0.0",
   "description": "Validation for inputs used throughout the kickjump codebase",
   "keywords": [],
@@ -28,12 +28,17 @@
     "dist"
   ],
   "dependencies": {
+    "type-fest": "^2.17.0",
+    "@felte/common": "^1.1.1",
+    "@kickjump/edgedb": "^0.0.0",
     "@solana/web3.js": "^1.48.0",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
+    "profane-words": "^1.5.3",
     "superjson": "^1.9.1",
-    "superstruct": "^0.16.0"
+    "superstruct": "^0.16.0",
+    "zod": "^3.17.9"
   },
   "publishConfig": {
     "access": "public"

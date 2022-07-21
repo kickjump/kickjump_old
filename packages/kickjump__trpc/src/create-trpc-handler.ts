@@ -1,9 +1,9 @@
 import type * as _ from '@kickjump/svelte-auth';
-import { s } from '@kickjump/validation';
+import { s } from '@kickjump/types';
 import type { Handle } from '@sveltejs/kit';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
-import { TRPC_ENDPOINT } from './client/index.js';
+import { TRPC_ENDPOINT } from './constants';
 import { type Context, Env } from './init.js';
 import { router } from './router/index.js';
 

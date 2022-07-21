@@ -4,7 +4,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { REDIRECTS } from '$lib/constants';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
-export const get: RequestHandler = (event) => {
+export const GET: RequestHandler = (event) => {
   const { pathname } = event.url;
   const { to, status = 302 } = REDIRECTS[pathname] ?? { to: '/' };
 

@@ -1,11 +1,12 @@
-import { s } from '@kickjump/validation';
-import type * as _ from '@octokit/types';
+import type _types from '@octokit/types';
+import * as z from 'zod';
 
 import { t } from '../init.js';
 import { withGitHubAccount } from '../middleware.js';
 import { parseLinkHeader } from '../parse-link-header.js';
 
-const cursor = s.nullable(s.optional(s.number()));
+// const cursor = s.nullable(s.optional(s.number()));
+const cursor = z.number().nullable().optional();
 
 export const github = t.router({
   userInstallations: withGitHubAccount.query(async (props) => {
@@ -17,7 +18,7 @@ export const github = t.router({
   }),
 
   userReposForInstallation: withGitHubAccount
-    .input(s.object({ id: s.number(), cursor }))
+    .input(z.object({ id: z.number(), cursor }))
     .query(async (props) => {
       const {
         ctx: { octokit },
@@ -42,10 +43,12 @@ export const github = t.router({
 
   userRepos: withGitHubAccount
     .input(
-      s.object({
-        cursor,
-        perPage: s.optional(s.number()),
-      }),
+      z
+        .object({
+          cursor,
+          perPage: z.number().optional(),
+        })
+        .strict(),
     )
     .query(async (props) => {
       const {

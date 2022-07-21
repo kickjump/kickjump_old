@@ -1,5 +1,5 @@
 import type { ServerSession } from '@kickjump/svelte-auth';
-import { s, transformer } from '@kickjump/validation';
+import { s, transformer } from '@kickjump/types';
 import { initTRPC } from '@trpc/server';
 
 export const Env = s.type({

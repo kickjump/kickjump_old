@@ -10,13 +10,13 @@
       <p>Copyright © {new Date().getFullYear()} - KickJump Ltd</p>
     </div>
     <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-      <a href="/r/github" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/github" target="_blank" class="hover:text-gray-300 active:text-gray-400" aria-label="GitHub">
         <Icon icon="github" size="2em" />
       </a>
-      <a href="/r/discord" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/discord" target="_blank" class="hover:text-gray-300 active:text-gray-400" aria-label="Discord">
         <Icon icon="discord" size="2em" />
       </a>
-      <a href="/r/twitter" target="_blank" class="hover:text-gray-300 active:text-gray-400">
+      <a href="/r/twitter" target="_blank" class="hover:text-gray-300 active:text-gray-400" aria-label="Twitter">
         <Icon icon="twitter" size="2em" />
       </a>
     </div>

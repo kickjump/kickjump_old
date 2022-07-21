@@ -2,10 +2,10 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  type AccountProvider,
-  type AccountType,
-  type EmailType,
-  type UserType,
+  AccountProvider,
+  AccountType,
+  EmailType,
+  UserType,
   client,
   e,
 } from './edgedb.js';
@@ -13,7 +13,6 @@ import {
 type Account = AccountType<{
   omit: 'id';
   simplify: true;
-  replace: { provider: keyof typeof AccountProvider };
 }>;
 type Email = EmailType<{ omit: 'id'; simplify: true }>;
 type User = UserType<{ omit: 'id'; simplify: true }>;
@@ -23,7 +22,7 @@ function createAccount(): Account {
     accountType: 'oauth2',
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
-    provider: 'github',
+    provider: AccountProvider.github,
     providerAccountId: faker.datatype.uuid(),
     scope: [],
   };

@@ -9,8 +9,13 @@
   import { Icon } from '$components/icon';
   import { Skeleton } from '$components/loaders';
   import { ModalTitle } from '$components/modal';
-  import { showUninstalledWallets } from '$stores/persistent-data';
-  import { type WalletWithMetadata, cleanUrl, getWalletProviders, solana } from '$stores/solana';
+  import {
+    type WalletWithMetadata,
+    cleanUrl,
+    getWalletProviders,
+    showUninstalledWallets,
+    solana,
+  } from '$stores/solana';
   import type { Maybe } from '$types';
   import { addUrlParams } from '$utils/url';
 

@@ -18,8 +18,10 @@ export function url(): s.Struct<URL, null> {
 }
 
 export function slug(): s.Struct<string, null> {
-  return s.refine(s.size(s.string(), 3, 25), 'username', (value) =>
-    /^(?=.{8,30}$)(?![._])(?!.*[._]{2})[\w.]+(?<![._])$/.test(value),
+  return s.refine(
+    s.pattern(s.size(s.string(), 3, 20), /^(?=.{3,20}$)(?![._])(?!.*[._]{2})[\w.]+(?<![._])$/),
+    'slug',
+    () => true,
   );
 }
 

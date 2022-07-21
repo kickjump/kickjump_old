@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { AccountProvider, OmittedKeys } from '../edgedb.js';
+import type { AccountProvider, CreateOmitKeys } from '../edgedb.js';
 import { type AccountType, type EmailType, type UserType, e, run } from '../edgedb.js';
 
 const USER_FIELDS = {
@@ -243,17 +243,17 @@ interface GetByAccountProps {
 }
 export type PopulatedUser = Awaited<ReturnType<typeof create>>;
 export type EmailCreateInput = EmailType<{
-  omit: OmittedKeys;
+  omit: CreateOmitKeys;
   replace: { verified: boolean };
   simplify: true;
 }>;
 export type AccountCreateInput = AccountType<{
-  omit: OmittedKeys;
+  omit: CreateOmitKeys;
   simplify: true;
   replace: { provider: keyof typeof AccountProvider };
 }>;
 export type UserCreateInput = UserType<{
-  omit: OmittedKeys;
+  omit: CreateOmitKeys;
   simplify: true;
   replace: { emails?: EmailCreateInput[]; accounts?: AccountCreateInput[] };
 }>;

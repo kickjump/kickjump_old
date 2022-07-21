@@ -19,6 +19,7 @@ import {
   useQuery,
 } from '@sveltestack/svelte-query';
 import type { Updater } from '@sveltestack/svelte-query/dist/queryCore/core/utils.js';
+import type { FlattenRouter } from '@trpc/client';
 import {
   type CreateTRPCClientOptions,
   type TRPCClient,
@@ -26,6 +27,7 @@ import {
   type TRPCClientErrorLike,
   type TRPCRequestOptions,
   createTRPCClient,
+  createTRPCClientProxy,
 } from '@trpc/client';
 import type {
   AnyRouter,
@@ -50,7 +52,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
    */
   static context<Router extends AnyRouter>(): TRPCContext<Router> {
     const context = getContext<TRPCContext<Router> | undefined>(CONTEXT_KEY);
-    invariant(context, 'StepProvider compound components cannot be rendered outside the context');
+    invariant(context, 'TRPCContext compound components cannot be rendered outside the context');
 
     return context;
   }
@@ -72,6 +74,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     return context;
   }
 
+  readonly proxy: FlattenRouter<Router>;
   readonly client: TRPCClient<Router>;
   readonly queryClient: QueryClient;
   readonly ssrState: SSRState | undefined;
@@ -84,6 +87,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     this.client = props.client;
     this.queryClient = props.queryClient;
     this.ssrState = props.ssrState;
+    this.proxy = createTRPCClientProxy<Router>(props.client);
   }
 
   fetchQuery = <

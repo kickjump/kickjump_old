@@ -20,10 +20,12 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
 }
 
 export {
-  type AccountProvider,
-  type Permission,
-  type Status,
-  type Visibility,
+  AccountProvider,
+  Permission,
+  Status,
+  Visibility
+} from '@kickjump/edgedb/types';
+export {
   default as e,
 } from '@kickjump/edgedb';
 
@@ -121,7 +123,8 @@ export type ProposalType<Options extends AvailableOptions = object> = Custom<
   DeepOmit<Proposal, '__type__'>,
   Options
 >;
-export type OmittedKeys = 'id' | 'createdAt' | 'updatedAt';
+export type CreateOmitKeys = 'id' | 'createdAt' | 'updatedAt';
+export type UpdateOmitKeys = 'createdAt' | 'updatedAt';
 
 interface AvailableOptions {
   /** Deep omit keys */

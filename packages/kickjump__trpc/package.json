@@ -54,7 +54,7 @@
     "is-what": "^4.1.7",
     "just-camel-case": "^6.0.1",
     "just-group-by": "^2.0.1",
-    "metascraper": "^5.29.15",
+    "metascraper": "^5.29.18",
     "metascraper-author": "^5.29.15",
     "metascraper-clearbit": "^5.29.15",
     "metascraper-date": "^5.29.15",
@@ -65,13 +65,14 @@
     "metascraper-title": "^5.29.15",
     "metascraper-url": "^5.29.15",
     "octokit": "^2.0.4",
-    "tiny-invariant": "^1.2.0"
+    "tiny-invariant": "^1.2.0",
+    "zod": "^3.17.9"
   },
   "devDependencies": {
     "@kickjump/db": "^0.0.1",
     "@kickjump/svelte-auth": "^0.0.0",
-    "@kickjump/validation": "^0.0.0",
-    "@sveltejs/kit": "1.0.0-next.380",
+    "@kickjump/types": "^0.0.0",
+    "@sveltejs/kit": "1.0.0-next.386",
     "@sveltestack/svelte-query": "^1.6.0",
     "@types/node": "^18.0.6",
     "svelte": "^3.49.0"
@@ -79,7 +80,7 @@
   "peerDependencies": {
     "@kickjump/db": "*",
     "@kickjump/svelte-auth": "*",
-    "@kickjump/validation": "*",
+    "@kickjump/types": "*",
     "@sveltejs/kit": "*",
     "@sveltestack/svelte-query": "^1.6.0",
     "svelte": "^3.49.0"

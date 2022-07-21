@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { s } from '@kickjump/validation';
+import { s } from '@kickjump/types';
 
 const EnvSchema = s.type({
   VITE_ENDPOINT_MOCKING_ENABLED: s.optional(s.string()),

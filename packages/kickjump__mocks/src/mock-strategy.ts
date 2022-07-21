@@ -1,4 +1,4 @@
-import { UserModel } from '@kickjump/db';
+import { UserModel, AccountProvider } from '@kickjump/db';
 import type { AuthenticateReturn, StrategyAuthenticateProps } from '@kickjump/svelte-auth';
 import { ServerError, Strategy } from '@kickjump/svelte-auth';
 
@@ -56,7 +56,7 @@ export const mockStrategy = new MockStrategy(async (props) => {
       accounts: [
         {
           accountType: 'oauth2',
-          provider: 'github',
+          provider: AccountProvider.github,
           providerAccountId,
           accessToken,
           refreshToken,
@@ -70,5 +70,5 @@ export const mockStrategy = new MockStrategy(async (props) => {
     });
   }
 
-  return { id: user.id, image: user.image, name: user.name, email: user?.emails.at(0) };
+  return { id: user.id, image: user.image, name: user.name, email: user?.emails.at(0)?.email };
 });
