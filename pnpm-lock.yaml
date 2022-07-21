@@ -651,6 +651,7 @@ importers:
       execa: ^6.1.0
       exit: ^0.1.2
       jest-process-manager: ^0.3.1
+      load-json-file: ^7.0.1
       p-retry: ^5.1.1
       signal-exit: ^3.0.7
       solana-credentials: ^0.0.1
@@ -670,6 +671,7 @@ importers:
       execa: 6.1.0
       exit: 0.1.2
       jest-process-manager: 0.3.1
+      load-json-file: 7.0.1
       p-retry: 5.1.1
       signal-exit: 3.0.7
       solana-credentials: link:../packages/solana-credentials
@@ -4247,7 +4249,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.15.1
+      follow-redirects: 1.15.1_debug@4.3.2
     transitivePeerDependencies:
       - debug
     dev: false

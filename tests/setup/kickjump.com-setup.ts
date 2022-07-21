@@ -1,5 +1,6 @@
 import { request } from '@kickjump/playwright';
 import { setup, teardown } from 'jest-process-manager';
+import { loadJsonFile } from 'load-json-file';
 
 import { instanceExists, setupDatabase, STORAGE_STATE, TEST_EDGEDB_INSTANCE } from './utils.js';
 
@@ -19,6 +20,14 @@ export default async function globalSetup() {
   });
 
   try {
+    const storageState = await gracefulReadStorageState(STORAGE_STATE);
+
+    for (const cookie of storageState?.cookies ?? []) {
+      if (cookie.name === 'kit.session' && cookie.expires * 1000 + 600_000 > Date.now()) {
+        return;
+      }
+    }
+
     // signin via api request.
     const context = await request.newContext({ baseURL: 'localhost:3030' });
     // Use GET to skip the csrf token verification.
@@ -34,4 +43,30 @@ export default async function globalSetup() {
     await teardown();
     throw error;
   }
+}
+
+async function gracefulReadStorageState(name: string) {
+  try {
+    const filepath = new URL(`../${name}`, import.meta.url).pathname;
+    const json = await loadJsonFile<StorageState>(filepath);
+    return json;
+  } catch {
+    return;
+  }
+}
+
+interface StorageState {
+  cookies: Cooky[];
+  origins: any[];
+}
+
+interface Cooky {
+  name: string;
+  value: string;
+  domain: string;
+  path: string;
+  expires: number;
+  httpOnly: boolean;
+  secure: boolean;
+  sameSite: string;
 }

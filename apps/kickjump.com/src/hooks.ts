@@ -11,7 +11,7 @@ import { getAbsoluteUrl } from '$server/get-absolute-url';
 const enabled = env.VITE_ENDPOINT_MOCKING_ENABLED === 'true';
 
 export const handle = handleSession(
-  { secret: env.SESSION_SECRET },
+  { secret: env.SESSION_SECRET, expires: enabled ? 600 : 7 },
   sequence(createMockHandle({ enabled }), authenticator.createAuthHandle(), createTRPCHandle()),
 );
 

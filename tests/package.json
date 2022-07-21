@@ -16,6 +16,7 @@
     "test:kickjump.com": "playwright test --workers=1"
   },
   "dependencies": {
+    "load-json-file": "^7.0.1",
     "@faker-js/faker": "^7.3.0",
     "@kickjump/db": "^0.0.1",
     "@kickjump/mocks": "^0.0.0",
