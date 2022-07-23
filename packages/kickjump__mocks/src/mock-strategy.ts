@@ -1,4 +1,4 @@
-import { UserModel, AccountProvider } from '@kickjump/db';
+import { AccountProvider, UserModel } from '@kickjump/db';
 import type { AuthenticateReturn, StrategyAuthenticateProps } from '@kickjump/svelte-auth';
 import { ServerError, Strategy } from '@kickjump/svelte-auth';
 
@@ -64,6 +64,7 @@ export const mockStrategy = new MockStrategy(async (props) => {
           scope: ['user:email'],
         },
       ],
+      username,
       emails: [{ email: data.user.email as string, primary: true, verified: true }],
       image: data.user.avatar_url,
       name: data.user.name,

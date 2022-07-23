@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import { browser } from '$app/env';
+  import { authenticated } from '$lib/protected';
   import {
     getStepHref,
     persistedProject,
@@ -7,6 +8,8 @@
     ProgressForm,
     PROJECT_CREATE_STEPS,
   } from '$modules/create-project';
+
+  export const load = authenticated();
 </script>
 
 <script lang="ts">
@@ -22,7 +25,7 @@
     navigateToStart();
   }
 
-  $: console.log({ $persistedProject });
+  $: console.log({ $persistedProject, index });
 </script>
 
 <div class="grid-cols-2 grid ">

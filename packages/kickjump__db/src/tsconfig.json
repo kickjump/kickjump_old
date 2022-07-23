@@ -18,6 +18,9 @@
   "references": [
     {
       "path": "../../kickjump__svelte-auth/src"
+    },
+    {
+      "path": "../../kickjump__types/src"
     }
   ]
 }

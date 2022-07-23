@@ -30,6 +30,8 @@ export default async function globalSetup() {
 
     // signin via api request.
     const context = await request.newContext({ baseURL: 'localhost:3030' });
+    // kick off building the javascript.
+    await context.get('http://localhost:3030');
     // Use GET to skip the csrf token verification.
     await context.get('http://localhost:3030/auth/login/mock', {
       params: { username: 'octocat' },

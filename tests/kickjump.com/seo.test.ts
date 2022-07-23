@@ -17,18 +17,15 @@ const externalLinks = {
   GitHub: 'https://github.com/kickjump/kickjump',
   Discord: 'https://discord.com/invite/mzaFsAUn22',
   Twitter: 'https://twitter.com/kickjumpco',
-}
+};
 
 for (const [label, redirect] of Object.entries(externalLinks)) {
-  test(`the site redirects when clicking the ${label} footer link`, async ({context, page}) => {
+  test(`the site redirects when clicking the ${label} footer link`, async ({ context, page }) => {
     await page.goto('/');
-    const link = page.locator(`[aria-label="${label}"]`)
-    const [newPage] = await Promise.all([
-      context.waitForEvent('page'),
-      link.click(),
-    ]);
+    const link = page.locator(`[aria-label="${label}"]`);
+    const [newPage] = await Promise.all([context.waitForEvent('page'), link.click()]);
 
     await page.waitForLoadState();
     expect(newPage.url()).toBe(redirect);
-  })
+  });
 }

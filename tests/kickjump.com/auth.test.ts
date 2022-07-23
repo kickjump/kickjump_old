@@ -6,21 +6,19 @@ import { STORAGE_STATE } from '../setup/utils.js';
 test.describe('saved state in page', () => {
   test.use({ storageState: STORAGE_STATE });
 
-  test('should recognise logged in state', async ({ page, queries }) => {
+  test('should recognise logged in state', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await queries.getByText('Logout');
+    await page.locator('"Logout"').isVisible();
   });
 });
 
-test('can login with github', async ({ page, queries, baseURL }) => {
+test('can login with github', async ({ page, baseURL }) => {
   await page.goto('/');
   await page.waitForLoadState('networkidle');
-  const loginButton = await queries.getByText('Login');
-  await loginButton.click();
-  await page.waitForLoadState('networkidle');
+  await page.locator('"Login"').click();
   await mockGitHubLoginFlow(page, baseURL);
-  await queries.getByText('Logout');
+  await page.locator('"Logout"').isVisible();
 });
 
 async function mockGitHubLoginFlow(page: Page, baseURL: string | undefined) {

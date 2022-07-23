@@ -9,6 +9,7 @@ afterAll(async () => {
 
 describe('create', async () => {
   const user = {
+    username: 'mighty_ducks',
     name: 'Mighty Ducks',
     image: 'https://path.com/to/image.jpg',
   };
@@ -49,5 +50,28 @@ describe('create', async () => {
     expect(user?.accounts.map((account) => account.id)).toEqual(
       accounts.map((account) => account.id),
     );
+  });
+
+  it('can create a user with accounts and emails in one shot', async () => {
+    const user = await UserModel.create({
+      username: 'abc',
+      emails: [{ email: 'abc@a.com', primary: true, verified: true }],
+      accounts: [
+        {
+          accountType: 'oauth2',
+          provider: 'github',
+          providerAccountId: 'sample',
+          accessToken: 'sample',
+          login: 'abc',
+          refreshToken: 'sample',
+          scope: ['user:email'],
+        },
+      ],
+    });
+    users.add(user.id);
+    expect(user.emails).toHaveLength(1);
+    expect(user.emails.at(0)?.email).toBe('abc@a.com');
+    expect(user.accounts).toHaveLength(1);
+    expect(user.accounts.at(0)?.provider).toBe('github');
   });
 });

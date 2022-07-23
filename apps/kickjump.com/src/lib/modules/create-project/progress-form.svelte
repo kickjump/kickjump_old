@@ -9,11 +9,12 @@
 
   const previous = PROJECT_CREATE_STEPS[index - 1];
   const next = PROJECT_CREATE_STEPS[index + 1];
+  console.log({ next, previous, index });
 </script>
 
 <div class="px-4 pt-5">
   <div class="max-w-md mx-auto">
-    <h1 class="text-3xl text-slate-800 font-bold pb-14">{heading}</h1>
+    <h1 class="text-3xl text-base-content font-bold pb-14">{heading}</h1>
     <!-- Form -->
     <slot />
     <div class="flex items-center justify-between">

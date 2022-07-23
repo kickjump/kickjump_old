@@ -31,7 +31,7 @@
       "path": "packages/kickjump__trpc/src"
     },
     {
-      "path": "packages/kickjump__validation/src"
+      "path": "packages/kickjump__types/src"
     },
     {
       "path": "packages/kickjump/src"

@@ -1,4 +1,4 @@
-import { instanceExists, setupDatabase, TEST_EDGEDB_INSTANCE } from './utils.js';
+import { instanceExists, migrateDatabase, setupDatabase, TEST_EDGEDB_INSTANCE } from './utils.js';
 // import { randomBytes } from 'node:crypto';
 // import retry from 'p-retry';
 
@@ -30,12 +30,17 @@ export default async function globalSetup() {
   process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;
 
   if (!(await instanceExists(TEST_EDGEDB_INSTANCE))) {
-    await setupDatabase(TEST_EDGEDB_INSTANCE);
+    try {
+      await setupDatabase(TEST_EDGEDB_INSTANCE);
+    } catch {
+      await migrateDatabase(TEST_EDGEDB_INSTANCE);
+    }
   }
 
-  return async () => {
-    const { e, run } = await import('@kickjump/db');
+  const { e, run } = await import('@kickjump/db');
+  await run(e.delete(e.Object));
 
+  return async () => {
     // Delete everything!
     await run(e.delete(e.Object));
   };

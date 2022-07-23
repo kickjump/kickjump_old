@@ -1,5 +1,4 @@
 import type * as _ from '@kickjump/svelte-auth';
-import { s } from '@kickjump/types';
 import type { Handle } from '@sveltejs/kit';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
@@ -26,7 +25,7 @@ export function createTRPCHandle(): Handle {
     const createContext = (): Context => ({
       session,
       user: session.data.user,
-      env: s.create(process.env, Env),
+      env: Env.parse(process.env),
     });
     const req = event.request;
 

@@ -20,18 +20,6 @@ export interface ValidatorConfig {
 
 export function validateSchema<Data extends Obj>(schema: ZodSchema): ValidationFunction<Data> {
   function shapeErrors(errors: ZodError): AssignableErrors<Data> {
-    // console.log(errors);
-    // console.dir(errors);
-    // globalThis._errors
-    // const accumulated: AssignableErrors<Data> = Object.create(null)
-
-    // for (const issue of errors.issues) {
-    //   if (!issue.path) {
-    //     continue;
-    //   }
-
-    // }
-
     // eslint-disable-next-line unicorn/no-array-reduce
     return errors.issues.reduce((err, value) => {
       /* istanbul ignore next */

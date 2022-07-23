@@ -1,22 +1,22 @@
 import 'dotenv/config';
 
-import { s } from '@kickjump/types';
+import { z } from 'zod';
 
-const EnvSchema = s.type({
-  VITE_ENDPOINT_MOCKING_ENABLED: s.optional(s.string()),
-  NODE_ENV: s.optional(s.string()),
-  VERCEL: s.optional(s.string()),
-  VERCEL_URL: s.optional(s.string()),
-  VERCEL_ENV: s.optional(s.string()),
-  WEBSITE_URL: s.optional(s.string()),
-  SESSION_SECRET: s.string(),
-  SOLANA_RPC_SECRET: s.string(),
-  GITHUB_CLIENT_ID: s.string(),
-  GITHUB_CLIENT_SECRET: s.string(),
-  GITHUB_APP_NAME: s.string(),
-  GITHUB_APP_ID: s.string(),
-  GITHUB_APP_PRIVATE_KEY: s.string(),
-  GITHUB_WEBHOOK_SECRET: s.string(),
+const EnvSchema = z.object({
+  VITE_ENDPOINT_MOCKING_ENABLED: z.string().optional(),
+  NODE_ENV: z.string().optional(),
+  VERCEL: z.string().optional(),
+  VERCEL_URL: z.string().optional(),
+  VERCEL_ENV: z.string().optional(),
+  WEBSITE_URL: z.string().optional(),
+  SESSION_SECRET: z.string(),
+  SOLANA_RPC_SECRET: z.string(),
+  GITHUB_CLIENT_ID: z.string(),
+  GITHUB_CLIENT_SECRET: z.string(),
+  GITHUB_APP_NAME: z.string(),
+  GITHUB_APP_ID: z.string(),
+  GITHUB_APP_PRIVATE_KEY: z.string(),
+  GITHUB_WEBHOOK_SECRET: z.string(),
 });
 
-export const env = s.create(process.env, EnvSchema);
+export const env = EnvSchema.parse(process.env);

@@ -22,7 +22,7 @@
       "path": "../../kickjump__svelte-auth/src"
     },
     {
-      "path": "../../kickjump__validation/src"
+      "path": "../../kickjump__types/src"
     }
   ]
 }

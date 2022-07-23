@@ -1,8 +1,6 @@
 <script lang="ts">
   import cx from 'clsx';
 
-  import { range } from '$utils/helpers';
-
   import {
     type BorderWidth,
     type SketchOptions,
@@ -30,9 +28,9 @@
     'border-current',
     className,
   );
-  $: classes = range(props.iterations).map((ii) => ({
-    class: cx(baseClass, props.shapes[ii], props.filters[ii]),
-    rotation: `rotate(${props.rotations[ii]}deg)`,
+  $: classes = [...'#'.repeat(props.iterations)].map((_, index) => ({
+    class: cx(baseClass, props.shapes[index], props.filters[index]),
+    rotation: `rotate(${props.rotations[index]}deg)`,
   }));
 </script>
 

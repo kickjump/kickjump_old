@@ -12,7 +12,7 @@ const USER_FIELDS = {
  * Create a user with the provided data.
  */
 export async function create(props: UserCreateInput) {
-  const user = e.insert(e.User, { name: props.name, image: props.image });
+  const user = e.insert(e.User, { name: props.name, image: props.image, username: props.username });
   const emails = (props.emails ?? []).map((email) =>
     e.insert(e.Email, {
       email: email.email,
@@ -27,8 +27,17 @@ export async function create(props: UserCreateInput) {
 
   const set = e.set(user, ...emails, ...accounts);
   await run(set);
-  const populatedUserQuery = e.select(user, () => USER_FIELDS);
+  const populatedUserQuery = e.select(e.User, (user) => ({
+    ...USER_FIELDS,
+    filter: e.op(user.username, '=', e.str(props.username)),
+  }));
   const populatedUser = await run(populatedUserQuery);
+
+  // const query = e.select(set.is(e.User), () => ({
+  //   ...USER_FIELDS,
+  //   filter: e.op(user.username, '=', e.str(props.username)),
+  // })).assert_single()
+  // const populatedUser = await run(query);
 
   if (!populatedUser) {
     throw new Error('The user could not be created');
@@ -123,7 +132,7 @@ export async function findByAccount({
 }
 
 function userQuery(user: UserCreateInput) {
-  return e.insert(e.User, { name: user.name, image: user.image });
+  return e.insert(e.User, { name: user.name, image: user.image, username: user.username });
 }
 
 type UserId = ReturnType<typeof userQuery> | string;
@@ -205,36 +214,31 @@ export async function linkEmails(userId: string, emails: EmailCreateInput[]) {
     user: true,
   }));
 
-  // const user = e.select(e.User, user => ({filter: e.op(user.id, '=', e.uuid(userId))}))
-  // const set = e.set(...emails.map(email => e.insert(e.Email, ({
-  //   email: email.email,
-  //   primary: email.primary,
-  //   user,
-  //   verified: email.verified ? e.datetime_current() : undefined,
-  // }))));
-
-  // const query = e.select(set, () => ({
-  //   ...e.Email['*'],
-  //   user: true,
-  // }));
-
   return run(query);
-  // await run(linkEmailsQuery(userId, emails))
-  // '<user[is Email]': e.set(...emails.map(email => e.insert(e.Email, ({
-  //   email: email.email,
-  //   primary: email.primary,
-  //   user: query,
-  //   verified: email.verified ? e.datetime_current() : undefined,
-  // })))),
-  // '<user[is Account]': e.set(...accounts.map(account => e.insert(e.Account, ({
-  //   accountType: account.accountType,
-  //   provider: account.provider,
-  //   providerAccountId: account.providerAccountId,
-  //   accessToken: account.accessToken,
-  //   scope: account.scope,
-  //   refreshToken: account.refreshToken,
-  //   user: query,
-  // })))),
+}
+
+interface GetPermissionsProps {
+  user: string;
+  entity: string;
+}
+
+export async function findPermission(props: GetPermissionsProps) {
+  const query = e
+    .select(e.Membership, (membership) => ({
+      permissions: true,
+      actor: true,
+      entity: true,
+      filter: e.op(
+        e.op(membership.entity.id, '=', e.uuid(props.entity)),
+        'and',
+        e.op(membership.actor.id, '=', e.uuid(props.user)),
+      ),
+    }))
+    .assert_single();
+
+  const permissions = await run(query);
+
+  return permissions ?? undefined;
 }
 
 interface GetByAccountProps {

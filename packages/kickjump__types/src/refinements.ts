@@ -3,7 +3,9 @@
  */
 import * as z from 'zod';
 
-export function slug(asyncCheck?: (value: string) => Promise<boolean>) {
+type SlugCheck = (value: string) => Promise<boolean>;
+
+export function slug(check?: SlugCheck) {
   return z
     .string()
     .min(3)
@@ -13,16 +15,16 @@ export function slug(asyncCheck?: (value: string) => Promise<boolean>) {
     .refine((value) => !/[._-]{2,}/.test(value), {
       message: "Special characters `-_.` shouldn't repeat.",
     })
-    .refine((value) => asyncCheck?.(value) ?? true, {
+    .refine((value) => check?.(value) ?? true, {
       message: 'The requested name is not available.',
     })
     .transform((value) => value.toLocaleLowerCase());
 }
 
-export function setSlugAndTitle(asyncCheck?: (value: string) => Promise<boolean>) {
+export function setSlugAndTitle(check?: SlugCheck) {
   return z.object({
     title: title(),
-    slug: slug(asyncCheck),
+    slug: slug(check),
   });
 }
 
@@ -46,4 +48,33 @@ export function project() {
     description: description(),
     members: ids().optional(),
   });
+}
+
+export function updateProject(check?: SlugCheck) {
+  return z.object({
+    id: z.string().uuid(),
+    title: title().optional(),
+    slug: slug(check).optional(),
+    description: description(),
+  });
+}
+
+export enum Permission {
+  /** The ultimate role */
+  Owner = 'owner',
+  /** Can do everything except promote self to owner / or demote owner */
+  Admin = 'admin',
+  /** A preset role that can most things */
+  Manager = 'manager',
+  /** Mostly read access */
+  Member = 'member',
+
+  UpdateAll = 'update.all',
+  DelateAll = 'delete.all',
+  ReadAll = 'read.all',
+  UpdateDescription = 'update.description',
+}
+
+export function permissions() {
+  return z.array(z.nativeEnum(Permission));
 }

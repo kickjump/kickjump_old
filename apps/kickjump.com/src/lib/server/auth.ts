@@ -66,6 +66,7 @@ export const authenticator = new Authenticator({
           image: profile._json.avatar_url,
           accounts,
           emails,
+          username: profile._json.login,
         });
       }
 

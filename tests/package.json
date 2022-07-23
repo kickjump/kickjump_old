@@ -13,28 +13,23 @@
     "test:anchor:watch": "vitest --config ./anchor.config.ts",
     "test:db": "vitest run --config ./db.config.ts",
     "test:db:watch": "DATABASE_URL=mysql://root:kickjump@localhost:3307/kickjump vitest --config ./db.config.ts",
-    "test:kickjump.com": "playwright test --workers=1"
+    "test:kickjump.com": "playwright test",
+    "trace:kickjump.com": "playwright show-trace"
   },
   "dependencies": {
-    "load-json-file": "^7.0.1",
     "@faker-js/faker": "^7.3.0",
     "@kickjump/db": "^0.0.1",
     "@kickjump/mocks": "^0.0.0",
     "@kickjump/playwright": "^0.0.0",
-    "@playwright/test": "^1.23.4",
+    "@playwright/test": "^1.24.0",
     "@project-serum/anchor": "0.25.0",
-    "@types/exit": "^0.1.31",
-    "@types/signal-exit": "^3.0.1",
     "chalk": "^5.0.1",
     "delay": "^5.0.0",
     "execa": "^6.1.0",
-    "exit": "^0.1.2",
     "jest-process-manager": "^0.3.1",
+    "load-json-file": "^7.0.1",
     "p-retry": "^5.1.1",
-    "signal-exit": "^3.0.7",
-    "solana-credentials": "^0.0.1",
-    "tree-kill": "^1.2.2",
-    "wait-port": "^0.3.0"
+    "solana-credentials": "^0.0.1"
   },
   "monots": {
     "tsconfigs": {

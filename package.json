@@ -36,6 +36,7 @@
     "lint:repo": "manypkg check",
     "lint:rustfmt": "cargo +nightly fmt --check",
     "prepare": "husky install .monots/.husky || true",
+    "preview:kickjump.com": "pnpm --dir apps/kickjump.com preview",
     "refresh": "pnpm clean; pnpm i -r;",
     "prerelease": "pnpm build",
     "release": "changeset publish",
@@ -55,6 +56,7 @@
     "test:packages": "vitest run",
     "test:playwright": "pnpm run -r test:playwright",
     "test:watch:packages": "vitest watch",
+    "trace:kickjump.com": "pnpm --dir tests trace:kickjump.com",
     "typecheck": "tsc --build --force",
     "update:crates": "cargo upgrade --workspace",
     "update:deps": "pnpm update --latest --recursive -i",
@@ -65,8 +67,8 @@
     "version:pr": "pnpm scripts delete:changeset:property"
   },
   "dependencies": {
-    "@changesets/changelog-github": "^0.4.5",
-    "@changesets/cli": "^2.23.2",
+    "@changesets/changelog-github": "^0.4.6",
+    "@changesets/cli": "^2.24.0",
     "@cloudflare/wrangler": "^1.19.12",
     "@manypkg/cli": "^0.19.1",
     "@manypkg/get-packages": "^1.1.3",
@@ -79,7 +81,6 @@
     "@testing-library/dom": "^8.16.0",
     "@testing-library/user-event": "^14.3.0",
     "@types/node": "^18.0.6",
-    "@types/testing-library__jest-dom": "^5.14.5",
     "@vitest/ui": "^0.18.1",
     "autoprefixer": "^10.4.7",
     "chokidar-cli": "^3.0.0",
@@ -98,7 +99,7 @@
     "msw": "^0.44.1",
     "ngrok": "^4.3.1",
     "npm-run-all": "^4.1.5",
-    "playwright": "^1.23.4",
+    "playwright": "^1.24.0",
     "playwright-watch": "^1.3.23",
     "postcss": "^8.4.14",
     "postcss-import": "^14.1.0",
@@ -111,14 +112,14 @@
     "tailwindcss-animate": "^1.0.5",
     "tsconfig-paths": "^4.0.0",
     "tsx": "^3.8.0",
-    "typescript": "4.8.0-dev.20220714",
+    "typescript": "4.8.0-dev.20220721",
     "vite": "^3.0.2",
     "vite-tsconfig-paths": "^3.5.0",
     "vitest": "^0.18.1",
     "wasm-pack": "^0.10.3",
     "wrangler": "^2.0.22"
   },
-  "packageManager": "pnpm@7.5.2",
+  "packageManager": "pnpm@7.6.0",
   "engines": {
     "node": ">=16.9",
     "pnpm": ">=6"
@@ -150,7 +151,8 @@
       "trim-newlines@<3.0.1": ">=3.0.1",
       "async@<2.6.4": ">=2.6.4",
       "got@<11.8.5": "^11.8.5",
-      "glob-parent@<6.0.1": ">=6.0.1"
+      "glob-parent@<6.0.1": ">=6.0.1",
+      "undici@<5.8.0": ">=5.8.0"
     },
     "patchedDependencies": {
       "fast-sort@3.2.0": ".monots/patches/fast-sort@3.2.0.patch",

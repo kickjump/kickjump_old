@@ -1,16 +1,17 @@
 import type { ServerSession } from '@kickjump/svelte-auth';
-import { s, transformer } from '@kickjump/types';
+import { transformer } from '@kickjump/types';
 import { initTRPC } from '@trpc/server';
+import { z } from 'zod';
 
-export const Env = s.type({
-  GITHUB_CLIENT_ID: s.string(),
-  GITHUB_CLIENT_SECRET: s.string(),
-  GITHUB_APP_NAME: s.string(),
-  GITHUB_APP_ID: s.string(),
-  GITHUB_APP_PRIVATE_KEY: s.string(),
-  GITHUB_WEBHOOK_SECRET: s.string(),
+export const Env = z.object({
+  GITHUB_CLIENT_ID: z.string(),
+  GITHUB_CLIENT_SECRET: z.string(),
+  GITHUB_APP_NAME: z.string(),
+  GITHUB_APP_ID: z.string(),
+  GITHUB_APP_PRIVATE_KEY: z.string(),
+  GITHUB_WEBHOOK_SECRET: z.string(),
 });
-type Env = s.Infer<typeof Env>;
+type Env = z.infer<typeof Env>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type Context = {

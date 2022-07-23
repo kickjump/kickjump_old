@@ -3,11 +3,11 @@
 
   import { page, session } from '$app/stores';
   import { Button } from '$components/buttons';
+  import Icon from '$components/icon/icon.svelte';
   import Logo from '$components/logo/logo.svelte';
   import { auth } from '$lib/auth';
   import { matchesHref } from '$utils/core';
-
-  import Icon from '../icon/icon.svelte';
+  
   import { IconToggle } from '../toggles';
 
   let open = false;
@@ -76,7 +76,7 @@
     </div>
     {#key user}
       <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-        <Button on:click={toggleMenu} variant="ghost" class="block sm:hidden">
+        <Button href={auth.logoutUrl()} variant="ghost" class="block sm:hidden">
           <Icon icon="menuLine" size="2em" />
         </Button>
         {#if loggedIn}

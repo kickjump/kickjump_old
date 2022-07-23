@@ -3,8 +3,7 @@
 // eslint-disable-next-line unicorn/prefer-node-protocol
 // import { Buffer } from 'buffer';
 import SuperJson from 'superjson';
-
-import * as s from './structs';
+import { z } from 'zod';
 
 // if (!globalThis.Buffer) {
 //   globalThis.Buffer = Buffer;
@@ -39,7 +38,7 @@ import * as s from './structs';
 // Add support for automatic serialization of Uint8Array
 SuperJson.registerCustom<Uint8Array, number[]>(
   {
-    isApplicable: (value): value is Uint8Array => s.uint8Array().is(value),
+    isApplicable: (value): value is Uint8Array => z.instanceof(Uint8Array).safeParse(value).success,
     serialize: (value) => [...value],
     deserialize: (value) => Uint8Array.from(value),
   },
@@ -48,7 +47,7 @@ SuperJson.registerCustom<Uint8Array, number[]>(
 
 SuperJson.registerCustom<URL, string>(
   {
-    isApplicable: (value): value is URL => s.url().is(value),
+    isApplicable: (value): value is URL => z.instanceof(URL).safeParse(value).success,
     serialize: (value) => value.href,
     deserialize: (value) => new URL(value),
   },

@@ -12,7 +12,19 @@ export const project = t.router({
       ProjectModel.createEssential({ creator: ctx.user.id, ...input }),
     ),
   slugAvailable: authenticated.input(z.string()).query(({ input }) => isSlugAvailable(input)),
-  // update: authenticated.input(),
+  setDescription: authenticated
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        description: z.string().min(50),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { user } = ctx;
+      // check has permissions
+      const { description, id } = input;
+      await ProjectModel.update({ id, description });
+    }),
 });
 
 async function isSlugAvailable(slug: string) {

@@ -13,6 +13,16 @@
       "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js"
     },
+    "./db": {
+      "types": "./dist/db.d.ts",
+      "browser": "./dist/db.browser.esm.js",
+      "import": "./dist/db.esm.js"
+    },
+    "./db.js": {
+      "types": "./dist/db.d.ts",
+      "browser": "./dist/db.browser.esm.js",
+      "import": "./dist/db.esm.js"
+    },
     "./index.js": {
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
@@ -25,27 +35,29 @@
   "browser": "./dist/index.browser.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "db",
     "dist"
   ],
   "dependencies": {
-    "type-fest": "^2.17.0",
     "@felte/common": "^1.1.1",
     "@kickjump/edgedb": "^0.0.0",
-    "@solana/web3.js": "^1.48.0",
+    "@solana/web3.js": "^1.50.0",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
     "profane-words": "^1.5.3",
     "superjson": "^1.9.1",
     "superstruct": "^0.16.0",
-    "zod": "^3.17.9"
+    "type-fest": "^2.17.0",
+    "zod": "^3.17.10"
   },
   "publishConfig": {
     "access": "public"
   },
   "monots": {
     "entrypoints": [
-      "index.ts"
+      "index.ts",
+      "db.ts"
     ],
     "tsconfigs": {},
     "mode": "library",

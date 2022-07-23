@@ -47,7 +47,7 @@
     "@octokit/plugin-rest-endpoint-methods": "^6.1.2",
     "@octokit/request-error": "^3.0.0",
     "@octokit/types": "^6.40.0",
-    "@octokit/webhooks": "^10.0.8",
+    "@octokit/webhooks": "^10.0.9",
     "@trpc/client": "10.0.0-alpha.38",
     "@trpc/server": "10.0.0-alpha.38",
     "@types/parse-link-header": "^2.0.0",
@@ -66,13 +66,13 @@
     "metascraper-url": "^5.29.15",
     "octokit": "^2.0.4",
     "tiny-invariant": "^1.2.0",
-    "zod": "^3.17.9"
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@kickjump/db": "^0.0.1",
     "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/types": "^0.0.0",
-    "@sveltejs/kit": "1.0.0-next.386",
+    "@sveltejs/kit": "1.0.0-next.391",
     "@sveltestack/svelte-query": "^1.6.0",
     "@types/node": "^18.0.6",
     "svelte": "^3.49.0"

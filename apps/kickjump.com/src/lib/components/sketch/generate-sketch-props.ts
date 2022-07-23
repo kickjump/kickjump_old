@@ -2,7 +2,6 @@ import cx from 'clsx';
 import RandomNumberGenerator from 'tiny-rng';
 
 import type { Maybe } from '$types';
-import { range } from '$utils/helpers';
 
 import type { ButtonVariant } from '../buttons/index.js';
 
@@ -47,7 +46,7 @@ export function generateSketchProps(
   const shapes: Array<Maybe<typeof SHAPE_CLASSES[number]>> = [];
   const rotations: number[] = [];
 
-  for (const _ of range(iterations + (iterations > 2 ? 2 : 1))) {
+  for (const _ of '#'.repeat(iterations) + (iterations > 2 ? '##' : '#')) {
     // filters.push(FILTER_CLASSES[generator.random(0, FILTER_CLASSES.length)]);
     filters.push(FILTER_CLASSES[0]);
     shapes.push(SHAPE_CLASSES[generator.random(0, SHAPE_CLASSES.length - 1)]);

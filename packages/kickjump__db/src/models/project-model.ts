@@ -1,17 +1,23 @@
+import { Permission } from '@kickjump/types';
+import invariant from 'tiny-invariant';
+
 import {
   type CreateOmitKeys,
   type ProjectType,
-  type Status,
   type UpdateOmitKeys,
-  type Visibility,
   e,
   run,
+  Status,
+  Visibility,
 } from '../edgedb.js';
 
 const PROJECT_SELECTOR = {
   ...e.Project['*'],
   creator: { name: true, id: true },
-  members: { '@permissions': true, id: true, name: true },
+  members: {
+    permissions: true,
+    actor: true,
+  },
   proposals: true,
 };
 
@@ -23,36 +29,48 @@ export async function create(props: ProjectCreateInput) {
     filter: e.op(user.id, '=', e.uuid(props.creator)),
   }));
 
-  const insert = e.insert(e.Project, {
+  const entity = e.insert(e.Project, {
     slug: props.slug,
     description: props.description,
     title: props.title,
-    privacy: props.privacy,
+    visibility: props.visibility,
     status: props.status,
     creator,
-    members: e.select(creator, () => ({
-      '@permissions': e.array([e.cast(e.Permission, 'owner')]),
-    })),
   });
 
-  const select = e.select(insert, (project) => ({
-    ...PROJECT_SELECTOR,
-    filter: e.op(project.id, '=', insert.id),
+  const membership = e.insert(e.Membership, {
+    entity,
+    actor: creator,
+    permissions: e.array([Permission.Owner]),
+  });
+
+  const select = e.select(membership, () => ({
+    ...e.Membership['*'],
+    entity: true,
   }));
 
-  const project = await run(select);
+  const value = await run(select);
+  const projectId = value?.entity?.id;
 
-  if (!project) {
+  if (!projectId) {
     throw new Error('The project could not be created');
   }
 
+  const project = await run(
+    e.select(e.Project, (project) => ({
+      ...PROJECT_SELECTOR,
+      filter: e.op(project.id, '=', e.uuid(projectId)),
+    })),
+  );
+
+  invariant(project, 'The project could not be populated.');
   return project;
 }
 
 /**
  * Quickly create a project. The creator should be a valid user id and is automatically
  */
-export function createEssential(props: ProjectCreateBaseInput) {
+export function createEssential(props: ProjectCreateBaseInput): Promise<Project> {
   const { creator, slug, title } = props;
 
   return create({
@@ -60,39 +78,31 @@ export function createEssential(props: ProjectCreateBaseInput) {
     title,
     slug,
     description: '',
-    privacy: 'creator',
-    status: 'draft',
+    visibility: Visibility.creator,
+    status: Status.draft,
   });
 }
 
 /**
  * Update the user
  */
-export async function update(props: ProjectUpdateInput) {
-  const addedMemebers = e.select(e.User, (user) => ({
-    filter: e.op(user.id, 'in', e.set(...(props.addMembers ?? []).map((id) => e.uuid(id)))),
-  }));
-
-  const removedMemebers = e.select(e.User, (user) => ({
-    filter: e.op(user.id, 'in', e.set(...(props.removeMembers ?? []).map((id) => e.uuid(id)))),
-  }));
-
-  const updateQuery = e.update(e.Project, (project) => ({
-    filter: e.op(project.id, '=', e.uuid(props.id)),
-    set: {
-      updatedAt: e.datetime_current(),
-      title: props.title ?? project.title,
-      description: props.description ?? project.description,
-      privacy: props.privacy ?? project.privacy,
-      status: props.status ?? project.status,
-      slug: props.slug ?? project.slug,
-      members: { '+=': addedMemebers, '-=': removedMemebers },
-    },
-  }));
+export async function update(props: ProjectUpdateInput): Promise<Project | undefined> {
+  const updateQuery = e.update(e.Project, (project) => {
+    return {
+      filter: e.op(project.id, '=', e.uuid(props.id)),
+      set: {
+        updatedAt: e.datetime_current(),
+        title: props.title ?? project.title,
+        description: props.description ?? project.description,
+        visibility: props.visibility ?? project.visibility,
+        status: props.status ?? project.status,
+        slug: props.slug ?? project.slug,
+      },
+    };
+  });
 
   const query = e.select(updateQuery, () => PROJECT_SELECTOR);
-
-  return await run(query);
+  return (await run(query)) ?? undefined;
 }
 
 export async function remove(id: string) {
@@ -113,16 +123,23 @@ export async function findBySlug(slug: string): Promise<Project | undefined> {
     filter: e.op(project.slug, '=', e.str(slug)),
   }));
 
-  const project = await run(query);
+  return (await run(query)) ?? undefined;
+}
 
-  return project ?? undefined;
+export async function find(id: string): Promise<Project | undefined> {
+  const query = e.select(e.Project, (project) => ({
+    ...PROJECT_SELECTOR,
+    filter: e.op(project.id, '=', e.uuid(id)),
+  }));
+
+  return (await run(query)) ?? undefined;
 }
 
 export type Project = Awaited<ReturnType<typeof create>>;
 export type ProjectCreateInput = ProjectType<{
   omit: CreateOmitKeys;
   simplify: true;
-  replace: { creator: string; privacy: keyof typeof Visibility; status: keyof typeof Status };
+  replace: { creator: string };
 }>;
 export type ProjectUpdateInput = ProjectType<{
   omit: UpdateOmitKeys | 'creator';
@@ -132,8 +149,7 @@ export type ProjectUpdateInput = ProjectType<{
     id: string;
     privacy?: keyof typeof Visibility;
     status?: keyof typeof Status;
-    addMembers?: string[];
-    removeMembers?: string[];
+    // members?: Array<{actor: string, permissions: string[]} | string>;
   };
 }>;
 export type ProjectCreateBaseInput = Pick<ProjectCreateInput, 'creator' | 'slug' | 'title'>;

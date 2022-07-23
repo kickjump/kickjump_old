@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { faker } from '@faker-js/faker';
 
-import {
-  AccountProvider,
-  AccountType,
-  EmailType,
-  UserType,
-  client,
-  e,
-} from './edgedb.js';
+import type { AccountType, EmailType, UserType } from './edgedb.js';
+import { AccountProvider, client, e } from './edgedb.js';
 
 type Account = AccountType<{
   omit: 'id';
@@ -40,11 +34,13 @@ function createEmail(): Email {
 
 // TODO(@ifiokjr) properly seed the project users
 export function createUser(): User {
+  const name = faker.name.findName();
   return {
     createdAt: faker.date.past(1),
     updatedAt: faker.date.recent(),
     image: faker.image.avatar(),
-    name: faker.name.findName(),
+    name,
+    username: faker.internet.userName(name),
   };
 }
 
@@ -62,6 +58,7 @@ export async function seed() {
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
         image: data.image,
+        username: data.username,
       })
       .run(client)
       .then((user) => {
