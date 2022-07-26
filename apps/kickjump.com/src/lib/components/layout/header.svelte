@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { EnhancedURL } from '@kickjump/svelte-auth/client';
   import themeStore, { setTheme } from 'svelte-themes';
 
   import { page, session } from '$app/stores';
@@ -28,9 +29,10 @@
   ];
 
   $: ({ csrf, user } = $session);
-  // $: console.log($session);
-  $: githubAuth = auth.strategyUrl('github', 'login', {
-    redirect: $page.params.redirect ?? $page.url.href,
+  $: loginPath = EnhancedURL.of({
+    path: '/login',
+    base: $page.url,
+    params: { redirect: $page.url.searchParams.get('redirect') ?? $page.url.href },
   }).searchPath;
   $: loggedIn = !!$session.user?.id;
   $: isDark =
@@ -70,13 +72,13 @@
     </div>
     {#key user}
       <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-        <Button href={auth.logoutUrl().searchPath} variant="ghost" class="block sm:hidden">
+        <Button variant="ghost" class="block sm:hidden">
           <Icon icon="menuLine" size="2em" />
         </Button>
         {#if loggedIn}
           <Button onClick={() => logout()} variant="outline">Logout</Button>
         {:else}
-          <Button href={githubAuth} variant="outline" leftIcon="github">Login</Button>
+          <Button href={loginPath} variant="outline">Login</Button>
         {/if}
       </div>
     {/key}

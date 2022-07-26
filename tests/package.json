@@ -17,6 +17,7 @@
     "trace:kickjump.com": "playwright show-trace"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.4.3",
     "@faker-js/faker": "^7.3.0",
     "@kickjump/db": "^0.0.1",
     "@kickjump/mocks": "^0.0.0",

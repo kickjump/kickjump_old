@@ -5,16 +5,30 @@ export function authenticated(fn?: Load): Load {
     const { session, url, props } = event;
 
     if (!session.user) {
-      return {
-        redirect: `/auth/login/github?redirect=${url.pathname}`,
-        status: 307,
-      };
+      return { redirect: `/login?redirect=${url.pathname}`, status: 307 };
     }
 
     if (!fn) {
-      return {
-        props,
-      };
+      return { props };
+    }
+
+    return fn(event);
+  };
+}
+
+export function notAuthenticated(fn?: Load): Load {
+  return (event) => {
+    const { session, props, url } = event;
+
+    if (session.user) {
+      // const redirectUrl = new URL(params.redirect ?? '/', url);
+      // redirectUrl.searchParams.set('redirect', url.href);
+      // const redirect = redirectUrl.href;
+      return { redirect: url.searchParams.get('redirect') ?? '/', status: 307 };
+    }
+
+    if (!fn) {
+      return { props };
     }
 
     return fn(event);

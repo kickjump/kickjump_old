@@ -1,6 +1,5 @@
 import { request } from '@kickjump/playwright';
 import { setup, teardown } from 'jest-process-manager';
-import { loadJsonFile } from 'load-json-file';
 
 import {
   instanceExists,
@@ -25,21 +24,26 @@ export default async function globalSetup() {
   }
 
   await setup({
-    command: `WEBSITE_URL="http://localhost:3030" EDGEDB_INSTANCE="${TEST_EDGEDB_INSTANCE}" VITE_ENDPOINT_MOCKING_ENABLED="true" pnpm -w dev:kickjump.com --mode "e2e" --port 3030 &> /dev/null`,
+    command: `pnpm -w dev:test-server &> /dev/null`,
     port: 3030,
-    usedPortAction: 'kill',
+    usedPortAction: 'ignore',
     launchTimeout: 30_000,
     debug: false,
   });
 
-  try {
-    const storageState = await gracefulReadStorageState(STORAGE_STATE);
+  const { e, run } = await import('@kickjump/db');
 
-    for (const cookie of storageState?.cookies ?? []) {
-      if (cookie.name === 'kit.session' && cookie.expires * 1000 + 600_000 > Date.now()) {
-        return;
-      }
-    }
+  // Delete everything!
+  await run(e.delete(e.Object), { unsafeIgnorePolicies: true });
+
+  try {
+    // const storageState = await gracefulReadStorageState(STORAGE_STATE);
+
+    // for (const cookie of storageState?.cookies ?? []) {
+    //   if (cookie.name === 'kit.session' && cookie.expires * 1000 + 600_000 > Date.now()) {
+    //     return;
+    //   }
+    // }
 
     // signin via api request.
     const context = await request.newContext({ baseURL: 'localhost:3030' });
@@ -60,28 +64,28 @@ export default async function globalSetup() {
   }
 }
 
-async function gracefulReadStorageState(name: string) {
-  try {
-    const filepath = new URL(`../${name}`, import.meta.url).pathname;
-    const json = await loadJsonFile<StorageState>(filepath);
-    return json;
-  } catch {
-    return;
-  }
-}
+// async function gracefulReadStorageState(name: string) {
+//   try {
+//     const filepath = new URL(`../${name}`, import.meta.url).pathname;
+//     const json = await loadJsonFile<StorageState>(filepath);
+//     return json;
+//   } catch {
+//     return;
+//   }
+// }
 
-interface StorageState {
-  cookies: Cooky[];
-  origins: any[];
-}
+// interface StorageState {
+//   cookies: Cooky[];
+//   origins: any[];
+// }
 
-interface Cooky {
-  name: string;
-  value: string;
-  domain: string;
-  path: string;
-  expires: number;
-  httpOnly: boolean;
-  secure: boolean;
-  sameSite: string;
-}
+// interface Cooky {
+//   name: string;
+//   value: string;
+//   domain: string;
+//   path: string;
+//   expires: number;
+//   httpOnly: boolean;
+//   secure: boolean;
+//   sameSite: string;
+// }

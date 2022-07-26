@@ -9,7 +9,7 @@ interface ClientAuthenticatorProps {
 }
 
 export class ClientAuthenticator {
-  #url?: URI;
+  #url?: EnhancedURL;
 
   readonly basePath: string;
   readonly page: Readable<Page>;
@@ -18,8 +18,8 @@ export class ClientAuthenticator {
     return this.url.origin;
   }
 
-  get url(): URI {
-    return (this.#url ??= URI.of(get(this.page).url));
+  get url(): EnhancedURL {
+    return (this.#url ??= EnhancedURL.of({ path: get(this.page).url }));
   }
 
   constructor(props: ClientAuthenticatorProps) {
@@ -70,13 +70,26 @@ export class ClientAuthenticator {
   }
 
   #getUrl(endpoint: string) {
-    return new URI(`${this.basePath}/${endpoint}`, this.#origin);
+    return new EnhancedURL(`${this.basePath}/${endpoint}`, this.#origin);
   }
 }
 
-export class URI extends URL {
-  static of(url: URL | string, base?: URL | string | undefined): URI {
-    return new this(url, base);
+interface EnhancedURLProps {
+  path: URL | string;
+  base?: URL | string | undefined;
+  params?: Record<string, string> | undefined;
+}
+
+export class EnhancedURL extends URL {
+  static of(props: EnhancedURLProps): EnhancedURL {
+    const { path, base, params = {} } = props;
+    const newURL = new this(path, base);
+
+    for (const [name, value] of Object.entries(params)) {
+      newURL.searchParams.set(name, value);
+    }
+
+    return newURL;
   }
 
   /**
@@ -91,8 +104,8 @@ export class URI extends URL {
     return `${this.pathname}${this.search}`;
   }
 
-  clone(): URI {
-    return URI.of(this);
+  clone(): EnhancedURL {
+    return EnhancedURL.of({ path: this });
   }
 }
 

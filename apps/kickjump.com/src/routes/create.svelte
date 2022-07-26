@@ -8,7 +8,11 @@
   import { createForm } from 'felte';
   import type { z } from 'zod';
 
+  import { goto } from '$app/navigation';
+  import { authenticated } from '$lib/route-loaders';
   import { Editor } from '$modules/editor';
+
+  export const load = authenticated();
 </script>
 
 <script lang="ts">
@@ -34,7 +38,6 @@
       const { description, name } = input;
 
       await $create.mutateAsync({ name, description });
-      const { goto } = await import('$app/navigation');
       await goto(`/${name}/edit`);
     },
     initialValues: { description: '', name: '' },
@@ -74,6 +77,7 @@
         {/if}
       </ul>
     </div>
+    <button type="submit" class="btn btn-primary">Create</button>
   </section>
   <section class="pt-6">
     <ul class="label flex-col items-start list-disc">

@@ -4,14 +4,17 @@
     const { error, status } = event;
     return {
       props: {
-        title: `${status}: ${error?.message}`,
+        status,
+        message: error?.message,
       },
     };
   });
 </script>
 
 <script lang="ts">
-  export let title: string;
+  export let message: string;
+  export let status: string;
 </script>
 
-<h1>{title}</h1>
+<h1>{status}</h1>
+<p>{message}</p>
