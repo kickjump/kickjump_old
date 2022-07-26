@@ -1,14 +1,7 @@
-interface PlainObject {
-  [key: string]: unknown;
-}
+import { isObject } from 'is-what';
 
 export function isElement(value: unknown): value is Element {
-  return (
-    value != null &&
-    typeof value === 'object' &&
-    'nodeType' in value &&
-    (value as PlainObject).nodeType === Node.ELEMENT_NODE
-  );
+  return isObject(value) && value.nodeType === Node.ELEMENT_NODE;
 }
 
 /**

@@ -1,5 +1,4 @@
 import type { UserModel } from '@kickjump/db';
-import type { AccountCreateInput } from '@kickjump/db/src/models/user-model.js';
 import { type GitHubScope, Authenticator, GitHubStrategy } from '@kickjump/svelte-auth';
 
 import { BASE_AUTH } from '$lib/constants.js';
@@ -24,14 +23,12 @@ export const authenticator = new Authenticator({
       const providerAccountId = profile.id.toString();
       const provider = 'github';
       const { UserModel } = await import('@kickjump/db');
-      let existingUser: UserModel.PopulatedUser | undefined = await UserModel.findByAccount({
-        provider,
-        providerAccountId,
-      });
+      const user = await UserModel.findByAccount({ provider, providerAccountId });
+      let id = user?.id;
 
       // Since the account already exists return the user
-      if (existingUser) {
-        return getAppUser(existingUser);
+      if (id) {
+        return { id };
       }
 
       const emails: UserModel.EmailCreateInput[] = profile.emails
@@ -40,19 +37,18 @@ export const authenticator = new Authenticator({
         .slice(0, 1);
 
       for (const email of emails) {
-        // here you would find or create a user in your database
-        existingUser = await UserModel.findByEmail(email.email);
+        const user = await UserModel.findByEmail(email.email);
+        id = user?.id;
 
-        if (existingUser) {
+        if (id) {
           break;
         }
       }
 
-      const acc: AccountCreateInput = {
+      const acc: UserModel.AccountCreateInput = {
         refreshToken: null,
         provider,
         providerAccountId,
-        accountType: 'oauth',
         accessToken,
         scope: GITHUB_SCOPE,
         login: profile._json.login,
@@ -60,8 +56,8 @@ export const authenticator = new Authenticator({
       const accounts: UserModel.AccountCreateInput[] = [acc];
 
       // the user doesn't exist; create the user and account;
-      if (!existingUser) {
-        existingUser = await UserModel.create({
+      if (!id) {
+        id = await UserModel.create({
           name: profile._json.name,
           image: profile._json.avatar_url,
           accounts,
@@ -70,18 +66,18 @@ export const authenticator = new Authenticator({
         });
       }
 
-      const account = existingUser.accounts.find((account) => account.provider === provider);
+      const account = await UserModel.findProviderAccountById({ id, provider: 'github' });
 
       if (!account) {
-        await UserModel.linkAccounts(existingUser.id, accounts);
+        await UserModel.linkAccounts(id, accounts);
       } else if (account.providerAccountId !== providerAccountId) {
         // TODO(@ifiokjr) check that this doesn't happen
-        await UserModel.replaceAccount(existingUser.id, account.id, acc);
+        await UserModel.replaceAccount(id, account.id, acc);
         // throw ServerError.auth('A different GitHub account has already been linked to this user.');
       }
 
       // the user exists; account doesn't; create the account and attach to user
-      return getAppUser(existingUser);
+      return { id };
     },
   ),
 );
@@ -89,11 +85,4 @@ export const authenticator = new Authenticator({
 if (env.VITE_ENDPOINT_MOCKING_ENABLED === 'true') {
   const { mockStrategy } = await import('@kickjump/mocks');
   authenticator.use(mockStrategy);
-}
-
-function getAppUser(user: UserModel.PopulatedUser): App.User {
-  const { id, image, name, emails } = user;
-  const email = emails.at(0)?.email;
-
-  return { id, image, name, email };
 }

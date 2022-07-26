@@ -1,14 +1,46 @@
+import type { CreatedAt, UpdatedAt } from '@kickjump/edgedb/types';
 import type {
-  Account,
-  CreatedAt,
-  Email,
-  Membership,
-  Project,
-  Proposal,
-  UpdatedAt,
-  User,
-} from '@kickjump/edgedb/types';
-import type { ConditionalKeys, PartialDeep, Primitive, SetOptional, Simplify } from 'type-fest';
+  ConditionalKeys,
+  ConditionalPick,
+  PartialDeep,
+  Primitive,
+  SetOptional,
+  Simplify,
+} from 'type-fest';
+
+export type ExtractFields<Type> = {
+  [Key in keyof Type]?:
+    | true
+    | (Type[Key] extends ArrayUnion<infer T extends WithId> ? ExtractFields<T> : never);
+};
+
+export function createTypeSafeFields<Type extends WithId>() {
+  return <Shape extends ExtractFields<Type>>(shape: Shape): Simplify<Shape> => {
+    return shape;
+  };
+}
+
+export type TypeFromFields<Type extends WithId, Fields extends ExtractFields<Type>> = Simplify<{
+  [Key in keyof Fields]: Key extends keyof Type
+    ? Fields[Key] extends true
+      ? Type[Key] extends WithId
+        ? WithId
+        : Type[Key] extends WithId[]
+        ? WithId[]
+        : Type[Key] extends string
+        ? `${Type[Key]}`
+        : Type[Key]
+      : Type[Key] extends WithId
+      ? Fields[Key] extends ExtractFields<Type[Key]>
+        ? TypeFromFields<Type[Key], Fields[Key]>
+        : never
+      : Type[Key] extends Array<infer T extends WithId>
+      ? Fields[Key] extends ExtractFields<T>
+        ? Array<TypeFromFields<T, Fields[Key]>>
+        : never
+      : never
+    : never;
+}>;
 
 export { AccountProvider, Status, Visibility } from '@kickjump/edgedb/types';
 
@@ -16,8 +48,9 @@ export { AccountProvider, Status, Visibility } from '@kickjump/edgedb/types';
  * Matches any primitive, `Date`, or `RegExp` value.
  */
 type BuiltIns = Primitive | Date | RegExp;
+type Native = BuiltIns | object;
 
-type DeepOmit<Type, Omitted extends string> = Type extends BuiltIns
+export type DeepOmit<Type, Omitted extends string> = Type extends BuiltIns
   ? Type
   : Type extends object
   ? Type extends Array<infer Item>
@@ -78,18 +111,6 @@ type DeepObjectOptionalKey<
   [Key in RequiredKeys]: DeepOptionalKey<Type[Key], Optional>;
 };
 
-export type UserType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<User, '__type__'>,
-  Options
->;
-export type AccountType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<Account, '__type__'>,
-  Options
->;
-export type EmailType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<Email, '__type__'>,
-  Options
->;
 export type UpdatedAtType<Options extends AvailableOptions = object> = Custom<
   DeepOmit<UpdatedAt, '__type__'>,
   Options
@@ -98,22 +119,10 @@ export type CreatedAtType<Options extends AvailableOptions = object> = Custom<
   DeepOmit<CreatedAt, '__type__'>,
   Options
 >;
-export type ProjectType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<Project, '__type__'>,
-  Options
->;
-export type ProposalType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<Proposal, '__type__'>,
-  Options
->;
-export type MembershipType<Options extends AvailableOptions = object> = Custom<
-  DeepOmit<Membership, '__type__'>,
-  Options
->;
-export type CreateOmitKeys = 'id' | 'createdAt' | 'updatedAt';
-export type UpdateOmitKeys = 'createdAt' | 'updatedAt';
+export type CreateOmitKeys = 'id' | 'createdAt' | 'updatedAt' | 'actions';
+export type UpdateOmitKeys = 'createdAt' | 'updatedAt' | 'actions';
 
-interface AvailableOptions {
+export interface AvailableOptions {
   /** Deep omit keys */
   deepOmit?: string | undefined;
   /** Make every property optional in a deeply nested way. */
@@ -126,18 +135,26 @@ interface AvailableOptions {
   optional?: string | undefined;
   /** Omit top level keys */
   omit?: string | undefined;
+  /** Pick top level keys */
+  pick?: string | undefined;
   /** Conditionally omit properties which extend the provided */
-  conditionalOmit?: object | undefined;
+  conditionalOmit?: Native | undefined;
+  /** Conditionally pick properties which extend the provided type */
+  conditionalPick?: Native | undefined;
   /** Remove all flattened object types */
   simplify?: boolean | undefined;
+  /** Only hold onto nested database objects */
+  complexify?: boolean | undefined;
   /** Replace the matching keys */
   replace?: object | undefined;
 }
 
-type Custom<Type, Options extends AvailableOptions> = Options extends { deepPartial: true }
+export type Custom<Type, Options extends AvailableOptions> = Options extends { deepPartial: true }
   ? Custom<PartialDeep<Type>, Omit<Options, 'deepPartial'>>
   : Options extends { simplify: true }
-  ? Custom<ConditionalOmit<Type, ArrayUnion<{ id: string }>>, Omit<Options, 'simplify'>>
+  ? Custom<ConditionalOmit<Type, ArrayUnion<WithId>>, Omit<Options, 'simplify'>>
+  : Options extends { complexify: true }
+  ? Custom<ConditionalPick<Type, ArrayUnion<WithId>>, Omit<Options, 'complexify'>>
   : Options extends { deepOmit: infer Keys extends string }
   ? Custom<DeepOmit<Type, Keys>, Omit<Options, 'deepOmit'>>
   : Options extends { deepOptional: infer Keys extends string }
@@ -148,12 +165,21 @@ type Custom<Type, Options extends AvailableOptions> = Options extends { deepPart
   ? Custom<SetOptional<Type, Keys extends keyof Type ? Keys : never>, Omit<Options, 'optional'>>
   : Options extends { omit: infer Keys extends string }
   ? Custom<Omit<Type, Keys>, Omit<Options, 'omit'>>
-  : Options extends { conditionalOmit: infer Shape extends object }
-  ? Custom<ConditionalOmit<Type, ArrayUnion<Shape>>, Omit<Options, 'conditionalOmit'>>
+  : Options extends { pick: infer Keys extends keyof Type }
+  ? Custom<Pick<Type, Keys>, Omit<Options, 'pick'>>
+  : Options extends { conditionalOmit: infer Shape }
+  ? Custom<ConditionalOmit<Type, Shape>, Omit<Options, 'conditionalOmit'>>
+  : Options extends { conditionalPick: infer Shape }
+  ? Custom<ConditionalPick<Type, Shape>, Omit<Options, 'conditionalPick'>>
   : Options extends { replace: infer Replacement extends object }
   ? Custom<Replace<Type, Replacement>, Omit<Options, 'replace'>>
   : Simplify<Type>;
 
 type Replace<Type, Replacement extends object> = Omit<Type, keyof Replacement> & Replacement;
 type ConditionalOmit<Base, Condition> = Omit<Base, ConditionalKeys<Base, Condition>>;
+
+export interface WithId {
+  id: string;
+}
 export type ArrayUnion<Type> = Type[] | Type;
+export type EnumUnion<Type extends string> = Type | `${Type}`;

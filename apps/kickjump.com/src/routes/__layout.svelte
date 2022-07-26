@@ -3,10 +3,9 @@
 
   import { createClient } from '@kickjump/trpc/client';
   import type { Load } from '@sveltejs/kit';
-  import SvelteSeo from 'svelte-seo';
 
   import { page, session } from '$app/stores';
-  import { TRPCProvider } from '$components';
+  import { Seo, TRPCProvider } from '$components';
   import MainLayout from '$layout/main.svelte';
   import { DEFAULT_SEO } from '$lib/constants';
 
@@ -23,9 +22,7 @@
   $: ({ animateTransition = false, ...seo } = { ...DEFAULT_SEO, ...$page.stuff });
 </script>
 
-{#key seo}
-  <SvelteSeo {...seo} />
-{/key}
+<Seo {...seo} />
 <TRPCProvider {client}>
   <MainLayout {animateTransition} refresh={key}><slot /></MainLayout>
 </TRPCProvider>

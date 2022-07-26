@@ -28,7 +28,7 @@ export const DEFAULT_SEO: SvelteSeoProps = {
   },
 };
 
-declare namespace App {
+export declare namespace App {
   interface Stuff {
     seo?: SvelteSeoProps;
   }

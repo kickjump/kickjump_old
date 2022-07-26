@@ -1,3 +1,4 @@
+import { isFunction } from 'is-what';
 import { getContext, hasContext, setContext } from 'svelte';
 import { type Readable, type Writable, derived, writable } from 'svelte/store';
 import invariant from 'tiny-invariant';
@@ -201,7 +202,7 @@ export class StepContext {
     this.#writables.data.update((value) => {
       return {
         ...value,
-        ...(typeof update === 'function' ? update(value) : update),
+        ...(isFunction(update) ? update(value) : update),
       };
     });
   };

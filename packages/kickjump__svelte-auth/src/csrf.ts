@@ -1,3 +1,4 @@
+import { isString } from 'is-what';
 import { type BinaryLike, createHash, randomBytes } from 'node:crypto';
 
 import { CSRF_HEADER_KEY } from './client.js';
@@ -27,7 +28,7 @@ export async function createCsrf(props: CreateCsrfProps): Promise<string> {
   // By default set the verification to false.
   locals.csrfTokenIsVerified = false;
 
-  if (typeof cookieValue === 'string') {
+  if (isString(cookieValue)) {
     const [csrfToken, csrfTokenHash] = cookieValue.split('|');
     const expectedCsrfTokenHash = createHash('sha256')
       .update(`${csrfToken}${secret}`)

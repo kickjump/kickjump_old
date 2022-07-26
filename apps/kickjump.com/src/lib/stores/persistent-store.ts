@@ -1,4 +1,5 @@
 import { createStore, del, get, set } from 'idb-keyval';
+import { isObject } from 'is-what';
 import type { Writable } from 'svelte/store';
 
 /**
@@ -92,11 +93,7 @@ export function persist<T>(
  * Storage implementation that use the browser IndexedDB
  */
 export function indexedDBStorage<T>(): SelfUpdateStorageInterface<T> {
-  if (
-    typeof indexedDB !== 'object' ||
-    typeof window === 'undefined' ||
-    typeof window?.indexedDB !== 'object'
-  ) {
+  if (typeof window === 'undefined' || !isObject(window?.indexedDB)) {
     console.warn('Unable to find the IndexedDB. No data will be persisted.');
     return noopSelfUpdateStorage();
   }

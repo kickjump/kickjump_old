@@ -8,7 +8,7 @@ import metaLogo from 'metascraper-logo';
 import metaPublisher from 'metascraper-publisher';
 import metaTitle from 'metascraper-title';
 import metaUrl from 'metascraper-url';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { t } from '../init.js';
 

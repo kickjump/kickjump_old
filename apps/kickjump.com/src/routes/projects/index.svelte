@@ -1,8 +1,6 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
 
-  import { GettingStartedCard } from '$modules/create-project';
-
   export const load: Load = () => ({ stuff: { title: 'Projects | KickJump' } });
 </script>
 

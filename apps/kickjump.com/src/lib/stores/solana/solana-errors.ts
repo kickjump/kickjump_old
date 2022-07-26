@@ -9,5 +9,5 @@ export class WalletInvalidNameError extends WalletError {
 }
 
 export function isWalletError(error: unknown): error is WalletError {
-  return typeof error === 'object' && error instanceof WalletError;
+  return error instanceof WalletError;
 }

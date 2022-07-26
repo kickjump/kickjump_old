@@ -538,6 +538,7 @@ export const RESERVED_USERNAMES = new Set([
   'tour',
   'translations',
   'trends',
+  'trpc',
   'tutorial',
   'tux',
   'tv',

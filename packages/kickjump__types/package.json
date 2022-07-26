@@ -41,13 +41,16 @@
   "dependencies": {
     "@felte/common": "^1.1.1",
     "@kickjump/edgedb": "^0.0.0",
-    "@solana/web3.js": "^1.50.0",
+    "@solana/web3.js": "^1.50.1",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
+    "edgedb": "^0.21.0",
+    "filter-anything": "^3.0.3",
+    "is-what": "^4.1.7",
     "profane-words": "^1.5.3",
     "superjson": "^1.9.1",
-    "superstruct": "^0.16.0",
+    "ts-extras": "^0.10.2",
     "type-fest": "^2.17.0",
     "zod": "^3.17.10"
   },

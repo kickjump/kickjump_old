@@ -1,38 +1,25 @@
-import { Permission } from '@kickjump/types';
-import invariant from 'tiny-invariant';
-
 import {
   type CreateOmitKeys,
-  type ProjectType,
+  type EnumUnion,
   type UpdateOmitKeys,
-  e,
-  run,
+  ProjectUtils,
   Status,
   Visibility,
-} from '../edgedb.js';
+} from '@kickjump/types';
 
-const PROJECT_SELECTOR = {
-  ...e.Project['*'],
-  creator: { name: true, id: true },
-  members: {
-    permissions: true,
-    actor: true,
-  },
-  proposals: true,
-};
+import { e, run } from '../edgedb.js';
 
 /**
- * Create a draft project.
+ * Create a project and return the id of the created project.
  */
-export async function create(props: ProjectCreateInput) {
+export async function create(props: ProjectCreateInput): Promise<string> {
   const creator = e.select(e.User, (user) => ({
     filter: e.op(user.id, '=', e.uuid(props.creator)),
   }));
 
   const entity = e.insert(e.Project, {
-    slug: props.slug,
+    name: props.name,
     description: props.description,
-    title: props.title,
     visibility: props.visibility,
     status: props.status,
     creator,
@@ -41,44 +28,30 @@ export async function create(props: ProjectCreateInput) {
   const membership = e.insert(e.Membership, {
     entity,
     actor: creator,
-    permissions: e.array([Permission.Owner]),
+    permissions: e.array([Visibility.owner]),
   });
 
-  const select = e.select(membership, () => ({
-    ...e.Membership['*'],
-    entity: true,
-  }));
+  const query = e.set(entity, membership);
+  const [project] = await run(query);
 
-  const value = await run(select);
-  const projectId = value?.entity?.id;
-
-  if (!projectId) {
+  if (!project.id) {
     throw new Error('The project could not be created');
   }
 
-  const project = await run(
-    e.select(e.Project, (project) => ({
-      ...PROJECT_SELECTOR,
-      filter: e.op(project.id, '=', e.uuid(projectId)),
-    })),
-  );
-
-  invariant(project, 'The project could not be populated.');
-  return project;
+  return project.id;
 }
 
 /**
  * Quickly create a project. The creator should be a valid user id and is automatically
  */
-export function createEssential(props: ProjectCreateBaseInput): Promise<Project> {
-  const { creator, slug, title } = props;
+export function createEssential(props: ProjectCreateBaseInput): Promise<string> {
+  const { creator, name, description } = props;
 
   return create({
     creator,
-    title,
-    slug,
-    description: '',
-    visibility: Visibility.creator,
+    name,
+    description,
+    visibility: Visibility.owner,
     status: Status.draft,
   });
 }
@@ -86,23 +59,21 @@ export function createEssential(props: ProjectCreateBaseInput): Promise<Project>
 /**
  * Update the user
  */
-export async function update(props: ProjectUpdateInput): Promise<Project | undefined> {
-  const updateQuery = e.update(e.Project, (project) => {
+export async function update(props: ProjectUpdateInput): Promise<void> {
+  const query = e.update(e.Project, (project) => {
     return {
       filter: e.op(project.id, '=', e.uuid(props.id)),
       set: {
         updatedAt: e.datetime_current(),
-        title: props.title ?? project.title,
         description: props.description ?? project.description,
         visibility: props.visibility ?? project.visibility,
         status: props.status ?? project.status,
-        slug: props.slug ?? project.slug,
+        name: props.name ?? project.name,
       },
     };
   });
 
-  const query = e.select(updateQuery, () => PROJECT_SELECTOR);
-  return (await run(query)) ?? undefined;
+  await run(query);
 }
 
 export async function remove(id: string) {
@@ -117,39 +88,83 @@ export async function removeAll(ids: string[]): Promise<void> {
   await run(query);
 }
 
-export async function findBySlug(slug: string): Promise<Project | undefined> {
+export async function findByName(name: string): Promise<ProjectUtils.Project | undefined> {
   const query = e.select(e.Project, (project) => ({
-    ...PROJECT_SELECTOR,
-    filter: e.op(project.slug, '=', e.str(slug)),
+    ...ProjectUtils.FIELDS,
+    filter: e.op(project.name, '=', e.str(name)),
   }));
 
-  return (await run(query)) ?? undefined;
+  const project = await run(query);
+
+  return project ?? undefined;
 }
 
-export async function find(id: string): Promise<Project | undefined> {
+export async function findById(id: string): Promise<ProjectUtils.Project | undefined> {
   const query = e.select(e.Project, (project) => ({
-    ...PROJECT_SELECTOR,
+    ...ProjectUtils.FIELDS,
     filter: e.op(project.id, '=', e.uuid(id)),
   }));
 
   return (await run(query)) ?? undefined;
 }
 
-export type Project = Awaited<ReturnType<typeof create>>;
-export type ProjectCreateInput = ProjectType<{
+interface HasPermissionProps {
+  actions: readonly ProjectUtils.Action[];
+  actor: string;
+  project: string;
+}
+
+/**
+ * Does the actor have permissions to perform the requested actions.
+ */
+export async function hasPermission(props: HasPermissionProps): Promise<boolean> {
+  if (props.actions.length === 0) {
+    return false;
+  }
+
+  const query = e
+    .select(e.Membership, (membership) => ({
+      entity: e.is(e.Project, { visibility: true }),
+      permissions: true,
+      filter: e.op(
+        e.op(membership.actor.id, '=', e.uuid(props.actor)),
+        'and',
+        e.op(membership.entity.id, '=', e.uuid(props.project)),
+      ),
+    }))
+    .assert_single();
+
+  const result = await run(query);
+
+  if (!result) {
+    return false;
+  }
+
+  const visibility = result.entity.visibility ?? Visibility.owner;
+  const permissions = result.permissions;
+
+  for (const action of props.actions) {
+    if (!ProjectUtils.has({ action, permissions, visibility })) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+export type ProjectCreateInput = ProjectUtils.Type<{
   omit: CreateOmitKeys;
   simplify: true;
   replace: { creator: string };
 }>;
-export type ProjectUpdateInput = ProjectType<{
+export type ProjectUpdateInput = ProjectUtils.Type<{
   omit: UpdateOmitKeys | 'creator';
   simplify: true;
   partial: true;
   replace: {
     id: string;
-    privacy?: keyof typeof Visibility;
-    status?: keyof typeof Status;
-    // members?: Array<{actor: string, permissions: string[]} | string>;
+    privacy?: EnumUnion<Visibility>;
+    status?: EnumUnion<Status>;
   };
 }>;
-export type ProjectCreateBaseInput = Pick<ProjectCreateInput, 'creator' | 'slug' | 'title'>;
+export type ProjectCreateBaseInput = Pick<ProjectCreateInput, 'creator' | 'name' | 'description'>;

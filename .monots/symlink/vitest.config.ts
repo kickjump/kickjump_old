@@ -12,7 +12,8 @@ const config = defineConfig({
     include: ['**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx,svelte}'],
     setupFiles: ['./tests/setup/spec-setup.ts'],
     reporters: process.env.CI ? 'dot' : 'default',
-    watchIgnore: ['.*\\/node_modules\\/.*', '.*\\/(?:build|dist)\\/.*', '.*\\/postgres-data\\/.*'],
+    teardownTimeout: 5000,
+    watchExclude: ['.*\\/node_modules\\/.*', '.*\\/(?:build|dist)\\/.*', '.*\\/postgres-data\\/.*'],
   },
 });
 

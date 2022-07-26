@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import { Button, PageWrapper } from '$components';
-  import { getStepHref, GettingStartedCard } from '$modules/create-project';
+  import { GettingStartedCard } from '$modules/create-project';
 
   export const load = () => {
     return {
@@ -27,7 +27,7 @@
       variant="primary"
       title="I am an open source creator 🎉"
       message="Raise funds for your next great open source project!"
-      href={getStepHref(0)}
+      href={'/create'}
       button="Create!"
     />
     <GettingStartedCard

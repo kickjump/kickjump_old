@@ -19,7 +19,6 @@ import {
   useQuery,
 } from '@sveltestack/svelte-query';
 import type { Updater } from '@sveltestack/svelte-query/dist/queryCore/core/utils.js';
-import type { FlattenRouter } from '@trpc/client';
 import {
   type CreateTRPCClientOptions,
   type TRPCClient,
@@ -74,7 +73,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     return context;
   }
 
-  readonly proxy: FlattenRouter<Router>;
+  readonly proxy: ReturnType<typeof createTRPCClientProxy<Router>>;
   readonly client: TRPCClient<Router>;
   readonly queryClient: QueryClient;
   readonly ssrState: SSRState | undefined;

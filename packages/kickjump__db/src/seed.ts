@@ -1,19 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { faker } from '@faker-js/faker';
+import type { AccountUtils, EmailUtils, UserUtils } from '@kickjump/types';
+import { AccountProvider } from '@kickjump/types';
+import type { $ } from 'edgedb';
 
-import type { AccountType, EmailType, UserType } from './edgedb.js';
-import { AccountProvider, client, e } from './edgedb.js';
+import { e, run } from './edgedb.js';
 
-type Account = AccountType<{
+type Account = AccountUtils.Type<{
   omit: 'id';
   simplify: true;
 }>;
-type Email = EmailType<{ omit: 'id'; simplify: true }>;
-type User = UserType<{ omit: 'id'; simplify: true }>;
+type Email = EmailUtils.Type<{ omit: 'id'; simplify: true }>;
+type User = UserUtils.Type<{ omit: 'id'; simplify: true }>;
 
 function createAccount(): Account {
   return {
-    accountType: 'oauth2',
+    accessToken: faker.datatype.hexadecimal().slice(2),
+    refreshToken: faker.datatype.hexadecimal().slice(2),
+    login: faker.internet.userName(),
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
     provider: AccountProvider.github,
@@ -45,57 +49,18 @@ export function createUser(): User {
 }
 
 export async function seed() {
-  const promises: Array<Promise<void>> = [];
-  const accounts: Array<Account & { user: string }> = [];
-  const emails: Array<Email & { user: string }> = [];
+  const expressions: [$.TypeSet, ...$.TypeSet[]] = [e.select(e.bool(false))];
 
   for (const _ of '+'.repeat(10)) {
-    const data = createUser();
+    const userData = createUser();
+    const emailData = createEmail();
+    const accountData = createAccount();
 
-    const promise = e
-      .insert(e.User, {
-        name: data.name,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
-        image: data.image,
-        username: data.username,
-      })
-      .run(client)
-      .then((user) => {
-        accounts.push({ ...createAccount(), user: user.id });
-        emails.push({ ...createEmail(), user: user.id });
-      });
-    promises.push(promise);
+    const user = e.insert(e.User, userData);
+    const email = e.insert(e.Email, { ...emailData, user });
+    const account = e.insert(e.Account, { ...accountData, user });
+    expressions.push(e.set(user, email, account));
   }
 
-  await Promise.all(promises);
-
-  await Promise.all([
-    e
-      .for(e.json_array_unpack(e.json(accounts)), (account) => {
-        return e.insert(e.Account, {
-          accountType: e.cast(e.str, account.accountType!),
-          provider: e.cast(e.AccountProvider, account.provider!),
-          providerAccountId: e.cast(e.str, account.providerAccountId!),
-          createdAt: e.cast(e.datetime, account.createdAt!),
-          updatedAt: e.cast(e.datetime, account.updatedAt!),
-          user: e.select(e.User, (u) => ({
-            filter: e.op(u.id, '=', e.cast(e.uuid, account.user!)),
-          })),
-        });
-      })
-      .run(client),
-    e
-      .for(e.json_array_unpack(e.json(emails)), (email) => {
-        return e.insert(e.Email, {
-          email: e.cast(e.str, email.email!),
-          verified: e.cast(e.datetime, email.verified!),
-          primary: e.cast(e.bool, email.primary!),
-          createdAt: e.cast(e.datetime, email.createdAt!),
-          updatedAt: e.cast(e.datetime, email.updatedAt!),
-          user: e.select(e.User, (u) => ({ filter: e.op(u.id, '=', e.cast(e.uuid, email.user!)) })),
-        });
-      })
-      .run(client),
-  ]);
+  await run(e.set(...expressions), { unsafeIgnorePolicies: true });
 }

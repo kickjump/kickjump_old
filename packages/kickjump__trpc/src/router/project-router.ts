@@ -1,18 +1,23 @@
 import { ProjectModel } from '@kickjump/db';
-import { isReservedOrProfanity, setSlugAndTitle } from '@kickjump/types';
+import { isReservedOrProfanity, ProjectUtils } from '@kickjump/types';
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { t } from '../init.js';
 import { authenticated } from '../middleware.js';
 
 export const project = t.router({
-  setSlugAndTitle: authenticated
-    .input(setSlugAndTitle(isSlugAvailable))
+  create: authenticated
+    .input(ProjectUtils.createSchema(isSlugAvailable))
     .mutation(async ({ ctx, input }) =>
       ProjectModel.createEssential({ creator: ctx.user.id, ...input }),
     ),
-  slugAvailable: authenticated.input(z.string()).query(({ input }) => isSlugAvailable(input)),
-  setDescription: authenticated
+  slugAvailable: authenticated.input(z.string()).query(async ({ input }) => {
+    const suggestions = await generateUsernames();
+
+    return { available: await isSlugAvailable(input), suggestions };
+  }),
+  update: authenticated
     .input(
       z.object({
         id: z.string().uuid(),
@@ -21,9 +26,18 @@ export const project = t.router({
     )
     .mutation(async ({ ctx, input }) => {
       const { user } = ctx;
-      // check has permissions
       const { description, id } = input;
-      await ProjectModel.update({ id, description });
+      const actions = ['update.description'] as const;
+      const permitted = await ProjectModel.hasPermission({ actions, actor: user.id, project: id });
+
+      if (!permitted) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: `'${actions[0]}' is not permitted for the current user.`,
+        });
+      }
+
+      return await ProjectModel.update({ id, description });
     }),
 });
 
@@ -32,9 +46,30 @@ async function isSlugAvailable(slug: string) {
     return false;
   }
 
-  if (await ProjectModel.findBySlug(slug)) {
+  if (await ProjectModel.findByName(slug)) {
     return false;
   }
 
   return true;
+}
+
+async function generateUsernames(length = 5) {
+  const {
+    uniqueNamesGenerator,
+    adjectives,
+    animals,
+    colors,
+    countries,
+    languages,
+    names,
+    starWars,
+  } = await import('unique-names-generator');
+
+  return Array.from({ length }).map(() =>
+    uniqueNamesGenerator({
+      style: 'lowerCase',
+      separator: '-',
+      dictionaries: [adjectives, animals, colors, countries, languages, names, starWars],
+    }),
+  );
 }

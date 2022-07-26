@@ -1,7 +1,7 @@
 import { emitterEventNames } from '@octokit/webhooks';
 import type { RequestEvent } from '@sveltejs/kit';
 import { App } from 'octokit';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { env } from '$server/env';
 

@@ -37,9 +37,9 @@
   "scripts": {
     "build": "pnpm run dev",
     "db:create": "edgedb instance create",
-    "db:init": "edgedb project init --non-interactive || edgedb project init --server-instance kickjump__edgedb --non-interactive",
+    "db:init": "edgedb project init --non-interactive",
     "db:remove": "edgedb instance destroy --force --instance",
-    "dev": "run-s generate:esm types:copy types:build",
+    "dev": "run-s generate:esm types:copy types:build types:version",
     "generate:esm": "edgeql-js --target=esm --output-dir dist --force-overwrite",
     "maybe_fix": "edgeql-js --target ts --output-dir tmp --force-overwrite && tsx scripts/patch-edgedb-gen.ts && rm -rf src/config.json src/*.ts src/modules src/syntax && mv tmp/* src/",
     "migrate": "run-s migrate:create migrate:run dev",
@@ -47,7 +47,8 @@
     "migrate:run": "edgedb migrate",
     "prepare": "pnpm run dev",
     "types:build": "esbuild tmp/types.ts --target=node16 --format=esm > dist/types.mjs",
-    "types:copy": "rm -rf tmp && mkdir tmp && cp dist/types.d.ts tmp/types.ts"
+    "types:copy": "rm -rf tmp && mkdir tmp && cp dist/types.d.ts tmp/types.ts",
+    "types:version": "tsx scripts/append-version.ts"
   },
   "dependencies": {
     "edgedb": "^0.21.0"

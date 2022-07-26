@@ -2,13 +2,26 @@ import { request } from '@kickjump/playwright';
 import { setup, teardown } from 'jest-process-manager';
 import { loadJsonFile } from 'load-json-file';
 
-import { instanceExists, setupDatabase, STORAGE_STATE, TEST_EDGEDB_INSTANCE } from './utils.js';
+import {
+  instanceExists,
+  migrateDatabase,
+  setupDatabase,
+  STORAGE_STATE,
+  TEST_EDGEDB_INSTANCE,
+} from './utils.js';
 
 export default async function globalSetup() {
   process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;
 
   if (!(await instanceExists(TEST_EDGEDB_INSTANCE))) {
-    await setupDatabase(TEST_EDGEDB_INSTANCE);
+    try {
+      await setupDatabase(TEST_EDGEDB_INSTANCE);
+    } catch {
+      console.log('something went wrong when creating the database');
+      await migrateDatabase(TEST_EDGEDB_INSTANCE);
+    }
+  } else {
+    await migrateDatabase(TEST_EDGEDB_INSTANCE);
   }
 
   await setup({

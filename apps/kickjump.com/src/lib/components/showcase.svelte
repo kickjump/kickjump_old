@@ -38,7 +38,6 @@
 </script>
 
 <script lang="ts">
-  import { container } from '@leveluptuts/svelte-element-query';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher<{ yo: { message: string; awesome: boolean } }>();
@@ -54,20 +53,4 @@
 <div
   use:something
   on:dblclick={onDoubleClick}
-  class="contain"
-  use:container={{ small: 0, medium: 200, large: 500 }}><slot /></div
->
-
-<style lang="postcss">
-  .contain {
-    border: dashed 5px var(--borderColor, #333);
-  }
-
-  :global(.medium) {
-    --borderColor: red;
-  }
-
-  :global(.large) {
-    --borderColor: blue;
-  }
-</style>
+/>

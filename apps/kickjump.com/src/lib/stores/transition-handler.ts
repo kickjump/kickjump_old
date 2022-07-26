@@ -1,3 +1,4 @@
+import { isFunction } from 'is-what';
 import type { TransitionConfig } from 'svelte/transition';
 
 import type { Maybe } from '$types';
@@ -18,7 +19,7 @@ export type TransitionTuple = [method: TransitionAction, config: object];
 export type TransitionWithOptions = TransitionTuple | TransitionAction;
 
 export function getTransitionConfig(options: Maybe<TransitionWithOptions>): TransitionTuple {
-  if (typeof options === 'function') {
+  if (isFunction(options)) {
     return [options, {}];
   }
 

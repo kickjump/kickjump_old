@@ -40,7 +40,7 @@ function createUser(login: GitHubUsername): GitHubUserData['user'] {
   return {
     login,
     id,
-    node_id: btoa(`04:User${id}`),
+    node_id: Buffer.from(`04:User${id}`).toString('base64'),
     avatar_url: faker.image.avatar(),
     gravatar_id: '',
     url: `https://api.github.com/users/${login}`,

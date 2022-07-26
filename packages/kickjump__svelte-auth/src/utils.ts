@@ -1,17 +1,18 @@
+import { isNumber, isString } from 'is-what';
 /**
  * Return this function in your svelte api to perform a redirect on the server.
  */
 export function redirect(url: string | URL, init?: number | ResponseInit): Response {
   let responseInit: ResponseInit = {};
 
-  responseInit = typeof init === 'number' ? { status: init } : init ?? {};
+  responseInit = isNumber(init) ? { status: init } : init ?? {};
 
   if (!responseInit.status) {
     responseInit.status = 302;
   }
 
   const headers = new Headers(responseInit.headers);
-  headers.set('Location', typeof url === 'string' ? url : url.href);
+  headers.set('Location', isString(url) ? url : url.href);
 
   return new Response(null, { ...responseInit, headers });
 }
@@ -23,10 +24,10 @@ export function redirect(url: string | URL, init?: number | ResponseInit): Respo
 export function json<Data = object>(data: Data, init: number | ResponseInit = {}): Response {
   let responseInit: ResponseInit = {};
 
-  if (typeof init === 'number') {
+  if (isNumber(init)) {
     responseInit = { status: init };
   } else if (typeof init?.status === 'undefined') {
-    responseInit.status = 302;
+    responseInit.status = 200;
   }
 
   const headers = new Headers(responseInit.headers);

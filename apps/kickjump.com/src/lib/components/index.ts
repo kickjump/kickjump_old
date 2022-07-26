@@ -7,5 +7,6 @@ export * from './layout/index.js';
 export * from './logo/index.js';
 export * from './modal/index.js';
 export * from './project/index.js';
+export * from './seo/index.js';
 export * from './transitions/index.js';
 export { default as TRPCProvider } from './trpc-provider.svelte';

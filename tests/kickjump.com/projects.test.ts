@@ -4,6 +4,6 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/projects');
 });
 
-test('the project page shows a list of projects', async ({ queries }) => {
-  await queries.getByLabelText('Projects List');
+test('the project page shows a list of projects', async ({ page }) => {
+  await page.locator('"Projects List"').isVisible();
 });

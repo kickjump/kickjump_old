@@ -35,21 +35,6 @@ declare namespace App {
      * The user id.
      */
     id: string;
-    /**
-     * The name of the user which is retrieved from their GitHub profile when
-     * signing up.
-     */
-    name: string | null | undefined;
-    /**
-     * The primary email address for this user. Only verified email address can
-     * be set as primary.
-     */
-    email: string | null | undefined;
-
-    /**
-     * A profile image url if one exists.
-     */
-    image: string | null | undefined;
   }
 
   interface Session {

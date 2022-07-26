@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { AccountProvider, CreateOmitKeys } from '../edgedb.js';
-import { type AccountType, type EmailType, type UserType, e, run } from '../edgedb.js';
+import type {
+  AccountProvider,
+  AccountUtils,
+  CreateOmitKeys,
+  EnumUnion,
+  WithId,
+} from '@kickjump/types';
+import { type EmailUtils, UserUtils } from '@kickjump/types';
+import { isArray, isString } from 'is-what';
 
-const USER_FIELDS = {
-  ...e.User['*'],
-  accounts: { provider: true, providerAccountId: true, id: true },
-  emails: { ...e.Email['*'] },
-} as const;
+import { e, run } from '../edgedb.js';
 
 /**
  * Create a user with the provided data.
  */
-export async function create(props: UserCreateInput) {
+export async function create(props: UserCreateInput): Promise<string> {
   const user = e.insert(e.User, { name: props.name, image: props.image, username: props.username });
-  const emails = (props.emails ?? []).map((email) =>
+  const emails = props.emails?.map((email) =>
     e.insert(e.Email, {
       email: email.email,
       user,
@@ -21,29 +24,27 @@ export async function create(props: UserCreateInput) {
       verified: email.verified ? e.datetime_current() : undefined,
     }),
   );
-  const accounts = (props.accounts ?? []).map((account) =>
-    e.insert(e.Account, { ...account, user }),
-  );
+  const accounts = props.accounts?.map((account) => e.insert(e.Account, { ...account, user }));
 
-  const set = e.set(user, ...emails, ...accounts);
-  await run(set);
-  const populatedUserQuery = e.select(e.User, (user) => ({
-    ...USER_FIELDS,
-    filter: e.op(user.username, '=', e.str(props.username)),
-  }));
-  const populatedUser = await run(populatedUserQuery);
+  const querySet = [user];
 
-  // const query = e.select(set.is(e.User), () => ({
-  //   ...USER_FIELDS,
-  //   filter: e.op(user.username, '=', e.str(props.username)),
-  // })).assert_single()
-  // const populatedUser = await run(query);
+  if (emails) {
+    (querySet as any[]).push(...emails);
+  }
 
-  if (!populatedUser) {
+  if (accounts) {
+    (querySet as any[]).push(...accounts);
+  }
+
+  const set = e.set(...querySet);
+  const result = await run(set);
+  const id = isArray(result) ? result.at(0)?.id : (result as Partial<WithId>)?.id;
+
+  if (!id) {
     throw new Error('The user could not be created');
   }
 
-  return populatedUser;
+  return id;
 }
 
 /**
@@ -66,22 +67,30 @@ export async function removeAll(ids: string[]): Promise<void> {
 
 export async function findById(id: string) {
   const query = e.select(e.User, (user) => ({
-    ...USER_FIELDS,
+    ...UserUtils.FIELDS,
     filter: e.op(user.id, '=', e.uuid(id)),
   }));
 
   return run(query);
 }
 
-export async function findAccountsByUserId(id: string, provider: keyof typeof AccountProvider) {
-  const query = e.select(e.Account, (account) => ({
-    ...e.Account['*'],
-    filter: e.op(
-      e.op(account.provider, '=', e.cast(e.AccountProvider, provider)),
-      'and',
-      e.op(account.user.id, '=', e.uuid(id)),
-    ),
-  }));
+interface FindProviderAccountById {
+  id: string;
+  provider: EnumUnion<AccountProvider>;
+}
+
+export async function findProviderAccountById(props: FindProviderAccountById) {
+  const { id, provider } = props;
+  const query = e
+    .select(e.Account, (account) => ({
+      ...e.Account['*'],
+      filter: e.op(
+        e.op(account.provider, '=', e.cast(e.AccountProvider, provider)),
+        'and',
+        e.op(account.user.id, '=', e.uuid(id)),
+      ),
+    }))
+    .assert_single();
 
   return await run(query);
 }
@@ -89,9 +98,9 @@ export async function findAccountsByUserId(id: string, provider: keyof typeof Ac
 /**
  * Get the populated user from their email address.
  */
-export async function findByEmail(email: string): Promise<PopulatedUser | undefined> {
+export async function findByEmail(email: string): Promise<UserUtils.User | undefined> {
   const query = e.select(e.Email, (item) => ({
-    user: USER_FIELDS,
+    user: UserUtils.FIELDS,
     filter: e.op(item.email, '=', email),
   }));
 
@@ -110,10 +119,10 @@ export async function findByEmail(email: string): Promise<PopulatedUser | undefi
 export async function findByAccount({
   provider,
   providerAccountId,
-}: GetByAccountProps): Promise<PopulatedUser | undefined> {
+}: GetByAccountProps): Promise<UserUtils.User | undefined> {
   const query = e
     .select(e.Account, (item) => ({
-      user: USER_FIELDS,
+      user: UserUtils.FIELDS,
       filter: e.op(
         e.op(item.provider, '=', e.cast(e.AccountProvider, provider)),
         'and',
@@ -140,14 +149,13 @@ type UserId = ReturnType<typeof userQuery> | string;
 function linkAccountsQuery(user: UserId, accounts: AccountCreateInput[]) {
   return e.for(e.json_array_unpack(e.json(accounts)), (account) => {
     return e.insert(e.Account, {
-      accountType: e.cast(e.str, account.accountType!),
       provider: e.cast(e.AccountProvider, account.provider!),
       providerAccountId: e.cast(e.str, account.providerAccountId!),
       accessToken: account.accessToken ? e.cast(e.str, account.accessToken) : undefined,
       refreshToken: account.refreshToken ? e.cast(e.str, account.refreshToken) : undefined,
       scope: account.scope ? e.cast(e.array(e.str), account.scope) : undefined,
       user: e.select(e.User, (u) => ({
-        filter: e.op(u.id, '=', typeof user === 'string' ? e.uuid(user) : user.id),
+        filter: e.op(u.id, '=', isString(user) ? e.uuid(user) : user.id),
       })),
     });
   });
@@ -160,7 +168,7 @@ function linkEmailsQuery(user: UserId, emails: EmailCreateInput[]) {
       verified: email.verified ? e.datetime_current() : undefined,
       primary: e.cast(e.bool, email.primary!),
       user: e.select(e.User, (u) => ({
-        filter: e.op(u.id, '=', typeof user === 'string' ? e.uuid(user) : user.id),
+        filter: e.op(u.id, '=', isString(user) ? e.uuid(user) : user.id),
       })),
     });
   });
@@ -208,8 +216,8 @@ export async function replaceAccount(
   return await run(insertQuery);
 }
 
-export async function linkEmails(userId: string, emails: EmailCreateInput[]) {
-  const query = e.select(linkEmailsQuery(userId, emails), () => ({
+export async function linkEmails(id: string, emails: EmailCreateInput[]) {
+  const query = e.select(linkEmailsQuery(id, emails), () => ({
     ...e.Email['*'],
     user: true,
   }));
@@ -242,21 +250,20 @@ export async function findPermission(props: GetPermissionsProps) {
 }
 
 interface GetByAccountProps {
-  provider: keyof typeof AccountProvider;
+  provider: EnumUnion<AccountProvider>;
   providerAccountId: string;
 }
-export type PopulatedUser = Awaited<ReturnType<typeof create>>;
-export type EmailCreateInput = EmailType<{
+export type EmailCreateInput = EmailUtils.Type<{
   omit: CreateOmitKeys;
   replace: { verified: boolean };
   simplify: true;
 }>;
-export type AccountCreateInput = AccountType<{
+export type AccountCreateInput = AccountUtils.Type<{
   omit: CreateOmitKeys;
   simplify: true;
-  replace: { provider: keyof typeof AccountProvider };
+  replace: { provider: EnumUnion<AccountProvider> };
 }>;
-export type UserCreateInput = UserType<{
+export type UserCreateInput = UserUtils.Type<{
   omit: CreateOmitKeys;
   simplify: true;
   replace: { emails?: EmailCreateInput[]; accounts?: AccountCreateInput[] };

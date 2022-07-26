@@ -4,6 +4,7 @@
 
 import type { Package } from '@manypkg/get-packages';
 import { getPackages } from '@manypkg/get-packages';
+import { execa } from 'execa';
 import { sort } from 'fast-sort';
 import { loadJsonFile } from 'load-json-file';
 import { writeJsonFile } from 'write-json-file';
@@ -41,4 +42,5 @@ if (JSON.stringify(sortedDependencies) !== JSON.stringify(packageJson.dependenci
   console.log('Hoisting dependencies to sveltekit app');
   packageJson.dependencies = sortedDependencies;
   await writeJsonFile(PACKAGE_JSON_PATH, packageJson, { detectIndent: true });
+  await execa('pnpm', ['i'], { stdout: 'inherit' });
 }

@@ -34,8 +34,7 @@ export const authenticated = t.procedure.use((props) => {
 export const withGitHubAccount = authenticated.use(async (props) => {
   const { next, ctx } = props;
 
-  const accounts = await UserModel.findAccountsByUserId(ctx.user.id, 'github');
-  const account = accounts.at(0);
+  const account = await UserModel.findProviderAccountById({ id: ctx.user.id, provider: 'github' });
 
   if (!account?.accessToken) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Missing github account accessToken' });

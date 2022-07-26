@@ -1,3 +1,4 @@
+import { isString } from 'is-what';
 import { objectEntries } from 'ts-extras';
 
 interface ServerErrorProps {
@@ -18,7 +19,7 @@ export class ServerError extends AggregateError {
    * Predicate to check if the error is a `ServerError`.
    */
   static is(value: unknown): value is ServerError {
-    return typeof value === 'object' && value instanceof ServerError;
+    return value instanceof ServerError;
   }
 
   /**
@@ -29,10 +30,7 @@ export class ServerError extends AggregateError {
       return error;
     }
 
-    const message =
-      typeof error === 'object' && error instanceof Error
-        ? error.message
-        : 'An unknown error occurred.';
+    const message = error instanceof Error ? error.message : 'An unknown error occurred.';
 
     return new ServerError({ code: code ?? 'InternalServerError', message, errors: [error] });
   }
@@ -54,7 +52,7 @@ export class ServerError extends AggregateError {
     super(errors, message);
     this.response = response;
 
-    if (typeof code === 'string') {
+    if (isString(code)) {
       this.code = code;
       this.status = ErrorCode[code];
       return;

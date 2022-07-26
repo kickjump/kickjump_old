@@ -1,3 +1,4 @@
+import { isString } from 'is-what';
 import type { LiteralUnion } from 'type-fest';
 
 import type { Maybe } from '$types';
@@ -8,7 +9,7 @@ interface AddUrlParams {
 }
 
 export function addUrlParams({ params, href }: AddUrlParams): string {
-  const url = typeof href === 'string' ? new URL(href) : new URL(href.href);
+  const url = isString(href) ? new URL(href) : new URL(href.href);
 
   for (const [key, value] of Object.entries(params)) {
     const params = url.searchParams;
@@ -31,7 +32,7 @@ export function getUrlParam(
   key: LiteralUnion<keyof KnownUrlParams, string>,
 ): Maybe<string> {
   try {
-    const url = typeof href === 'string' ? new URL(href) : href;
+    const url = isString(href) ? new URL(href) : href;
     return url.searchParams.get(key);
   } catch {
     return undefined;

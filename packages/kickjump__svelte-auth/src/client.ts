@@ -22,9 +22,6 @@ export class ClientAuthenticator {
     return (this.#url ??= URI.of(get(this.page).url));
   }
 
-  /**
-   * @param [basePath] The path to the base authentication route.
-   */
   constructor(props: ClientAuthenticatorProps) {
     const { basePath = '/auth', page } = props;
 
@@ -82,6 +79,14 @@ export class URI extends URL {
     return new this(url, base);
   }
 
+  /**
+   * The pathname including search parameters.
+   *
+   * ```ts
+   * const url = new URI('https://awesome.com/path/to/destiny?you=have&arrived=now');
+   * url.searchPath // => /path/to/destiny?you=have&arrived=now
+   * ```
+   */
   get searchPath(): string {
     return `${this.pathname}${this.search}`;
   }

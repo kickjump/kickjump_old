@@ -6,7 +6,7 @@ const directory = new URL('../../packages/kickjump__edgedb', import.meta.url).pa
  * Setup a database by name.
  */
 export async function setupDatabase(name: string) {
-  await execa('pnpm', ['--dir', directory, 'db:create', '-I', name], { stdio: 'inherit' });
+  await execa('pnpm', ['--dir', directory, 'db:create', name], { stdio: 'inherit' });
   await migrateDatabase(name);
 }
 

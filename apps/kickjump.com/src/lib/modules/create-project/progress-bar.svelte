@@ -1,11 +1,17 @@
 <script lang="ts" context="module">
-  import { getStepHref, PROJECT_CREATE_STEPS } from './project-steps.js';
 </script>
 
 <script lang="ts">
   export let index = 0;
-  const steps = PROJECT_CREATE_STEPS.map((data, index) => ({
-    href: getStepHref(index),
+  const PROJECT_CREATE_STEPS = [
+    { title: '' },
+    { title: '' },
+    { title: '' },
+    { title: '' },
+    { title: '' },
+  ];
+  const steps = PROJECT_CREATE_STEPS.map((data) => ({
+    href: '#',
     title: data.title,
   }));
 

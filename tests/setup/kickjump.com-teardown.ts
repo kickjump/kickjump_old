@@ -9,5 +9,5 @@ export default async function globalTeardown() {
   const { e, run } = await import('@kickjump/db');
 
   // Delete everything!
-  await run(e.delete(e.Object));
+  await run(e.delete(e.Object), { unsafeIgnorePolicies: true });
 }

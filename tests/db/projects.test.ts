@@ -1,4 +1,4 @@
-import { ProjectModel, UserModel } from '@kickjump/db';
+import { MembershipModel, ProjectModel, UserModel } from '@kickjump/db';
 import { describe, expect, it } from 'vitest';
 
 const projects: Set<string> = new Set();
@@ -6,39 +6,40 @@ const users: Set<string> = new Set();
 
 describe('create', () => {
   it('essential project', async () => {
-    const user = await UserModel.create({ name: 'Tolani', username: 'tolani' });
-    users.add(user.id);
-    const project = await ProjectModel.createEssential({
-      creator: user.id,
-      slug: 'my-project',
-      title: 'My project',
+    const userId = await UserModel.create({ name: 'Tolani', username: 'tolani' });
+    users.add(userId);
+    const projectId = await ProjectModel.createEssential({
+      creator: userId,
+      name: 'my-project',
+      description: '# My Project\n\nHello friend!',
     });
-    projects.add(project.id);
+    projects.add(projectId);
 
-    expect(project.members).toHaveLength(1);
-    expect(project.members.at(0)?.actor?.id).toBe(project.creator.id);
-    expect(project.members.at(0)?.permissions).toEqual(['owner']);
+    const [project, membership] = await Promise.all([
+      ProjectModel.findById(projectId),
+      MembershipModel.findOne({ actor: userId, entity: projectId }),
+    ]);
+
+    expect(project?.members).toHaveLength(1);
+    expect(membership?.permissions).toEqual(['owner']);
   });
 });
 
 describe('update', async () => {
-  const user = await UserModel.create({ name: 'Ms Updater', username: 'ms_updater' });
-  users.add(user.id);
+  const userId = await UserModel.create({ name: 'Terminator', username: 'Terminator' });
 
-  const project = await ProjectModel.createEssential({
-    creator: user.id,
-    slug: 'another-project',
-    title: 'Another Project',
+  const projectId = await ProjectModel.createEssential({
+    creator: userId,
+    name: 'another-project',
+    description: 'Another Project',
   });
-  projects.add(project.id);
+  projects.add(projectId);
 
   it('can update the description', async () => {
     const description = 'This is a new description to use.';
-    const updated = await ProjectModel.update({ id: project.id, description });
+    await ProjectModel.update({ id: projectId, description });
 
+    const updated = await ProjectModel.findById(projectId);
     expect(updated?.description).toBe(description);
-    const retrieved = await ProjectModel.find(project.id);
-
-    expect(retrieved?.description).toBe(description);
   });
 });

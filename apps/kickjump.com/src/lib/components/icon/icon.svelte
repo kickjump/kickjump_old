@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import Icon, { type IconProps, addIcon } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import Icon, { type IconProps } from '@iconify/svelte/dist/OfflineIcon.svelte';
   import type _ from '@iconify/types';
   import type { IconifyIcon } from '@iconify/types';
   import cx from 'clsx';

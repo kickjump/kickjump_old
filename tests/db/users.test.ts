@@ -13,30 +13,30 @@ describe('create', async () => {
     name: 'Mighty Ducks',
     image: 'https://path.com/to/image.jpg',
   };
-  const populatedUser: UserModel.PopulatedUser = await UserModel.create(user);
-  users.add(populatedUser.id);
+  const userId = await UserModel.create(user);
+  users.add(userId);
 
   it('can create a user', async () => {
-    expect(populatedUser.accounts).toHaveLength(0);
-    expect(populatedUser.name).toBe(user.name);
-    expect(populatedUser.image).toBe(user.image);
+    const retrieved = await UserModel.findById(userId);
+    expect(retrieved?.accounts).toHaveLength(0);
+    expect(retrieved?.name).toBe(user.name);
+    expect(retrieved?.image).toBe(user.image);
   });
 
   it('can link emails', async () => {
     const email = { email: 'test@email.com', primary: true, verified: true };
-    const emails = await UserModel.linkEmails(populatedUser.id, [
+    const emails = await UserModel.linkEmails(userId, [
       email,
       { email: 'name@awesome.com', verified: false, primary: false },
     ]);
     expect(emails.at(0)?.email).toEqual(email.email);
     expect(emails).toHaveLength(2);
-    expect(emails.at(0)?.user.id).toEqual(populatedUser.id);
+    expect(emails.at(0)?.user.id).toEqual(userId);
   });
 
   it('can link accounts', async () => {
-    const accounts = await UserModel.linkAccounts(populatedUser.id, [
+    const accounts = await UserModel.linkAccounts(userId, [
       {
-        accountType: 'oauth2',
         provider: 'github',
         providerAccountId: 'asdf',
         accessToken: 'asd',
@@ -45,7 +45,7 @@ describe('create', async () => {
         refreshToken: 'something here',
       },
     ]);
-    const user = await UserModel.findById(populatedUser.id);
+    const user = await UserModel.findById(userId);
     expect(accounts).toHaveLength(1);
     expect(user?.accounts.map((account) => account.id)).toEqual(
       accounts.map((account) => account.id),
@@ -53,12 +53,11 @@ describe('create', async () => {
   });
 
   it('can create a user with accounts and emails in one shot', async () => {
-    const user = await UserModel.create({
+    const userId = await UserModel.create({
       username: 'abc',
       emails: [{ email: 'abc@a.com', primary: true, verified: true }],
       accounts: [
         {
-          accountType: 'oauth2',
           provider: 'github',
           providerAccountId: 'sample',
           accessToken: 'sample',
@@ -68,10 +67,12 @@ describe('create', async () => {
         },
       ],
     });
-    users.add(user.id);
-    expect(user.emails).toHaveLength(1);
-    expect(user.emails.at(0)?.email).toBe('abc@a.com');
-    expect(user.accounts).toHaveLength(1);
-    expect(user.accounts.at(0)?.provider).toBe('github');
+    users.add(userId);
+
+    const user = await UserModel.findById(userId);
+    expect(user?.emails).toHaveLength(1);
+    expect(user?.emails.at(0)?.email).toBe('abc@a.com');
+    expect(user?.accounts).toHaveLength(1);
+    expect(user?.accounts.at(0)?.provider).toBe('github');
   });
 });

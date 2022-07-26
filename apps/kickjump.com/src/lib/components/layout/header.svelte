@@ -7,17 +7,11 @@
   import Logo from '$components/logo/logo.svelte';
   import { auth } from '$lib/auth';
   import { matchesHref } from '$utils/core';
-  
-  import { IconToggle } from '../toggles';
 
-  let open = false;
+  import { IconToggle } from '../toggles';
 
   function toggleTheme() {
     setTheme(isDark ? 'light' : 'dark');
-  }
-
-  function toggleMenu() {
-    open = !open;
   }
 
   async function logout() {
@@ -76,7 +70,7 @@
     </div>
     {#key user}
       <div class="pl-8 justify-self-end flex flex-row gap-x-1">
-        <Button href={auth.logoutUrl()} variant="ghost" class="block sm:hidden">
+        <Button href={auth.logoutUrl().searchPath} variant="ghost" class="block sm:hidden">
           <Icon icon="menuLine" size="2em" />
         </Button>
         {#if loggedIn}

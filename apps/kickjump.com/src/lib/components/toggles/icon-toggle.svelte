@@ -5,7 +5,7 @@
   export let initial: IconType;
   export let swap: IconType;
   export let label: string;
-  export let size: string | number | undefined = undefined;
+  export let size: string | number | null = null;
 </script>
 
 <label class="swap swap-rotate hover:bg-base-content hover:bg-opacity-20 px-3 sketchy-5" aria-label={label}>

@@ -49,13 +49,13 @@ export const mockStrategy = new MockStrategy(async (props) => {
   const { username, data } = props;
   const { accessToken, refreshToken, providerAccountId } = data.auth;
 
-  let user = await UserModel.findByAccount({ provider: 'github', providerAccountId });
+  const user = await UserModel.findByAccount({ provider: 'github', providerAccountId });
+  let id = user?.id;
 
-  if (!user) {
-    user = await UserModel.create({
+  if (!id) {
+    id = await UserModel.create({
       accounts: [
         {
-          accountType: 'oauth2',
           provider: AccountProvider.github,
           providerAccountId,
           accessToken,
@@ -71,5 +71,5 @@ export const mockStrategy = new MockStrategy(async (props) => {
     });
   }
 
-  return { id: user.id, image: user.image, name: user.name, email: user?.emails.at(0)?.email };
+  return { id };
 });

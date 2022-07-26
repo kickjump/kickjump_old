@@ -1,5 +1,5 @@
 import type _types from '@octokit/types';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { t } from '../init.js';
 import { withGitHubAccount } from '../middleware.js';
