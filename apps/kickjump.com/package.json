@@ -77,7 +77,7 @@
     "@felte/validator-zod": "^1.0.10",
     "@iconify-icons/bi": "^1.2.7",
     "@iconify-icons/ri": "^1.2.3",
-    "@iconify-json/logos": "^1.1.12",
+    "@iconify-json/logos": "^1.1.13",
     "@iconify/svelte": "^2.2.1",
     "@iconify/types": "^1.1.0",
     "@iconify/utils": "^1.0.33",
