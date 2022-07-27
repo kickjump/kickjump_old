@@ -29,7 +29,7 @@ export async function GET(event: RequestEvent): Promise<RequestHandlerOutput> {
     permissions.push(...(membership?.permissions ?? []));
   }
 
-  const value = ProjectUtils.read(project, permissions);
+  const value = ProjectUtils.readPermissions(project, permissions);
 
   if (!value) {
     return { status: 403, body: { error: true, message: MESSAGE[project.visibility] } };

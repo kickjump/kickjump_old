@@ -1,86 +1,101 @@
 <script lang="ts">
-  import { type SeoProps, DEFAULT_SEO } from './types.js';
+  import { page } from '$app/stores';
 
-  interface $$Props extends SeoProps {}
+  // import { DEFAULT_SEO } from './types.js';
 
-  $: props = { ...DEFAULT_SEO, ...$$props } as $$Props;
+  // interface $$$page.stuff extends Seo$page.stuff {}
+
+  // $: $page.stuff = { ...DEFAULT_SEO, ...$page.stuff };
 </script>
 
 <svelte:head>
-  {#if props.title}
-    <title>{props.title}</title>
+  {#if $page.stuff.title}
+    <title>{$page.stuff.title}</title>
   {/if}
 
   <meta
     name="robots"
-    content={`${props.noindex ? 'noindex' : 'index'},${props.nofollow ? 'nofollow' : 'follow'}`}
+    content={`${$page.stuff.noindex ? 'noindex' : 'index'},${
+      $page.stuff.nofollow ? 'nofollow' : 'follow'
+    }`}
   />
   <meta
     name="googlebot"
-    content={`${props.noindex ? 'noindex' : 'index'},${props.nofollow ? 'nofollow' : 'follow'}`}
+    content={`${$page.stuff.noindex ? 'noindex' : 'index'},${
+      $page.stuff.nofollow ? 'nofollow' : 'follow'
+    }`}
   />
 
-  {#if props.description}
-    <meta name="description" content={props.description} />
+  {#if $page.stuff.description}
+    <meta name="description" content={$page.stuff.description} />
   {/if}
 
-  {#if props.canonical}
-    <link rel="canonical" href={props.canonical} />
+  {#if $page.stuff.canonical}
+    <link rel="canonical" href={$page.stuff.canonical} />
   {/if}
 
-  {#if props.keywords}
-    <meta name="keywords" content={props.keywords} />
+  {#if $page.stuff.keywords}
+    <meta name="keywords" content={$page.stuff.keywords} />
   {/if}
 
-  {#if props.openGraph}
-    {#if props.openGraph.title}
-      <meta property="og:title" content={props.openGraph.title} />
+  {#if $page.stuff.openGraph}
+    {#if $page.stuff.openGraph.title}
+      <meta property="og:title" content={$page.stuff.openGraph.title} />
     {/if}
 
-    {#if props.openGraph.description}
-      <meta property="og:description" content={props.openGraph.description} />
+    {#if $page.stuff.openGraph.description}
+      <meta property="og:description" content={$page.stuff.openGraph.description} />
     {/if}
 
-    {#if props.openGraph.url || props.canonical}
-      <meta property="og:url" content={props.openGraph.url || props.canonical} />
+    {#if $page.stuff.openGraph.url || $page.stuff.canonical}
+      <meta property="og:url" content={$page.stuff.openGraph.url || $page.stuff.canonical} />
     {/if}
 
-    {#if props.openGraph.type}
-      <meta property="og:type" content={props.openGraph.type.toLowerCase()} />
+    {#if $page.stuff.openGraph.type}
+      <meta property="og:type" content={$page.stuff.openGraph.type.toLowerCase()} />
     {/if}
 
-    {#if props.openGraph.article}
-      {#if props.openGraph.article.publishedTime}
-        <meta property="article:published_time" content={props.openGraph.article.publishedTime} />
+    {#if $page.stuff.openGraph.article}
+      {#if $page.stuff.openGraph.article.publishedTime}
+        <meta
+          property="article:published_time"
+          content={$page.stuff.openGraph.article.publishedTime}
+        />
       {/if}
 
-      {#if props.openGraph.article.modifiedTime}
-        <meta property="article:modified_time" content={props.openGraph.article.modifiedTime} />
+      {#if $page.stuff.openGraph.article.modifiedTime}
+        <meta
+          property="article:modified_time"
+          content={$page.stuff.openGraph.article.modifiedTime}
+        />
       {/if}
 
-      {#if props.openGraph.article.expirationTime}
-        <meta property="article:expiration_time" content={props.openGraph.article.expirationTime} />
+      {#if $page.stuff.openGraph.article.expirationTime}
+        <meta
+          property="article:expiration_time"
+          content={$page.stuff.openGraph.article.expirationTime}
+        />
       {/if}
 
-      {#if props.openGraph.article.section}
-        <meta property="article:section" content={props.openGraph.article.section} />
+      {#if $page.stuff.openGraph.article.section}
+        <meta property="article:section" content={$page.stuff.openGraph.article.section} />
       {/if}
 
-      {#if props.openGraph.article.authors && props.openGraph.article.authors.length > 0}
-        {#each props.openGraph.article.authors as author}
+      {#if $page.stuff.openGraph.article.authors && $page.stuff.openGraph.article.authors.length > 0}
+        {#each $page.stuff.openGraph.article.authors as author}
           <meta property="article:author" content={author} />
         {/each}
       {/if}
 
-      {#if props.openGraph.article.tags && props.openGraph.article.tags.length > 0}
-        {#each props.openGraph.article.tags as tag}
+      {#if $page.stuff.openGraph.article.tags && $page.stuff.openGraph.article.tags.length > 0}
+        {#each $page.stuff.openGraph.article.tags as tag}
           <meta property="article:tag" content={tag} />
         {/each}
       {/if}
     {/if}
 
-    {#if props.openGraph.images && props.openGraph.images.length > 0}
-      {#each props.openGraph.images as image}
+    {#if $page.stuff.openGraph.images && $page.stuff.openGraph.images.length > 0}
+      {#each $page.stuff.openGraph.images as image}
         <meta property="og:image" content={image.url} />
         {#if image.alt}
           <meta property="og:image:alt" content={image.alt} />
@@ -95,31 +110,31 @@
     {/if}
   {/if}
 
-  {#if props.twitter}
-    <meta name="twitter:card" content={props.twitter.card || 'summary_large_image'} />
-    {#if props.twitter.site}
-      <meta name="twitter:site" content={props.twitter.site} />
+  {#if $page.stuff.twitter}
+    <meta name="twitter:card" content={$page.stuff.twitter.card || 'summary_large_image'} />
+    {#if $page.stuff.twitter.site}
+      <meta name="twitter:site" content={$page.stuff.twitter.site} />
     {/if}
-    {#if props.twitter.title}
-      <meta name="twitter:title" content={props.twitter.title} />
+    {#if $page.stuff.twitter.title}
+      <meta name="twitter:title" content={$page.stuff.twitter.title} />
     {/if}
-    {#if props.twitter.description}
-      <meta name="twitter:description" content={props.twitter.description} />
+    {#if $page.stuff.twitter.description}
+      <meta name="twitter:description" content={$page.stuff.twitter.description} />
     {/if}
-    {#if props.twitter.image}
-      <meta name="twitter:image" content={props.twitter.image} />
+    {#if $page.stuff.twitter.image}
+      <meta name="twitter:image" content={$page.stuff.twitter.image} />
     {/if}
-    {#if props.twitter.imageAlt}
-      <meta name="twitter:image:alt" content={props.twitter.imageAlt} />
+    {#if $page.stuff.twitter.imageAlt}
+      <meta name="twitter:image:alt" content={$page.stuff.twitter.imageAlt} />
     {/if}
-    {#if props.twitter.player}
-      <meta name="twitter:player" content={props.twitter.player} />
+    {#if $page.stuff.twitter.player}
+      <meta name="twitter:player" content={$page.stuff.twitter.player} />
     {/if}
-    {#if props.twitter.playerWidth}
-      <meta name="twitter:player:width" content={`${props.twitter.playerWidth}`} />
+    {#if $page.stuff.twitter.playerWidth}
+      <meta name="twitter:player:width" content={`${$page.stuff.twitter.playerWidth}`} />
     {/if}
-    {#if props.twitter.playerHeight}
-      <meta name="twitter:player:height" content={`${props.twitter.playerHeight}`} />
+    {#if $page.stuff.twitter.playerHeight}
+      <meta name="twitter:player:height" content={`${$page.stuff.twitter.playerHeight}`} />
     {/if}
   {/if}
   <slot />

@@ -103,11 +103,11 @@ const AUTH_ENDPOINTS: Record<string, EndpointHandler> = {
       url: props.url,
     });
 
+    await auth.logout({ ...event, request: request.clone(), redirectTo });
+
     if (request.method !== 'POST') {
       return redirect(redirectTo);
     }
-
-    await auth.logout({ ...event, request: request.clone(), redirectTo });
 
     return json({ success: true, redirectTo });
   },

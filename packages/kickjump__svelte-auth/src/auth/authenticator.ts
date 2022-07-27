@@ -126,7 +126,6 @@ export class Authenticator {
    */
   async logout(event: RequestEvent & { redirectTo: string | URL }): Promise<void> {
     const { session } = event.locals;
-
     await Promise.all([session.unset('user'), session.unset('authError')]);
   }
 

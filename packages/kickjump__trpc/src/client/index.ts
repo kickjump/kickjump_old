@@ -14,8 +14,11 @@ export function context() {
   return TRPCContext.context<Router>();
 }
 
-export function createClient(csrf: string) {
-  return svelteClient.createClient({ csrf, url: TRPC_ENDPOINT, transformer });
+export function createClient() {
+  return [
+    svelteClient.createClient({ url: TRPC_ENDPOINT, transformer }),
+    svelteClient.setCrsf,
+  ] as const;
 }
 
 export type InferInput<Type> = Type extends (opts: infer Opts, ...args: any[]) => any

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { faker } from '@faker-js/faker';
-import type { AccountUtils, EmailUtils, UserUtils } from '@kickjump/types';
+import type { AccountUtils, EmailUtils, TagUtils, UserUtils } from '@kickjump/types';
 import { AccountProvider } from '@kickjump/types';
 import type { $ } from 'edgedb';
 
@@ -12,6 +12,9 @@ type Account = AccountUtils.Type<{
 }>;
 type Email = EmailUtils.Type<{ omit: 'id'; simplify: true }>;
 type User = UserUtils.Type<{ omit: 'id'; simplify: true }>;
+type Tag = TagUtils.Type<{ omit: 'id'; simplify: true }>;
+
+faker.seed(2);
 
 function createAccount(): Account {
   return {
@@ -48,8 +51,28 @@ export function createUser(): User {
   };
 }
 
+function createTag(): Tag {
+  return {
+    createdAt: faker.date.past(1),
+    name: faker.word.noun(),
+  };
+}
+
 export async function seed() {
-  const expressions: [$.TypeSet, ...$.TypeSet[]] = [e.select(e.bool(false))];
+  // const expressions: [$.TypeSet, ...$.TypeSet[]] = [] as any;
+  const tags: [$.TypeSet, ...$.TypeSet[]] = [
+    e.insert(e.Tag, {
+      ...createTag(),
+    }),
+  ];
+
+  for (const _ of '#'.repeat(50)) {
+    const tag = e.insert(e.Tag, {
+      ...createTag(),
+    });
+
+    tags.push(tag);
+  }
 
   for (const _ of '+'.repeat(10)) {
     const userData = createUser();
@@ -57,10 +80,12 @@ export async function seed() {
     const accountData = createAccount();
 
     const user = e.insert(e.User, userData);
-    const email = e.insert(e.Email, { ...emailData, user });
-    const account = e.insert(e.Account, { ...accountData, user });
-    expressions.push(e.set(user, email, account));
+    const email = e.insert(e.Email, { ...emailData, user: e.select(user) });
+    const account = e.insert(e.Account, { ...accountData, user: e.select(user) });
+    await run(user);
+    await run(email);
+    await run(account);
   }
 
-  await run(e.set(...expressions), { unsafeIgnorePolicies: true });
+  await run(e.set(...tags), { unsafeIgnorePolicies: true });
 }

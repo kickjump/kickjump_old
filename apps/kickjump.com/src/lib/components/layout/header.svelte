@@ -15,20 +15,13 @@
     setTheme(isDark ? 'light' : 'dark');
   }
 
-  async function logout() {
-    const redirect = await auth.logout(csrf);
-
-    if (redirect) {
-      window.location.href = redirect;
-    }
-  }
-
   const items = [
     { label: 'Projects', href: '/projects' },
     { label: 'About', href: '/about' },
   ];
 
-  $: ({ csrf, user } = $session);
+  $: ({ user } = $session);
+  // $: console.log($session);
   $: loginPath = EnhancedURL.of({
     path: '/login',
     base: $page.url,
@@ -76,7 +69,7 @@
           <Icon icon="menuLine" size="2em" />
         </Button>
         {#if loggedIn}
-          <Button onClick={() => logout()} variant="outline">Logout</Button>
+          <Button href={auth.logoutUrl().searchPath} variant="outline">Logout</Button>
         {:else}
           <Button href={loginPath} variant="outline">Login</Button>
         {/if}

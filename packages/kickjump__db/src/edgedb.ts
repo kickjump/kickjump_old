@@ -17,3 +17,4 @@ export function run<Runner extends { run: (cxn: Executor) => any }>(
 }
 
 export { default as e } from '@kickjump/edgedb';
+export { $ } from 'edgedb';

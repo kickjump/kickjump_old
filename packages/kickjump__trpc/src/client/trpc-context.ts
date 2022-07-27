@@ -270,6 +270,7 @@ type inferProcedures<Type extends ProcedureRecord> = {
 export type SSRState = false | 'prepass' | 'mounting' | 'mounted';
 
 export function createSvelteQueryTRPC<Router extends AnyRouter>() {
+  let csrf = '';
   type Queries = Router['_def']['queries'];
   // type TSubscriptions = Router['_def']['subscriptions'];
   type Error = TRPCClientErrorLike<Router>;
@@ -277,12 +278,17 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
   type TQueryValues = inferProcedures<Router['_def']['queries']>;
   type TMutationValues = inferProcedures<Router['_def']['mutations']>;
 
-  function createClient(options: CreateTRPCClientOptions<Router> & { csrf: string }) {
-    const { csrf, ...rest } = options;
+  function createClient(options: CreateTRPCClientOptions<Router>) {
     return createTRPCClient<Router>({
-      ...rest,
+      ...options,
       headers: () => {
         const headers = { [CSRF_HEADER_KEY]: csrf };
+
+        if (!csrf) {
+          // eslint-disable-next-line no-console
+          console.warn('CSRF token not added to headers: please use `setCsrf()` method.');
+        }
+
         const value =
           typeof options.headers === 'function'
             ? options.headers()
@@ -405,7 +411,11 @@ export function createSvelteQueryTRPC<Router extends AnyRouter>() {
     ) as any;
   }
 
-  return { createClient, context, query, mutation, infiniteQuery };
+  function setCrsf(value: string) {
+    csrf = value;
+  }
+
+  return { createClient, context, query, mutation, infiniteQuery, setCrsf };
 }
 
 /**

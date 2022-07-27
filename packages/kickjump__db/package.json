@@ -34,7 +34,7 @@
     "seed"
   ],
   "scripts": {
-    "seed": "tsx scripts/seed.ts"
+    "seed": "EDGEDB_INSTANCE=\"kickjump__edgedb\" tsx scripts/seed.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.3.0",

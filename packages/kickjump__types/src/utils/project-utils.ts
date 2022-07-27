@@ -1,6 +1,6 @@
 import type { Project as RawProject } from '@kickjump/edgedb/types';
 import { isFunction } from 'is-what';
-import { objectEntries, objectFromEntries, objectKeys } from 'ts-extras';
+import { objectEntries, objectKeys } from 'ts-extras';
 import type { ConditionalKeys } from 'type-fest';
 import { z } from 'zod';
 
@@ -42,6 +42,7 @@ export type Action =
   | `${'read' | 'update'}.${keyof Project}`
   | `${'create' | 'delete'}.${ConditionalKeys<Project, WithId[]>}`
   | 'read'
+  | 'update'
   | 'delete'
   | 'update.owner';
 
@@ -58,50 +59,49 @@ type ProjectPermissions = {
   [Key in Action]: PermissionGrant<EnumUnion<Visibility>>;
 };
 
-const permissionsTuple = [
-  ['create.members', minimumVisibility(Visibility.admin)],
-  ['create.proposals', minimumVisibility(Visibility.manager)],
-  ['create.tags', minimumVisibility(Visibility.editor)],
-  ['delete.members', minimumVisibility(Visibility.admin)],
-  ['delete.proposals', minimumVisibility(Visibility.manager)],
-  ['delete.tags', minimumVisibility(Visibility.editor)],
-  ['delete', minimumVisibility(Visibility.owner)],
-  ['read', minimumVisibility(Visibility.$public)],
-  ['read.createdAt', minimumVisibility(Visibility.$public)],
-  ['read.creator', minimumVisibility(Visibility.$public)],
-  ['read.description', minimumVisibility(Visibility.$public)],
-  ['read.id', minimumVisibility(Visibility.$public)],
-  ['read.members', minimumVisibility(Visibility.$public)],
-  ['read.name', minimumVisibility(Visibility.$public)],
-  ['read.proposals', minimumVisibility(Visibility.$public)],
-  ['read.status', minimumVisibility(Visibility.$public)],
-  ['read.tags', minimumVisibility(Visibility.$public)],
-  ['read.title', minimumVisibility(Visibility.$public)],
-  ['read.updatedAt', minimumVisibility(Visibility.$public)],
-  ['read.visibility', minimumVisibility(Visibility.$public)],
-  ['update.createdAt', []],
-  ['update.creator', []],
-  ['update.description', minimumVisibility(Visibility.editor)],
-  ['update.id', []],
-  ['update.members', minimumVisibility(Visibility.admin)],
-  ['update.name', minimumVisibility(Visibility.admin)],
-  ['update.owner', minimumVisibility(Visibility.owner)],
-  ['update.proposals', minimumVisibility(Visibility.manager)],
-  ['update.status', minimumVisibility(Visibility.manager)],
-  ['update.tags', minimumVisibility(Visibility.editor)],
-  ['update.title', minimumVisibility(Visibility.manager)],
-  ['update.updatedAt', []],
-  ['update.visibility', minimumVisibility(Visibility.admin)],
-] as const;
+const projectPermissions: ProjectPermissions = {
+  'create.members': minimumVisibility(Visibility.admin),
+  'create.proposals': minimumVisibility(Visibility.manager),
+  'create.tags': minimumVisibility(Visibility.editor),
+  'delete.members': minimumVisibility(Visibility.admin),
+  'delete.proposals': minimumVisibility(Visibility.manager),
+  'delete.tags': minimumVisibility(Visibility.editor),
+  delete: minimumVisibility(Visibility.owner),
+  read: minimumVisibility(Visibility.$public),
+  'read.createdAt': minimumVisibility(Visibility.$public),
+  'read.creator': minimumVisibility(Visibility.$public),
+  'read.description': minimumVisibility(Visibility.$public),
+  'read.id': minimumVisibility(Visibility.$public),
+  'read.members': minimumVisibility(Visibility.$public),
+  'read.name': minimumVisibility(Visibility.$public),
+  'read.proposals': minimumVisibility(Visibility.$public),
+  'read.status': minimumVisibility(Visibility.$public),
+  'read.tags': minimumVisibility(Visibility.$public),
+  'read.updatedAt': minimumVisibility(Visibility.$public),
+  'read.visibility': minimumVisibility(Visibility.$public),
+  update: minimumVisibility(Visibility.editor),
+  'update.createdAt': [],
+  'update.creator': [],
+  'update.description': minimumVisibility(Visibility.editor),
+  'update.id': [],
+  'update.members': minimumVisibility(Visibility.admin),
+  'update.name': minimumVisibility(Visibility.admin),
+  'update.owner': minimumVisibility(Visibility.owner),
+  'update.proposals': minimumVisibility(Visibility.manager),
+  'update.status': minimumVisibility(Visibility.manager),
+  'update.tags': minimumVisibility(Visibility.editor),
+  'update.updatedAt': [],
+  'update.visibility': minimumVisibility(Visibility.admin),
+};
 
-const projectPermissions: ProjectPermissions = objectFromEntries(permissionsTuple);
-type MappedTupleEntry<Type> = Type extends readonly [infer Name, any] ? Name : never;
-type MappedTuple<Tuple extends readonly [...(readonly any[])]> = {
-  [Index in keyof Tuple]: MappedTupleEntry<Tuple[Index]>;
-} & { length: Tuple['length'] };
-const permissionNames: MappedTuple<typeof permissionsTuple> = permissionsTuple.map(
-  (value) => value[0],
-) as unknown as MappedTuple<typeof permissionsTuple>;
+// type MappedTupleEntry<Type> = Type extends readonly [infer Name, any] ? Name : never;
+// type MappedTuple<Tuple extends readonly [...(readonly any[])]> = {
+//   [Index in keyof Tuple]: MappedTupleEntry<Tuple[Index]>;
+// } & { length: Tuple['length'] };
+// const permissionNames: MappedTuple<typeof permissionsTuple> = permissionsTuple.map(
+//   (value) => value[0],
+// ) as unknown as MappedTuple<typeof permissionsTuple>;
+const permissionNames = objectKeys(projectPermissions) as [Action, ...Action[]];
 
 export function permissions() {
   return z.enum(permissionNames);
@@ -126,7 +126,10 @@ export function actionsInUpdate(project: Partial<Project>): Action[] {
 /**
  * Get the visible project values available.
  */
-export function read<P extends Project>(project: P, permissions: string[] = []): P | undefined {
+export function readPermissions<P extends Project>(
+  project: P,
+  permissions: string[] = [],
+): P | undefined {
   const fields = Object.create(null);
 
   if (!has({ action: 'read', permissions, visibility: project.visibility })) {
@@ -178,12 +181,12 @@ export function has(props: HasProjectPermissionsProps): boolean {
 
 type Check = (value: string) => Promise<boolean>;
 
-export function slug(check?: Check) {
+export function name(check?: Check) {
   return z
     .string()
     .min(3)
     .max(20)
-    .regex(/^[\w.-]+$/, { message: 'The slug should only include valid alphanumeric characters.' })
+    .regex(/^[\w.-]+$/, { message: 'The name should only include valid alphanumeric characters.' })
     .regex(/^[^._-]+/, { message: 'Please start with an alphanumeric character [a-z] or [0-9]' })
     .refine((value) => !/[._-]{2,}/.test(value), {
       message: "Special characters `-_.` shouldn't repeat.",
@@ -194,10 +197,18 @@ export function slug(check?: Check) {
     .transform((value) => value.toLocaleLowerCase());
 }
 
-export function createSchema(check?: Check) {
+interface CreateSchemaProps {
+  name?: Check;
+  tags?: Check;
+}
+
+export function createSchema({ name: nameCheck, tags: tagCheck }: CreateSchemaProps = {}) {
   return z.object({
-    name: slug(check),
+    name: name(nameCheck),
     description: description(),
+    tags: tags(tagCheck).optional(),
+    visibility: z.nativeEnum(Visibility).optional(),
+    status: z.nativeEnum(Status).optional(),
   });
 }
 
@@ -206,20 +217,68 @@ export function title() {
 }
 
 export function description() {
-  return z.string().min(50, { message: 'The description must contain a least 50 characters.' });
+  return z.string().min(20, { message: 'The description must contain a least 20 characters.' });
 }
 
 export function ids() {
   return z.array(z.string().uuid());
 }
 
-export function updateSchema(check?: Check) {
+export function updateSchema(checks?: { name?: Check | undefined; tag?: Check | undefined }) {
+  return z
+    .object({
+      id: z.string().uuid(),
+      name: name(checks?.name).optional(),
+      visibility: z.nativeEnum(Visibility).optional(),
+      status: z.nativeEnum(Status).optional(),
+      description: description().optional(),
+      tags: updateTags(checks?.tag).optional(),
+    })
+    .strict();
+}
+
+function tags(check?: Check) {
+  return z.array(
+    z
+      .string()
+      .min(2, { message: 'Tags need a minimum of 2 characters' })
+      .max(30, { message: 'Tags can have a maximum of 30 characters' })
+      .refine((value) => check?.(value) ?? true, {
+        message: 'The tag name is not allowed.',
+      }),
+  );
+}
+
+function updateTags(check?: Check) {
   return z.object({
-    id: z.string().uuid(),
-    title: title().optional(),
-    slug: slug(check).optional(),
-    visibility: z.nativeEnum(Visibility).optional(),
-    status: z.nativeEnum(Status).optional(),
-    description: description().optional(),
+    add: tags(check).optional(),
+    remove: tags().optional(),
   });
+}
+
+type Allowed =
+  | { allowed: true }
+  | { allowed: false; fields: Array<keyof z.infer<ReturnType<typeof updateSchema>>> };
+
+interface UpdatePermissionsProps {
+  project: z.infer<ReturnType<typeof updateSchema>>;
+  permissions: string[];
+  visibility: EnumUnion<Visibility>;
+}
+
+export function updatePermissions(props: UpdatePermissionsProps): Allowed {
+  const { project, permissions, visibility } = props;
+  const fields: Array<keyof z.infer<ReturnType<typeof updateSchema>>> = [];
+
+  for (const field of objectKeys(project)) {
+    if (field === 'id') {
+      continue;
+    }
+
+    if (!has({ action: `update.${field}`, permissions, visibility })) {
+      fields.push(field);
+    }
+  }
+
+  return fields.length > 0 ? { allowed: false, fields } : { allowed: true };
 }

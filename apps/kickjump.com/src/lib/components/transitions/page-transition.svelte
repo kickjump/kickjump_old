@@ -1,11 +1,10 @@
 <script lang="ts">
   import clsx from 'clsx';
-  // import { onMount } from 'svelte';
   import { type FlyParams, fly } from 'svelte/transition';
 
   import type { Maybe } from '$types';
-  export let refresh: string;
-  export let animateTransition: boolean;
+  export let refresh: string | number;
+  export let animateTransition: boolean | undefined = false;
   let className: Maybe<string> = undefined;
 
   export { className as class };

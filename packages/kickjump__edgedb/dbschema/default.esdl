@@ -153,7 +153,7 @@ module default {
       constraint max_len_value(25);
     };
 
-    required multi link tagged -> Taggable;
+    multi link tagged -> Taggable;
   }
 
   # Like a team where everyone is equal.

@@ -1,6 +1,7 @@
-import type { Load } from '@sveltejs/kit';
+import type { Load, LoadOutput } from '@sveltejs/kit';
+import { isFunction } from 'is-what';
 
-export function authenticated(fn?: Load): Load {
+export function authenticated(fn?: Load | LoadOutput): Load {
   return (event) => {
     const { session, url, props } = event;
 
@@ -8,15 +9,15 @@ export function authenticated(fn?: Load): Load {
       return { redirect: `/login?redirect=${url.pathname}`, status: 307 };
     }
 
-    if (!fn) {
-      return { props };
+    if (!fn || !isFunction(fn)) {
+      return { props, ...fn };
     }
 
     return fn(event);
   };
 }
 
-export function notAuthenticated(fn?: Load): Load {
+export function notAuthenticated(fn?: Load | LoadOutput): Load {
   return (event) => {
     const { session, props, url } = event;
 
@@ -27,16 +28,14 @@ export function notAuthenticated(fn?: Load): Load {
       return { redirect: url.searchParams.get('redirect') ?? '/', status: 307 };
     }
 
-    if (!fn) {
-      return { props };
+    if (!fn || !isFunction(fn)) {
+      return { props, ...fn };
     }
 
     return fn(event);
   };
 }
 
-export function loader(fn: Load): Load {
-  return (event) => {
-    return fn(event);
-  };
+export function loader(fn: Load | LoadOutput): Load {
+  return (event) => (isFunction(fn) ? fn(event) : { props: event.props, ...fn });
 }
