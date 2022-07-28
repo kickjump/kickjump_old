@@ -1,6 +1,7 @@
 import type { $ } from '@kickjump/db';
 import { e, ProjectModel, run } from '@kickjump/db';
-import { CreateOmitKeys, Visibility } from '@kickjump/types';
+import type { CreateOmitKeys } from '@kickjump/types';
+import { Visibility } from '@kickjump/types';
 import { isProfanity, isReservedOrProfanity, ProjectUtils } from '@kickjump/types';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
@@ -36,17 +37,15 @@ export const project = t.router({
             on: tag.name,
             else: e.update(tag, () => ({ set: { tagged: { '+=': entity } } })),
           }));
-        })
+        });
       }
 
-      let entries: Array<ReturnType<typeof createTags>> = [];
-      if (input.tags?.length) {
-        entries.push(createTags(input.tags));
-      }
+      const tags = input.tags?.length ? [createTags(input.tags)] : ([] as const);
 
+      const query = e.set(entity, membership, ...tags);
+      const [{ id }] = await run(query);
 
-      const query = e.set(entity, membership, ...entries);
-      await run(query);
+      return id;
     }),
   nameAvailable: authenticated.input(z.string()).query(async ({ input }) => {
     const suggestions = await generateUsernames();
@@ -55,7 +54,7 @@ export const project = t.router({
   }),
 
   update: authenticated
-    .input(ProjectUtils.updateSchema({ tag: isProfanity, name: isReservedOrProfanity }))
+    .input(ProjectUtils.updateSchema({ tag: checkTag, name: checkTag }))
     .mutation(async ({ ctx, input }) => {
       const { user } = ctx;
       const initialQuery = e.select(e.Project, (project) => ({
@@ -73,10 +72,14 @@ export const project = t.router({
       const visibility = result?.visibility;
 
       if (!permissions || !visibility) {
-        throw new TRPCError({ code: 'FORBIDDEN', message: 'Insuffient permissions' });
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message:
+            'This user is not a member and has insufficient permissions to make requested changes.',
+        });
       }
 
-      const checkPermissions = ProjectUtils.updatePermissions({
+      const checkPermissions = ProjectUtils.canUpdate({
         permissions,
         visibility,
         project: input,
@@ -115,39 +118,52 @@ export const project = t.router({
         set: { updatedAt: e.datetime_current(), ...updateProject },
       }));
 
-      const entries: [$.TypeSet, ...$.TypeSet[]] = [projectQuery];
-
-      if (input.tags?.add) {
-        const added = e.for(e.set(...input.tags.add), (name) => {
+      function createAdded(tags: string[]) {
+        return e.for(e.set(...tags), (name) => {
           return e.insert(e.Tag, { name, tagged: projectQuery }).unlessConflict((tag) => ({
             on: tag.name,
             else: e.update(tag, () => ({ set: { tagged: { '+=': projectQuery } } })),
           }));
         });
-
-        entries.push(added);
       }
 
-      if (input.tags?.remove) {
-        const tagsToRemove = input.tags.remove;
-        const removed = e.update(e.Tag, (tag) => ({
-          filter: e.op(tag.name, 'in', e.set(...tagsToRemove)),
+      function createRemoved(tags: string[]) {
+        return e.update(e.Tag, (tag) => ({
+          filter: e.op(tag.name, 'in', e.set(...tags)),
           set: { tagged: { '-=': projectQuery } },
         }));
-
-        entries.push(removed);
       }
 
-      await run(e.set(...entries));
+      function createCleared() {
+        return e.delete(e.Tag, (tag) => ({
+          filter: e.op(tag.tagged, '=', projectQuery),
+        }));
+      }
+
+      const addedTags =
+        !input.tags?.removeAll && input.tags?.add ? [createAdded(input.tags?.add)] : ([] as const);
+      const removedTags =
+        !input.tags?.removeAll && input.tags?.remove
+          ? [createRemoved(input.tags.remove)]
+          : ([] as const);
+      const clearedTags = input.tags?.removeAll ? [createCleared()] : ([] as const);
+
+      const query = e.set(projectQuery, ...addedTags, ...removedTags, ...clearedTags);
+
+      await run(query);
     }),
 });
 
-async function checkName(slug: string) {
-  if (await isReservedOrProfanity(slug)) {
+async function checkTag(name: string) {
+  return !(await isProfanity(name));
+}
+
+async function checkName(name: string) {
+  if (await isReservedOrProfanity(name)) {
     return false;
   }
 
-  if (await ProjectModel.findByName(slug)) {
+  if (await ProjectModel.findByName(name)) {
     return false;
   }
 

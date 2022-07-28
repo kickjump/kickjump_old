@@ -23,7 +23,7 @@ export function createTRPCHandle(): Handle {
 
     const { session } = event.locals;
     const createContext = (): Context => ({
-      session,
+      // session,
       user: session.data.user,
       env: Env.parse(process.env),
     });

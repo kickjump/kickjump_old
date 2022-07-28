@@ -17,5 +17,6 @@ export const FIELDS = createFields({
   updatedAt: true,
   user: true,
   verified: true,
+  verifiedAt: true,
 });
 export type Email = TypeFromFields<Type, typeof FIELDS>;

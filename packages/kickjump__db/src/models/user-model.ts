@@ -21,7 +21,7 @@ export async function create(props: UserCreateInput): Promise<string> {
       email: email.email,
       user,
       primary: email.primary,
-      verified: email.verified ? e.datetime_current() : undefined,
+      verifiedAt: email.verified ? e.datetime_current() : undefined,
     }),
   );
   const accounts = props.accounts?.map((account) => e.insert(e.Account, { ...account, user }));
@@ -165,7 +165,7 @@ function linkEmailsQuery(user: UserId, emails: EmailCreateInput[]) {
   return e.for(e.json_array_unpack(e.json(emails)), (email) => {
     return e.insert(e.Email, {
       email: e.cast(e.str, email.email!),
-      verified: email.verified ? e.datetime_current() : undefined,
+      verifiedAt: email.verified ? e.datetime_current() : undefined,
       primary: e.cast(e.bool, email.primary!),
       user: e.select(e.User, (u) => ({
         filter: e.op(u.id, '=', isString(user) ? e.uuid(user) : user.id),

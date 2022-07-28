@@ -15,7 +15,7 @@ import {
 import { Status } from '../db.js';
 import { Visibility } from '../db.js';
 import { removeUndefined } from './utils.js';
-import { minimumVisibility, VisibilityHierachy as VisibilityHierarchy } from './utils.js';
+import { minimumVisibility, VisibilityHierarchy } from './utils.js';
 
 export type Type<Options extends AvailableOptions = object> = Custom<
   DeepOmit<RawProject, '__type__'>,
@@ -94,17 +94,15 @@ const projectPermissions: ProjectPermissions = {
   'update.visibility': minimumVisibility(Visibility.admin),
 };
 
-// type MappedTupleEntry<Type> = Type extends readonly [infer Name, any] ? Name : never;
-// type MappedTuple<Tuple extends readonly [...(readonly any[])]> = {
-//   [Index in keyof Tuple]: MappedTupleEntry<Tuple[Index]>;
-// } & { length: Tuple['length'] };
-// const permissionNames: MappedTuple<typeof permissionsTuple> = permissionsTuple.map(
-//   (value) => value[0],
-// ) as unknown as MappedTuple<typeof permissionsTuple>;
-const permissionNames = objectKeys(projectPermissions) as [Action, ...Action[]];
+type MemberVisibility = Exclude<`${Visibility}`, 'public'>;
 
-export function permissions() {
-  return z.enum(permissionNames);
+const permissionNames = [...objectKeys(projectPermissions), ...VisibilityHierarchy.slice(1)] as [
+  Action | MemberVisibility,
+  ...Array<Action | MemberVisibility>,
+];
+
+export function permission() {
+  return z.nativeEnum(Visibility).or(z.enum(permissionNames));
 }
 
 interface HasProjectPermissionsProps {
@@ -203,13 +201,15 @@ interface CreateSchemaProps {
 }
 
 export function createSchema({ name: nameCheck, tags: tagCheck }: CreateSchemaProps = {}) {
-  return z.object({
-    name: name(nameCheck),
-    description: description(),
-    tags: tags(tagCheck).optional(),
-    visibility: z.nativeEnum(Visibility).optional(),
-    status: z.nativeEnum(Status).optional(),
-  });
+  return z
+    .object({
+      name: name(nameCheck),
+      description: description(),
+      tags: tags(tagCheck).optional(),
+      visibility: z.nativeEnum(Visibility).optional(),
+      status: z.nativeEnum(Status).optional(),
+    })
+    .strict();
 }
 
 export function title() {
@@ -233,6 +233,7 @@ export function updateSchema(checks?: { name?: Check | undefined; tag?: Check | 
       status: z.nativeEnum(Status).optional(),
       description: description().optional(),
       tags: updateTags(checks?.tag).optional(),
+      members: updateMembers().optional(),
     })
     .strict();
 }
@@ -249,11 +250,32 @@ function tags(check?: Check) {
   );
 }
 
+function members() {
+  return z
+    .object({
+      id: z.string().uuid(),
+      permissions: z.array(permission()).min(1),
+    })
+    .strict();
+}
+
+function updateMembers() {
+  return z
+    .object({
+      add: members().optional(),
+      remove: members().optional(),
+    })
+    .strict();
+}
+
 function updateTags(check?: Check) {
-  return z.object({
-    add: tags(check).optional(),
-    remove: tags().optional(),
-  });
+  return z
+    .object({
+      add: tags(check).optional(),
+      remove: tags().optional(),
+      removeAll: z.boolean().optional(),
+    })
+    .strict();
 }
 
 type Allowed =
@@ -266,7 +288,7 @@ interface UpdatePermissionsProps {
   visibility: EnumUnion<Visibility>;
 }
 
-export function updatePermissions(props: UpdatePermissionsProps): Allowed {
+export function canUpdate(props: UpdatePermissionsProps): Allowed {
   const { project, permissions, visibility } = props;
   const fields: Array<keyof z.infer<ReturnType<typeof updateSchema>>> = [];
 

@@ -10,25 +10,32 @@ export function createMockHandle(props: CreateMockHandleProps = {}): Handle {
   const { enabled = false, preventUnmockedRequests = false } = props;
 
   return async ({ event, resolve }) => {
-    let agent: MockAgent<MockAgent.Options> | undefined;
+    let disableMocking: (() => Promise<void>) | undefined;
 
     if (enabled) {
-      agent = new MockAgent({});
-      const { setupDomains } = await import('./domains.js');
-      setupDomains(agent);
-      setGlobalDispatcher(agent);
-
-      if (preventUnmockedRequests) {
-        // prevent any unmocked request - NOT currently recommanded.
-        agent.disableNetConnect();
-      }
+      disableMocking = await setupMocking(preventUnmockedRequests);
     }
 
     const response = await resolve(event);
-
-    agent?.deactivate();
-    await agent?.close();
+    await disableMocking?.();
 
     return response;
+  };
+}
+
+export async function setupMocking(preventUnmockedRequests = false) {
+  const agent = new MockAgent({});
+  const { setupDomains } = await import('./domains.js');
+  setupDomains(agent);
+  setGlobalDispatcher(agent);
+
+  if (preventUnmockedRequests) {
+    // prevent any unmocked request - NOT currently recommanded.
+    agent.disableNetConnect();
+  }
+
+  return async () => {
+    agent.deactivate();
+    await agent.close();
   };
 }

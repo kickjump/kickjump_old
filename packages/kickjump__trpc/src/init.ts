@@ -1,4 +1,4 @@
-import type { ServerSession } from '@kickjump/svelte-auth';
+// import type { ServerSession } from '@kickjump/svelte-auth';
 import { transformer } from '@kickjump/types';
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
@@ -16,7 +16,7 @@ type Env = z.infer<typeof Env>;
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type Context = {
   user?: App.User | undefined;
-  session: ServerSession;
+  // session: ServerSession;
   env: Env;
 };
 

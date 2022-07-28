@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Cookie based authentication provider inspired by remix-auth",
   "keywords": [],
-  "license": "MIT",
+  "license": "AGPLv3",
   "contributors": [],
   "sideEffects": false,
   "type": "module",

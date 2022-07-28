@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Generate tokens with strata",
   "keywords": [],
-  "license": "MIT",
+  "license": "AGPLv3",
   "contributors": [],
   "sideEffects": false,
   "type": "module",

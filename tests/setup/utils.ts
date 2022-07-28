@@ -51,5 +51,6 @@ export async function instanceExists(name: string): Promise<boolean> {
   return false;
 }
 
+export const SPEC_EDGEDB_INSTANCE = 'kickjump__specdb';
 export const TEST_EDGEDB_INSTANCE = 'kickjump__testdb';
 export const STORAGE_STATE = 'tmp/octocat.json';

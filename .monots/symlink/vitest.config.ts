@@ -11,10 +11,12 @@ const config = defineConfig({
   test: {
     include: ['**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx,svelte}'],
     setupFiles: ['./tests/setup/spec-setup.ts'],
+    globalSetup: ['./tests/setup/global-spec-setup.ts'],
     reporters: process.env.CI ? 'dot' : 'default',
     teardownTimeout: 5000,
     watchExclude: ['.*\\/node_modules\\/.*', '.*\\/(?:build|dist)\\/.*', '.*\\/postgres-data\\/.*'],
   },
+  optimizeDeps: {entries: ['msw']}
 });
 
 export default config;

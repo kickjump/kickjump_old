@@ -1,0 +1,129 @@
+// Vitest Snapshot v1
+
+exports[`create > can create a project 1`] = `
+{
+  "description": "This needs to be at least 50 characters",
+  "members": [
+    {
+      "permissions": [
+        "owner",
+      ],
+    },
+  ],
+  "name": "simple",
+  "tags": [],
+  "visibility": "owner",
+}
+`;
+
+exports[`create > can create a project with tags 1`] = `
+{
+  "description": "This needs to be at least 50 characters",
+  "members": [
+    {
+      "permissions": [
+        "owner",
+      ],
+    },
+  ],
+  "name": "simple",
+  "tags": [
+    {
+      "name": "welcome",
+    },
+    {
+      "name": "to",
+    },
+    {
+      "name": "the",
+    },
+    {
+      "name": "jungle",
+    },
+  ],
+  "visibility": "owner",
+}
+`;
+
+exports[`update > can update tags 1`] = `
+{
+  "description": "This needs to be at least 50 characters",
+  "members": [
+    {
+      "permissions": [
+        "owner",
+      ],
+    },
+  ],
+  "name": "simple",
+  "tags": [
+    {
+      "name": "abc",
+    },
+    {
+      "name": "def",
+    },
+    {
+      "name": "ghi",
+    },
+    {
+      "name": "jkl",
+    },
+  ],
+  "visibility": "owner",
+}
+`;
+
+exports[`update > can update the description 1`] = `
+{
+  "description": "What about another description with enough characters?",
+  "members": [
+    {
+      "permissions": [
+        "owner",
+      ],
+    },
+  ],
+  "name": "simple",
+  "tags": [],
+  "visibility": "owner",
+}
+`;
+
+exports[`update > permissions > only lets users with required permissions update 1`] = `"This user is not a member and has insufficient permissions to make requested changes."`;
+
+exports[`update > permissions > only lets users with required permissions update 2`] = `
+"Insufficient permissions to update field: 'visibility'.
+Insufficient permissions to update field: 'description'."
+`;
+
+exports[`update > permissions > only lets users with required permissions update 3`] = `
+"Insufficient permissions to update field: 'visibility'.
+Insufficient permissions to update field: 'description'."
+`;
+
+exports[`update > permissions > only lets users with required permissions update 4`] = `
+{
+  "description": "An alternative title to test with.",
+  "members": [
+    {
+      "permissions": [
+        "owner",
+      ],
+    },
+    {
+      "permissions": [
+        "member",
+      ],
+    },
+    {
+      "permissions": [
+        "admin",
+      ],
+    },
+  ],
+  "name": "simple",
+  "tags": [],
+  "visibility": "public",
+}
+`;

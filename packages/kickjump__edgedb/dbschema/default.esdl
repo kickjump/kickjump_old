@@ -42,13 +42,11 @@ module default {
 
   # This is actionable even though the email can't be changed
   # it can be `verified` and can be set to `primary`.
-  type Email extending Actionable, CreatedAt, UpdatedAt {
+  type Email extending Actionable, CreatedAt, UpdatedAt, VerifiedAt {
     required property email -> str {
       constraint exclusive;
       readonly := true; # Email's can't be updated
     }
-
-    property verified -> datetime;
 
     required property primary -> bool {
       default := false;
@@ -59,11 +57,21 @@ module default {
     }
 
     constraint exclusive on ((.user, .primary)) except (not .primary);
-    index on (.email);
 
     # access policy userOwned allow all using (
     #   .user.id ?= global currentUser or global unsafeIgnorePolicies ?= true
     # );
+  }
+
+  type GitHubRepository extending Actionable, CreatedAt, Resource, UpdatedAt, VerifiedAt {
+    # The github numerical id.
+    required property externalId -> int64;
+    required property data -> json;
+    required property fullName -> str;
+    required property ownerType -> str {
+      constraint one_of ('User', 'Organization');
+    }
+    constraint exclusive on ((.externalId)) except (not .verified);
   }
 
   # Memberships connect actors to entities like projects and proposals.
@@ -72,10 +80,14 @@ module default {
     required property permissions -> array<str>;
 
     # Link to the user.
-    required link actor -> Actor;
+    required link actor -> Actor {
+      on target delete delete source;
+    };
 
     # A link to any entity with support for permissions.
-    required link entity -> HasMembership;
+    required link entity -> HasMembership {
+      on target delete delete source;
+    };
 
     constraint exclusive on ((.actor, .entity));
   }
@@ -109,6 +121,10 @@ module default {
 
     multi link proposals := .<project[is Proposal];
 
+    multi link resources -> Resource {
+      constraint exclusive;
+    }
+
     required property status -> Status {
       default := Status.draft;
     }
@@ -141,8 +157,12 @@ module default {
       );
     }
 
-    required link actor -> Actor;
-    required link target -> Reactable;
+    required link actor -> Actor {
+      on target delete delete source;
+    }
+    required link target -> Reactable {
+      on target delete delete source;
+    }
 
     constraint exclusive on ((.actor, .target, .name));
   }
@@ -153,7 +173,9 @@ module default {
       constraint max_len_value(25);
     };
 
-    multi link tagged -> Taggable;
+    multi link tagged -> Taggable {
+      on target delete allow;
+    }
   }
 
   # Like a team where everyone is equal.
@@ -168,6 +190,9 @@ module default {
     property name -> str;
     property image -> str;
     multi link emails := .<user[is Email];
+    link email := (
+      select assert_single((select .emails filter .primary = true))
+    );
     multi link accounts := .<user[is Account];
   }
 
@@ -201,6 +226,11 @@ module default {
     multi link reactions := .<target[is Reaction];
   }
 
+  # Resources that are linked to the project
+  abstract type Resource {
+    link project := .<resources[is Project];
+  }
+
   abstract type Taggable {
     multi link tags := .<tagged[is Tag]
   }
@@ -209,9 +239,14 @@ module default {
     # Currently this must be manually provided by the client as there is no
     # update hook for edgedb. See more here
     # https://github.com/edgedb/edgedb/discussions/3180.
-    property updatedAt -> datetime {
+    required property updatedAt -> datetime {
       default := std::datetime_current();
     };
+  }
+
+  abstract type VerifiedAt {
+    property verifiedAt -> datetime;
+    property verified := exists .verifiedAt;
   }
 
   ### Scalars

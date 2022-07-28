@@ -6,7 +6,7 @@ import { Visibility } from '../db.js';
  * This sets the order.
  */
 
-export const VisibilityHierachy = [
+export const VisibilityHierarchy = [
   Visibility.$public,
   Visibility.member,
   Visibility.editor,
@@ -21,7 +21,7 @@ export const VisibilityHierachy = [
 export function minimumVisibility(minimum: Visibility) {
   return (visibility: EnumUnion<Visibility>) => {
     if (
-      VisibilityHierachy.indexOf(minimum) >= VisibilityHierachy.indexOf(visibility as Visibility)
+      VisibilityHierarchy.indexOf(minimum) >= VisibilityHierarchy.indexOf(visibility as Visibility)
     ) {
       return [minimum];
     }
