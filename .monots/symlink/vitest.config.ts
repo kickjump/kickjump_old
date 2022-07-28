@@ -16,7 +16,7 @@ const config = defineConfig({
     teardownTimeout: 5000,
     watchExclude: ['.*\\/node_modules\\/.*', '.*\\/(?:build|dist)\\/.*', '.*\\/postgres-data\\/.*'],
   },
-  optimizeDeps: {entries: ['msw']}
+  optimizeDeps: { entries: ['msw'] },
 });
 
 export default config;

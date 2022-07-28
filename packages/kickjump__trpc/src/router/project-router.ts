@@ -1,4 +1,3 @@
-import type { $ } from '@kickjump/db';
 import { e, ProjectModel, run } from '@kickjump/db';
 import type { CreateOmitKeys } from '@kickjump/types';
 import { Visibility } from '@kickjump/types';

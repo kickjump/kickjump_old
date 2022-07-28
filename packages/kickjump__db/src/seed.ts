@@ -10,7 +10,7 @@ type Account = AccountUtils.Type<{
   omit: 'id';
   simplify: true;
 }>;
-type Email = EmailUtils.Type<{ omit: 'id'; simplify: true }>;
+type Email = EmailUtils.Type<{ omit: 'id' | 'verified'; simplify: true }>;
 type User = UserUtils.Type<{ omit: 'id'; simplify: true }>;
 type Tag = TagUtils.Type<{ omit: 'id'; simplify: true }>;
 
@@ -33,7 +33,7 @@ function createEmail(): Email {
   return {
     createdAt: faker.date.past(),
     email: faker.internet.email(),
-    verified: faker.date.recent(),
+    verifiedAt: faker.date.recent(),
     primary: true,
     updatedAt: faker.date.recent(),
   };
