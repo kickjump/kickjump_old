@@ -1,0 +1,816 @@
+diff --git a/dist/esm/coder/borsh/accounts.d.ts b/dist/esm/coder/borsh/accounts.d.ts
+deleted file mode 100644
+index e4face153c399b71d6e5d066299889432cae2524..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/accounts.d.ts.map b/dist/esm/coder/borsh/accounts.d.ts.map
+deleted file mode 100644
+index 3cbde67f6da03897532accc6001fbe9e7e97b05f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/accounts.js b/dist/esm/coder/borsh/accounts.js
+deleted file mode 100644
+index 801118b8658f4465817f3ea74ccd03e31a4ba32d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/accounts.js.map b/dist/esm/coder/borsh/accounts.js.map
+deleted file mode 100644
+index a5cb193a482a9671da519caf8730e21ff549b013..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/event.d.ts b/dist/esm/coder/borsh/event.d.ts
+deleted file mode 100644
+index a76e7d3e3830445d82ed3b7c21d3de1073311869..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/event.d.ts.map b/dist/esm/coder/borsh/event.d.ts.map
+deleted file mode 100644
+index d80e63071b9bb3a75ddccb00bb13c2947a010076..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/event.js b/dist/esm/coder/borsh/event.js
+deleted file mode 100644
+index 11a4afe08e8388a3f7646dfa3161bd7fccefe27f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/event.js.map b/dist/esm/coder/borsh/event.js.map
+deleted file mode 100644
+index d0dc39359594af1ac1f20d0281be5dd4a7f04a8e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/idl.d.ts b/dist/esm/coder/borsh/idl.d.ts
+deleted file mode 100644
+index fe606f24bec5e6b0d737833f38565b43df77e79d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/idl.d.ts.map b/dist/esm/coder/borsh/idl.d.ts.map
+deleted file mode 100644
+index fa8edc04ebd0dec5bcd5dd592b83a34188f4502f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/idl.js b/dist/esm/coder/borsh/idl.js
+deleted file mode 100644
+index aa2eb16278d3120be99aaa804d181af44a44b7da..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/idl.js.map b/dist/esm/coder/borsh/idl.js.map
+deleted file mode 100644
+index 5a5bcb320dc13aff6343e9468d4c1693cfbbfa22..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/index.d.ts b/dist/esm/coder/borsh/index.d.ts
+deleted file mode 100644
+index 02dad4c411eeede4664b6a68cccfef2e497ce8cc..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/index.d.ts.map b/dist/esm/coder/borsh/index.d.ts.map
+deleted file mode 100644
+index f6a7d1e2cb400e757963c1086099f77167f3b6e0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/index.js b/dist/esm/coder/borsh/index.js
+deleted file mode 100644
+index 6fa1d1aed71bcecf0a0c8e09c804abcb4b5c55da..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/index.js.map b/dist/esm/coder/borsh/index.js.map
+deleted file mode 100644
+index 368c96ed5b10d0178aaf30168a8301bff9fadd9d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/instruction.d.ts b/dist/esm/coder/borsh/instruction.d.ts
+deleted file mode 100644
+index 0a36a142a386d6d9c7bb711b9fa9e5aea43bcc44..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/instruction.d.ts.map b/dist/esm/coder/borsh/instruction.d.ts.map
+deleted file mode 100644
+index ec4b9e711fb2600594f13aba5a0d707dce105f39..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/instruction.js b/dist/esm/coder/borsh/instruction.js
+deleted file mode 100644
+index e92cfc4ed26fc1d3368c5dd3341f5bdda42ebbe0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/instruction.js.map b/dist/esm/coder/borsh/instruction.js.map
+deleted file mode 100644
+index 84c597a1ab59906550503aae4bf22bf6e6fb2044..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/state.d.ts b/dist/esm/coder/borsh/state.d.ts
+deleted file mode 100644
+index 3e1cb4b1f00dd44b911ba33c0c5b096f6544a108..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/state.d.ts.map b/dist/esm/coder/borsh/state.d.ts.map
+deleted file mode 100644
+index f4c9b0d3ffa939b195a79159b696428382c38862..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/state.js b/dist/esm/coder/borsh/state.js
+deleted file mode 100644
+index 2f9f0e2f12de1b4ffb62d3170ecb0486e8b88939..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/state.js.map b/dist/esm/coder/borsh/state.js.map
+deleted file mode 100644
+index 7e3f24935e452c6a48447304d5368b414acc75ff..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/types.d.ts b/dist/esm/coder/borsh/types.d.ts
+deleted file mode 100644
+index 0a09c326441770296acf873dd7cd942b2c5bebab..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/types.d.ts.map b/dist/esm/coder/borsh/types.d.ts.map
+deleted file mode 100644
+index 02d631a504d4b8b0393d5993aea74bec31ba19b7..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/types.js b/dist/esm/coder/borsh/types.js
+deleted file mode 100644
+index 3046d9abaf1955985e2dacb0bfbdf32f2fd92c3c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/borsh/types.js.map b/dist/esm/coder/borsh/types.js.map
+deleted file mode 100644
+index 6f7a9efd47f5e6c1fcf369bc65847515157641db..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/common.d.ts b/dist/esm/coder/common.d.ts
+deleted file mode 100644
+index e4e6d62f6445d15ef33619a5413eebb14175873f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/common.d.ts.map b/dist/esm/coder/common.d.ts.map
+deleted file mode 100644
+index 180fa94c32af973c09bbfd9df51aaa4884147696..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/common.js b/dist/esm/coder/common.js
+deleted file mode 100644
+index 420d3ba0ff4f59c99e7cd1f512b7575bf0e86c18..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/common.js.map b/dist/esm/coder/common.js.map
+deleted file mode 100644
+index 67c9c45f7e6b5e4659bacf400b0e7de7983c1ba2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/index.d.ts b/dist/esm/coder/index.d.ts
+deleted file mode 100644
+index 29e6e0f75b11a07b37cf685c94e3e659ae261d1b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/index.d.ts.map b/dist/esm/coder/index.d.ts.map
+deleted file mode 100644
+index 4228f59fc0f1406db49b0db46f584e1b973886a7..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/index.js b/dist/esm/coder/index.js
+deleted file mode 100644
+index 52da7b7d947f47700ecf9e51515f2021e2068e87..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/index.js.map b/dist/esm/coder/index.js.map
+deleted file mode 100644
+index 59211edb0a39900b3c8c817d56f1711f41966e67..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/accounts.d.ts b/dist/esm/coder/spl-associated-token/accounts.d.ts
+deleted file mode 100644
+index ee5fef19537012769dde3d9efb547af58dc0ba2d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/accounts.d.ts.map b/dist/esm/coder/spl-associated-token/accounts.d.ts.map
+deleted file mode 100644
+index 56fbe74bc8d7620da5360a087015ff618b30a90f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/accounts.js b/dist/esm/coder/spl-associated-token/accounts.js
+deleted file mode 100644
+index 40a676578641e1152b392a444ac2c50d3e970921..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/accounts.js.map b/dist/esm/coder/spl-associated-token/accounts.js.map
+deleted file mode 100644
+index 8e20869cdba4a40c311e17306d18e9e9bb459272..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/events.d.ts b/dist/esm/coder/spl-associated-token/events.d.ts
+deleted file mode 100644
+index 3ff9bad920f4e8c89c3bfd61bc27732b2a5222be..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/events.d.ts.map b/dist/esm/coder/spl-associated-token/events.d.ts.map
+deleted file mode 100644
+index 43788e91d304e301a58dd1c34375a686328cc799..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/events.js b/dist/esm/coder/spl-associated-token/events.js
+deleted file mode 100644
+index 5b89f3d8ac946b6267d1d81bb627b09357c929a5..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/events.js.map b/dist/esm/coder/spl-associated-token/events.js.map
+deleted file mode 100644
+index 70d74be7d498f993b41681865785a9dccad2e981..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/index.d.ts b/dist/esm/coder/spl-associated-token/index.d.ts
+deleted file mode 100644
+index b970a61e01da52c65e5fa6ca11972f1f57d88e3d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/index.d.ts.map b/dist/esm/coder/spl-associated-token/index.d.ts.map
+deleted file mode 100644
+index defd6c1dae59a2ab7b090aec47531dade413d63f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/index.js b/dist/esm/coder/spl-associated-token/index.js
+deleted file mode 100644
+index 57f452043603214a5c1f849786565a37b7e29db2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/index.js.map b/dist/esm/coder/spl-associated-token/index.js.map
+deleted file mode 100644
+index eab9554840e60bbc77fc3efc39fa0382394946a0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/instruction.d.ts b/dist/esm/coder/spl-associated-token/instruction.d.ts
+deleted file mode 100644
+index 41064e297d2bdd450101fe151f1834e204efdae0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/instruction.d.ts.map b/dist/esm/coder/spl-associated-token/instruction.d.ts.map
+deleted file mode 100644
+index fbb5766167b6b47963020a910a7ee56833b3bca6..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/instruction.js b/dist/esm/coder/spl-associated-token/instruction.js
+deleted file mode 100644
+index 4eb32ce9506054d689bd10f3a54bbc67f0353294..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/instruction.js.map b/dist/esm/coder/spl-associated-token/instruction.js.map
+deleted file mode 100644
+index d038925158198d6668c15871d5d64331c4662406..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/state.d.ts b/dist/esm/coder/spl-associated-token/state.d.ts
+deleted file mode 100644
+index a50f68a9ed8f33d8d7f1408da18519380dc31ea2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/state.d.ts.map b/dist/esm/coder/spl-associated-token/state.d.ts.map
+deleted file mode 100644
+index 5e5ec7b8e6a3b33f99c573124163955a01858fdf..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/state.js b/dist/esm/coder/spl-associated-token/state.js
+deleted file mode 100644
+index 48440672bb65a871c76d9a4442237284a1ad34b0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/state.js.map b/dist/esm/coder/spl-associated-token/state.js.map
+deleted file mode 100644
+index 3a202118e437d32eb2068f42ef5a60c4f1510c8b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/types.d.ts b/dist/esm/coder/spl-associated-token/types.d.ts
+deleted file mode 100644
+index 007771c700be42864fb44478e98497dc6c3191de..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/types.d.ts.map b/dist/esm/coder/spl-associated-token/types.d.ts.map
+deleted file mode 100644
+index fbc6fe9a0ab2a2b0b00ee10bffcdbf59d13e9331..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/types.js b/dist/esm/coder/spl-associated-token/types.js
+deleted file mode 100644
+index 74cfeddd2aa88412e23727bb39a0a427bd438780..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-associated-token/types.js.map b/dist/esm/coder/spl-associated-token/types.js.map
+deleted file mode 100644
+index a914187a30c49cc8619386397a88b91c8b8da485..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/accounts.d.ts b/dist/esm/coder/spl-token/accounts.d.ts
+deleted file mode 100644
+index 651e825adf104d731aa4b63368a13638994fe867..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/accounts.d.ts.map b/dist/esm/coder/spl-token/accounts.d.ts.map
+deleted file mode 100644
+index 1939b6ac486c152e5f933fc6b21a7aac3f364e9e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/accounts.js b/dist/esm/coder/spl-token/accounts.js
+deleted file mode 100644
+index 8695a28d4ec7ac66ee987e45dbeae9010f0cd17c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/accounts.js.map b/dist/esm/coder/spl-token/accounts.js.map
+deleted file mode 100644
+index 9eb17064188abba93b4d0f12117c5d7898a936a2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/buffer-layout.d.ts b/dist/esm/coder/spl-token/buffer-layout.d.ts
+deleted file mode 100644
+index c20a4909b0b64a11fd5932b7cb594b83c6e23928..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/buffer-layout.d.ts.map b/dist/esm/coder/spl-token/buffer-layout.d.ts.map
+deleted file mode 100644
+index 818c845cb85c3fc0c8de86cd15c02286c2bcd740..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/buffer-layout.js b/dist/esm/coder/spl-token/buffer-layout.js
+deleted file mode 100644
+index 467a368e1310e68d4373e382750e1190b07af997..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/buffer-layout.js.map b/dist/esm/coder/spl-token/buffer-layout.js.map
+deleted file mode 100644
+index e482b7983d06920036d61ac0b0892982605ee591..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/events.d.ts b/dist/esm/coder/spl-token/events.d.ts
+deleted file mode 100644
+index 9a862790acaaaa51d9553b45f384e2f447834175..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/events.d.ts.map b/dist/esm/coder/spl-token/events.d.ts.map
+deleted file mode 100644
+index b599ccbcfcc53983542f43d81190cfb79092f092..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/events.js b/dist/esm/coder/spl-token/events.js
+deleted file mode 100644
+index 5fd348f5f90967745b148c62ac5d687f6b54731b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/events.js.map b/dist/esm/coder/spl-token/events.js.map
+deleted file mode 100644
+index 4e5f41beea04469326ed9883fe4f189b7795978e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/index.d.ts b/dist/esm/coder/spl-token/index.d.ts
+deleted file mode 100644
+index e96df49422f0f9be95d68be02703557bfc8d0cf8..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/index.d.ts.map b/dist/esm/coder/spl-token/index.d.ts.map
+deleted file mode 100644
+index f496698d70abd7af48fb4372cfaffe852822ef75..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/index.js b/dist/esm/coder/spl-token/index.js
+deleted file mode 100644
+index 664a0c964c15ded2a20f50f5fdf972a8fbb67285..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/index.js.map b/dist/esm/coder/spl-token/index.js.map
+deleted file mode 100644
+index ae7a0223217cd45441209cf28aaaf5caf5123a1f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/instruction.d.ts b/dist/esm/coder/spl-token/instruction.d.ts
+deleted file mode 100644
+index 7c5f951603c90d6e07996cded8abf995ff590654..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/instruction.d.ts.map b/dist/esm/coder/spl-token/instruction.d.ts.map
+deleted file mode 100644
+index 9521286f89c14933296101a0102b1ace5edd4b25..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/instruction.js b/dist/esm/coder/spl-token/instruction.js
+deleted file mode 100644
+index 2ee2cd431bdb93e9c8e529c56091b5960158ce41..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/instruction.js.map b/dist/esm/coder/spl-token/instruction.js.map
+deleted file mode 100644
+index 633302c866950a42cfc70ca4f7037f3e9fa35769..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/state.d.ts b/dist/esm/coder/spl-token/state.d.ts
+deleted file mode 100644
+index 2aba1fa6d2fed49229cd344e951ec53d5822cd96..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/state.d.ts.map b/dist/esm/coder/spl-token/state.d.ts.map
+deleted file mode 100644
+index 2f91fd32f457864ef11f8175026d0dcb7af3a0b4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/state.js b/dist/esm/coder/spl-token/state.js
+deleted file mode 100644
+index 64529d30660feb8e13f448cabd44957c7564932c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/state.js.map b/dist/esm/coder/spl-token/state.js.map
+deleted file mode 100644
+index 9fbefa7dcf4057ae7e79e8befcc2f1c9bc652396..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/types.d.ts b/dist/esm/coder/spl-token/types.d.ts
+deleted file mode 100644
+index 75c7c3c1ef7a37289ae6c5e472fcd6218048c6aa..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/types.d.ts.map b/dist/esm/coder/spl-token/types.d.ts.map
+deleted file mode 100644
+index 1214aa4db416fc9ed62f5def9b19231ee2ab0e09..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/types.js b/dist/esm/coder/spl-token/types.js
+deleted file mode 100644
+index f52a7e777f91a104b2df5a5c68f86d6e95f92b8e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/spl-token/types.js.map b/dist/esm/coder/spl-token/types.js.map
+deleted file mode 100644
+index 5880636b28b407f249d3fdabf3129b8f91ba45cc..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/accounts.d.ts b/dist/esm/coder/system/accounts.d.ts
+deleted file mode 100644
+index 1265aa72655eeec47b1f6895c9cf979506d54f82..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/accounts.d.ts.map b/dist/esm/coder/system/accounts.d.ts.map
+deleted file mode 100644
+index 675249c7b99d8fa1542bf2f2a459549a91f0bc5d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/accounts.js b/dist/esm/coder/system/accounts.js
+deleted file mode 100644
+index 9def1f455f88c26c67dacb2cf9d088243701f316..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/accounts.js.map b/dist/esm/coder/system/accounts.js.map
+deleted file mode 100644
+index be5007c61aa0b50351a90e561c43b8761163d5d4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/events.d.ts b/dist/esm/coder/system/events.d.ts
+deleted file mode 100644
+index f171db3039b4e3b6b32c6ad1ed3dcf571006f7b9..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/events.d.ts.map b/dist/esm/coder/system/events.d.ts.map
+deleted file mode 100644
+index 90ae0d7fcac65314bd699fbc7bf055c3bd06b111..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/events.js b/dist/esm/coder/system/events.js
+deleted file mode 100644
+index e582ec2c7c0c5da9dffe8949c68032f0e4c0350a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/events.js.map b/dist/esm/coder/system/events.js.map
+deleted file mode 100644
+index 385fbb9b37c13f9a0ea5604980de26a601e540c9..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/index.d.ts b/dist/esm/coder/system/index.d.ts
+deleted file mode 100644
+index 20f04b4e8098ac198f6050a3becba327b471a61d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/index.d.ts.map b/dist/esm/coder/system/index.d.ts.map
+deleted file mode 100644
+index b0525cf4bb6bfbd75b17005c9462d4cd5407f525..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/index.js b/dist/esm/coder/system/index.js
+deleted file mode 100644
+index 2eb97d8a598d79e0b899827538b5443070e6519d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/index.js.map b/dist/esm/coder/system/index.js.map
+deleted file mode 100644
+index 380e27f6ce2b0c8df3cd31b5434de359ea29df24..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/instruction.d.ts b/dist/esm/coder/system/instruction.d.ts
+deleted file mode 100644
+index e57e332afd81c3891687b912e5ba02242ce9ce3d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/instruction.d.ts.map b/dist/esm/coder/system/instruction.d.ts.map
+deleted file mode 100644
+index 983fc74eacbf6353f79c3d97f245137740b25f5d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/instruction.js b/dist/esm/coder/system/instruction.js
+deleted file mode 100644
+index 5329a26c9ba913599216deac4478e9fc48a34e7f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/instruction.js.map b/dist/esm/coder/system/instruction.js.map
+deleted file mode 100644
+index d748ab05e09c0e04bad7489406eba9dedda4ca37..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/state.d.ts b/dist/esm/coder/system/state.d.ts
+deleted file mode 100644
+index 64c0b293449848003d25f41c55dbe31948928b14..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/state.d.ts.map b/dist/esm/coder/system/state.d.ts.map
+deleted file mode 100644
+index 9f6f39d44e898c9e6cf1a6a75157983c323805b4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/state.js b/dist/esm/coder/system/state.js
+deleted file mode 100644
+index 6e448e546b7dcc7807622a40061efc1dfcff9605..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/state.js.map b/dist/esm/coder/system/state.js.map
+deleted file mode 100644
+index 63b2463f99bc51db04a0a2f51099b8cd336776af..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/types.d.ts b/dist/esm/coder/system/types.d.ts
+deleted file mode 100644
+index 26b129ee81f5993625f827edcffe43531eeb0fef..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/types.d.ts.map b/dist/esm/coder/system/types.d.ts.map
+deleted file mode 100644
+index d697b84e8b7e2bbae9a701914fce208552c184f3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/types.js b/dist/esm/coder/system/types.js
+deleted file mode 100644
+index 895d7e8a05118d0917d8596acfdef946fcf86412..0000000000000000000000000000000000000000
+diff --git a/dist/esm/coder/system/types.js.map b/dist/esm/coder/system/types.js.map
+deleted file mode 100644
+index 5856e22a0b3b3898914f04bdacdbddcdfc778b1c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/error.d.ts b/dist/esm/error.d.ts
+deleted file mode 100644
+index 0d23b7ebbc7f6ab15768f659114fc4ef5c518342..0000000000000000000000000000000000000000
+diff --git a/dist/esm/error.d.ts.map b/dist/esm/error.d.ts.map
+deleted file mode 100644
+index dda1abc95abe720ddbff089576d575ba875ac1e0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/error.js b/dist/esm/error.js
+deleted file mode 100644
+index 2bb12bdb8bffd6a29291ce8f055387bb26e7fe43..0000000000000000000000000000000000000000
+diff --git a/dist/esm/error.js.map b/dist/esm/error.js.map
+deleted file mode 100644
+index 32f06bc180c9529117c7574c665207be0f149e20..0000000000000000000000000000000000000000
+diff --git a/dist/esm/idl.d.ts b/dist/esm/idl.d.ts
+deleted file mode 100644
+index 865a26d6879177dd8238a93d24ddc0dff52eb909..0000000000000000000000000000000000000000
+diff --git a/dist/esm/idl.d.ts.map b/dist/esm/idl.d.ts.map
+deleted file mode 100644
+index 955ee8488b10da3bea62a5ebc6c7c99090879ca4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/idl.js b/dist/esm/idl.js
+deleted file mode 100644
+index 22baaece0a7a94fbcedd467faca1738fec13362e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/idl.js.map b/dist/esm/idl.js.map
+deleted file mode 100644
+index dd921b25709a09281292d5e4ecc47343df035b0f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/index.d.ts b/dist/esm/index.d.ts
+deleted file mode 100644
+index b9b32251a18b9de0aa1bb01f72689d875158d050..0000000000000000000000000000000000000000
+diff --git a/dist/esm/index.d.ts.map b/dist/esm/index.d.ts.map
+deleted file mode 100644
+index ba51f0560f20bb4ca5537b470bb28129264a07cf..0000000000000000000000000000000000000000
+diff --git a/dist/esm/index.js b/dist/esm/index.js
+deleted file mode 100644
+index 74a32bb9d150168773e61820745494bea789200a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/index.js.map b/dist/esm/index.js.map
+deleted file mode 100644
+index 17bbbe4ea1650e6cb14a1a6c9a5b6f4de633e86f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/index.d.ts b/dist/esm/native/index.d.ts
+deleted file mode 100644
+index 0d0bd7f4967a9a6be8f888371691b5dba51364ba..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/index.d.ts.map b/dist/esm/native/index.d.ts.map
+deleted file mode 100644
+index acda604bcb2d3ac17a73c2d5d077745dfecc9e16..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/index.js b/dist/esm/native/index.js
+deleted file mode 100644
+index b4f5521bf61b143f1cf3a4d609d66bf6c9874701..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/index.js.map b/dist/esm/native/index.js.map
+deleted file mode 100644
+index 6aea0851be07ad8405955057cb55931358bb9750..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/system.d.ts b/dist/esm/native/system.d.ts
+deleted file mode 100644
+index 750bc0c8e5b21d0cbea775e6c8d698486d4ba46f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/system.d.ts.map b/dist/esm/native/system.d.ts.map
+deleted file mode 100644
+index 63de88169e7427f07596877357d2dbf53c0a9fd6..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/system.js b/dist/esm/native/system.js
+deleted file mode 100644
+index 5a7cc972d13edd8f514529b5255b4ad627c630ed..0000000000000000000000000000000000000000
+diff --git a/dist/esm/native/system.js.map b/dist/esm/native/system.js.map
+deleted file mode 100644
+index 598078742295ffa6eefef3e8686793b2455dad42..0000000000000000000000000000000000000000
+diff --git a/dist/esm/nodewallet.d.ts b/dist/esm/nodewallet.d.ts
+deleted file mode 100644
+index abdac8031f6f811e3962f018888d9e92b7f363b4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/nodewallet.d.ts.map b/dist/esm/nodewallet.d.ts.map
+deleted file mode 100644
+index b3369ee6cd029ca43307dc3b9aa2f85dd0c4758c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/nodewallet.js b/dist/esm/nodewallet.js
+deleted file mode 100644
+index 6edc485dbf3610ac3cf09e0e49aa0a48543d1d74..0000000000000000000000000000000000000000
+diff --git a/dist/esm/nodewallet.js.map b/dist/esm/nodewallet.js.map
+deleted file mode 100644
+index db6f004ae95445425408da269d6efdc7e61f0776..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/accounts-resolver.d.ts b/dist/esm/program/accounts-resolver.d.ts
+deleted file mode 100644
+index c6e46ca7df1421b310227ac61f9679918e18913a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/accounts-resolver.d.ts.map b/dist/esm/program/accounts-resolver.d.ts.map
+deleted file mode 100644
+index 5429b4d44c96149f02fab3a85d22ecda9310997b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/accounts-resolver.js b/dist/esm/program/accounts-resolver.js
+deleted file mode 100644
+index f9024715a384fea6389132b06d9922fce029319a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/accounts-resolver.js.map b/dist/esm/program/accounts-resolver.js.map
+deleted file mode 100644
+index ac9e2e2be1512decc8312db5bb33bd4647e9d64d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/common.d.ts b/dist/esm/program/common.d.ts
+deleted file mode 100644
+index 40f536b4cab972c9bfa8310f5d5c63c31b9fb0c4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/common.d.ts.map b/dist/esm/program/common.d.ts.map
+deleted file mode 100644
+index 1358f610e6bfe8175be969e0fade9911a32733b9..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/common.js b/dist/esm/program/common.js
+deleted file mode 100644
+index a96fd208e1a6e25efc9b38a4d6d8e5d7614c503d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/common.js.map b/dist/esm/program/common.js.map
+deleted file mode 100644
+index 7126a3c8ffa3062d73b4f54eca82bc58f0095928..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/context.d.ts b/dist/esm/program/context.d.ts
+deleted file mode 100644
+index d8cef9d8fb6adc965d199b6b4fcd4d2e3b3f8d56..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/context.d.ts.map b/dist/esm/program/context.d.ts.map
+deleted file mode 100644
+index d67dd93908d71298df71dcea926f7822882d063d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/context.js b/dist/esm/program/context.js
+deleted file mode 100644
+index 29255931e04bf2cb0caa62bbf60fe6284bbc9cc2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/context.js.map b/dist/esm/program/context.js.map
+deleted file mode 100644
+index f699d37c320a351861dc84a20dc1bb841c1cd338..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/event.d.ts b/dist/esm/program/event.d.ts
+deleted file mode 100644
+index b5c1c5fada59582774dd80c1809198b38c9f3ec6..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/event.d.ts.map b/dist/esm/program/event.d.ts.map
+deleted file mode 100644
+index 6ed19a79ab45acba613c675928a2856a4eea68cb..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/event.js b/dist/esm/program/event.js
+deleted file mode 100644
+index aa5a0249ce8796addc40989043cd47954fe8fff4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/event.js.map b/dist/esm/program/event.js.map
+deleted file mode 100644
+index 23cb792e7d4c3e7682f13793b96c13ce5a3d86a3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/index.d.ts b/dist/esm/program/index.d.ts
+deleted file mode 100644
+index 77f9eab52fb795b37819967a001e061f2c81549b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/index.d.ts.map b/dist/esm/program/index.d.ts.map
+deleted file mode 100644
+index 0e3082ae126f6b80dd9aafb6a9604d93b93cf931..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/index.js b/dist/esm/program/index.js
+deleted file mode 100644
+index 43c66075cfae74e08faaee02db974dc0e6a1c40b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/index.js.map b/dist/esm/program/index.js.map
+deleted file mode 100644
+index 07747ac5f67ae8e1cccb0a022b77c40177c03e14..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/account.d.ts b/dist/esm/program/namespace/account.d.ts
+deleted file mode 100644
+index a24b8a043421ec381126b72988286d50f1c5d315..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/account.d.ts.map b/dist/esm/program/namespace/account.d.ts.map
+deleted file mode 100644
+index e34df43c4a465687c400515062f78fc442d9f90a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/account.js b/dist/esm/program/namespace/account.js
+deleted file mode 100644
+index 518f75eef794d2487457823441169f0e308b4edd..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/account.js.map b/dist/esm/program/namespace/account.js.map
+deleted file mode 100644
+index 92d5de9f23b7f4b29794cad55eb37f4bfbeece57..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/index.d.ts b/dist/esm/program/namespace/index.d.ts
+deleted file mode 100644
+index 809b5847e7ecfb2d492c46c94921f64f9235ba13..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/index.d.ts.map b/dist/esm/program/namespace/index.d.ts.map
+deleted file mode 100644
+index aec48524e87054421d49ab5965baad765de322d4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/index.js b/dist/esm/program/namespace/index.js
+deleted file mode 100644
+index 8331695cabfdb29e79bfb7bd71168f8491415053..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/index.js.map b/dist/esm/program/namespace/index.js.map
+deleted file mode 100644
+index b184cc2b4a8e9dfd80c31d88cef11d57da0bdd05..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/instruction.d.ts b/dist/esm/program/namespace/instruction.d.ts
+deleted file mode 100644
+index 7c3c505c5fc2628f27b99b9f8ffe3a325d9cbddb..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/instruction.d.ts.map b/dist/esm/program/namespace/instruction.d.ts.map
+deleted file mode 100644
+index c9c24306fb00d299cbaa4eee1ce6c1c5cbe1ab2a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/instruction.js b/dist/esm/program/namespace/instruction.js
+deleted file mode 100644
+index 81a67d2d75bedccb3f0288f2a2bd81b886a83052..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/instruction.js.map b/dist/esm/program/namespace/instruction.js.map
+deleted file mode 100644
+index 94d2426d652cda04c7bddee5005a8cc1cd7b750c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/methods.d.ts b/dist/esm/program/namespace/methods.d.ts
+deleted file mode 100644
+index 043f483ecf160a9b2af56d70b33689fdff68541c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/methods.d.ts.map b/dist/esm/program/namespace/methods.d.ts.map
+deleted file mode 100644
+index 8295f356a6444b5b6260fb68e45af4f0d54d284f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/methods.js b/dist/esm/program/namespace/methods.js
+deleted file mode 100644
+index dc32db48cce4333c9faa0c4c46e68b79acc01a88..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/methods.js.map b/dist/esm/program/namespace/methods.js.map
+deleted file mode 100644
+index 7c7e18422328bf507b899e11e403e24aa00e9df4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/rpc.d.ts b/dist/esm/program/namespace/rpc.d.ts
+deleted file mode 100644
+index cd63f12a2ba03ca8e6d1ea13c113c91adc78d605..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/rpc.d.ts.map b/dist/esm/program/namespace/rpc.d.ts.map
+deleted file mode 100644
+index 7aa9c7083e31513f267d1bbc258f313f89b690c4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/rpc.js b/dist/esm/program/namespace/rpc.js
+deleted file mode 100644
+index 5390fac4529612fe468d711164792ae117fe31ba..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/rpc.js.map b/dist/esm/program/namespace/rpc.js.map
+deleted file mode 100644
+index 163de22738cb02a78009559a8fb4960c70d09f91..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/simulate.d.ts b/dist/esm/program/namespace/simulate.d.ts
+deleted file mode 100644
+index b8df9b2ea3707c46746dda67ca6ae7d96807d03b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/simulate.d.ts.map b/dist/esm/program/namespace/simulate.d.ts.map
+deleted file mode 100644
+index 340cf78435756113152887e15ee4249e1b781726..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/simulate.js b/dist/esm/program/namespace/simulate.js
+deleted file mode 100644
+index 331055f1a5e428cc6577572c8f07e289abc2fa71..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/simulate.js.map b/dist/esm/program/namespace/simulate.js.map
+deleted file mode 100644
+index 1bae23a7481306678678aeb33f5da9bb9b2bb6bc..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/state.d.ts b/dist/esm/program/namespace/state.d.ts
+deleted file mode 100644
+index 722980128ea238f5c887db26c620979038f09d8b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/state.d.ts.map b/dist/esm/program/namespace/state.d.ts.map
+deleted file mode 100644
+index 12d4a30a1e16bdffa077338ee3293a51f327f466..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/state.js b/dist/esm/program/namespace/state.js
+deleted file mode 100644
+index 2bb0d7f895cf219a94e848fe08ecd378b695f3b2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/state.js.map b/dist/esm/program/namespace/state.js.map
+deleted file mode 100644
+index ccae29f9a22ff9beb34aa5e7aaaaebed016924ac..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/transaction.d.ts b/dist/esm/program/namespace/transaction.d.ts
+deleted file mode 100644
+index 5ed2a2b1f1fb41c3543469213a421e6debc74ea4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/transaction.d.ts.map b/dist/esm/program/namespace/transaction.d.ts.map
+deleted file mode 100644
+index 81dc9f1e2abc9f2a9f2a0424c012a502baaf289e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/transaction.js b/dist/esm/program/namespace/transaction.js
+deleted file mode 100644
+index 3ad0120c547ef2c741e77a83c56f25d92fbfbfe7..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/transaction.js.map b/dist/esm/program/namespace/transaction.js.map
+deleted file mode 100644
+index a3dc04e6a72778e524731fb37a49b9451ea6bd70..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/types.d.ts b/dist/esm/program/namespace/types.d.ts
+deleted file mode 100644
+index c3a3c2fce78481bec9b14fb511411aa2c493f53c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/types.d.ts.map b/dist/esm/program/namespace/types.d.ts.map
+deleted file mode 100644
+index 45ee1c5d16e3df9a1422c7f5847bcb499fdda5ee..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/types.js b/dist/esm/program/namespace/types.js
+deleted file mode 100644
+index 718fd38ae40c67ea23b242517cf9919f602c5a3e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/types.js.map b/dist/esm/program/namespace/types.js.map
+deleted file mode 100644
+index 8b3712484c356eb563440f04074f2cb72fb6e286..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/views.d.ts b/dist/esm/program/namespace/views.d.ts
+deleted file mode 100644
+index 835cc86cd424d810c47dccc5e1c4371c96aae5ba..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/views.d.ts.map b/dist/esm/program/namespace/views.d.ts.map
+deleted file mode 100644
+index 1515d58e1ed6537a963be8bf73d7eae7f28e5582..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/views.js b/dist/esm/program/namespace/views.js
+deleted file mode 100644
+index 19d68caae4ec97e1be3c36f850559868910747c1..0000000000000000000000000000000000000000
+diff --git a/dist/esm/program/namespace/views.js.map b/dist/esm/program/namespace/views.js.map
+deleted file mode 100644
+index 8ef68e87159e21bf8b5889486d67c26eba3efac0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/provider.d.ts b/dist/esm/provider.d.ts
+deleted file mode 100644
+index e2ba9863187b1e805ad5ff4658751b180b1cc72f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/provider.d.ts.map b/dist/esm/provider.d.ts.map
+deleted file mode 100644
+index 9d7166e09c5a11de8cc7378ce01d79769dd67984..0000000000000000000000000000000000000000
+diff --git a/dist/esm/provider.js b/dist/esm/provider.js
+deleted file mode 100644
+index df789ef15ae8a50796f238d04dbf6775eed67be8..0000000000000000000000000000000000000000
+diff --git a/dist/esm/provider.js.map b/dist/esm/provider.js.map
+deleted file mode 100644
+index ffdf0ebe0225ded919c0a880cd4ed07243b8cbcd..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/associated-token.d.ts b/dist/esm/spl/associated-token.d.ts
+deleted file mode 100644
+index 938c49754bf9427ffa5cb9fc2fd4c3196401a6ff..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/associated-token.d.ts.map b/dist/esm/spl/associated-token.d.ts.map
+deleted file mode 100644
+index cc0b108d158c0fa64f2027385e142de86315748e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/associated-token.js b/dist/esm/spl/associated-token.js
+deleted file mode 100644
+index cadd84f5a103f4fdc009d818b052aca817b44f35..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/associated-token.js.map b/dist/esm/spl/associated-token.js.map
+deleted file mode 100644
+index 05b0c3f45d5319ce7a777213487cba4a6a6ab4c6..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/index.d.ts b/dist/esm/spl/index.d.ts
+deleted file mode 100644
+index 31fb8dbfa2e9c03cc038bd1d42d8b4dd871f6a9c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/index.d.ts.map b/dist/esm/spl/index.d.ts.map
+deleted file mode 100644
+index a1302db01d07f419dcf1cdba4a33b9a44b616994..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/index.js b/dist/esm/spl/index.js
+deleted file mode 100644
+index 481489493b5b84a38cad8eb3578b41e3331e52c5..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/index.js.map b/dist/esm/spl/index.js.map
+deleted file mode 100644
+index d7baa6df319b14459a4b339f15e33071ae6bc802..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/token.d.ts b/dist/esm/spl/token.d.ts
+deleted file mode 100644
+index 83907a0b82938030a4a5545fd04d88b3c94eca20..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/token.d.ts.map b/dist/esm/spl/token.d.ts.map
+deleted file mode 100644
+index fca2c151abeb5cfc61d8fe0648110de57e74992a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/token.js b/dist/esm/spl/token.js
+deleted file mode 100644
+index bb192aa7b7c2d58994c6413227953093717c280a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/spl/token.js.map b/dist/esm/spl/token.js.map
+deleted file mode 100644
+index 50f1fd40b5f2c99b3c38d5780d5675ad045cd772..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/base64.d.ts b/dist/esm/utils/bytes/base64.d.ts
+deleted file mode 100644
+index b5d66981f4399eed3b79b3a255e01af018b09182..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/base64.d.ts.map b/dist/esm/utils/bytes/base64.d.ts.map
+deleted file mode 100644
+index 8a024185148a85b917de8cb9ebb3a536fdf316f2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/base64.js b/dist/esm/utils/bytes/base64.js
+deleted file mode 100644
+index 32c5d6c4c3dc19b89af38bdc00bfbca8463ce458..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/base64.js.map b/dist/esm/utils/bytes/base64.js.map
+deleted file mode 100644
+index afd1144b957e87361903ab452f153b0f43585920..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/bs58.d.ts b/dist/esm/utils/bytes/bs58.d.ts
+deleted file mode 100644
+index 0d24ed3279fc48ed875394ab15654a27b96273f3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/bs58.d.ts.map b/dist/esm/utils/bytes/bs58.d.ts.map
+deleted file mode 100644
+index 1e56d5574aaee608f46dbc55f365e0e02b33b6d1..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/bs58.js b/dist/esm/utils/bytes/bs58.js
+deleted file mode 100644
+index c33d9b583c1f89b28b6efb56ecdb3a656c4f33be..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/bs58.js.map b/dist/esm/utils/bytes/bs58.js.map
+deleted file mode 100644
+index 013f3daec08df4caecf51b1f02bebf15ae3e8768..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/hex.d.ts b/dist/esm/utils/bytes/hex.d.ts
+deleted file mode 100644
+index 021ea9d090b78c1a325a796355c808ad55cbfbc4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/hex.d.ts.map b/dist/esm/utils/bytes/hex.d.ts.map
+deleted file mode 100644
+index f4d48375ea0a2ca94b7858a7c159a98119ab7da3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/hex.js b/dist/esm/utils/bytes/hex.js
+deleted file mode 100644
+index 263088eee40644f82f4a48f625b407985b6713d8..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/hex.js.map b/dist/esm/utils/bytes/hex.js.map
+deleted file mode 100644
+index 8511c27221945ec66b8598c483132c3e25a61883..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/index.d.ts b/dist/esm/utils/bytes/index.d.ts
+deleted file mode 100644
+index 1a0eba3ff8bbfa0572b774949c10450b628fd8c6..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/index.d.ts.map b/dist/esm/utils/bytes/index.d.ts.map
+deleted file mode 100644
+index 9d33f1891f5b5dc6544fa553c7e0e8ab35493704..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/index.js b/dist/esm/utils/bytes/index.js
+deleted file mode 100644
+index d978473d04ebc3ef084b0bd07565cb7340e8ad96..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/index.js.map b/dist/esm/utils/bytes/index.js.map
+deleted file mode 100644
+index 470b86fc9e6390c2e28c54acccf90d80619bd9a2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/utf8.d.ts b/dist/esm/utils/bytes/utf8.d.ts
+deleted file mode 100644
+index e56620f12bd6c707bf2e6cfdbc6c5193f80af5b1..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/utf8.d.ts.map b/dist/esm/utils/bytes/utf8.d.ts.map
+deleted file mode 100644
+index 00b54f3daac42c01c70bc124ccb16125f7343348..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/utf8.js b/dist/esm/utils/bytes/utf8.js
+deleted file mode 100644
+index 6535b3c8a26c96810ab02cec024a20666b8f0b4f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/bytes/utf8.js.map b/dist/esm/utils/bytes/utf8.js.map
+deleted file mode 100644
+index df33e8d94fed4b5ef289e076df4b1992a2df8b7f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/common.d.ts b/dist/esm/utils/common.d.ts
+deleted file mode 100644
+index a1b6c90c504dfd7de7f1190d14e7f3e9ed7be001..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/common.d.ts.map b/dist/esm/utils/common.d.ts.map
+deleted file mode 100644
+index f5a3031335445a8078488409e4b8a817ea977975..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/common.js b/dist/esm/utils/common.js
+deleted file mode 100644
+index be17b6637cde1e8955a1e0d3b1365a8f3db11a74..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/common.js.map b/dist/esm/utils/common.js.map
+deleted file mode 100644
+index bcafa6ea0d2d261ddd7fc7a1a9acdb75edcf68f2..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/features.d.ts b/dist/esm/utils/features.d.ts
+deleted file mode 100644
+index e5f059d358dd6fa186ef4064d3f2a35134c5c705..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/features.d.ts.map b/dist/esm/utils/features.d.ts.map
+deleted file mode 100644
+index fe38a8d3970df49407c96a80caa772a9e2331e1d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/features.js b/dist/esm/utils/features.js
+deleted file mode 100644
+index f27c019419b275140db9677b30e96a120dfe394d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/features.js.map b/dist/esm/utils/features.js.map
+deleted file mode 100644
+index 4ddbe5550cf436ee1c81dd15fed9db42fecdf2b5..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/index.d.ts b/dist/esm/utils/index.d.ts
+deleted file mode 100644
+index 327136231af8e7d220eafa3bec3714d925ad7400..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/index.d.ts.map b/dist/esm/utils/index.d.ts.map
+deleted file mode 100644
+index 1d7fce0199ec5e07ff55020320f9206030315969..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/index.js b/dist/esm/utils/index.js
+deleted file mode 100644
+index 61e4dbe618e2ba296144bbeca0daff6cea821f6d..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/index.js.map b/dist/esm/utils/index.js.map
+deleted file mode 100644
+index 2b8df83a58e97e37433db7fc8bc62b1bfa03c228..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/pubkey.d.ts b/dist/esm/utils/pubkey.d.ts
+deleted file mode 100644
+index 6b245692eab63352d894ce94f36cadd5df9b815c..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/pubkey.d.ts.map b/dist/esm/utils/pubkey.d.ts.map
+deleted file mode 100644
+index 42eafb368f708502df5cbd3aaf47fa861291565f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/pubkey.js b/dist/esm/utils/pubkey.js
+deleted file mode 100644
+index c7ac6702c8540d3f7f4789b36b10e16dcd18173b..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/pubkey.js.map b/dist/esm/utils/pubkey.js.map
+deleted file mode 100644
+index e79736aea81cfe86741357e28458ef0fb74660e0..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/registry.d.ts b/dist/esm/utils/registry.d.ts
+deleted file mode 100644
+index 109b7c68bdea6701d38f6d006b4d9bebbf26e279..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/registry.d.ts.map b/dist/esm/utils/registry.d.ts.map
+deleted file mode 100644
+index c9ac69fe32fe0aa9c24a542299b72bb5acd0d5f3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/registry.js b/dist/esm/utils/registry.js
+deleted file mode 100644
+index 3b9c01d4edaa1af5f67c062beaa4dda4e90c19e3..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/registry.js.map b/dist/esm/utils/registry.js.map
+deleted file mode 100644
+index 91d48a6a17c2734a0a7325aebde9200ef0a9197f..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/rpc.d.ts b/dist/esm/utils/rpc.d.ts
+deleted file mode 100644
+index 9f0ce0f122b8d6496016401e1e89a0e09f39aeed..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/rpc.d.ts.map b/dist/esm/utils/rpc.d.ts.map
+deleted file mode 100644
+index f4fde80572cd8f57bda2162ac9fa6ced5b31da03..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/rpc.js b/dist/esm/utils/rpc.js
+deleted file mode 100644
+index 7631522ff89103b1759fb69fa78fd3dced99a937..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/rpc.js.map b/dist/esm/utils/rpc.js.map
+deleted file mode 100644
+index 664004bb694b9feedb83fbb00985981d618c0ca4..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/sha256.d.ts b/dist/esm/utils/sha256.d.ts
+deleted file mode 100644
+index 2f9b1f515546ea0f02388eec9ca079784d4b7f20..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/sha256.d.ts.map b/dist/esm/utils/sha256.d.ts.map
+deleted file mode 100644
+index b79f726c7bd9540d373706da350d259770d73311..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/sha256.js b/dist/esm/utils/sha256.js
+deleted file mode 100644
+index 110309a7c495b77a50d36583fe12406d7cfb986a..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/sha256.js.map b/dist/esm/utils/sha256.js.map
+deleted file mode 100644
+index 9ed256dd8f71cfecf2949f54966b0697101449ec..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/token.d.ts b/dist/esm/utils/token.d.ts
+deleted file mode 100644
+index c9745ca8fa4bf112d1de28fd207e5e13d28e5ba1..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/token.d.ts.map b/dist/esm/utils/token.d.ts.map
+deleted file mode 100644
+index 1c83b507b623180792f9c7e04b616420b69415d9..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/token.js b/dist/esm/utils/token.js
+deleted file mode 100644
+index 422bc45425525c130e33e4f89b32958b8be323bb..0000000000000000000000000000000000000000
+diff --git a/dist/esm/utils/token.js.map b/dist/esm/utils/token.js.map
+deleted file mode 100644
+index eeaf49b378d5ead4be6c7d0a19d29ba9b9c35106..0000000000000000000000000000000000000000
+diff --git a/dist/esm/workspace.d.ts b/dist/esm/workspace.d.ts
+deleted file mode 100644
+index 63ba1f6c48d4d4adaaeea8fd2b5978acfecb6161..0000000000000000000000000000000000000000
+diff --git a/dist/esm/workspace.d.ts.map b/dist/esm/workspace.d.ts.map
+deleted file mode 100644
+index 594bdacb9d7971097bef0a6e44a6dc426cde9d6e..0000000000000000000000000000000000000000
+diff --git a/dist/esm/workspace.js b/dist/esm/workspace.js
+deleted file mode 100644
+index 44d98581dd664fe3d117e412179e5ab63064c073..0000000000000000000000000000000000000000
+diff --git a/dist/esm/workspace.js.map b/dist/esm/workspace.js.map
+deleted file mode 100644
+index 78560f48421a0808b69bcb215f828700e496fd40..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 726d7801b1e374231e46a0bf48f3abf086a69180..0bdd22d5d936d5a5f0c1ca15915da1b131a3f5af 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,6 @@
+   "name": "@project-serum/anchor",
+   "version": "0.25.0",
+   "description": "Anchor client",
+-  "module": "./dist/esm/index.js",
+   "main": "./dist/cjs/index.js",
+   "browser": "./dist/browser/index.js",
+   "license": "(MIT OR Apache-2.0)",

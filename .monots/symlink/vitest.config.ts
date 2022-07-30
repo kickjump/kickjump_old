@@ -9,6 +9,11 @@ const config = defineConfig({
     svelte({ hot: !process.env.VITEST }),
   ],
   test: {
+    // deps: {
+    //   inline: ['@project-serum/anchor'],
+    //   fallbackCJS: true,
+    //   external: ['@project-serum/anchor'],
+    // },
     include: ['**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx,svelte}'],
     setupFiles: ['./tests/setup/spec-setup.ts'],
     globalSetup: ['./tests/setup/global-spec-setup.ts'],
@@ -16,7 +21,8 @@ const config = defineConfig({
     teardownTimeout: 5000,
     watchExclude: ['.*\\/node_modules\\/.*', '.*\\/(?:build|dist)\\/.*', '.*\\/postgres-data\\/.*'],
   },
-  optimizeDeps: { entries: ['msw'] },
+
+  optimizeDeps: { include: ['@project-serum/anchor'] },
 });
 
 export default config;
