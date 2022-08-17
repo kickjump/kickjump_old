@@ -40,7 +40,7 @@
     "db:init": "edgedb project init --non-interactive",
     "db:remove": "edgedb instance destroy --force --instance",
     "dev": "run-s generate:esm types:copy types:build types:version",
-    "generate:esm": "edgeql-js --target=esm --output-dir dist --force-overwrite",
+    "generate:esm": "edgeql-js --target=esm --output-dir dist --force-overwrite --instance kickjump__edgedb",
     "maybe_fix": "edgeql-js --target ts --output-dir tmp --force-overwrite && tsx scripts/patch-edgedb-gen.ts && rm -rf src/config.json src/*.ts src/modules src/syntax && mv tmp/* src/",
     "migrate": "run-s migrate:create migrate:run dev",
     "migrate:create": "edgedb migration create",
@@ -51,7 +51,7 @@
     "types:version": "tsx scripts/append-version.ts"
   },
   "dependencies": {
-    "edgedb": "^0.21.1"
+    "edgedb": "0.21.1"
   },
   "publishConfig": {
     "access": "public"

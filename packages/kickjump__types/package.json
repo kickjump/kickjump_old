@@ -39,20 +39,20 @@
     "dist"
   ],
   "dependencies": {
-    "@felte/common": "^1.1.1",
+    "@felte/common": "^1.1.2",
     "@kickjump/edgedb": "^0.0.0",
-    "@solana/web3.js": "^1.50.1",
+    "@solana/web3.js": "^1.53.0",
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "edgedb": "^0.21.1",
+    "edgedb": "0.21.1",
     "filter-anything": "^3.0.3",
     "is-what": "^4.1.7",
     "profane-words": "^1.5.3",
     "superjson": "^1.9.1",
     "ts-extras": "^0.10.2",
-    "type-fest": "^2.17.0",
-    "zod": "^3.17.10"
+    "type-fest": "^2.18.0",
+    "zod": "^3.18.0"
   },
   "publishConfig": {
     "access": "public"
