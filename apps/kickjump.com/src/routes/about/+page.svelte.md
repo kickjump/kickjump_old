@@ -2,12 +2,6 @@
 layout: page
 ---
 
-<script context="module">
-  export const load = () => {
-    return { stuff: { title: 'About | KickJump', animateTransition: true }}
-  };
-</script>
-
 <script>
   import { Button } from '$components';
 </script>

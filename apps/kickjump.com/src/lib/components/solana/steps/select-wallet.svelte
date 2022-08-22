@@ -4,11 +4,11 @@
   import { quintInOut } from 'svelte/easing';
   import { type FadeParams, fade } from 'svelte/transition';
 
-  import { session } from '$app/stores';
   import Button from '$components/buttons/button.svelte';
   import { Icon } from '$components/icon';
   import { Skeleton } from '$components/loaders';
   import { ModalTitle } from '$components/modal';
+  import { session } from '$stores/session';
   import {
     type WalletWithMetadata,
     cleanUrl,

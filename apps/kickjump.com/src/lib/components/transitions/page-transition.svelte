@@ -15,7 +15,7 @@
   $: classes = clsx('max-w-full overflow-x-hidden grid', className);
 </script>
 
-{#if animateTransition}
+{#if !animateTransition}
   <main class={classes}><slot /></main>
 {:else}
   {#key refresh}

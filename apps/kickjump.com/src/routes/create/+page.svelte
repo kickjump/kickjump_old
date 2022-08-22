@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import 'bytemd/dist/index.css';
 
   import { validator } from '@felte/validator-zod';
@@ -10,13 +10,8 @@
   import type { z } from 'zod';
 
   import { goto } from '$app/navigation';
-  import { authenticated } from '$lib/route-loaders';
   import { Editor } from '$modules/editor';
 
-  export const load = authenticated({ stuff: { title: 'Create Project' } });
-</script>
-
-<script lang="ts">
   let filterText = '';
   const { proxy } = context();
   const schema = ProjectUtils.createSchema({ name: checkName });
@@ -97,7 +92,7 @@
         {/if}
       </ul>
     </div>
-    <Select items={$tags.data} isMulti bind:filterText isCreatable bind:justValue={$data.tags} />
+    <Select items={$tags.data} multiple bind:filterText isCreatable bind:justValue={$data.tags} />
 
     <button type="submit" class="btn btn-primary">Create</button>
   </section>

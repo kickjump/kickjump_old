@@ -20,7 +20,7 @@
   <Header />
   <PageTransition
     refresh={$page.routeId ?? ''}
-    animateTransition={$page.stuff.animateTransition ?? false}
+    animateTransition={$page.data.animateTransition ?? false}
   >
     <slot />
   </PageTransition>

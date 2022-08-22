@@ -1,13 +1,11 @@
-<script lang="ts" context="module">
-  import type { ProjectUtils } from '@kickjump/types';
-
+<script lang="ts">
   import { Button } from '$components';
   import { Viewer } from '$modules/editor';
-</script>
 
-<script lang="ts">
+  import type { PageData } from './$types';
 
-  export let project: ProjectUtils.Project;
+  export let data: PageData;
+  $: ({ project } = data);
 </script>
 
 <section>

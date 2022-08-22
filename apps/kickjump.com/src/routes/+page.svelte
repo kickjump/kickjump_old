@@ -1,9 +1,6 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import { Button, PageWrapper } from '$components';
-  import { loader } from '$lib/route-loaders';
   import { GettingStartedCard } from '$modules/create-project';
-
-  export const load = loader({ stuff: { animateTransition: true, title: 'KickJump' } });
 </script>
 
 <div class="hero hero-height">
@@ -12,9 +9,9 @@
       <h1 class="pb-14 gradient-text">
         <strong>Unlock</strong> financial freedom with open source
       </h1>
-      <Button href="/projects" theme="primary" variant="outline" size="lg" class="border-4"
-        >Get Started</Button
-      >
+      <Button href="/projects" theme="primary" variant="outline" size="lg" class="border-4">
+        Get Started
+      </Button>
     </div>
   </div>
 </div>

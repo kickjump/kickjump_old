@@ -1,23 +1,15 @@
 import { MembershipModel, ProjectModel } from '@kickjump/db';
 import { ProjectUtils, Visibility } from '@kickjump/types';
-import type { RequestEvent, RequestHandlerOutput } from '@sveltejs/kit';
+import { type ServerLoadEvent, error } from '@sveltejs/kit';
 
-const NOT_FOUND = { status: 404 } as const;
+import type { RouteParams } from './$types';
 
-export async function GET(event: RequestEvent): Promise<RequestHandlerOutput> {
+export async function load(event: ServerLoadEvent<RouteParams>) {
   const { name } = event.params;
-  console.log({ name });
-
-  if (!name) {
-    return NOT_FOUND;
-  }
-
   const project = await ProjectModel.findByName(name);
 
   if (!project) {
-    return {
-      status: 404,
-    };
+    throw error(404, `No project exists for ${name}`);
   }
 
   const permissions: string[] = [Visibility.$public];
@@ -32,10 +24,10 @@ export async function GET(event: RequestEvent): Promise<RequestHandlerOutput> {
   const value = ProjectUtils.readPermissions(project, permissions);
 
   if (!value) {
-    return { status: 403, body: { error: true, message: MESSAGE[project.visibility] } };
+    throw error(403, MESSAGE[project.visibility]);
   }
 
-  return { status: 200, body: { project: project as any } };
+  return { project };
 }
 
 const MESSAGE: Record<Visibility, string> = {

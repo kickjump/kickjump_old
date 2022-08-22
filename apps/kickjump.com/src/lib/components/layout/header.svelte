@@ -2,11 +2,12 @@
   import { EnhancedURL } from '@kickjump/svelte-auth/client';
   import themeStore, { setTheme } from 'svelte-themes';
 
-  import { page, session } from '$app/stores';
+  import { page } from '$app/stores';
   import { Button } from '$components/buttons';
   import Icon from '$components/icon/icon.svelte';
   import Logo from '$components/logo/logo.svelte';
   import { auth } from '$lib/auth';
+  import { session } from '$stores/session';
   import { matchesHref } from '$utils/core';
 
   import { IconToggle } from '../toggles';

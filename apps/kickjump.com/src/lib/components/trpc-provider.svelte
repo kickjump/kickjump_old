@@ -3,7 +3,7 @@
   import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
   import { onMount } from 'svelte';
 
-  import { session } from '$app/stores';
+  import { session } from '$stores/session';
 
   const [client, setCsrf] = createClient();
 

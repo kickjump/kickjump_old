@@ -1,41 +1,35 @@
-import type { Load, LoadOutput } from '@sveltejs/kit';
-import { isFunction } from 'is-what';
+import { type LoadEvent, redirect } from '@sveltejs/kit';
 
-export function authenticated(fn?: Load | LoadOutput): Load {
-  return (event) => {
-    const { session, url, props } = event;
+import type { SeoProps } from '$components/seo';
 
-    if (!session.user) {
-      return { redirect: `/login?redirect=${url.pathname}`, status: 307 };
-    }
+import type { LayoutData } from '../routes/$types.js';
 
-    if (!fn || !isFunction(fn)) {
-      return { props, ...fn };
-    }
-
-    return fn(event);
-  };
+export function authenticated(url: URL, session: App.Session) {
+  if (!session?.user) {
+    console.log('redirecting');
+    throw redirect(307, `/login?redirect=${url.pathname}`);
+  }
 }
 
-export function notAuthenticated(fn?: Load | LoadOutput): Load {
-  return (event) => {
-    const { session, props, url } = event;
-
-    if (session.user) {
-      // const redirectUrl = new URL(params.redirect ?? '/', url);
-      // redirectUrl.searchParams.set('redirect', url.href);
-      // const redirect = redirectUrl.href;
-      return { redirect: url.searchParams.get('redirect') ?? '/', status: 307 };
-    }
-
-    if (!fn || !isFunction(fn)) {
-      return { props, ...fn };
-    }
-
-    return fn(event);
-  };
+export function notAuthenticated(url: URL, session: App.Session) {
+  if (session?.user?.id) {
+    throw redirect(307, url.searchParams.get('redirect') ?? '/');
+  }
 }
 
-export function loader(fn: Load | LoadOutput): Load {
-  return (event) => (isFunction(fn) ? fn(event) : { props: event.props, ...fn });
+type BaseLoadEvent = LoadEvent<object, object | null, LayoutData>;
+
+interface WithSeoProps<Data extends object, Event extends BaseLoadEvent = BaseLoadEvent> {
+  seo: SeoProps;
+  event: Event;
+  data: Data;
+}
+
+export async function withSeo<Data extends object, Event extends BaseLoadEvent = BaseLoadEvent>(
+  props: WithSeoProps<Data, Event>,
+) {
+  const { seo, data, event } = props;
+  const parent = await event.parent();
+
+  return { seo: { ...parent.seo, ...seo }, ...data };
 }

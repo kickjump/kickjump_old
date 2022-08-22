@@ -1,13 +1,8 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import { page } from '$app/stores';
   import { Button } from '$components';
   import { auth } from '$lib/auth';
-  import { notAuthenticated } from '$lib/route-loaders';
 
-  export const load = notAuthenticated();
-</script>
-
-<script lang="ts">
   $: githubAuth = auth.strategyUrl('github', 'login', {
     redirect: $page.url.searchParams.get('redirect') ?? undefined,
   }).searchPath;

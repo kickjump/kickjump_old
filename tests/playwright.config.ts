@@ -2,7 +2,7 @@ import type { PlaywrightTestConfig } from '@kickjump/playwright';
 
 process.env.VITE_ENDPOINT_MOCKING_ENABLED = 'true';
 const baseURL = process.env.WEBSITE_URL ?? 'http://localhost:3030';
-process.env.EDGEDB_INSTANCE = 'kickjump__testdb';
+process.env.EDGEDB_INSTANCE = 'kjtestdb';
 
 const config: PlaywrightTestConfig = {
   use: { baseURL, trace: 'retain-on-failure' },

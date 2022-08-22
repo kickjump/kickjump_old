@@ -9,6 +9,7 @@
     "dist"
   ],
   "scripts": {
+    "postinstall": "pnpm playwright install",
     "test:anchor": "vitest run --config ./anchor.config.ts",
     "test:anchor:watch": "vitest --config ./anchor.config.ts",
     "test:db": "vitest run --config ./db.config.ts",

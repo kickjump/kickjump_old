@@ -1,10 +1,9 @@
-import './src/app.d.ts';
-
 import { sveltekit } from '@sveltejs/kit/vite';
 import * as path from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  // build: { target: ['es2022'] },
   plugins: [sveltekit()],
   resolve: {
     alias: {
@@ -15,8 +14,9 @@ export default defineConfig({
       $server: path.resolve('./src/lib/server'),
       $types: path.resolve('./src/lib/types'),
       $utils: path.resolve('./src/lib/utils'),
-      $lib: path.resolve('./src/lib'),
+      // $lib: path.resolve('./src/lib'),
     },
   },
   server: { port: 3000 },
+  optimizeDeps: { esbuildOptions: { target: 'es2022' } },
 });
