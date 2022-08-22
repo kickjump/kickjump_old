@@ -108,5 +108,7 @@
   "peacock.color": "#633594",
   "rust-analyzer.cachePriming.enable": true,
   "svelte.enable-ts-plugin": true,
-  "svelte.ask-to-enable-ts-plugin": true
+  "svelte.ask-to-enable-ts-plugin": true,
+  "vitest.commandLine": "pnpm vitest",
+  "vitest.include": ["**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx,svelte}"]
 }

@@ -57,7 +57,7 @@ function createUser(login: GitHubUsername): GitHubUserData['user'] {
     type: 'User',
     site_admin: false,
     name: `${firstName} ${lastName}`,
-    company: faker.company.companyName(),
+    company: faker.company.name(),
     blog: faker.internet.url(),
     location: faker.address.city(),
     email: faker.internet.email(firstName, lastName),

@@ -32,6 +32,10 @@ const config = {
       // extends: ['monots/jest', 'monots/jest-dom', 'monots/testing-library'],
     },
     {
+      files: ['packages/kickjump__query/src/**/*.ts'],
+      rules: { '@typescript-eslint/naming-convention': 'off' },
+    },
+    {
       files: ['apps/kickjump.com/**/*.test.ts', 'tests/kickjump.com/*.test.ts'],
       extends: ['plugin:playwright/playwright-test'],
     },

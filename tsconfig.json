@@ -22,6 +22,12 @@
       "path": "packages/kickjump__playwright/src"
     },
     {
+      "path": "packages/kickjump__query/src"
+    },
+    {
+      "path": "packages/kickjump__query/tests"
+    },
+    {
       "path": "packages/kickjump__svelte-auth/src"
     },
     {
