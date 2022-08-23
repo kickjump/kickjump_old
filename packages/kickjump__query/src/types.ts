@@ -1,4 +1,3 @@
-import type { QueryClient } from '@tanstack/query-core';
 import type {
   DefinedQueryObserverResult,
   InfiniteQueryObserverOptions,
@@ -11,18 +10,13 @@ import type {
   QueryObserverResult,
 } from '@tanstack/query-core';
 
-export interface ContextOptions {
-  context?: () => QueryClient;
-}
-
 export interface UseBaseQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> extends ContextOptions,
-    QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey> {}
+> extends QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey> {}
 
 export interface UseQueryOptions<
   TQueryFnData = unknown,
@@ -37,8 +31,7 @@ export interface UseInfiniteQueryOptions<
   TData = TQueryFnData,
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> extends ContextOptions,
-    InfiniteQueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey> {}
+> extends InfiniteQueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey> {}
 
 export type UseBaseQueryResult<TData = unknown, TError = unknown> = QueryObserverResult<
   TData,
@@ -67,11 +60,10 @@ export interface UseMutationOptions<
   TError = unknown,
   TVariables = void,
   TContext = unknown,
-> extends ContextOptions,
-    Omit<
-      MutationObserverOptions<TData, TError, TVariables, TContext>,
-      '_defaulted' | 'variables'
-    > {}
+> extends Omit<
+    MutationObserverOptions<TData, TError, TVariables, TContext>,
+    '_defaulted' | 'variables'
+  > {}
 
 export type UseMutateFunction<
   TData = unknown,

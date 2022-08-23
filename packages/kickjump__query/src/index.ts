@@ -1,12 +1,3 @@
-export { type HydrateProps, Hydrate, useHydrate } from './hydrate.js';
-export { IsRestoringProvider, useIsRestoring } from './is-restoring.js';
-export type { QueryClientProviderProps } from './query-client-provider.js';
-export { defaultContext, QueryClientProvider, useQueryClient } from './query-client-provider.js';
-export type { QueryErrorResetBoundaryProps } from './query-error-reset-boundary.js';
-export {
-  QueryErrorResetBoundary,
-  useQueryErrorResetBoundary,
-} from './query-error-reset-boundary.js';
 export * from './types.js';
 export { useInfiniteQuery } from './use-infinite-query.js';
 export { useIsFetching } from './use-is-fetching.js';
@@ -16,4 +7,5 @@ export { type QueriesOptions, type QueriesResults, useQueries } from './use-quer
 export { useQuery } from './use-query.js';
 
 // Re-export core
+export { getQueryClient, QUERY_CLIENT_CONTEXT, useQueryClient } from './use-query-client.js';
 export * from '@tanstack/query-core';

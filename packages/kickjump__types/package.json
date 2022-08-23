@@ -51,7 +51,7 @@
     "profane-words": "^1.5.3",
     "superjson": "^1.9.1",
     "ts-extras": "^0.11.0",
-    "type-fest": "^2.18.1",
+    "type-fest": "^2.19.0",
     "zod": "^3.18.0"
   },
   "publishConfig": {

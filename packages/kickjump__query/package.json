@@ -28,13 +28,13 @@
     "dist"
   ],
   "dependencies": {
-    "@tanstack/query-core": "^4.0.0-beta.1",
-    "@types/use-sync-external-store": "^0.0.3",
-    "use-sync-external-store": "^1.2.0"
+    "@tanstack/query-core": "^4.2.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/svelte": "^3.2.1",
     "@tsconfig/svelte": "^3.0.0",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "svelte": "^3.49.0"
   },
   "peerDependencies": {
