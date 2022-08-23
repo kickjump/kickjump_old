@@ -138,7 +138,7 @@
     "svelte": "^3.49.0",
     "svelte-check": "^2.8.1",
     "svelte-json-tree": "^1.0.0",
-    "svelte-select": "5.0.0-beta.19",
+    "svelte-select": "5.0.0-beta.15",
     "svelte-seo": "^1.4.1",
     "svelte-themes": "^0.0.98",
     "svelte-tiny-virtual-list": "^2.0.5",

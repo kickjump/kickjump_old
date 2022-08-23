@@ -10,7 +10,7 @@
   import type { z } from 'zod';
 
   import { goto } from '$app/navigation';
-  import { Editor } from '$modules/editor';
+  // import { Editor } from '$modules/editor';
 
   let filterText = '';
   const { proxy } = context();
@@ -63,7 +63,6 @@
       $touched.tags = true;
     }
   }
-  $: console.log($data, $errors, { $isValid });
 </script>
 
 <form class="grid-cols-2 grid gap-4" use:form>
@@ -92,7 +91,14 @@
         {/if}
       </ul>
     </div>
-    <Select items={$tags.data} multiple bind:filterText isCreatable bind:justValue={$data.tags} />
+    <Select
+      items={$tags.data}
+      isMulti
+      bind:filterText
+      isCreatable
+      bind:justValue={$data.tags}
+      placeholder="Select Tags"
+    />
 
     <button type="submit" class="btn btn-primary">Create</button>
   </section>
@@ -108,7 +114,13 @@
         <span class="label-text text-error-content"> &nbsp; </span>
       {/if}
     </ul>
-    <Editor bind:value={$data.description} />
+    <textarea
+      name="description"
+      rows={5}
+      placeholder="Enter description here"
+      class={cx('textarea textarea-bordered w-full', $errors.description && 'textarea-error')}
+    />
+    <!-- <Editor bind:value={$data.description} /> -->
   </section>
 </form>
 

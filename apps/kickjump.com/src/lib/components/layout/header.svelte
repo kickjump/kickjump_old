@@ -22,7 +22,6 @@
   ];
 
   $: ({ user } = $session);
-  // $: console.log($session);
   $: loginPath = EnhancedURL.of({
     path: '/login',
     base: $page.url,

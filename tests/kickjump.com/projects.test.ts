@@ -15,13 +15,13 @@ test.describe('authenticated', () => {
     await page.goto('/create');
     await page.waitForLoadState('networkidle');
     const nameField = page.locator('input[name="name"]');
-    const editorField = page.locator('.CodeMirror textarea');
+    const editorField = page.locator('textarea');
     const button = page.locator('text="Create"');
 
     await nameField.type('my-project', { delay: 10 });
     await editorField.type(
       '# Heading \n\nThis is the best way to type stuff that must be at least 50 characters!!',
-      { delay: 10 },
+      { delay: 1 },
     );
     await button.click();
     await page.waitForNavigation();

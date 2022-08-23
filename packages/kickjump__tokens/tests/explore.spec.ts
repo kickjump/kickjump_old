@@ -1,13 +1,13 @@
-import { GokiSDK } from '@gokiprotocol/client';
+// import { GokiSDK } from '@gokiprotocol/client';
 import { type Wallet, AnchorProvider } from '@project-serum/anchor';
 import { type PublicKey, type Transaction, Keypair } from '@solana/web3.js';
-import { expect, test } from 'vitest';
+import { test } from 'vitest';
 
 test('can create a wallet', async () => {
   const wallet = new TestWallet();
 
   const provider = new AnchorProvider(CONNECTION, wallet, {});
-  const goki = GokiSDK.load({ provider });
+  // const goki = GokiSDK.load({ provider });
 });
 
 class TestWallet implements Wallet {

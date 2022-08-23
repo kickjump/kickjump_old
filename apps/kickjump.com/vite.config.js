@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // build: { target: ['es2022'] },
+  build: { target: ['es2022'] },
   plugins: [sveltekit()],
   resolve: {
     alias: {
@@ -18,5 +18,5 @@ export default defineConfig({
     },
   },
   server: { port: 3000 },
-  optimizeDeps: { esbuildOptions: { target: 'es2022' } },
+  optimizeDeps: { esbuildOptions: { target: 'esnext' } },
 });

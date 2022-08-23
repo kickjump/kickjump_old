@@ -54,7 +54,9 @@
     "entrypoints": [
       "index.ts"
     ],
-    "tsconfigs": {},
+    "tsconfigs": {
+      "tests": {}
+    },
     "mode": "library",
     "externalModules": []
   }

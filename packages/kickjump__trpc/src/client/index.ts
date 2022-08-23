@@ -10,9 +10,9 @@ export function context() {
   return TRPCContext.context<Router>();
 }
 
-export function createClient() {
+export function createClient(base: string | URL) {
   return [
-    svelteClient.createClient({ url: TRPC_ENDPOINT, transformer }),
+    svelteClient.createClient({ url: new URL(TRPC_ENDPOINT, base).href, transformer }),
     svelteClient.setCrsf,
   ] as const;
 }

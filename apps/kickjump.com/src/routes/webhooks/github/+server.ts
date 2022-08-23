@@ -30,7 +30,7 @@ export async function POST(event: RequestEvent): Promise<Response> {
   // check that whether the webhook is valid.
   await app.webhooks.verifyAndReceive(received);
 
-  const json = JSON.parse(received.payload);
+  // const json = JSON.parse(received.payload);
 
   if (received.name === 'installation.created') {
     // do something
@@ -39,8 +39,6 @@ export async function POST(event: RequestEvent): Promise<Response> {
   if (received.name === 'installation.deleted') {
     // do something
   }
-
-  console.log(json);
 
   // Return as valid.
   return new Response(null, { status: 202 });

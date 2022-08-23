@@ -6,7 +6,6 @@ import type { LayoutData } from '../routes/$types.js';
 
 export function authenticated(url: URL, session: App.Session) {
   if (!session?.user) {
-    console.log('redirecting');
     throw redirect(307, `/login?redirect=${url.pathname}`);
   }
 }
