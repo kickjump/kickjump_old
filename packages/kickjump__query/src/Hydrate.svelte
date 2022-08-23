@@ -7,7 +7,7 @@
   } from '@tanstack/query-core';
   import { hydrate } from '@tanstack/query-core';
 
-  import { useQueryClient } from './use-query-client.js';
+  import { useQueryClient } from '../';
 
   export let state: DehydratedState;
   export let queries: QueryOptions | undefined = undefined;

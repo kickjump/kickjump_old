@@ -10,7 +10,7 @@ export function parseLinkHeader(linkHeader: string | null | undefined): Links {
   for (const header of linkHeader.split(HEADER_SPLIT_REGEX)) {
     const link = parseLink(header);
 
-    if (!link || !link.rel) {
+    if (!link?.rel) {
       continue;
     }
 
@@ -46,7 +46,7 @@ function parseLink(header: string) {
   for (const part of parts) {
     const match = part.match(KEY_VALUE_REGEX);
 
-    if (!match || !match.groups?.key || typeof match.groups.value !== 'string') {
+    if (!match?.groups?.key || typeof match.groups.value !== 'string') {
       continue;
     }
 

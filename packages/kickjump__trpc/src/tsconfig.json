@@ -19,6 +19,9 @@
       "path": "../../kickjump__db/src"
     },
     {
+      "path": "../../kickjump__query/src"
+    },
+    {
       "path": "../../kickjump__svelte-auth/src"
     },
     {
