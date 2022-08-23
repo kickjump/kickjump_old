@@ -15,3 +15,4 @@ export {
 // Re-export core
 export { getQueryClient, QUERY_CLIENT_CONTEXT, useQueryClient } from './use-query-client.js';
 export * from '@tanstack/query-core';
+export type { Updater } from '@tanstack/query-core/build/types/packages/query-core/src/utils';

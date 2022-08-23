@@ -32,7 +32,7 @@ const config = {
       // extends: ['monots/jest', 'monots/jest-dom', 'monots/testing-library'],
     },
     {
-      files: ['packages/kickjump__query/src/**/*.ts'],
+      files: ['packages/{kickjump__query,kickjump__trpc-svelte}/src/**/*.ts'],
       rules: { '@typescript-eslint/naming-convention': 'off' },
     },
     {

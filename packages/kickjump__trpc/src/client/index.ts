@@ -1,8 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { transformer } from '@kickjump/types';
+import { transformer, TRPC_ENDPOINT } from '@kickjump/types';
 import type _webhooks from '@octokit/webhooks';
 
-import { TRPC_ENDPOINT } from '../constants';
 import type { Router } from '../router';
 import type { UseTRPCMutationOptions, UseTRPCQueryOptions } from './trpc-context.js';
 import { createSvelteQueryTRPC, createSvelteQueryTRPCProxy, TRPCContext } from './trpc-context.js';

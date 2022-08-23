@@ -1,8 +1,8 @@
 import type * as _ from '@kickjump/svelte-auth';
+import { TRPC_ENDPOINT as endpoint } from '@kickjump/types';
 import type { Handle } from '@sveltejs/kit';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
-import { TRPC_ENDPOINT } from './constants';
 import { type Context, Env } from './init.js';
 import { router } from './router/index.js';
 
@@ -12,8 +12,6 @@ import { router } from './router/index.js';
  * @see https://kit.svelte.dev/docs/hooks
  */
 export function createTRPCHandle(): Handle {
-  const endpoint = TRPC_ENDPOINT;
-
   return async function trpcHandler(props) {
     const { event, resolve } = props;
 

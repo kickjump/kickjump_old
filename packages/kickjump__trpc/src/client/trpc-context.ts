@@ -1,5 +1,3 @@
-import { CSRF_HEADER_KEY } from '@kickjump/svelte-auth/client';
-import type { UseInfiniteQueryOptions, UseInfiniteQueryResult } from '@sveltestack/svelte-query';
 import {
   type FetchInfiniteQueryOptions,
   type FetchQueryOptions,
@@ -10,6 +8,9 @@ import {
   type RefetchOptions,
   type RefetchQueryFilters,
   type SetDataOptions,
+  type Updater,
+  type UseInfiniteQueryOptions,
+  type UseInfiniteQueryResult,
   type UseMutationOptions,
   type UseMutationResult,
   type UseQueryOptions,
@@ -17,8 +18,8 @@ import {
   useInfiniteQuery,
   useMutation,
   useQuery,
-} from '@sveltestack/svelte-query';
-import type { Updater } from '@sveltestack/svelte-query/dist/queryCore/core/utils.js';
+} from '@kickjump/query';
+import { CSRF_HEADER_KEY } from '@kickjump/svelte-auth/client';
 import {
   type CreateTRPCClientOptions,
   type TRPCClient,
@@ -26,7 +27,7 @@ import {
   type TRPCClientErrorLike,
   type TRPCRequestOptions,
   createTRPCClient,
-  createTRPCClientProxy,
+  createTRPCProxyClient,
 } from '@trpc/client';
 import type {
   AnyRouter,
@@ -73,7 +74,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     return context;
   }
 
-  readonly proxy: ReturnType<typeof createTRPCClientProxy<Router>>;
+  readonly proxy: ReturnType<typeof createTRPCProxyClient<Router>>;
   readonly client: TRPCClient<Router>;
   readonly queryClient: QueryClient;
   readonly ssrState: SSRState | undefined;
@@ -86,7 +87,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     this.client = props.client;
     this.queryClient = props.queryClient;
     this.ssrState = props.ssrState;
-    this.proxy = createTRPCClientProxy<Router>(props.client);
+    this.proxy = createTRPCProxyClient<Router>(props.client);
   }
 
   fetchQuery = <
