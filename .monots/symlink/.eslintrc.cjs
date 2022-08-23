@@ -29,11 +29,14 @@ const config = {
     },
     {
       files: ['*.spec.ts'],
-      // extends: ['monots/jest', 'monots/jest-dom', 'monots/testing-library'],
+      extends: ['monots/jest', 'monots/jest-dom', 'monots/testing-library'],
     },
     {
-      files: ['packages/{kickjump__query,kickjump__trpc-svelte}/src/**/*.ts'],
-      rules: { '@typescript-eslint/naming-convention': 'off' },
+      files: ['packages/{kickjump__query,kickjump__trpc-svelte}/**'],
+      rules: {
+        '@typescript-eslint/naming-convention': 'off',
+        '@typescript-eslint/method-signature-style': 'off',
+      },
     },
     {
       files: ['apps/kickjump.com/**/*.test.ts', 'tests/kickjump.com/*.test.ts'],

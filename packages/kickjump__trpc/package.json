@@ -75,7 +75,7 @@
     "@kickjump/query": "^0.0.0",
     "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/types": "^0.0.0",
-    "@sveltejs/kit": "1.0.0-next.430",
+    "@sveltejs/kit": "1.0.0-next.431",
     "@types/node": "^18.7.11",
     "svelte": "^3.49.0",
     "vite": "^3.0.9"

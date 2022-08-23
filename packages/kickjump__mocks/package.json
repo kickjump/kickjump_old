@@ -35,7 +35,7 @@
     "undici": "^5.9.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.430",
+    "@sveltejs/kit": "1.0.0-next.431",
     "vite": "^3.0.9"
   },
   "peerDependencies": {

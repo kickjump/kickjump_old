@@ -27,14 +27,14 @@ import {
   type TRPCClientErrorLike,
   type TRPCRequestOptions,
   createTRPCClient,
-  createTRPCProxyClient,
+  createTRPCClientProxy,
 } from '@trpc/client';
 import type {
   AnyRouter,
   inferHandlerInput,
   inferProcedureInput,
   inferProcedureOutput,
-  inferProcedureParams,
+  OmitNeverKeys,
   Procedure,
   ProcedureRouterRecord,
 } from '@trpc/server';
@@ -74,7 +74,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     return context;
   }
 
-  readonly proxy: ReturnType<typeof createTRPCProxyClient<Router>>;
+  readonly proxy: ReturnType<typeof createTRPCClientProxy<Router>>;
   readonly client: TRPCClient<Router>;
   readonly queryClient: QueryClient;
   readonly ssrState: SSRState | undefined;
@@ -87,7 +87,7 @@ export class TRPCContext<Router extends AnyRouter = AnyRouter> {
     this.client = props.client;
     this.queryClient = props.queryClient;
     this.ssrState = props.ssrState;
-    this.proxy = createTRPCProxyClient<Router>(props.client);
+    this.proxy = createTRPCClientProxy<Router>(props.client);
   }
 
   fetchQuery = <
@@ -446,7 +446,7 @@ type CreateSvelteQueryTRPC<Router extends AnyRouter> = returnTypeInferer<HackyIn
 
 export function createSvelteQueryTRPCProxy<Router extends AnyRouter>(
   trpc: CreateSvelteQueryTRPC<Router>,
-) {
+): DecoratedProcedureRecord<Router['_def']['record']> {
   const proxy = createProxy((opts) => {
     const args = opts.args;
     const pathCopy = [...opts.path];
@@ -467,45 +467,35 @@ export function createSvelteQueryTRPCProxy<Router extends AnyRouter>(
     return (trpc as any)[lastArg]([path, input], ...rest);
   });
 
-  return proxy as DecoratedProcedureRecord<Router['_def']['record']>;
+  return proxy as any;
 }
 
-type inferProcedureClientError<T extends AnyProcedure> =
-  inferProcedureParams<T>['_config']['errorShape'];
-
-type NeverKeys<T> = {
-  [TKey in keyof T]: T[TKey] extends never ? TKey : never;
-}[keyof T];
-type OmitNeverKeys<T> = Omit<T, NeverKeys<T>>;
-
-type DecorateProcedure<Procedure extends AnyProcedure, Path extends string> = OmitNeverKeys<{
+export type DecorateProcedure<Procedure extends AnyProcedure, Path extends string> = OmitNeverKeys<{
   query: Procedure extends { _query: true }
     ? <QueryFnData = inferProcedureOutput<Procedure>, Data = inferProcedureOutput<Procedure>>(
-        ...args: [
+        input: inferProcedureInput<Procedure>,
+        opts?: UseTRPCQueryOptions<
+          Path,
           inferProcedureInput<Procedure>,
-          void | UseTRPCQueryOptions<
-            Path,
-            inferProcedureInput<Procedure>,
-            QueryFnData,
-            Data,
-            inferProcedureClientError<Procedure>
-          >,
-        ]
-      ) => Readable<UseQueryResult<Data, inferProcedureClientError<Procedure>>>
+          QueryFnData,
+          Data,
+          TRPCClientErrorLike<Procedure>
+        >,
+      ) => Readable<UseQueryResult<Data, TRPCClientErrorLike<Procedure>>>
     : never;
 
   mutation: Procedure extends { _mutation: true }
     ? <Context = unknown>(
         opts?: UseTRPCMutationOptions<
           inferProcedureInput<Procedure>,
-          inferProcedureClientError<Procedure>,
+          TRPCClientErrorLike<Procedure>,
           inferProcedureOutput<Procedure>,
           Context
         >,
       ) => Readable<
         UseMutationResult<
           inferProcedureOutput<Procedure>,
-          inferProcedureClientError<Procedure>,
+          TRPCClientErrorLike<Procedure>,
           inferProcedureInput<Procedure>,
           Context
         >
@@ -518,23 +508,21 @@ type DecorateProcedure<Procedure extends AnyProcedure, Path extends string> = Om
       }
       ? // eslint-disable-next-line @typescript-eslint/naming-convention
         <_QueryFnData = inferProcedureOutput<Procedure>, Data = inferProcedureOutput<Procedure>>(
-          ...args: [
-            Omit<inferProcedureInput<Procedure>, 'cursor'>,
-            void | UseTRPCInfiniteQueryOptions<
-              Path,
-              inferProcedureInput<Procedure>,
-              Data,
-              inferProcedureClientError<Procedure>
-            >,
-          ]
-        ) => Readable<UseInfiniteQueryResult<Data, inferProcedureClientError<Procedure>>>
+          input: Omit<inferProcedureInput<Procedure>, 'cursor'>,
+          opts?: UseTRPCInfiniteQueryOptions<
+            Path,
+            inferProcedureInput<Procedure>,
+            Data,
+            TRPCClientErrorLike<Procedure>
+          >,
+        ) => Readable<UseInfiniteQueryResult<Data, TRPCClientErrorLike<Procedure>>>
       : never
     : never;
 }>;
 
 type assertProcedure<T> = T extends AnyProcedure ? T : never;
 
-type DecoratedProcedureRecord<
+export type DecoratedProcedureRecord<
   Procedures extends ProcedureRouterRecord,
   Path extends string = '',
 > = {

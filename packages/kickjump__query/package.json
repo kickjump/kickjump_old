@@ -13,18 +13,16 @@
       "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js"
     },
-    "./Hydrate": "./dist/Hydrate.svelte",
-    "./Hydrate.svelte": "./dist/Hydrate.svelte",
+    "./dist/Hydrate": "./dist/Hydrate.svelte",
+    "./dist/Hydrate.svelte": "./dist/Hydrate.svelte",
+    "./dist/QueryClientProvider": "./dist/QueryClientProvider.svelte",
+    "./dist/QueryClientProvider.svelte": "./dist/QueryClientProvider.svelte",
     "./index.js": {
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
       "import": "./dist/index.esm.js"
     },
     "./package.json": "./package.json",
-    "./QueryClientProvider": "./dist/QueryClientProvider.svelte",
-    "./QueryClientProvider.svelte": "./dist/QueryClientProvider.svelte",
-    "./svelte": "./svelte.js",
-    "./svelte.js": "./svelte.js",
     "./types/*": "./dist/*.d.ts"
   },
   "module": "./dist/index.esm.js",
@@ -76,12 +74,10 @@
     "mode": "library",
     "externalModules": [],
     "extraExports": {
-      "./svelte": "./svelte.js",
-      "./svelte.js": "./svelte.js",
-      "./QueryClientProvider": "./dist/QueryClientProvider.svelte",
-      "./QueryClientProvider.svelte": "./dist/QueryClientProvider.svelte",
-      "./Hydrate": "./dist/Hydrate.svelte",
-      "./Hydrate.svelte": "./dist/Hydrate.svelte"
+      "./dist/QueryClientProvider": "./dist/QueryClientProvider.svelte",
+      "./dist/QueryClientProvider.svelte": "./dist/QueryClientProvider.svelte",
+      "./dist/Hydrate": "./dist/Hydrate.svelte",
+      "./dist/Hydrate.svelte": "./dist/Hydrate.svelte"
     }
   }
 }

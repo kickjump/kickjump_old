@@ -1,4 +1,3 @@
-// import type { ServerSession } from '@kickjump/svelte-auth';
 import { transformer } from '@kickjump/types';
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';

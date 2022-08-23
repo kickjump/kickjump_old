@@ -2,8 +2,8 @@
  * @vitest-environment happy-dom
  */
 
-import { cleanup, render, waitFor } from '@testing-library/svelte';
-import { afterEach, expect, test } from 'vitest';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, test } from 'vitest';
 
 import { QueryCache } from '../src/index.js';
 import Example from './components/Example.svelte';
@@ -14,18 +14,18 @@ import { createQueryClient, setupJestDomMatchers } from './utils.js';
 setupJestDomMatchers();
 
 test('can mount a component', () => {
-  const { getByText } = render(Example);
-  expect(() => getByText('Hello')).not.toThrow();
+  const screen = render(Example);
+  screen.getByText('Hello');
 });
 
 test('should allow to set default data value', async () => {
   const cache = new QueryCache();
   const client = createQueryClient({ queryCache: cache });
-  const rendered = render(Wrapper, { props: { client, Component: SetDefaultDataValue } });
+  const screen = render(Wrapper, { props: { client, Component: SetDefaultDataValue } });
 
-  rendered.getByText('default');
+  screen.getByText('default');
 
-  await waitFor(() => rendered.getByText('test'));
+  await screen.findByText('test');
 });
 
 afterEach(cleanup);

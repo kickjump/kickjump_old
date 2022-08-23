@@ -35,9 +35,9 @@
     "svelte"
   ],
   "dependencies": {
-    "@playwright/test": "^1.25.0",
+    "@playwright/test": "^1.25.1",
     "delay": "^5.0.0",
-    "playwright-core": "^1.25.0",
+    "playwright-core": "^1.25.1",
     "undici": "^5.9.1"
   },
   "devDependencies": {
