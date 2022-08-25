@@ -32,10 +32,10 @@
     "@kickjump/db": "^0.0.1",
     "@kickjump/svelte-auth": "^0.0.0",
     "@octokit/openapi-types": "^13.4.0",
-    "undici": "^5.9.1"
+    "undici": "^5.10.0"
   },
   "devDependencies": {
-    "@sveltejs/kit": "1.0.0-next.431",
+    "@sveltejs/kit": "1.0.0-next.437",
     "vite": "^3.0.9"
   },
   "peerDependencies": {

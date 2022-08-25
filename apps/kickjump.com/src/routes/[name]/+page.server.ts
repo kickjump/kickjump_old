@@ -1,6 +1,7 @@
 import { MembershipModel, ProjectModel } from '@kickjump/db';
 import { ProjectUtils, Visibility } from '@kickjump/types';
 import { type ServerLoadEvent, error } from '@sveltejs/kit';
+import { objectEntries } from 'ts-extras';
 
 import type { RouteParams } from './$types';
 
@@ -27,7 +28,21 @@ export async function load(event: ServerLoadEvent<RouteParams>) {
     throw error(403, MESSAGE[project.visibility]);
   }
 
-  return { project };
+  const serializable = Object.create(null);
+
+  for (const [key, value] of objectEntries(project)) {
+    if (value instanceof Date) {
+      serializable[key] = value.toISOString();
+      continue;
+    }
+
+    serializable[key] = value;
+  }
+
+  // console.log(project);
+
+  // return { project: { name: 'world', visibility: 'admin', description: 'This is a description' } };
+  return { project: serializable as typeof project };
 }
 
 const MESSAGE: Record<Visibility, string> = {

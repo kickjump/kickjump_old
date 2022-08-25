@@ -41,7 +41,7 @@
     "@kickjump/edgedb": "^0.0.0",
     "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/types": "^0.0.0",
-    "edgedb": "0.21.3",
+    "edgedb": "0.22.1",
     "is-what": "^4.1.7",
     "tiny-invariant": "^1.2.0",
     "ts-extras": "^0.11.0",
@@ -49,7 +49,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.11"
+    "@types/node": "^18.7.13"
   },
   "peerDependencies": {
     "@types/node": "*"
