@@ -1,6 +1,4 @@
 <script lang="ts">
-  import 'bytemd/dist/index.css';
-
   import { validator } from '@felte/validator-zod';
   import { context, trpc } from '@kickjump/trpc/client';
   import { ProjectUtils } from '@kickjump/types';
@@ -10,7 +8,6 @@
   import type { z } from 'zod';
 
   import { goto } from '$app/navigation';
-  // import { Editor } from '$modules/editor';
 
   let filterText = '';
   const { proxy } = context();
@@ -123,10 +120,3 @@
     <!-- <Editor bind:value={$data.description} /> -->
   </section>
 </form>
-
-<style>
-  :global(.bytemd) {
-    height: 60vh;
-    max-height: 800px;
-  }
-</style>

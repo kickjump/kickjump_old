@@ -45,7 +45,7 @@
     "@types/bn.js": "^5.1.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "edgedb": "0.22.1",
+    "edgedb": "0.21.3",
     "filter-anything": "^3.0.3",
     "is-what": "^4.1.7",
     "profane-words": "^1.5.3",

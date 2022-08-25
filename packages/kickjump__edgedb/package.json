@@ -51,7 +51,7 @@
     "types:version": "tsx scripts/append-version.ts"
   },
   "dependencies": {
-    "edgedb": "0.22.1"
+    "edgedb": "0.21.3"
   },
   "publishConfig": {
     "access": "public"

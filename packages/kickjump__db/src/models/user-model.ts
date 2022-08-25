@@ -9,7 +9,7 @@ import type {
 import { type EmailUtils, UserUtils } from '@kickjump/types';
 import { isArray, isString } from 'is-what';
 
-import { e, run } from '../edgedb.js';
+import { client, e, run } from '../edgedb.js';
 
 /**
  * Create a user with the provided data.
@@ -71,7 +71,7 @@ export async function findById(id: string) {
     filter: e.op(user.id, '=', e.uuid(id)),
   }));
 
-  return run(query);
+  return query.run(client);
 }
 
 interface FindProviderAccountById {
