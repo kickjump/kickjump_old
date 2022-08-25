@@ -1,11 +1,7 @@
-<script lang="ts" context="module">
-  import { Viewer } from 'bytemd';
-
-  import { plugins } from './plugins.js';
-</script>
-
 <script lang="ts">
+  import { marked } from 'marked';
+
   export let value: string;
 </script>
 
-<Viewer {value} {plugins} />
+<div class="prose-base">{@html marked(value)}</div>

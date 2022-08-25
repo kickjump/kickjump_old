@@ -4,10 +4,6 @@
 
   import { Button } from '$components';
   import { auth } from '$lib/auth';
-
-  // import { Skeleton } from '$components/loaders';
-
-  // import VirtualList from 'svelte-tiny-virtual-list';
 </script>
 
 <script lang="ts">
