@@ -1,8 +1,7 @@
 <script lang="ts">
-  import type { QueryClient } from '@tanstack/query-core';
   import { onDestroy, onMount, setContext } from 'svelte';
 
-  import { QUERY_CLIENT_CONTEXT } from '../';
+  import { type QueryClient, QUERY_CLIENT_CONTEXT } from '../';
 
   // Props with default values
   export let client: QueryClient;
@@ -11,7 +10,7 @@
     client.mount();
   });
 
-  setContext(QUERY_CLIENT_CONTEXT, client);
+  $: setContext(QUERY_CLIENT_CONTEXT, client);
 
   onDestroy(() => {
     client.unmount();

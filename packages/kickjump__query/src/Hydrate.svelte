@@ -1,23 +1,22 @@
 <script lang="ts">
-  import type {
-    DehydratedState,
-    HydrateOptions,
-    MutationOptions,
-    QueryOptions,
-  } from '@tanstack/query-core';
-  import { hydrate } from '@tanstack/query-core';
-
-  import { useQueryClient } from '../';
+  import {
+    type DehydratedState,
+    type HydrateOptions,
+    type MutationOptions,
+    type QueryOptions,
+    hydrate,
+    useQueryClient,
+  } from '../';
 
   export let state: DehydratedState;
   export let queries: QueryOptions | undefined = undefined;
   export let mutations: MutationOptions | undefined = undefined;
 
-  $: queryClient = useQueryClient();
+  $: client = useQueryClient();
   $: options =
     queries || mutations ? ({ defaultOptions: { queries, mutations } } as HydrateOptions) : {};
 
-  $: if (state) {
-    hydrate(queryClient, state, options);
-  }
+  $: hydrate(client, state, options);
 </script>
+
+<slot />
