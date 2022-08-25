@@ -1,5 +1,5 @@
 import { MembershipModel, ProjectModel } from '@kickjump/db';
-import { ProjectUtils, Visibility } from '@kickjump/types';
+import { ProjectUtils, replaceJsonDate, Visibility } from '@kickjump/types';
 import { type ServerLoadEvent, error } from '@sveltejs/kit';
 
 import type { RouteParams } from './$types';
@@ -27,7 +27,7 @@ export async function load(event: ServerLoadEvent<RouteParams>) {
     throw error(403, MESSAGE[project.visibility]);
   }
 
-  return { project };
+  return { project: replaceJsonDate(project) };
 }
 
 const MESSAGE: Record<Visibility, string> = {

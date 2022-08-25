@@ -10,13 +10,21 @@ export const Env = z.object({
   GITHUB_APP_PRIVATE_KEY: z.string(),
   GITHUB_WEBHOOK_SECRET: z.string(),
 });
-type Env = z.infer<typeof Env>;
+export type Env = z.infer<typeof Env>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type Context = {
   user?: App.User | undefined;
   // session: ServerSession;
   env: Env;
+  /**
+   * Set to true to prevent a trpc route from being accessible from the api.
+   *
+   * This is for endpoints that can be called from the server only.
+   *
+   * @default undefined
+   */
+  private?: boolean;
 };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

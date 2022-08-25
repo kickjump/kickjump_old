@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store';
 
-const { set: setSession, subscribe } = writable<App.Session>();
-
-export const session = { subscribe };
-export { setSession };
+const writableSession = writable<App.Session>();
+export const session = { subscribe: writableSession.subscribe };
+export const setSession = writableSession.set;

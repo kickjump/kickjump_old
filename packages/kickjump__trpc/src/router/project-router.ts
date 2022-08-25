@@ -46,6 +46,7 @@ export const project = t.router({
 
       return id;
     }),
+
   nameAvailable: authenticated.input(z.string()).query(async ({ input }) => {
     const suggestions = await generateUsernames();
 

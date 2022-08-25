@@ -29,6 +29,16 @@
       "import": "./dist/index.esm.js"
     },
     "./package.json": "./package.json",
+    "./ssg": {
+      "types": "./dist/ssg.d.ts",
+      "browser": "./dist/ssg.browser.esm.js",
+      "import": "./dist/ssg.esm.js"
+    },
+    "./ssg.js": {
+      "types": "./dist/ssg.d.ts",
+      "browser": "./dist/ssg.browser.esm.js",
+      "import": "./dist/ssg.esm.js"
+    },
     "./types/*": "./dist/*.d.ts"
   },
   "module": "./dist/index.esm.js",
@@ -36,7 +46,8 @@
   "types": "./dist/index.d.ts",
   "files": [
     "client",
-    "dist"
+    "dist",
+    "ssg"
   ],
   "dependencies": {
     "@octokit/app": "^13.0.7",
@@ -99,7 +110,8 @@
   "monots": {
     "entrypoints": [
       "index.ts",
-      "client/index.ts"
+      "client/index.ts",
+      "ssg/index.ts"
     ],
     "tsconfigs": {},
     "mode": "library",

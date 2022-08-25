@@ -46,3 +46,8 @@ export const withGitHubAccount = authenticated.use(async (props) => {
 
   return next({ ctx: { ...ctx, account, octokit, app } });
 });
+
+/**
+ * Middleware to ensure that a
+ */
+export function direct() {}

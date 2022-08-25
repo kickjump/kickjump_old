@@ -17,5 +17,7 @@
 
   <Viewer value={project.description} />
 
-  <span>visibility: <strong>{project.visibility}</strong></span>
+  <div>visibility: <strong>{project.visibility}</strong></div>
+  <div>created: <strong>{project.createdAt}</strong></div>
+  <div>updated: <strong>{project.updatedAt}</strong></div>
 </section>

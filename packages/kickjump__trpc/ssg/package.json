@@ -1,0 +1,17 @@
+{
+  "exports": {
+    ".": {
+      "browser": "./../dist/ssg.browser.esm.js",
+      "import": "./../dist/ssg.esm.js",
+      "types": "./../dist/ssg.d.ts"
+    },
+    "./index.js": {
+      "browser": "./../dist/ssg.browser.esm.js",
+      "import": "./../dist/ssg.esm.js",
+      "types": "./../dist/ssg.d.ts"
+    }
+  },
+  "module": "../dist/ssg.esm.js",
+  "browser": "../dist/ssg.browser.esm.js",
+  "types": "../dist/ssg.d.ts"
+}

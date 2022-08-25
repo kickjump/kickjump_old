@@ -1,9 +1,9 @@
-import { withSeo } from '$lib/route-loaders.js';
+import { withPageLoad } from '$lib/route-loaders.js';
 
 import type { PageLoadEvent } from './$types';
 
 export async function load(event: PageLoadEvent) {
-  return withSeo({
+  return withPageLoad({
     seo: { title: `${event.data.project.name} | Project` },
     event,
     data: event.data,

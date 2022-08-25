@@ -48,3 +48,19 @@ export function removeUndefined<Shape extends object>(data: Shape): Shape {
 
   return transformed;
 }
+
+// Not deep
+type ReplaceDate<Type extends object> = {
+  [Key in keyof Type]: Type[Key] extends Date ? string : Type[Key];
+};
+
+/**
+ * Remove dates to make json support possible in SvelteKit page functions.
+ */
+export function replaceJsonDate<Type extends object>(data: Type): ReplaceDate<Type> {
+  return Object.fromEntries(
+    Object.entries(data).map(([key, value]) => {
+      return value instanceof Date ? [key, value.toISOString()] : [key, value];
+    }),
+  ) as ReplaceDate<Type>;
+}

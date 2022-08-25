@@ -1,4 +1,6 @@
-import type { SvelteSeoProps } from 'svelte-seo/types/SvelteSeo';
+import type { DehydratedState } from '@kickjump/query';
+
+import type { SeoProps } from './components/index.js';
 
 /**
  * The entrypoint for all authentication endpoints.
@@ -18,7 +20,7 @@ export const REDIRECTS: Redirects = {
   '/r/github': { to: 'https://github.com/kickjump/kickjump', status: 302 },
 };
 
-export const DEFAULT_SEO: SvelteSeoProps = {
+export const DEFAULT_SEO: SeoProps = {
   title: 'KickJump',
   description: 'Your toolkit for financially sustainable open source development.',
   twitter: {
@@ -28,8 +30,4 @@ export const DEFAULT_SEO: SvelteSeoProps = {
   },
 };
 
-export declare namespace App {
-  interface Stuff {
-    seo?: SvelteSeoProps;
-  }
-}
+export const DEFAULT_DEHYDRATED_STATE: DehydratedState = { mutations: [], queries: [] };
