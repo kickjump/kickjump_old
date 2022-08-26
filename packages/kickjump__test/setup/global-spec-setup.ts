@@ -1,4 +1,9 @@
-import { instanceExists, migrateDatabase, setupDatabase, SPEC_EDGEDB_INSTANCE } from './utils.js';
+import {
+  instanceExists,
+  migrateDatabase,
+  setupDatabase,
+  SPEC_EDGEDB_INSTANCE,
+} from '../src/utils.js';
 
 export default async function globalSetup() {
   process.env.EDGEDB_INSTANCE = SPEC_EDGEDB_INSTANCE;

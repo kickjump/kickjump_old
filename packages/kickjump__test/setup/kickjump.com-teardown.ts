@@ -1,6 +1,6 @@
 import { teardown } from 'jest-process-manager';
 
-import { TEST_EDGEDB_INSTANCE } from './utils.js';
+import { TEST_EDGEDB_INSTANCE } from '../src/utils.js';
 
 export default async function globalTeardown() {
   process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;

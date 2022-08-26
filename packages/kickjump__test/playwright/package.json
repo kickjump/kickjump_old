@@ -1,0 +1,14 @@
+{
+  "exports": {
+    ".": {
+      "import": "./../dist/playwright.esm.js",
+      "types": "./../dist/playwright.d.ts"
+    },
+    "./index.js": {
+      "import": "./../dist/playwright.esm.js",
+      "types": "./../dist/playwright.d.ts"
+    }
+  },
+  "module": "../dist/playwright.esm.js",
+  "types": "../dist/playwright.d.ts"
+}

@@ -1,4 +1,4 @@
-import { expect, test } from '@kickjump/playwright';
+import { expect, test } from '@kickjump/test/playwright';
 
 import { externalLinks, seo } from './utils.js';
 

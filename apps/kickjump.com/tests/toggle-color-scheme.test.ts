@@ -1,4 +1,4 @@
-import { expect, test } from '@kickjump/playwright';
+import { expect, test } from '@kickjump/test/playwright';
 
 test.describe('light mode', () => {
   test.use({ colorScheme: 'light' });

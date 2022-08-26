@@ -19,9 +19,6 @@
       "path": "packages/kickjump__mocks/src"
     },
     {
-      "path": "packages/kickjump__playwright/src"
-    },
-    {
       "path": "packages/kickjump__query/src"
     },
     {
@@ -29,6 +26,12 @@
     },
     {
       "path": "packages/kickjump__svelte-auth/src"
+    },
+    {
+      "path": "packages/kickjump__test/setup"
+    },
+    {
+      "path": "packages/kickjump__test/src"
     },
     {
       "path": "packages/kickjump__tokens/src"
@@ -47,9 +50,6 @@
     },
     {
       "path": "packages/solana-credentials/src"
-    },
-    {
-      "path": "tests"
     }
   ]
 }

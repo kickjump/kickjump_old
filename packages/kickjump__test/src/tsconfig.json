@@ -14,5 +14,12 @@
     "emitDeclarationOnly": true,
     "outDir": "../dist"
   },
-  "references": []
+  "references": [
+    {
+      "path": "../../kickjump__db/src"
+    },
+    {
+      "path": "../../kickjump__mocks/src"
+    }
+  ]
 }

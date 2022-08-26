@@ -1,6 +1,6 @@
-import { expect, test } from '@kickjump/playwright';
+import { expect, test } from '@kickjump/test/playwright';
+import { STORAGE_STATE } from '@kickjump/test/utils';
 
-import { STORAGE_STATE } from '../setup/utils.js';
 import { loginWithGitHub } from './utils.js';
 
 test('the project page shows a list of projects', async ({ page }) => {

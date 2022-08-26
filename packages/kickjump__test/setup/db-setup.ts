@@ -1,4 +1,9 @@
-import { instanceExists, migrateDatabase, setupDatabase, TEST_EDGEDB_INSTANCE } from './utils.js';
+import {
+  instanceExists,
+  migrateDatabase,
+  setupDatabase,
+  TEST_EDGEDB_INSTANCE,
+} from '../src/utils.js';
 
 export default async function globalSetup() {
   process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;

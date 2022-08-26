@@ -23,16 +23,6 @@
       "browser": "./dist/client.browser.esm.js",
       "import": "./dist/client.esm.js"
     },
-    "./db": {
-      "types": "./dist/db.d.ts",
-      "browser": "./dist/db.browser.esm.js",
-      "import": "./dist/db.esm.js"
-    },
-    "./db.js": {
-      "types": "./dist/db.d.ts",
-      "browser": "./dist/db.browser.esm.js",
-      "import": "./dist/db.esm.js"
-    },
     "./index.js": {
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",

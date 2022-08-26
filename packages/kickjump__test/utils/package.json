@@ -1,0 +1,14 @@
+{
+  "exports": {
+    ".": {
+      "import": "./../dist/utils.esm.js",
+      "types": "./../dist/utils.d.ts"
+    },
+    "./index.js": {
+      "import": "./../dist/utils.esm.js",
+      "types": "./../dist/utils.d.ts"
+    }
+  },
+  "module": "../dist/utils.esm.js",
+  "types": "../dist/utils.d.ts"
+}

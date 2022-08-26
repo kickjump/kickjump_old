@@ -1,9 +1,6 @@
-import AxeBuilder from '@axe-core/playwright'; // 1
-import { expect, test } from '@playwright/test';
+import { Axe, expect, test } from '@kickjump/test/playwright';
 
 import { seo } from './utils.js';
-
-const Axe = (AxeBuilder as any).default as typeof AxeBuilder;
 
 for (const [path] of seo) {
   test.fixme(`'${path}' should be accessible`, async ({ page }) => {

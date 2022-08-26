@@ -1,0 +1,116 @@
+{
+  "name": "@kickjump/test",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Internal playwright testing tools.",
+  "keywords": [],
+  "license": "AGPLv3",
+  "contributors": [],
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js"
+    },
+    "./index.js": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./playwright": {
+      "types": "./dist/playwright.d.ts",
+      "import": "./dist/playwright.esm.js"
+    },
+    "./playwright.js": {
+      "types": "./dist/playwright.d.ts",
+      "import": "./dist/playwright.esm.js"
+    },
+    "./svelte": {
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.esm.js"
+    },
+    "./svelte.js": {
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.esm.js"
+    },
+    "./types/*": "./dist/*.d.ts",
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.esm.js"
+    },
+    "./utils.js": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.esm.js"
+    }
+  },
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "playwright",
+    "svelte",
+    "utils"
+  ],
+  "scripts": {
+    "postinstall": "run-s setup:playwright",
+    "setup:playwright": "playwright install"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.4.4",
+    "@faker-js/faker": "^7.4.0",
+    "@kickjump/db": "^0.0.1",
+    "@kickjump/mocks": "^0.0.0",
+    "@playwright/test": "^1.25.1",
+    "@project-serum/anchor": "^0.25.0",
+    "chalk": "^5.0.1",
+    "delay": "^5.0.0",
+    "execa": "^6.1.0",
+    "jest-process-manager": "^0.3.1",
+    "load-json-file": "^7.0.1",
+    "p-retry": "^5.1.1",
+    "playwright-core": "^1.25.1",
+    "undici": "^5.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.13"
+  },
+  "peerDependencies": {
+    "@types/node": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "monots": {
+    "entrypoints": [
+      "index.ts",
+      "playwright.ts",
+      "svelte.ts",
+      "utils.ts"
+    ],
+    "tsconfigs": {
+      "setup": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
+      },
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ],
+          "noEmit": true
+        }
+      }
+    },
+    "mode": "library",
+    "externalModules": []
+  }
+}

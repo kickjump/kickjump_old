@@ -1,4 +1,4 @@
-import { request } from '@kickjump/playwright';
+import { request } from '@playwright/test';
 import { setup, teardown } from 'jest-process-manager';
 
 import {
@@ -7,7 +7,7 @@ import {
   setupDatabase,
   STORAGE_STATE,
   TEST_EDGEDB_INSTANCE,
-} from './utils.js';
+} from '../src/utils.js';
 
 export default async function globalSetup() {
   process.env.EDGEDB_INSTANCE = TEST_EDGEDB_INSTANCE;
