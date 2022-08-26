@@ -14,7 +14,7 @@ export default defineConfig({
       $server: path.resolve('./src/lib/server'),
       $types: path.resolve('./src/lib/types'),
       $utils: path.resolve('./src/lib/utils'),
-      $lib: path.resolve('./src/lib'), // Keep for playwright component tests
+      // $lib: path.resolve('./src/lib'), // Keep for playwright component tests
     },
   },
   server: { port: 3000 },

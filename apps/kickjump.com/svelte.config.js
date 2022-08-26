@@ -9,7 +9,10 @@ const config = {
   extensions: ['.svelte', ...mdsvexConfig.extensions],
   preprocess: [preprocess({ postcss: true }), mdsvex(mdsvexConfig)],
   compilerOptions: {},
-  kit: { adapter: adapter() },
+  kit: {
+    adapter: adapter(),
+    outDir: process.env.VITE_ENDPOINT_MOCKING_ENABLED === 'true' ? '.svelte-kit-test' : undefined,
+  },
 };
 
 export default config;

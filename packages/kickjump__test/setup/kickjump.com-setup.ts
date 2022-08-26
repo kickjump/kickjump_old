@@ -24,7 +24,7 @@ export default async function globalSetup() {
   }
 
   await setup({
-    command: `pnpm -w dev:test-server &> /dev/null`,
+    command: `VITE_ENDPOINT_MOCKING_ENABLED=true pnpm -w dev:test-server &> /dev/null`,
     port: 3030,
     usedPortAction: 'ignore',
     launchTimeout: 30_000,
