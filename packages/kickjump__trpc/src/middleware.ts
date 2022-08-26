@@ -6,17 +6,20 @@ import type _paginateRest from '@octokit/plugin-paginate-rest';
 import type _pluginRestEndpointMethods from '@octokit/plugin-rest-endpoint-methods';
 import type _requestError from '@octokit/request-error';
 import type _webhooks from '@octokit/webhooks';
-import type { ProcedureBuilder } from '@trpc/server';
+import type { MiddlewareFunction, ProcedureBuilder } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
 import { App, Octokit } from 'octokit';
 
-import { t } from './init';
+import { t } from './init.js';
 
 // Reusable:
 
+export type InferProcedureParams<Builder extends AnyProcedureBuilder> =
+  Builder extends ProcedureBuilder<infer T> ? T : never;
 export type InferProcedureContext<Builder extends AnyProcedureBuilder> =
   Builder extends ProcedureBuilder<infer T> ? T['_ctx_out'] : never;
 type AnyProcedureBuilder = ProcedureBuilder<any>;
+type Params = InferProcedureParams<typeof t.procedure>;
 
 export const authenticated = t.procedure.use((props) => {
   const { next, ctx } = props;
@@ -50,4 +53,15 @@ export const withGitHubAccount = authenticated.use(async (props) => {
 /**
  * Middleware to ensure that a
  */
-export function direct() {}
+export const privateMiddleware: MiddlewareFunction<Params, Params> = (props) => {
+  const { next, ctx } = props;
+
+  if (!ctx.private) {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      message: 'This procedure is only available from the server side.',
+    });
+  }
+
+  return next();
+};

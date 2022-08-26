@@ -1,0 +1,17 @@
+{
+  "exports": {
+    ".": {
+      "browser": "./../dist/db.browser.esm.js",
+      "import": "./../dist/db.esm.js",
+      "types": "./../dist/db.d.ts"
+    },
+    "./index.js": {
+      "browser": "./../dist/db.browser.esm.js",
+      "import": "./../dist/db.esm.js",
+      "types": "./../dist/db.d.ts"
+    }
+  },
+  "module": "../dist/db.esm.js",
+  "browser": "../dist/db.browser.esm.js",
+  "types": "../dist/db.d.ts"
+}

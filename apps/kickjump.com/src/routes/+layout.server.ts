@@ -4,7 +4,7 @@ import type { ServerLoadEvent } from '@sveltejs/kit';
 import { DEFAULT_DEHYDRATED_STATE, DEFAULT_SEO } from '$lib/constants.js';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
-import type { LayoutParams } from './$types';
+import type { LayoutParams } from './$types.js';
 
 export async function load(event: ServerLoadEvent<LayoutParams>) {
   const session = await getSessionData(event);

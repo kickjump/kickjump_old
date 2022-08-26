@@ -6,7 +6,7 @@ import {
 } from '@tanstack/query-core';
 import type { Readable } from 'svelte/store';
 
-import type { DefinedUseQueryResult, UseQueryOptions, UseQueryResult } from './types';
+import type { DefinedUseQueryResult, UseQueryOptions, UseQueryResult } from './types.js';
 import { useBaseQuery } from './use-base-query.js';
 
 export function useQuery<

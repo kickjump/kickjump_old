@@ -17,7 +17,7 @@ export function notAuthenticated(url: URL, session: App.Session) {
   }
 }
 
-type BasePageLoadEvent = LoadEvent<object, object | null, LayoutData>;
+type BasePageLoadEvent = LoadEvent<object, Record<string, unknown> | null, LayoutData>;
 type BaseLoadEventServer = ServerLoadEvent<object, LayoutData>;
 
 interface WithPageLoad<Data extends object, Event extends BasePageLoadEvent = BasePageLoadEvent>

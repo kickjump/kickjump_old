@@ -9,8 +9,7 @@ import type {
 } from '@trpc/server';
 import { createProxy } from '@trpc/server/shared';
 
-import type { CreateSSGHelpers, CreateSSGHelpersOptions } from './ssg';
-import { createSSGHelpers } from './ssg';
+import { type CreateSSGHelpers, type CreateSSGHelpersOptions, createSSGHelpers } from './ssg.js';
 
 interface DecorateProcedure<TProcedure extends Procedure<any>> {
   /**

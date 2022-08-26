@@ -7,7 +7,7 @@ import {
   cookieSession,
 } from 'svelte-kit-cookie-session';
 import type { PrivateSession } from 'svelte-kit-cookie-session/types';
-import invariant from 'tiny-invariant';
+import { default as invariant } from 'tiny-invariant';
 
 import { createCsrf } from './csrf.js';
 

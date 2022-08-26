@@ -1,5 +1,6 @@
-import { UserModel } from '@kickjump/db';
 import { afterAll, describe, expect, it } from 'vitest';
+
+import { UserModel } from '../';
 
 const users: Set<string> = new Set();
 

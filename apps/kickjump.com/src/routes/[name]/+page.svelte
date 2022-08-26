@@ -2,7 +2,7 @@
   import { Button } from '$components';
   import { Viewer } from '$modules/editor';
 
-  import type { PageData } from './$types';
+  import type { PageData } from './$types.js';
 
   export let data: PageData;
   $: ({ project } = data);

@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs';
 import { execSync } from 'node:child_process';
 import path from 'node:path';
 import { getPackages } from '@manypkg/get-packages';
-import { Pkg, baseDir } from './helpers';
+import { Pkg, baseDir } from './helpers.js';
 
 /**
  * The cached packages, to prevent multiple re-computations.

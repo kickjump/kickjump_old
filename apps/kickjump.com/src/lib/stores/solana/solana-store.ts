@@ -20,7 +20,7 @@ import { type Readable, type Unsubscriber, type Writable, get, writable } from '
 import { browser } from '$app/env';
 import { type PersistentStore, indexedDBStorage, persist } from '$stores/persistent-store';
 
-import { isWalletError, WalletInvalidNameError, WalletNotSelectedError } from './solana-errors';
+import { isWalletError, WalletInvalidNameError, WalletNotSelectedError } from './solana-errors.js';
 
 export const showUninstalledWallets = persist(
   writable(false),

@@ -1,4 +1,4 @@
-import invariant from 'tiny-invariant';
+import { default as invariant } from 'tiny-invariant';
 
 import { env } from '$server/env';
 /**

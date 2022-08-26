@@ -37,4 +37,15 @@ interface Params {
   meta: Meta;
 }
 
+export const DEFAULT_CONTEXT: Context = {
+  env: {
+    GITHUB_APP_ID: '',
+    GITHUB_APP_NAME: '',
+    GITHUB_APP_PRIVATE_KEY: '',
+    GITHUB_CLIENT_ID: '',
+    GITHUB_CLIENT_SECRET: '',
+    GITHUB_WEBHOOK_SECRET: '',
+  },
+};
+
 export const t = initTRPC<Params>()({ transformer });

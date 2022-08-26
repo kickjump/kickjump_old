@@ -1,7 +1,7 @@
 import { isFunction } from 'is-what';
 import { getContext, hasContext, setContext } from 'svelte';
 import { type Readable, type Writable, derived, writable } from 'svelte/store';
-import invariant from 'tiny-invariant';
+import { default as invariant } from 'tiny-invariant';
 
 import { asReadable } from '$stores/utils';
 

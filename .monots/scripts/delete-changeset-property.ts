@@ -10,7 +10,7 @@
 import { loadJsonFile } from 'load-json-file';
 import { writeJsonFile } from 'write-json-file';
 import chalk from 'chalk';
-import { baseDir } from './helpers';
+import { baseDir } from './helpers.js';
 
 async function main() {
   if (!process.env.CI) {

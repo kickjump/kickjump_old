@@ -1,6 +1,6 @@
 import { type Context, t } from '../init.js';
 import { github } from './github-router.js';
-import { meta } from './meta-router';
+import { meta } from './meta-router.js';
 import { project } from './project-router.js';
 import { tag } from './tag-router.js';
 

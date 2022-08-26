@@ -23,6 +23,16 @@
       "browser": "./dist/client.browser.esm.js",
       "import": "./dist/client.esm.js"
     },
+    "./db": {
+      "types": "./dist/db.d.ts",
+      "browser": "./dist/db.browser.esm.js",
+      "import": "./dist/db.esm.js"
+    },
+    "./db.js": {
+      "types": "./dist/db.d.ts",
+      "browser": "./dist/db.browser.esm.js",
+      "import": "./dist/db.esm.js"
+    },
     "./index.js": {
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.browser.esm.js",
@@ -46,6 +56,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "client",
+    "db",
     "dist",
     "ssg"
   ],
@@ -86,7 +97,7 @@
     "@kickjump/query": "^0.0.0",
     "@kickjump/svelte-auth": "^0.0.0",
     "@kickjump/types": "^0.0.0",
-    "@sveltejs/kit": "1.0.0-next.437",
+    "@sveltejs/kit": "1.0.0-next.442",
     "@types/node": "^18.7.13",
     "svelte": "^3.49.0",
     "vite": "^3.0.9"
@@ -111,6 +122,7 @@
     "entrypoints": [
       "index.ts",
       "client/index.ts",
+      "db.ts",
       "ssg/index.ts"
     ],
     "tsconfigs": {},

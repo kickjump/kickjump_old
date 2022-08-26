@@ -1,10 +1,12 @@
 import { MembershipModel, ProjectModel } from '@kickjump/db';
-import { ProjectUtils, replaceJsonDate, Visibility } from '@kickjump/types';
-import { type ServerLoadEvent, error } from '@sveltejs/kit';
+import { ProjectUtils, Visibility } from '@kickjump/types';
+import { transformer } from '@kickjump/types';
+import { error } from '@sveltejs/kit';
 
-import type { RouteParams } from './$types';
+import type { PageServerLoadEvent } from './$types.js';
+import { MESSAGE } from './messages.js';
 
-export async function load(event: ServerLoadEvent<RouteParams>) {
+export async function load(event: PageServerLoadEvent) {
   const { name } = event.params;
   const project = await ProjectModel.findByName(name);
 
@@ -27,15 +29,5 @@ export async function load(event: ServerLoadEvent<RouteParams>) {
     throw error(403, MESSAGE[project.visibility]);
   }
 
-  return { project: replaceJsonDate(project) };
+  return transformer.serialize(project);
 }
-
-const MESSAGE: Record<Visibility, string> = {
-  admin: 'Only admin members can read this project',
-  editor: 'Only editors can read this project',
-  manager: 'Only managers can read this project',
-  member:
-    'Only members, managers, editors, administrators and the owner can view this project right now.',
-  owner: 'Only the owner can view this project at the moment.',
-  public: 'Open to all.',
-};

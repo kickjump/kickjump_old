@@ -74,6 +74,15 @@ export async function findById(id: string) {
   return query.run(client);
 }
 
+export async function findByUsername(username: string) {
+  const query = e.select(e.User, (user) => ({
+    ...UserUtils.FIELDS,
+    filter: e.op(user.username, '=', username),
+  }));
+
+  return query.run(client);
+}
+
 interface FindProviderAccountById {
   id: string;
   provider: EnumUnion<AccountProvider>;

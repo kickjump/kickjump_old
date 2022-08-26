@@ -1,8 +1,9 @@
 import type { RequestEvent } from '@sveltejs/kit';
-import type { MaybePromise } from '@sveltejs/kit/types/private';
 
 import type { ServerErrorJson } from '../errors.js';
 import type { ServerSession } from '../session.js';
+
+type MaybePromise<T> = T | Promise<T>;
 
 export interface SessionUser extends App.User {
   /**

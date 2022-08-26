@@ -15,19 +15,17 @@ import {
   TokenPocketWalletAdapter,
   TokenPocketWalletName,
 } from '@solana/wallet-adapter-tokenpocket';
-// import { TorusWalletAdapter, TorusWalletName } from '@solana/wallet-adapter-torus';
 import type { Connection } from '@solana/web3.js';
 import { inPlaceSort } from 'fast-sort';
 import isMobile from 'ismobilejs';
 
 import { browser } from '$app/env';
 
-// import { env } from '$utils/env';
 import {
   type WalletMetadata as WalletMetadata,
   type WalletWithMetadata,
   MobileSupportLevel,
-} from './types';
+} from './types.js';
 
 interface WalletProviderProps {
   connection: Connection;

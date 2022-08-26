@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import invariant from 'tiny-invariant';
+import { default as invariant } from 'tiny-invariant';
 
 export interface ModalContext {
   close: (method?: Exclude<ModalCloseMethod, 'event'>) => void;

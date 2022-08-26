@@ -11,5 +11,5 @@
     "declaration": false,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["anchor", "db", "setup"]
+  "include": ["anchor", "../packages/kickjump__db/db", "setup"]
 }

@@ -42,7 +42,7 @@ import { createProxy } from '@trpc/server/shared';
 import { isPromise } from 'is-what';
 import { getContext, hasContext, setContext } from 'svelte';
 import type { Readable } from 'svelte/store';
-import invariant from 'tiny-invariant';
+import { default as invariant } from 'tiny-invariant';
 
 const CONTEXT_KEY = Symbol('$$trpc-context$$');
 

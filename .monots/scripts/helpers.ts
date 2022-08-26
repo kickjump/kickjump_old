@@ -1,10 +1,9 @@
 import path from 'node:path';
-import url from 'node:url';
 import type { Package } from '@manypkg/get-packages';
 import cp from 'node:child_process';
 import { promisify } from 'node:util';
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const __dirname = new URL('.', import.meta.url).pathname;
 
 /**
  * Resolve a path relative to the base directory.

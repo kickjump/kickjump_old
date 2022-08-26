@@ -1,5 +1,6 @@
-import { MembershipModel, ProjectModel, UserModel } from '@kickjump/db';
 import { describe, expect, it } from 'vitest';
+
+import { MembershipModel, ProjectModel, UserModel } from '../';
 
 const projects: Set<string> = new Set();
 const users: Set<string> = new Set();

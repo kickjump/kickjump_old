@@ -1,11 +1,12 @@
+import type { ProjectUtils } from '@kickjump/types';
+import { transformer } from '@kickjump/types';
+
 import { withPageLoad } from '$lib/route-loaders.js';
 
-import type { PageLoadEvent } from './$types';
+import type { PageLoadEvent } from './$types.js';
 
 export async function load(event: PageLoadEvent) {
-  return withPageLoad({
-    seo: { title: `${event.data.project.name} | Project` },
-    event,
-    data: event.data,
-  });
+  const project: ProjectUtils.Project = transformer.deserialize(event.data);
+
+  return withPageLoad({ seo: { title: `${project.name} | Project` }, event, data: { project } });
 }

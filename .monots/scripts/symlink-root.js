@@ -6,13 +6,13 @@
  * internals.
  */
 
-import { lstatSync, readdirSync, readlinkSync, rmdirSync, symlinkSync, unlinkSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = new URL('.', import.meta.url).pathname;
 
-const targets = readdirSync(baseDir('.monots', 'symlink'))
+const targets = fs
+  .readdirSync(baseDir('.monots', 'symlink'))
   // Exclude the `readme.md` file from being symlinked.
   .filter((filename) => !filename.endsWith('readme.md'))
   .map((filename) => ({
@@ -26,7 +26,7 @@ const targets = readdirSync(baseDir('.monots', 'symlink'))
  * @param {string[]} paths
  */
 function baseDir(...paths) {
-  return resolve(__dirname, '../..', ...paths);
+  return path.resolve(__dirname, '../..', ...paths);
 }
 
 /**
@@ -36,7 +36,7 @@ function baseDir(...paths) {
  */
 function getFileStatSync(target) {
   try {
-    return lstatSync(target);
+    return fs.lstatSync(target);
   } catch {
     return;
   }
@@ -45,20 +45,20 @@ function getFileStatSync(target) {
 /**
  * Delete a file or folder recursively.
  *
- * @param {string} path
+ * @param {string} filepath
  *
  * @returns {void}
  */
-function deletePath(path) {
-  const stat = getFileStatSync(path);
+function deletePath(filepath) {
+  const stat = getFileStatSync(filepath);
 
   if (!stat) {
     return;
   }
 
   if (stat.isFile()) {
-    console.log('deleting file', path);
-    unlinkSync(path);
+    console.log('deleting file', filepath);
+    fs.unlinkSync(filepath);
   }
 
   if (!stat.isDirectory()) {
@@ -66,23 +66,23 @@ function deletePath(path) {
   }
 
   // Delete all nested paths
-  for (const file of readdirSync(path)) {
-    deletePath(join(path, file));
+  for (const file of fs.readdirSync(filepath)) {
+    deletePath(path.join(filepath, file));
   }
 
   // Delete the directory
-  rmdirSync(path);
+  fs.rmdirSync(filepath);
 }
 
 /**
  * Check that the path is linked to the target.
  *
- * @param {string} path
+ * @param {string} filepath
  * @param {string} target
  */
-function isLinkedTo(path, target) {
+function isLinkedTo(filepath, target) {
   try {
-    const checkTarget = readlinkSync(path);
+    const checkTarget = fs.readlinkSync(filepath);
     return checkTarget === target;
   } catch {
     return false;
@@ -104,7 +104,7 @@ for (const { original, target } of targets) {
     deletePath(target);
   }
 
-  symlinkSync(original, target);
+  fs.symlinkSync(original, target);
 }
 
 console.log(

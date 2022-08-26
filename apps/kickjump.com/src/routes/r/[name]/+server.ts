@@ -3,7 +3,7 @@ import { type RequestEvent, redirect } from '@sveltejs/kit';
 import { REDIRECTS } from '$lib/constants';
 import { getAbsoluteUrl } from '$server/get-absolute-url';
 
-import type { RouteParams } from './$types';
+import type { RouteParams } from './$types.js';
 
 export function GET(event: RequestEvent<RouteParams>) {
   const { name } = event.params;

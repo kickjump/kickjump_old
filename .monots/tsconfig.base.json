@@ -1,8 +1,18 @@
 {
   "extends": "../node_modules/@monots/tsconfig/tsconfig.json",
   "compilerOptions": {
+    // "moduleResolution": "NodeNext",
+    // "module": "NodeNext", // TODO(@ifiokjr): would be nice to have this working, but several issues prevent it
+    //
+    // error: TS1149 File name
+    // '/Users/ifiokjr/Developer/kickjump/kj/node_modules/.pnpm/svelte@3.49.0/node_modules/svelte/types/runtime/store/index.d.ts'
+    // differs from already included file name
+    // '/users/ifiokjr/developer/kickjump/kj/node_modules/.pnpm/svelte@3.49.0/node_modules/svelte/types/runtime/store/index.d.ts'
+    // only in casing. For some reason the filepath is being lowercased when comparing.
+    // "forceConsistentCasingInFileNames": false,
+
     "skipLibCheck": true,
-    "exactOptionalPropertyTypes": true,
+    // "exactOptionalPropertyTypes": true,
     "importsNotUsedAsValues": "error"
   }
 }

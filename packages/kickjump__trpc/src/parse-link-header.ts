@@ -1,4 +1,4 @@
-import camelCase from 'just-camel-case';
+import { default as camelCase } from 'just-camel-case';
 
 export function parseLinkHeader(linkHeader: string | null | undefined): Links {
   const links: Links = Object.create(null);
